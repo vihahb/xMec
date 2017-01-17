@@ -9,4 +9,9 @@
     <string name="sign_up"><u>Tạo tài khoản</u></string>
     <string name="login_fb">Đăng nhập bằng Facebook</string>
     <string name="login">Đăng nhập</string>
+    <string name="enter_opt_password">Nhập mã xác nhận</string>
+    <string name="otp_password">Mã xác nhận</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="resend_otp">Gửi lại mã xác nhận</string>
+    <string name="resend_otp_affter">Sau 30 giây</string>
 </resources>
