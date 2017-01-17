@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".xmec.views.ui.SplashScreen"
+            android:name=".SplashScreen"
             android:theme="@style/NoACtionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,15 +17,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".xmec.views.ui.MainActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity"></activity>
         <activity
-            android:name=".xmec.views.ui.RegisterActivity"
-            android:parentActivityName=".xmec.views.ui.MainActivity"
+            android:name=".RegisterActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".xmec.views.ui.ConfirmOPTActivity"
+            android:name=".ConfirmOPTActivity"
             android:theme="@style/AppTheme"
-            android:parentActivityName=".xmec.views.ui.RegisterActivity" />
+            android:parentActivityName=".RegisterActivity" />
     </application>
 
 </manifest>
