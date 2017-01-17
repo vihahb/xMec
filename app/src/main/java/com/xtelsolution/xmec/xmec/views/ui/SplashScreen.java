@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec;
+package com.xtelsolution.xmec.xmec.views.ui;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.xtelsolution.xmec.R;
 
 public class SplashScreen extends AppCompatActivity {
     private ImageView imgLogo;

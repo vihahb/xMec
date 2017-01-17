@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec;
+package com.xtelsolution.xmec.xmec.views.inf;
 
 import android.app.Activity;
 
