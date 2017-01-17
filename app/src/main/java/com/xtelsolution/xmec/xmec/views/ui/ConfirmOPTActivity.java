@@ -1,7 +1,9 @@
-package com.xtelsolution.xmec;
+package com.xtelsolution.xmec.xmec.views.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.xtelsolution.xmec.R;
 
 public class ConfirmOPTActivity extends AppCompatActivity {
 

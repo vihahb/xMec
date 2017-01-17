@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".xmec.views.ui.MainActivity">
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <EditText
+            style="@style/EditextLogin"
+            android:hint="Số điện thoại"
+            android:id="@+id/editText2" />
+
+        <EditText
+            style="@style/EditextLogin"
+            android:hint="Số điện thoại"
+            android:id="@+id/editText" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/backgroudbutton"
+            android:text="Đăng nhập"
+            android:id="@+id/button" />
+    </LinearLayout>
+</LinearLayout>
