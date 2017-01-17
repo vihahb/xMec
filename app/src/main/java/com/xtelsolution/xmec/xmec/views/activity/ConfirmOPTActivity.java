@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec.xmec.views.ui;
+package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

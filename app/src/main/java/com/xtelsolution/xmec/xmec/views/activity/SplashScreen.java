@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec.xmec.views.ui;
+package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.content.Intent;
 import android.os.Handler;

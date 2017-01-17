@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context=".xmec.views.ui.SplashScreen">
+    tools:context=".xmec.views.activity.SplashScreen">
 
     <ImageView
         android:id="@+id/img_logo"

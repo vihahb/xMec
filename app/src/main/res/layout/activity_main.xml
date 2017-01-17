@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".xmec.views.ui.MainActivity">
+    tools:context=".xmec.views.activity.MainActivity">
 
     <ImageView
         android:id="@+id/img_logo"
