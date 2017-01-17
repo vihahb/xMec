@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">xMec</string>
+    <string name="create_account">Tạo tài khoản</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="password">Mật khẩu</string>
+    <string name="re_password">Nhập lại mật khẩu</string>
+    <string name="had_account"><u>Đã có tài khoản</u></string>
 </resources>
