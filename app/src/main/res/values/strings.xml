@@ -5,4 +5,8 @@
     <string name="password">Mật khẩu</string>
     <string name="re_password">Nhập lại mật khẩu</string>
     <string name="had_account"><u>Đã có tài khoản</u></string>
+    <string name="forgot_pw"><u>Quên mật khẩu</u></string>
+    <string name="sign_up"><u>Tạo tài khoản</u></string>
+    <string name="login_fb">Đăng nhập bằng Facebook</string>
+    <string name="login">Đăng nhập</string>
 </resources>
