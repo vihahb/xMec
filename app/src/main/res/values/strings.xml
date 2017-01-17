@@ -5,4 +5,9 @@
     <string name="password">Mật khẩu</string>
     <string name="re_password">Nhập lại mật khẩu</string>
     <string name="had_account"><u>Đã có tài khoản</u></string>
+    <string name="enter_opt_password">Nhập mã xác nhận:</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="otp_password">Mã xác nhận</string>
+    <string name="resend_otp"><u>Gửi lại mã xác nhận</u></string>
+    <string name="resend_otp_affter">Sau <font fgcolor='#FF0000'>30 </font> giây</string>
 </resources>

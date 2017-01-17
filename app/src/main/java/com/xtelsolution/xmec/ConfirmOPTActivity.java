@@ -1,15 +1,14 @@
 package com.xtelsolution.xmec;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class ConfirmOPTActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+        setContentView(R.layout.activity_confirm_opt);
+        getSupportActionBar().setTitle("Xác nhận");
     }
 }

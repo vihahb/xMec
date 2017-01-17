@@ -33,61 +33,43 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputEditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:background="@android:color/white"
-            android:inputType="phone"
+            android:textSize="20sp"
             android:gravity="center"
-            android:imeOptions="actionNext"
-            android:maxLines="1"
-            android:hint="@string/phone_number" />
+            android:textColor="@android:color/white"
+            android:hint="@string/enter_opt_password" />
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:background="@android:color/white"
-            android:inputType="textPassword"
-            android:imeOptions="actionNext"
-            android:gravity="center"
-            android:maxLines="1"
-            android:layout_marginTop="8dp"
-            android:hint="@string/password" />
-
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:background="@android:color/white"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:imeOptions="actionDone"
             android:gravity="center"
             android:maxLines="1"
             android:layout_marginTop="8dp"
-            android:hint="@string/re_password" />
+            android:hint="@string/otp_password" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_btn_transparent"
-            android:text="@string/create_account" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20"
-        android:gravity="bottom|center"
-        android:orientation="horizontal">
-
+            android:text="@string/confirm" />
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="@string/resend_otp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/had_account"
-            android:textStyle="" />
+            android:textSize="16sp"
+            android:text="@string/resend_otp_affter"/>
     </LinearLayout>
 </LinearLayout>
