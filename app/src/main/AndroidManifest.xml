@@ -29,6 +29,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".xmec.views.activity.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/HomeActivityTheme" />
     </application>
 

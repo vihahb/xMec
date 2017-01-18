@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="16dp"
+    android:layout_margin="16dp"
+    android:background="@drawable/bg_shape_radius_white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="92dp"
+        android:maxWidth="120dp"
+        android:src="@drawable/placeholder_news"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textColor="#DD000000"
+        android:gravity="center"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="Tiêm phòng cho trẻ em ngày đậu xanh rau má"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textSize="12sp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:text="18/01/2017"/>
+</LinearLayout>
