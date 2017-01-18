@@ -6,7 +6,10 @@
     
     <ImageView
         android:id="@+id/imgIllnessAva"
-        android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@drawable/ic_virus"/>
@@ -14,7 +17,7 @@
         android:id="@+id/tvIllnessName"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textSize="16sp"
         android:gravity="center_vertical"
         android:text="Tên bệnh số 1"/>
