@@ -30,11 +30,10 @@ public class SplashScreen extends AppCompatActivity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
+
     }
 
     private void init() {
         imgLogo = (ImageView) findViewById(R.id.img_logo);
     }
-
-
 }

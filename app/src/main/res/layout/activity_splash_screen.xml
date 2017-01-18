@@ -10,17 +10,18 @@
 
     <ImageView
         android:id="@+id/img_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
         android:layout_gravity="center"
         android:layout_marginTop="200dp"
-        android:src="@mipmap/family_logo" />
+        android:src="@drawable/medical_logo_white" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="TEXT SLOGAN"
+        android:text="@string/sologan_text"
         android:textColor="@color/primary_light"
-        android:textStyle="italic|bold" />
+        android:textStyle="italic|bold"
+        android:id="@+id/textView" />
 </LinearLayout>
