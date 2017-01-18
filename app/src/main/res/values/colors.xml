@@ -9,4 +9,5 @@
     <color name="icons">#FFFFFF</color>
     <color name="facebook">#3B5998</color>
     <color name="primaryText">#212121</color>
+    <color name="default_background">#e2eff7</color>
 </resources>

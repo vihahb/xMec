@@ -22,6 +22,7 @@
         android:background="@drawable/bg_btn_home_search"
         android:textAllCaps="false"
         android:textColor="@color/icons"
+        android:padding="16dp"
         android:text="@string/btn_home_search_text"/>
 
 </LinearLayout>

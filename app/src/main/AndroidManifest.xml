@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".xmec.views.activity.HomeActivity"
-            android:theme="@style/NoACtionBar" />
+            android:theme="@style/HomeActivityTheme" />
     </application>
 
 </manifest>

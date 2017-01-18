@@ -7,36 +7,8 @@
     android:orientation="vertical"
     tools:context=".xmec.views.activity.MainActivity">
 
-    <ImageView
-        android:id="@+id/img_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher" />
-
-    <LinearLayout
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
+    <TextView
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-
-        <EditText
-            style="@style/EditextLogin"
-            android:hint="Số điện thoại"
-            android:id="@+id/editText2" />
-
-        <EditText
-            style="@style/EditextLogin"
-            android:hint="Số điện thoại"
-            android:id="@+id/editText" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/backgroudbutton"
-            android:text="Đăng nhập"
-            android:id="@+id/button" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:text="activity_main.xml"/>
 </LinearLayout>
