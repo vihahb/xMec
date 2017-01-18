@@ -10,5 +10,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="activity_main.xml"/>
+        android:text="activity_main.xml"
+        android:id="@+id/textView2" />
 </LinearLayout>

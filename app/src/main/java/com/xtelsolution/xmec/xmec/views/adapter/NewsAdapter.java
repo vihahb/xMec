@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 
 import com.xtelsolution.xmec.R;
 
-/**
- * Created by HUNGNT on 1/18/2017.
- */
-
 public class NewsAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
