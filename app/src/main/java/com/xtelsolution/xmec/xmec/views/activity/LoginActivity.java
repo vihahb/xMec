@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private void init() {
         imgLogo = (ImageView) findViewById(R.id.img_logo);
         tvSignUp = (TextView) findViewById(R.id.tv_sign_up);
-        btnLog = (Button) findViewById(R.id.btnLog);
+        btnLog = (Button) findViewById(R.id.btnLogin);
     }
 
 }

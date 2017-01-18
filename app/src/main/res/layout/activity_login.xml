@@ -5,89 +5,103 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xtelsolution.xmec.MainActivity">
+    android:focusableInTouchMode="true"
+    tools:context="com.xtelsolution.xmec.xmec.views.activity.LoginActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/family_logo" />
-
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="64dp"
-            android:layout_marginRight="64dp"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/editText2"
-                style="@style/EditextLogin"
-                android:hint="@string/phone_number" />
-
-            <EditText
-                android:id="@+id/editText"
-                style="@style/EditextLogin"
-                android:hint="@string/password" />
-
-            <Button
-                android:id="@+id/btnLog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@color/colorPrimaryDark"
-                android:padding="8dp"
-                android:text="@string/login"
-                android:textColor="@color/icons" />
-
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="98dp"
+                    android:layout_height="98dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@color/divider"></View>
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/medical_logo" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:text="Hoặc" />
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginRight="64dp"
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@color/divider"></View>
+                    <EditText
+                        android:id="@+id/editText2"
+                        style="@style/EditextLogin"
+                        android:maxLines="1"
+                        android:hint="@string/phone_number" />
+
+                    <EditText
+                        android:id="@+id/editText"
+                        style="@style/EditextLogin"
+                        android:inputType="textPassword"
+                        android:hint="@string/password" />
+
+                    <Button
+                        android:id="@+id/btnLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:background="@drawable/button_login_selector"
+                        android:padding="8dp"
+                        android:text="@string/login"
+                        android:textColor="@color/icons" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@color/divider"></View>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="8dp"
+                            android:text="Hoặc" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@color/divider"></View>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:background="@drawable/button_selector"
+                        style="@style/LoginFB"
+                        android:text="@string/login_fb"
+                        android:textColor="@color/icons" />
+                </LinearLayout>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/facebook"
-                android:padding="8dp"
-                android:text="@string/login_fb"
-                android:textColor="@color/icons" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/tv_sign_up"
         style="@style/TextViewUnderLine"
-        android:clickable="true"
         android:layout_gravity="bottom|right"
         android:text="@string/sign_up" />
 
