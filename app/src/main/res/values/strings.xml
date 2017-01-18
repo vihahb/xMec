@@ -16,6 +16,7 @@
     <string name="resend_otp_affter">Sau 30 giây</string>
     <string name="sologan_text">Sức khỏe của bạn là niềm vui \n của chúng tôi</string>
     <string name="btn_home_search_text"><big><b>Chuẩn đoán bệnh</b></big>\nBạn bị đau ở đâu?</string>
-    <string name="result_search_news_text">Kết quả tìm kiếm bài viết…</string>
-    <string name="result_search_illnesses_text">Kết quả tìm kiếm bài bệnh…</string>
+    <string name="result_search_news_text">Kết quả tìm kiếm bài viết …</string>
+    <string name="result_search_illnesses_text">Kết quả tìm kiếm bệnh …</string>
+    <string name="search_placeholder_text">Nhập tên bệnh, triệu chứng …</string>
 </resources>

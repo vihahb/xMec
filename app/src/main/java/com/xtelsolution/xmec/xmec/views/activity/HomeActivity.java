@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.xmec.views.fragment.HomeFragment;
@@ -31,16 +32,15 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         init();
-
         tabLayout.initialize(viewPager, getSupportFragmentManager(), fragmentList, savedInstanceState);
+
     }
+
 
     private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         tabLayout = (SpaceTabLayout) findViewById(R.id.spaceTabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         fragmentList = new ArrayList<>();
@@ -63,4 +63,6 @@ public class HomeActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
+
+
 }
