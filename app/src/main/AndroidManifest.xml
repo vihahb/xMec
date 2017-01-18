@@ -18,15 +18,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".xmec.views.activity.MainActivity" />
-        <activity android:name=".xmec.views.activity.LoginActivity"></activity>
+        <activity android:name=".xmec.views.activity.LoginActivity" />
         <activity
             android:name=".xmec.views.activity.RegisterActivity"
             android:parentActivityName=".xmec.views.activity.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".xmec.views.activity.ConfirmOPTActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".xmec.views.activity.RegisterActivity" />
+            android:parentActivityName=".xmec.views.activity.RegisterActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".xmec.views.activity.HomeActivity"
+            android:theme="@style/NoACtionBar" />
     </application>
 
 </manifest>
