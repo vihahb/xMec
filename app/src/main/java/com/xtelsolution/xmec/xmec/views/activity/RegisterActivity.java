@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.xmec.views.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.xtelsolution.xmec.R;
 
@@ -14,6 +15,12 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         getSupportActionBar().setTitle("Đăng ký tài khoản");
-        startActivity(new Intent(RegisterActivity.this,ConfirmOPTActivity.class));
+
+        findViewById(R.id.btnCreateAccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this,ConfirmOPTActivity.class));
+            }
+        });
     }
 }

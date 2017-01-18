@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -28,7 +29,7 @@ public class LoginActivity extends AppCompatActivity{
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
             }
         });
     }

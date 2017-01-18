@@ -22,7 +22,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashScreen.this, RegisterActivity.class);
+                Intent i = new Intent(SplashScreen.this, LoginActivity.class);
                 Pair<View,String> pair = new Pair<View, String>(imgLogo,"logo");
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashScreen.this,pair);
                 startActivity(i,optionsCompat.toBundle());
