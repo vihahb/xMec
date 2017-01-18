@@ -18,4 +18,6 @@
     <string name="btn_home_search_text"><big><b>Chuẩn đoán bệnh</b></big>\nBạn bị đau ở đâu?</string>
     <string name="result_search_news_text">Kết quả tìm kiếm bài viết…</string>
     <string name="result_search_illnesses_text">Kết quả tìm kiếm bài bệnh…</string>
+    <string name="update_profile_text">Cập nhật thông tin</string>
+    <string name="tong_hop">Tổng hợp</string>
 </resources>
