@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
-        <layer-list>
-            <!-- SHADOW LAYER -->
-            <item android:bottom="4dp" android:right="4dp">
-                <shape>
-                    <solid android:color="@color/colorPrimary" />
-                </shape>
-            </item>
-        </layer-list>
-    </item>
-    <item>
-        <shape android:shape="rectangle">
-            <corners android:radius="2dip"/>
-            <solid android:color="@color/colorPrimary" />
-            <padding
-                android:left="8dp"
-                android:top="4dp"
-                android:right="8dp"
-                android:bottom="4dp" />
-        </shape>
-    </item>
+<item android:state_pressed="true">
+    <layer-list>
+        <!-- SHADOW LAYER -->
+        <item android:bottom="4dp" android:right="4dp">
+            <shape>
+                <solid android:color="@color/colorPrimary" />
+            </shape>
+        </item>
+    </layer-list>
+</item>
+<item>
+    <shape android:shape="rectangle">
+        <corners android:radius="2dip"/>
+        <solid android:color="@color/colorPrimary" />
+    </shape>
+</item>
 </selector>

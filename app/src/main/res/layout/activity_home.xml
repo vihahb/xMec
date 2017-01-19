@@ -32,4 +32,40 @@
         app:starting_position="three"
         app:tab_color="@color/colorPrimary"
         app:text_color="#61FFFFFF" />
+
+    <SlidingDrawer
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:content="@+id/content"
+        android:layout_marginLeft="48dp"
+        android:orientation="horizontal"
+        android:handle="@+id/handleImageView">
+
+        <ImageView
+            android:id="@id/handleImageView"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
+            android:elevation="12dp"
+            android:src="@drawable/ic_sliding" />
+
+        <LinearLayout
+            android:id="@id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/icons"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_hospital_center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </SlidingDrawer>
+
 </android.support.design.widget.CoordinatorLayout>

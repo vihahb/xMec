@@ -21,4 +21,6 @@
     <string name="update_profile_text">Cập nhật thông tin</string>
     <string name="tong_hop">Tổng hợp</string>
     <string name="search_placeholder_text">Nhập tên bệnh, triệu chứng …</string>
+    <string name="search_health_center">Tìm cơ sở y tế</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

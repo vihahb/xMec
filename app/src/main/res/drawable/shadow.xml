@@ -40,6 +40,8 @@
         <shape>
             <solid android:color="@color/icons"/>
             <corners android:radius="3dp"/>
+            <padding android:right="60dp" android:bottom="60dp"></padding>
         </shape>
+
     </item>
 </layer-list>
