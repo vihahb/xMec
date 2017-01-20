@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_medical_directory"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xtelsolution.xmec.xmec.views.activity.MedicalDirectoryActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_mediacal_directory"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp">
+
+            <EditText
+                android:id="@+id/et_directory_name"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/directory_name"
+                android:paddingLeft="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_start_time"
+                    style="@style/EditTextTimeTow"
+                    android:layout_marginRight="32dp"
+                    android:hint="@string/directory_start_time" />
+
+                <EditText
+                    android:id="@+id/et_end_time"
+                    style="@style/EditTextTimeTow"
+                    android:hint="@string/directory_end_time" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_disease_name"
+                    style="@style/EditTextTime"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:hint="@string/directory_disease_name" />
+
+                <ImageView
+                    android:id="@+id/btn_add"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/plus" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_treatment_reslut"
+                android:hint="@string/directory_disease_treatment"
+                style="@style/EditTextTime" />
+            <EditText
+                android:id="@+id/et_note"
+                android:hint="@string/directory_disease_note"
+                android:maxLines="5"
+                android:ellipsize="end"
+                style="@style/EditTextTime" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_save_director"
+            android:layout_gravity="bottom|center"
+            android:layout_width="match_parent"
+            android:layout_margin="32dp"
+            android:text="Lưu Y bạ"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</LinearLayout>

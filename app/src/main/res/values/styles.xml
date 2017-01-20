@@ -40,4 +40,13 @@
     <style name="HomeActivityTheme" parent="NoACtionBar">
         <item name="android:windowBackground">@drawable/bg_home_activity</item>
     </style>
+    <style name="EditTextTime">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+    <style name="EditTextTimeTow" parent="EditTextTime">
+        <item name="android:layout_weight">1</item>
+    </style>
 </resources>
