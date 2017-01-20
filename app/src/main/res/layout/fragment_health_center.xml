@@ -37,37 +37,4 @@
             android:layout_height="match_parent"
             tools:context=".xmec.views.activity.HomeActivity" />
     </LinearLayout>
-    <!--<SlidingDrawer-->
-        <!--android:id="@+id/drawer"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:content="@+id/content"-->
-        <!--android:paddingLeft="48dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:handle="@+id/handleImageView">-->
-
-        <!--<ImageView-->
-            <!--android:id="@id/handleImageView"-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:elevation="12dp"-->
-            <!--android:rotation="270"-->
-            <!--android:src="@drawable/medical_logo_white" />-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@id/content"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:gravity="right"-->
-            <!--android:elevation="12dp"-->
-            <!--android:background="@color/icons"-->
-            <!--android:orientation="horizontal">-->
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/rv_hospital_center"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent">-->
-
-            <!--</android.support.v7.widget.RecyclerView>-->
-        <!--</LinearLayout>-->
-    <!--</SlidingDrawer>-->
 </android.support.design.widget.CoordinatorLayout>

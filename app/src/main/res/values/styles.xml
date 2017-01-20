@@ -13,6 +13,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <item name="windowNoTitle">true</item>
         //gender color
     </style>
 
@@ -36,7 +38,6 @@
     </style>
 
     <style name="HomeActivityTheme" parent="NoACtionBar">
-        <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/bg_home_activity</item>
     </style>
 </resources>

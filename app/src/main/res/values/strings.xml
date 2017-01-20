@@ -16,6 +16,9 @@
     <string name="resend_otp_affter">Sau 30 giây</string>
     <string name="sologan_text">Sức khỏe của bạn là niềm vui \n của chúng tôi</string>
     <string name="btn_home_search_text"><big><b>Chuẩn đoán bệnh</b></big>\nBạn bị đau ở đâu?</string>
+    <string name="text_work_time"><b>Giờ làm việc: </b></string>
+    <string name="text_vote"><b>Đánh giá: </b></string>
+    <string name="text_introduce"><b>Giới thiệu chung: </b></string>
     <string name="result_search_news_text">Kết quả tìm kiếm bài viết…</string>
     <string name="result_search_illnesses_text">Kết quả tìm kiếm bài bệnh…</string>
     <string name="update_profile_text">Cập nhật thông tin</string>
@@ -23,4 +26,5 @@
     <string name="search_placeholder_text">Nhập tên bệnh, triệu chứng …</string>
     <string name="search_health_center">Tìm cơ sở y tế</string>
     <string name="title_activity_maps">Map</string>
+    <string name="detail_hospital">Cơ sở y tế</string>
 </resources>

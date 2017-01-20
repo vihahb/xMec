@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         fragmentList.add(new MapFragment());
         slidingDrawer = (SlidingDrawer) findViewById(R.id.drawer);
         rvHosiptalCenter = (RecyclerView) slidingDrawer.findViewById(R.id.rv_hospital_center);
-        adapter = new HospitalCenterAdapter(getApplicationContext());
+        adapter = new HospitalCenterAdapter(getApplicationContext(),HomeActivity.this);
         imgHanderSliding = (ImageView) slidingDrawer.findViewById(R.id.handleImageView);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
