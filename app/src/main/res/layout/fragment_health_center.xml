@@ -1,40 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="8dp"
-    android:orientation="vertical"
-    android:focusableInTouchMode="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:layout_height="match_parent">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <EditText
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/bg_edittext_search"
-        android:drawableEnd="@drawable/ic_action_search"
-        android:lines="1"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:inputType="text"
-        android:textSize="13sp"
-        android:imeOptions="actionSearch"
+        android:background="@drawable/bg_edittext_search"
+        android:drawableEnd="@drawable/ic_action_search"
         android:elevation="8dp"
         android:hint="@string/search_health_center"
-        android:padding="16dp" ></EditText>
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:lines="1"
+        android:padding="16dp"
+        android:textSize="13sp"></EditText>
 
-    <LinearLayout
-        android:layout_marginTop="16dp"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
         android:background="@drawable/radius"
-        android:padding="3dp"
-        android:layout_height="match_parent">
+        android:padding="3dp">
+
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".xmec.views.activity.HomeActivity" />
-    </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn__current_location"
+            android:layout_width="@dimen/action_button_size"
+            android:layout_height="@dimen/action_button_size"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_my_location_white_36dp" />
+    </android.support.design.widget.CoordinatorLayout>
 </android.support.design.widget.CoordinatorLayout>
