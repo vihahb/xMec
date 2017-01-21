@@ -31,11 +31,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_health_center, container, false);
-//            slidingDrawer = (SlidingDrawer) view.findViewById(R.id.drawer);
-//            rvHosiptalCenter = (RecyclerView) slidingDrawer.findViewById(R.id.rv_hospital_center);
-//            adapter = new HospitalCenterAdapter(getContext());
-//            rvHosiptalCenter.setAdapter(adapter);
-//            rvHosiptalCenter.setLayoutManager(new LinearLayoutManager(getContext()));
         }
         return view;
 

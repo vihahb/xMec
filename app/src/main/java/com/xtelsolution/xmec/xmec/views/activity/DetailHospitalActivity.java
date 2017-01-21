@@ -27,9 +27,9 @@ public class DetailHospitalActivity extends AppCompatActivity implements OnMapRe
 
     private void init() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class DetailHospitalActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
     }
 }
