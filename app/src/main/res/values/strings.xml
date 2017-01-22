@@ -37,4 +37,16 @@
     <string name="directory_disease_note">Ghi chú</string>
     <string name="save_director_disease">Lưu Y bạ</string>
     <string name="add_disease">Thêm bệnh</string>
+    <string name="title_activity_test_tab">TestTab</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="overview_text">Tổng quan</string>
+    <string name="detail_text">Chi tiết</string>
+    <string name="define_disease"><b>Khái quán:</b> ABC là Bệnh gì gì đấy................ ..............</string>
+    <string name="symptom"><b>Triêu chứng:</b> triệu trứng của bệnh là cái gì đó viết ở đây.</string>
+    <string name="treatment"><b>Điều trị:</b></string>
+    <string name="treatment_method">Một nghiên cứu kéo dài 8 năm từ 2000 đến 2007 nhằm đánh giá tuổi thọ kỳ vọng của những người có HIV đang điều trị ARV. Nghiên cứu này tiến hành trên gần 23.000 bệnh nhân ở Mỹ và Canada, thông qua đánh giá các thông số sinh học, từ đó phân tích tỷ lệ tử vong và tuổi thọ kỳ vọng của nhóm này. Đồng thời, các nhà khoa học cũng so sánh tuổi thọ của bệnh nhân với mặt bằng dân số chung tại thời điểm bắt đầu nghiên cứu và 8 năm sau đó.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.xtelsolution.xmec.xmec.views.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.xtelsolution.xmec.Entity.IIlness;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 
 import java.util.ArrayList;
 
@@ -30,10 +32,17 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.Illnes
     public IllnessViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        if (viewType == Normal)
-             view = inflater.inflate(R.layout.list_item_illness, null);
-        else
-            view= inflater.inflate(R.layout.item_button_add,parent,false);
+        if (viewType == Normal) {
+            view = inflater.inflate(R.layout.list_item_illness, null);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(mContext, DetailDiseaseActivity.class);
+                    mContext.startActivity(i);
+                }
+            });
+        } else
+            view = inflater.inflate(R.layout.item_button_add, parent, false);
         return new IllnessViewHolder(view);
     }
 

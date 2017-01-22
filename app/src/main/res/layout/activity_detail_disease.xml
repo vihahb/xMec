@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_detail_disease"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity">
+
+    <include layout="@layout/toobar"></include>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        app:tabMode="fixed"
+        android:background="@color/colorPrimary"
+        app:tabGravity="center"
+        app:tabTextColor="@color/icons"
+        app:tabSelectedTextColor="@color/icons"
+        android:layout_height="?attr/actionBarSize"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+</LinearLayout>
