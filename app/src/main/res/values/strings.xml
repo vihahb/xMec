@@ -29,9 +29,12 @@
     <string name="detail_hospital">Cơ sở y tế</string>
     <string name="title_mediacal_directory">Tạo y bạ</string>
     <string name="directory_name">Tên y bạ</string>
-    <string name="directory_start_time">Start time</string>
-    <string name="directory_end_time">End time</string>
+    <string name="directory_start_time">Ngày bắt đầu </string>
+    <string name="directory_end_time">Ngày kết thúc</string>
     <string name="directory_disease_name">Tên Bệnh</string>
     <string name="directory_disease_treatment">Kết quả điều trị</string>
+    <string name="list_disease">Danh sách bệnh</string>
     <string name="directory_disease_note">Ghi chú</string>
+    <string name="save_director_disease">Lưu Y bạ</string>
+    <string name="add_disease">Thêm bệnh</string>
 </resources>

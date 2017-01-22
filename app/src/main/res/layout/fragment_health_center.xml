@@ -10,19 +10,12 @@
 
     <EditText
         android:id="@+id/etSearch"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/bg_edittext_search"
+        style="@style/EditextNomarl"
         android:drawableEnd="@drawable/ic_action_search"
-        android:elevation="8dp"
         android:hint="@string/search_health_center"
         android:imeOptions="actionSearch"
         android:inputType="text"
-        android:lines="1"
-        android:padding="16dp"
-        android:textSize="13sp"></EditText>
+        android:lines="1"></EditText>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"

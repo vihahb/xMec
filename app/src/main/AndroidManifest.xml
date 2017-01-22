@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".xmec.views.activity.SplashScreen"
+            android:name=".xmec.views.activity.MedicalDirectoryActivity"
             android:theme="@style/NoACtionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +58,10 @@
             android:name=".xmec.views.activity.DetailHospitalActivity"
             android:parentActivityName=".xmec.views.activity.HomeActivity"
             android:theme="@style/HomeActivityTheme" />
-        <activity android:name=".xmec.views.activity.MedicalDirectoryActivity"></activity>
+        <activity
+            android:name=".xmec.views.activity.SplashScreen"
+            android:parentActivityName=".xmec.views.activity.HomeActivity"
+            android:theme="@style/HomeActivityTheme"></activity>
     </application>
 
 </manifest>
