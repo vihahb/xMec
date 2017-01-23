@@ -33,6 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_login_layout"
                     android:layout_marginRight="@dimen/margin_login_layout"
+                    android:clipToPadding="false"
                     android:orientation="vertical">
 
                     <EditText
@@ -52,8 +53,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
-                        android:background="@drawable/button_login_selector"
+                        android:layout_margin="8dp"
                         android:padding="8dp"
+                        android:background="@color/colorPrimary"
                         android:text="@string/login"
                         android:textColor="@color/icons" />
 
@@ -89,8 +91,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:background="@drawable/button_selector"
-                        style="@style/LoginFB"
+                        android:layout_margin="8dp"
+                        android:background="@color/facebook"
                         android:text="@string/login_fb"
                         android:textColor="@color/icons" />
                 </LinearLayout>

@@ -4,8 +4,9 @@
     android:id="@+id/activity_disease_diagnosi"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xtelsolution.xmec.xmec.views.activity.DiseaseDiagnosiActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.xtelsolution.xmec.xmec.views.activity.DiseaseDiagnosiActivity">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -23,4 +24,53 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/nu_truoc"
+        android:layout_weight="1"
+        android:id="@+id/img_body_map" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <RadioGroup
+            android:id="@+id/toggle_sex"
+            style="@style/RadioGroup"
+            android:layout_marginRight="8dp"
+            android:checkedButton="@+id/sex_female">
+
+            <RadioButton
+                android:id="@+id/sex_male"
+                style="@style/RadioButton"
+                android:text="Nam " />
+
+            <RadioButton
+                android:id="@+id/sex_female"
+                style="@style/RadioButton"
+                android:text="Nữ" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/toggle_quarter"
+            style="@style/RadioGroup"
+            android:checkedButton="@+id/quarter_front">
+
+            <RadioButton
+                android:id="@+id/quarter_front"
+                style="@style/RadioButton"
+                android:text="Trước" />
+
+            <RadioButton
+                android:id="@+id/quarter_behind"
+                style="@style/RadioButton"
+                android:text="Sau" />
+        </RadioGroup>
+    </LinearLayout>
+
 </LinearLayout>
