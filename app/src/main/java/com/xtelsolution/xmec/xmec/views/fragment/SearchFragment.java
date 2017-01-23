@@ -52,6 +52,5 @@ public class SearchFragment extends Fragment {
     private void initView() {
         rvResultFindNews = (RecyclerView) getActivity().findViewById(R.id.rvResultFindNews);
         rvResultFindIllness = (RecyclerView) getActivity().findViewById(R.id.rvResultFindIllnesses);
-
     }
 }

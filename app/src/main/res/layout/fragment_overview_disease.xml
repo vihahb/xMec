@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
     android:orientation="vertical"
+    android:padding="@dimen/text_size_10"
     tools:context="com.xtelsolution.xmec.xmec.views.fragment.OverviewDiseaseFragment">
 
     <ScrollView
@@ -141,8 +141,7 @@
                 android:src="@drawable/ic_nha_thuoc" />
         </LinearLayout>
 
-        <LinearLayout
-         style="@style/LinearLayoutButtonImage">
+        <LinearLayout style="@style/LinearLayoutButtonImage">
 
             <ImageView
                 android:id="@+id/btn_2"

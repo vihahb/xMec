@@ -50,4 +50,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="disease_dia">Hello blank fragment</string>
+
+
+    <string name="control_disease_trieu_trung">Triệu trứng bệnh</string>
+    <string name="control_disease_nguyen_nhan">Nguyên Nhân</string>
+    <string name="control_disease_phong_ngua">Phong ngừa</string>
+    <string name="control_disease_dieu_tri">Điều trị</string>
+
+
 </resources>
