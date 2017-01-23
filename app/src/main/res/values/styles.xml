@@ -38,6 +38,7 @@
     </style>
 
     <style name="HomeActivityTheme" parent="NoACtionBar">
+        <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/bg_home_activity</item>
     </style>
     <style name="EditTextTime">
@@ -48,5 +49,8 @@
     </style>
     <style name="EditTextTimeTow" parent="EditTextTime">
         <item name="android:layout_weight">1</item>
+    </style>
+    <style name="NewsFeedTansTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
     </style>
 </resources>
