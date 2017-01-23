@@ -9,11 +9,11 @@ import android.view.View;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class RecyclerViewMargin extends RecyclerView.ItemDecoration {
+public class RecyclerViewMarginVertical extends RecyclerView.ItemDecoration {
     private int margin;
 
 
-    public RecyclerViewMargin(@IntRange(from = 0) int margin) {
+    public RecyclerViewMarginVertical(@IntRange(from = 0) int margin) {
         this.margin = margin;
 
     }
@@ -27,9 +27,12 @@ public class RecyclerViewMargin extends RecyclerView.ItemDecoration {
                                RecyclerView parent, RecyclerView.State state) {
 
         int position = parent.getChildLayoutPosition(view);
-        outRect.left = margin;
-        if (position==0){
-            outRect.left = 0;
-        }
+
+        if (position == 0)
+            outRect.top = 0;
+        else
+            outRect.top = margin;
+
     }
+
 }

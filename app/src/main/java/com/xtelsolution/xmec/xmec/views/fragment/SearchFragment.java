@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
-import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMargin;
+import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginHorizontal;
 
 /**
  * Created by HUNGNT on 1/18/2017.
@@ -26,7 +26,7 @@ public class SearchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.search_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class SearchFragment extends Fragment {
         NewsAdapter adapter = new NewsAdapter(getContext());
         rvResultFindNews.setAdapter(adapter);
         rvResultFindNews.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        RecyclerViewMargin decoration = new RecyclerViewMargin((int)(getContext().getResources().getDisplayMetrics().density*8f+0.5f));
+        RecyclerViewMarginHorizontal decoration = new RecyclerViewMarginHorizontal((int)(getContext().getResources().getDisplayMetrics().density*8f+0.5f));
         rvResultFindNews.addItemDecoration(decoration);
         ////
         IllnessAdapter illnessAdapter = new IllnessAdapter(getContext());

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_shape_radius_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+        <com.xtelsolution.xmec.xmec.views.smallviews.RoundImage
+            android:id="@+id/imgNewsThumble"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentLeft="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_toEndOf="@+id/imgNewsThumble"
+            android:layout_toStartOf="@+id/btnOptions"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_toRightOf="@+id/imgNewsThumble"
+            android:layout_toLeftOf="@+id/btnOptions"
+            android:paddingLeft="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Admin 1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    android:text="&#9654; Bài thuốc hay"
+                    android:textColor="#ff8359"
+                    android:layout_marginLeft="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 phút trước" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_action_more"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_centerInParent="true"
+                android:maxHeight="250dp"
+                android:src="@drawable/thumble_news_placeholder" />
+
+            <ImageView
+                android:layout_width="114dp"
+                android:layout_height="114dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_play" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Mẹo bảo quản thuốc lâu, không bị mốc và có thể tái
+sử đụng khi cần! "
+            android:textColor="#687281"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/imgViews"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_view" />
+
+            <TextView
+                android:id="@+id/tvViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/imgViews"
+                android:text="99999 lượt xem"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/imgViews" />
+
+            <ImageView
+                android:id="@+id/imgLikes"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_toStartOf="@+id/tvLikes"
+                android:src="@drawable/ic_like"
+                android:layout_toLeftOf="@+id/tvLikes" />
+
+            <TextView
+                android:id="@id/tvLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_toStartOf="@+id/imgComments"
+                android:text="9999999"
+                android:layout_marginLeft="8dp"
+                android:layout_toLeftOf="@+id/imgComments" />
+
+            <ImageView
+                android:id="@id/imgComments"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_toStartOf="@+id/tvComments"
+                android:src="@drawable/ic_comment"
+                android:layout_marginLeft="8dp"
+                android:layout_toLeftOf="@+id/tvComments" />
+
+            <TextView
+                android:id="@id/tvComments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="8dp"
+                android:text="99999"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="8dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

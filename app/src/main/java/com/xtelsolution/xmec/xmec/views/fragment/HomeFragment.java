@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.xmec.views.adapter.DiseaseApdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
+import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginHorizontal;
+import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginVertical;
 
 /**
  * Created by HUNGNT on 1/18/2017.
