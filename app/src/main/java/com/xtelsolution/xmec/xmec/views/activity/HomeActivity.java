@@ -40,7 +40,8 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView rvHosiptalCenter;
     private HospitalCenterAdapter adapter;
     private ImageView imgHanderSliding;
-    private String TAG="phimau";
+    private String TAG = "phimau";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,8 @@ public class HomeActivity extends AppCompatActivity {
         rvHosiptalCenter.setAdapter(adapter);
         rvHosiptalCenter.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         slidingDrawer.setVisibility(View.GONE);
+        slidingDrawer.unlock();
+
     }
 
 
@@ -67,12 +70,12 @@ public class HomeActivity extends AppCompatActivity {
         fragmentList.add(new MapFragment());
         slidingDrawer = (SlidingDrawer) findViewById(R.id.drawer);
         rvHosiptalCenter = (RecyclerView) slidingDrawer.findViewById(R.id.rv_hospital_center);
-        adapter = new HospitalCenterAdapter(getApplicationContext(),HomeActivity.this);
+        adapter = new HospitalCenterAdapter(getApplicationContext(), HomeActivity.this);
         imgHanderSliding = (ImageView) slidingDrawer.findViewById(R.id.handleImageView);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position==4){
+                if (position == 4) {
                     slidingDrawer.setVisibility(View.VISIBLE);
                 } else {
                     slidingDrawer.setVisibility(View.GONE);
@@ -86,7 +89,6 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
@@ -105,5 +107,12 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (slidingDrawer.isOpened())
+            slidingDrawer.close();
+        else
+            super.onBackPressed();
 
+    }
 }

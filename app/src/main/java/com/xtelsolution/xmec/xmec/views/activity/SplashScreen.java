@@ -27,7 +27,13 @@ public class SplashScreen extends AppCompatActivity {
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashScreen.this,pair);
                 startActivity(i,optionsCompat.toBundle());
                 overridePendingTransition(R.anim.right_in,R.anim.left_out);
-                finish();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                },1000);
             }
         }, SPLASH_TIME_OUT);
 
