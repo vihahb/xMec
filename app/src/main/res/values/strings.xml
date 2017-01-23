@@ -21,6 +21,7 @@
     <string name="text_introduce"><b>Giới thiệu chung: </b></string>
     <string name="result_search_news_text">Kết quả tìm kiếm bài viết…</string>
     <string name="result_search_illnesses_text">Kết quả tìm kiếm bài bệnh…</string>
+    <string name="result_search_mediacine_text">Kết quả tìm kiếm thuốc : </string>
     <string name="update_profile_text">Cập nhật thông tin</string>
     <string name="tong_hop">Tổng hợp</string>
     <string name="search_placeholder_text">Nhập tên bệnh, triệu chứng …</string>

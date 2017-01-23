@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".xmec.views.activity.DiseaseDiagnosiActivity"
+            android:name=".xmec.views.activity.SplashScreen"
             android:theme="@style/NoACtionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,7 +57,7 @@
             android:name=".xmec.views.activity.DetailDiseaseActivity"
             android:theme="@style/MaterialTab" />
         <activity
-            android:name=".xmec.views.activity.SplashScreen"
+            android:name=".xmec.views.activity.DiseaseDiagnosiActivity"
             android:theme="@style/HomeActivityTheme" />
         <activity android:name=".xmec.views.activity.DetailBodyPart"></activity>
     </application>
