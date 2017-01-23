@@ -11,8 +11,9 @@
         android:layout_height="24dp"
         app:tabGravity="center"
         app:tabIndicatorHeight="1dp"
-        app:tabMode="scrollable"
+        app:tabIndicatorColor="@color/icons"
         app:tabSelectedTextColor="@color/icons"
+        app:tabMode="scrollable"
         app:tabTextAppearance="@style/NewsFeedTansTextAppearance"
         app:tabTextColor="@color/icons" />
 
