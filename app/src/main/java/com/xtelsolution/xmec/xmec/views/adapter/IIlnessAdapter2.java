@@ -38,6 +38,7 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.Illnes
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(mContext, DetailDiseaseActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     mContext.startActivity(i);
                 }
             });

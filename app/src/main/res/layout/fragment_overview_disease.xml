@@ -137,9 +137,7 @@
 
             <ImageView
                 android:id="@+id/btn_medicine"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:clickable="true"
+                style="@style/ButtonImage"
                 android:src="@drawable/ic_nha_thuoc" />
         </LinearLayout>
 

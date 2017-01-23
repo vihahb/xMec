@@ -28,7 +28,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        imgLogo.setTransitionName("logo");
+        if (checkApiVersion())
+            imgLogo.setTransitionName("logo");
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             }
         });
     }
@@ -47,6 +48,14 @@ public class LoginActivity extends AppCompatActivity {
         imgLogo = (ImageView) findViewById(R.id.img_logo);
         tvSignUp = (TextView) findViewById(R.id.tv_sign_up);
         btnLog = (Button) findViewById(R.id.btnLogin);
+    }
+
+    public static boolean checkApiVersion() {
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            return true;
+        }
+        return false;
     }
 
 }

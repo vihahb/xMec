@@ -97,8 +97,8 @@
         <item name="android:padding">8dp</item>
     </style>
     <style name="ButtonImage">
-        <item name="android:layout_width">56dp</item>
-        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_width">@dimen/button_image_size</item>
+        <item name="android:layout_height">@dimen/button_image_size</item>
         <item name="android:clickable">true</item>
     </style>
     <style name="AppTheme.NoActionBar">
