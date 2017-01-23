@@ -11,10 +11,11 @@
         android:gravity="center_vertical"
         android:padding="8dp">
 
-        <com.xtelsolution.xmec.xmec.views.smallviews.RoundImage
+        <agency.tango.android.avatarview.views.AvatarView
             android:id="@+id/imgNewsThumble"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:scaleType="centerCrop"
             android:layout_alignParentStart="true"
             android:src="@drawable/avaplaceholder"
             android:layout_alignParentLeft="true" />

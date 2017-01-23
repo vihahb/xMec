@@ -19,13 +19,17 @@ import com.xtelsolution.xmec.R;
 
 public class NewsFeedFragment extends Fragment {
 
+    private View mainView;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_news_feed, container, false);
+        if(mainView==null){
+            mainView = inflater.inflate(R.layout.fragment_news_feed, container, false);
+        }
+        return mainView;
     }
 
     @Override

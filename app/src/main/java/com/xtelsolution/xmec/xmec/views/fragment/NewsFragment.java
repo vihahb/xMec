@@ -18,10 +18,15 @@ import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginVertical;
  */
 
 public class NewsFragment extends Fragment {
+    private View mainView;
+    private int position;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_inside_news_feed, container, false);
+        if(mainView==null){
+            mainView = inflater.inflate(R.layout.fragment_inside_news_feed, container, false);
+        }
+        return mainView;
     }
 
     @Override
