@@ -59,11 +59,10 @@
         <activity
             android:name=".xmec.views.activity.DiseaseDiagnosiActivity"
             android:theme="@style/HomeActivityTheme" />
-        <activity android:name=".xmec.views.activity.DetailControlDiseaseActivity"></activity>
-        <activity
-            android:name=".xmec.views.activity.DiseaseDiagnosiActivity"
-            android:theme="@style/HomeActivityTheme" />
-        <activity android:name=".xmec.views.activity.DetailBodyPart"></activity>
+        <activity android:name=".xmec.views.activity.DetailControlDiseaseActivity" />
+        <activity android:name=".xmec.views.activity.DetailBodyPart" />
+        <activity android:name=".xmec.views.activity.UpdateInfoActivity"
+            android:theme="@style/HomeActivityTheme"></activity>
     </application>
 
 </manifest>

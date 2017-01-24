@@ -12,4 +12,6 @@
     <color name="default_background">#e2eff7</color>
     <color name="colorControlNormal">#fff</color>
     <color name="fistText">#616161</color>
+    <color name="tim">#673AB7</color>
+
 </resources>

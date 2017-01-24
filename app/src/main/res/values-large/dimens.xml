@@ -2,4 +2,9 @@
 <resources>
     <dimen name="button_image_size">56dp</dimen>
     <dimen name="margin_login_layout">56dp</dimen>
+    <dimen name="editext_height">48dp</dimen>
+    <dimen name="avatar_size">98dp</dimen>
+    <dimen name="activity_vertical_margin1">16dp</dimen>
+    <dimen name="avatar_icon_size">24dp</dimen>
+
 </resources>
