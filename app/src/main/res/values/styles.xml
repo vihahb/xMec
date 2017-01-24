@@ -28,9 +28,11 @@
     <style name="LoginButton" parent="Base.TextAppearance.AppCompat.Button">
         <item name="android:background">@drawable/backgroudbutton</item>
     </style>
+
     <style name="LoginFB">
         <item name="android:background">@drawable/button_selector</item>
     </style>
+
     <style name="TextViewUnderLine">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -40,22 +42,51 @@
     <style name="HomeActivityTheme" parent="NoACtionBar">
         <item name="android:windowBackground">@drawable/bg_home_activity</item>
     </style>
+
     <style name="MaterialTab" parent="HomeActivityTheme">
 
         <item name="colorAccent">@color/icons</item>
 
     </style>
+
     <style name="EditTextTime">
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
+
+    <style name="EditProfile">
+        <item name="android:layout_marginLeft">@dimen/dimen_16</item>
+        <item name="android:layout_marginRight">@dimen/dimen_16</item>
+        <item name="android:background">@drawable/shadow_edtitext_2</item>
+        <item name="android:paddingLeft">@dimen/dimen_25</item>
+        <item name="android:paddingRight">@dimen/dimen_16</item>
+        <item name="android:paddingTop">@dimen/dimen_16</item>
+        <item name="android:paddingBottom">@dimen/dimen_16</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textColorHint">@color/textHint</item>
+        <item name="android:textSize">@dimen/dimen14sp</item>
+        <item name="android:lines">1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="EditTextTimeTow" parent="EditTextTime">
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="NewsFeedTansTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">#33000000
+        </item> <!-- Or any transparency or color you need -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
     <style name="EditextNomarl">
@@ -92,6 +123,7 @@
         <item name="android:textColor">@android:color/white</item>
         <!--<item name="android:layout_width">wrap_content</item>-->
     </style>
+
     <style name="LinearLayoutButtonImage">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -99,11 +131,13 @@
         <item name="android:background">@drawable/bg_shape_radius_white</item>
         <item name="android:padding">8dp</item>
     </style>
+
     <style name="ButtonImage">
         <item name="android:layout_width">@dimen/button_image_size</item>
         <item name="android:layout_height">@dimen/button_image_size</item>
         <item name="android:clickable">true</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -112,6 +146,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="RadioGroup">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">30dp</item>
@@ -119,6 +154,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="RadioButton">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -131,5 +167,6 @@
         <item name="android:button">@null</item>
         <item name="android:textColor">@color/colorAccent</item>
 
-    </style>"
+    </style>
+    "
 </resources>

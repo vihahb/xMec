@@ -29,6 +29,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="detail_hospital">Cơ sở y tế</string>
     <string name="title_mediacal_directory">Tạo y bạ</string>
+    <string name="title_profile">Thông tin cá nhân</string>
     <string name="directory_name">Tên y bạ</string>
     <string name="directory_start_time">Ngày bắt đầu </string>
     <string name="directory_end_time">Ngày kết thúc</string>
