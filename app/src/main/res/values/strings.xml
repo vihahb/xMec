@@ -21,6 +21,7 @@
     <string name="text_introduce"><b>Giới thiệu chung: </b></string>
     <string name="result_search_news_text">Kết quả tìm kiếm bài viết…</string>
     <string name="result_search_illnesses_text">Kết quả tìm kiếm bài bệnh…</string>
+    <string name="result_search_mediacine_text">Kết quả tìm kiếm thuốc : </string>
     <string name="update_profile_text">Cập nhật thông tin</string>
     <string name="tong_hop">Tổng hợp</string>
     <string name="search_placeholder_text">Nhập tên bệnh, triệu chứng …</string>
@@ -45,6 +46,9 @@
     <string name="define_disease"><b>Khái quán:</b> ABC là Bệnh gì gì đấy................ ..............</string>
     <string name="symptom"><b>Triêu chứng:</b> triệu trứng của bệnh là cái gì đó viết ở đây.</string>
     <string name="treatment"><b>Điều trị:</b></string>
+    <string name="disease_diagnosi">Chuẩn đoán bệnh</string>
+    <string name="male">Nam</string>
+    <string name="fermale">Nữ</string>
     <string name="treatment_method">Một nghiên cứu kéo dài 8 năm từ 2000 đến 2007 nhằm đánh giá tuổi thọ kỳ vọng của những người có HIV đang điều trị ARV. Nghiên cứu này tiến hành trên gần 23.000 bệnh nhân ở Mỹ và Canada, thông qua đánh giá các thông số sinh học, từ đó phân tích tỷ lệ tử vong và tuổi thọ kỳ vọng của nhóm này. Đồng thời, các nhà khoa học cũng so sánh tuổi thọ của bệnh nhân với mặt bằng dân số chung tại thời điểm bắt đầu nghiên cứu và 8 năm sau đó.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
