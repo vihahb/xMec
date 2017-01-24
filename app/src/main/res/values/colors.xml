@@ -9,9 +9,13 @@
     <color name="icons">#FFFFFF</color>
     <color name="facebook">#3B5998</color>
     <color name="primaryText">#212121</color>
+    <color name="textTitle">#3f4751</color>
+    <color name="textHint">#a9b7cf</color>
     <color name="default_background">#e2eff7</color>
     <color name="colorControlNormal">#fff</color>
     <color name="fistText">#616161</color>
     <color name="tim">#673AB7</color>
+    <color name="time">#96a9c5</color>
+    <color name="title_item">#424a55</color>
 
 </resources>

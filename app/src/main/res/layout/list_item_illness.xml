@@ -19,8 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        android:textColor="@color/fistText"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="@color/title_item"
         android:gravity="center_vertical"
         android:text="Tên bệnh số 1"/>
 </LinearLayout>

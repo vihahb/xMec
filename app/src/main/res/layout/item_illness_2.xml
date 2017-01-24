@@ -36,6 +36,7 @@
             android:layout_marginLeft="16dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textColor="@color/title_item"
             android:text="Tên bệnh số 1"
             android:textSize="13sp" />
 

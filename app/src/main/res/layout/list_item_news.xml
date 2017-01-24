@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_shape_radius_white"
     android:orientation="vertical"
     android:paddingBottom="16dp"
-    android:paddingTop="16dp">
+    android:paddingTop="20dp">
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="86dp"
+        android:layout_width="135dp"
+        android:layout_height="76dp"
         android:maxWidth="120dp"
         android:scaleType="centerCrop"
         android:src="@drawable/placeholder_news" />
@@ -17,20 +17,24 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:ellipsize="end"
         android:gravity="center"
         android:lines="1"
+        android:textSize="11sp"
         android:text="Tiêm phòng cho trẻ em ngày đậu xanh rau má"
-        android:textColor="#DD000000" />
+        android:textColor="@color/textTitle" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:gravity="center"
         android:lines="1"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:textColor="@color/time"
         android:text="18/01/2017"
-        android:textSize="12sp" />
+        android:textSize="11sp" />
 </LinearLayout>
