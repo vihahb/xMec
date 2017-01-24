@@ -2,6 +2,7 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.xmec.views.adapter.DiseaseApdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
@@ -44,6 +46,8 @@ public class HomeFragment extends Fragment {
         rvDisease.setAdapter(adapter);
         rvDisease.setLayoutManager(new LinearLayoutManager(getContext()));
         rvDisease.setNestedScrollingEnabled(false);
+        MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spcategorize);
+        spinner.setItems("Bệnh",  "Thuốc");
 
     }
 }

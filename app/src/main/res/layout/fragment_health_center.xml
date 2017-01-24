@@ -12,10 +12,15 @@
         android:id="@+id/etSearch"
         style="@style/EditextNomarl"
         android:drawableEnd="@drawable/ic_action_search"
+        android:drawableRight="@drawable/ic_action_search"
         android:hint="@string/search_health_center"
         android:imeOptions="actionSearch"
+        android:textColor="@color/textTitle"
+        android:textColorHint="@color/textHint"
+        android:textStyle="bold"
+        android:textSize="@dimen/dimen12sp"
         android:inputType="text"
-        android:lines="1"></EditText>
+        android:lines="1" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"

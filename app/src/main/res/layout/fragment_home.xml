@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,7 +41,7 @@
                         android:layout_height="110dp"
                         android:layout_gravity="center"
                         android:layout_marginRight="16dp"
-                        android:src="@mipmap/ic_logo" />
+                        android:src="@drawable/avatar" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -59,7 +60,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="07/121996"
+                            android:text="07/12/1996"
                             android:textColor="@color/textHint"
                             android:textSize="11sp" />
 
@@ -128,31 +129,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/dimen_18"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/dimen_12"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/dimen_16"
+                android:paddingTop="@dimen/dimen_12">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity=""
+                    android:text="@string/tong_hop"
+                    android:layout_gravity="left"
                     android:textColor="@color/title_item"
-                    android:textStyle="bold"
-                    android:text="@string/tong_hop" />
+                    android:textStyle="bold" />
 
-                <Spinner
+                <!--<Spinner-->
+                <!--android:id="@+id/spcategorize"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:tag="Benh">-->
+
+                <!--</Spinner>-->
+                <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/spcategorize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:tag="Benh">
-
-                </Spinner>
+                    app:ms_text_color="@color/colorPrimary"
+                    app:ms_arrow_tint="@color/colorPrimary"
+                    app:ms_background_color="@color/default_background" />
             </android.support.design.widget.CoordinatorLayout>
 
             <android.support.v7.widget.RecyclerView
