@@ -22,6 +22,7 @@ import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginVertical;
 public class HomeFragment extends Fragment {
     private DiseaseApdapter adapter;
     private RecyclerView rvDisease;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,5 +36,6 @@ public class HomeFragment extends Fragment {
         rvDisease = (RecyclerView) view.findViewById(R.id.rvDisease);
         rvDisease.setAdapter(adapter);
         rvDisease.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvDisease.setNestedScrollingEnabled(false);
     }
 }
