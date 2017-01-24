@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.xtelsolution.xmec.R;
@@ -19,6 +20,7 @@ public class DetailDiseaseActivity extends AppCompatActivity {
     private TextView titleToolbar;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +37,8 @@ public class DetailDiseaseActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter tabAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        tabAdapter.addFragment(getResources().getString(R.string.overview_text),new OverviewDiseaseFragment());
-        tabAdapter.addFragment(getResources().getString(R.string.detail_text),new DetailDiseaseFragment());
+        tabAdapter.addFragment(getResources().getString(R.string.overview_text), new OverviewDiseaseFragment());
+        tabAdapter.addFragment(getResources().getString(R.string.detail_text), new DetailDiseaseFragment());
         viewPager.setAdapter(tabAdapter);
 
     }
@@ -55,4 +57,11 @@ public class DetailDiseaseActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

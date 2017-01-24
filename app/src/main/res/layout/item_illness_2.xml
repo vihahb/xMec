@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingTop="8dp"
-    android:paddingRight="16dp"
-    android:paddingLeft="8dp"
-    android:paddingBottom="8dp"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp">
+
     <TextView
         android:id="@+id/stt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
-        android:text="1"/>
+        android:text="1" />
+
     <ImageView
         android:id="@+id/imgIllnessAva"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/ic_virus"/>
+        android:src="@drawable/ic_virus" />
 
     <RelativeLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/tvIllnessName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:textSize="13sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:layout_gravity="center_vertical"
-            android:text="Tên bệnh số 1"/>
+            android:layout_marginLeft="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Tên bệnh số 1"
+            android:textSize="13sp" />
+
         <TextView
             android:layout_width="wrap_content"
-            android:textSize="13sp"
-            android:textColor="@color/secondaryText"
-            android:layout_alignParentRight="true"
             android:layout_height="wrap_content"
-            android:text="2010"/>
+            android:layout_alignParentRight="true"
+            android:text="24/01/2017"
+            android:textColor="@color/secondaryText"
+            android:textSize="13sp" />
     </RelativeLayout>
 
 </LinearLayout>
