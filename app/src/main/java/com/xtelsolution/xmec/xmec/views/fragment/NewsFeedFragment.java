@@ -35,12 +35,13 @@ public class NewsFeedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
-        mViewPager = (ViewPager) getActivity().findViewById(R.id.vpNewsFeed);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabsNewsFeed);
-        tabLayout.setupWithViewPager(mViewPager);
+        if (mViewPager==null) {
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
+            mViewPager = (ViewPager) getActivity().findViewById(R.id.vpNewsFeed);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabsNewsFeed);
+            tabLayout.setupWithViewPager(mViewPager);
+        }
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
