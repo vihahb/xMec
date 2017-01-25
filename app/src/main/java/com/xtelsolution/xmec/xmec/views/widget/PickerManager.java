@@ -122,10 +122,10 @@ public abstract  class PickerManager {
             uCrop = uCrop.useSourceImageAspectRatio();
             UCrop.Options options = new UCrop.Options();
             options.setFreeStyleCropEnabled(true);
-
             options.setToolbarColor(cropActivityColor);
             options.setStatusBarColor(cropActivityColor);
             options.setActiveWidgetColor(cropActivityColor);
+
             uCrop = uCrop.withOptions(options);
         }
 

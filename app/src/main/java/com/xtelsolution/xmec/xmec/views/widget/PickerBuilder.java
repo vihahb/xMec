@@ -1,14 +1,10 @@
 package com.xtelsolution.xmec.xmec.views.widget;
 
-import com.yalantis.ucrop.UCrop;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
 
 import com.yalantis.ucrop.UCrop;
-
-import java.io.Serializable;
 /**
  * Created by Admin on 1/24/2017.
  */

@@ -22,7 +22,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_news_feed, null);
-        return new NewsFeedAdapter.NewsFeedViewHolder(view);
+        return new NewsFeedViewHolder(view);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 13;
     }
 
     private class NewsFeedViewHolder extends RecyclerView.ViewHolder {

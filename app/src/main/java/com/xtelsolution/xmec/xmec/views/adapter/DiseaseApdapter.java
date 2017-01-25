@@ -41,7 +41,7 @@ public class DiseaseApdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 3;
     }
 
     private class NewsViewHolder1 extends RecyclerView.ViewHolder {

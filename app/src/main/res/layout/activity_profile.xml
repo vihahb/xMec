@@ -94,7 +94,8 @@
                     android:layout_height="66dp"
                     android:layout_margin="0dp"
                     android:layout_weight="1"
-                    android:hint="Cân nặng" />
+                    android:hint="Cân nặng"
+                    android:id="@+id/editText3" />
             </LinearLayout>
 
             <Button
