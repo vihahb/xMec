@@ -10,6 +10,7 @@
     <color name="facebook">#3B5998</color>
     <color name="primaryText">#212121</color>
     <color name="textTitle">#3f4751</color>
+    <color name="textTitleNewFeed">#687281</color>
     <color name="textHint">#a9b7cf</color>
     <color name="default_background">#f1f9ff</color>
     <color name="colorControlNormal">#fff</color>

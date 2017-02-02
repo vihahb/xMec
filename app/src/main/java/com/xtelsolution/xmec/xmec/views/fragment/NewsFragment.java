@@ -25,6 +25,7 @@ import java.util.List;
 
 /**
  * Created by HUNGNT on 1/20/2017.
+ *
  */
 
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
@@ -60,8 +61,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView = (SuperRecyclerView) view.findViewById(R.id.rvNewsFeed);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        RecyclerViewMarginVertical decoration = new RecyclerViewMarginVertical((int) (getContext().getResources().getDisplayMetrics().density * 8f + 0.5f));
-        recyclerView.addItemDecoration(decoration);
+//        RecyclerViewMarginVertical decoration = new RecyclerViewMarginVertical((int) (getContext().getResources().getDisplayMetrics().density * 8f + 0.5f));
+//        recyclerView.addItemDecoration(decoration);
         recyclerView.setRefreshing(true);
         recyclerView.setRefreshListener(this);
         recyclerView.setLoadingMore(true);
@@ -81,7 +82,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             article.setId(i);
             articles.add(article);
         }
-
         return articles;
     }
 
