@@ -36,5 +36,4 @@
             android:layout_weight="1"
             android:src="@mipmap/ic_arrow_right" />
     </LinearLayout>
-
 </LinearLayout>

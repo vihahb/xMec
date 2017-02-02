@@ -14,10 +14,9 @@ public class CameraPickerManager extends PickerManager {
         super(activity);
     }
 
-    protected void sendToExternalApp()
-    {
+    protected void sendToExternalApp() {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        mProcessingPhotoUri =  getImageFile();
+        mProcessingPhotoUri = getImageFile();
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mProcessingPhotoUri);
         activity.startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
     }

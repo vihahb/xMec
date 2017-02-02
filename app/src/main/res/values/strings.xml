@@ -67,6 +67,7 @@
     <string name="control_disease_nguyen_nhan">Nguyên Nhân</string>
     <string name="control_disease_phong_ngua">Phong ngừa</string>
     <string name="control_disease_dieu_tri">Điều trị</string>
+    <string name="emtry_list_new_feed">Không có bài viết nào</string>
 
 
 </resources>
