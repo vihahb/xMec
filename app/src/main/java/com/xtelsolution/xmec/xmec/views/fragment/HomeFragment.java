@@ -16,11 +16,17 @@ import android.widget.TextView;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
+import com.xtelsolution.xmec.model.Stick;
 import com.xtelsolution.xmec.xmec.views.activity.ProfileActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.DiseaseApdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
 import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginHorizontal;
 import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginVertical;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HUNGNT on 1/18/2017.
@@ -31,12 +37,15 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvDisease;
     private TextView btnProfile;
     private Context mContext;
+    private List<Stick> sticks;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
-        adapter = new DiseaseApdapter(getContext());
+        sticks = new ArrayList<>();
+        sticks.addAll(createTempData(0));
+        adapter = new DiseaseApdapter(getContext(), sticks);
     }
 
     @Nullable
@@ -50,12 +59,44 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         rvDisease = (RecyclerView) view.findViewById(R.id.rvDisease);
+
         rvDisease.setAdapter(adapter);
-        rvDisease.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        rvDisease.setLayoutManager(manager);
+
         rvDisease.setNestedScrollingEnabled(false);
+
         MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spcategorize);
+
         spinner.setItems("Bệnh", "Thuốc");
+
+
+        NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
+
+        scrollView.setOnScrollChangeListener(new EndlessParentScrollListener(manager) {
+
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+
+            }
+
+            @Override
+            public void onHide() {
+
+                mContext.sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
+            }
+
+            @Override
+            public void onShow() {
+
+                mContext.sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
+            }
+        });
+
+
+        scrollView.scrollTo(0, 0);
 
     }
 
@@ -68,5 +109,15 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(mContext, ProfileActivity.class));
             }
         });
+    }
+
+    private List<Stick> createTempData(int size) {
+        List<Stick> sticks = new ArrayList<>();
+
+        for (int i = size; i < size + 10; i++) {
+
+            sticks.add(new Stick(i, "Tên Bệnh " + i, "vien"));
+        }
+        return sticks;
     }
 }

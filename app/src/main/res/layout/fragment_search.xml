@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/NscrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -30,8 +31,8 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="12dp"
-            android:textColorHint="@color/textHint"
             android:textColor="@color/textHint"
+            android:textColorHint="@color/textHint"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -73,8 +74,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/result_search_illnesses_text"
-            android:textSize="12sp"
             android:textColor="@color/textTitle"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView

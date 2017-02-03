@@ -142,8 +142,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tong_hop"
                     android:layout_gravity="left"
+                    android:text="@string/tong_hop"
                     android:textColor="@color/title_item"
                     android:textStyle="bold" />
 
@@ -160,15 +160,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    app:ms_text_color="@color/colorPrimary"
                     app:ms_arrow_tint="@color/colorPrimary"
-                    app:ms_background_color="@color/default_background" />
+                    app:ms_background_color="@color/default_background"
+                    app:ms_text_color="@color/colorPrimary" />
             </android.support.design.widget.CoordinatorLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvDisease"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:layout_marginLeft="@dimen/dimen_6"
                 android:layout_marginRight="@dimen/dimen_16"

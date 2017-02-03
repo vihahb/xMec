@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec.sdk.utils;
+package com.xtelsolution.xmec.listener;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

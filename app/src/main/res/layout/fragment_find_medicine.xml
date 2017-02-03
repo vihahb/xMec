@@ -1,77 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nesstedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fillViewport="true"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    >
+    android:paddingRight="16dp">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_edittext_search"
+            android:drawableEnd="@drawable/ic_action_search"
+            android:drawableRight="@drawable/ic_action_search"
+            android:hint="@string/search_placeholder_text"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/textTitle"
+            android:textColorHint="@color/textHint"
+            android:textSize="@dimen/dimen12sp"
+            android:textStyle="bold" />
+
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:text="@string/result_search_news_text"-->
+        <!--android:textSize="16sp"-->
+        <!--android:textStyle="bold" />-->
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/rvResultFindNews"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="16dp" />-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/result_search_mediacine_text"
+            android:textColor="@color/textTitle"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvResultFindMediacine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:layout_marginTop="8dp" />
 
-            <EditText
-                android:id="@+id/etSearch"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@drawable/bg_edittext_search"
-                android:drawableEnd="@drawable/ic_action_search"
-                android:drawableRight="@drawable/ic_action_search"
-                android:hint="@string/search_placeholder_text"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:lines="1"
-                android:textColor="@color/textTitle"
-                android:textColorHint="@color/textHint"
-                android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="8dp"
-                android:textStyle="bold"
-                android:textSize="@dimen/dimen12sp" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
 
-
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="16dp"-->
-            <!--android:layout_marginTop="16dp"-->
-            <!--android:text="@string/result_search_news_text"-->
-            <!--android:textSize="16sp"-->
-            <!--android:textStyle="bold" />-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/rvResultFindNews"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="16dp" />-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/result_search_mediacine_text"
-                android:textColor="@color/textTitle"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvResultFindMediacine"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp" />
-
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>

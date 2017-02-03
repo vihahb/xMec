@@ -6,8 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-
-        android:id="@+id/textView4"
+        android:id="@+id/tx_msg_emtry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/emtry_list_new_feed" />

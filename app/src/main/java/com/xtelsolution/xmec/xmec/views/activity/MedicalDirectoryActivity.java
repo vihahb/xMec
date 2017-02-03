@@ -12,7 +12,6 @@ import com.xtelsolution.xmec.Entity.IIlness;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.xmec.views.adapter.HealtRecoderAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.IIlnessAdapter2;
-import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;
 
 import java.util.ArrayList;
 
@@ -22,6 +21,7 @@ public class MedicalDirectoryActivity extends AppCompatActivity {
     private HealtRecoderAdapter healtRecoderAdapter;
     private RecyclerView rcDesease;
     private RecyclerView rvHealthReconder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class MedicalDirectoryActivity extends AppCompatActivity {
         rcDesease.setAdapter(mAdapter);
         rcDesease.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         rvHealthReconder.setAdapter(healtRecoderAdapter);
-        rvHealthReconder.setLayoutManager(new LinearLayoutManager(getBaseContext(),LinearLayoutManager.HORIZONTAL,false));
+        rvHealthReconder.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void init() {
@@ -53,7 +53,7 @@ public class MedicalDirectoryActivity extends AppCompatActivity {
         iIlnesses.add(ilness4);
         iIlnesses.add(ilness5);
         iIlnesses.add(ilness6);
-        mAdapter = new IIlnessAdapter2(getApplicationContext(),iIlnesses);
+        mAdapter = new IIlnessAdapter2(getApplicationContext(), iIlnesses);
         healtRecoderAdapter = new HealtRecoderAdapter();
 
     }
