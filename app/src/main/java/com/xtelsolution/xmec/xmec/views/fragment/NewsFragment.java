@@ -51,7 +51,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         articleList = new ArrayList<>();
 
-        adapter = new NewsFeedAdapter(articleList);
+        adapter = new NewsFeedAdapter(mContext, articleList);
     }
 
     @Nullable

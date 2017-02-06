@@ -19,8 +19,11 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
 import com.xtelsolution.xmec.listener.RecyclerOnScrollListener;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.Stick;
+import com.xtelsolution.xmec.sdk.utils.Utils;
+import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 import com.xtelsolution.xmec.xmec.views.activity.DiseaseDiagnosiActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
@@ -136,6 +139,15 @@ public class SearchFragment extends Fragment {
             }
         });
         illnessAdapter.addAll(createTempData(0));
+
+        illnessAdapter.setOnItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClickListener(Object item, int position) {
+                Intent i = new Intent(mContext, DetailDiseaseActivity.class);
+                mContext.startActivity(i);
+            }
+        });
+
     }
 
     private void initView() {

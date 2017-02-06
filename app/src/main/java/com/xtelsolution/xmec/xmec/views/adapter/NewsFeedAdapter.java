@@ -18,8 +18,10 @@ import java.util.List;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter {
     private List<Article> data;
+    private Context mContext;
 
-    public NewsFeedAdapter(List<Article> articles) {
+    public NewsFeedAdapter(Context mContext, List<Article> articles) {
+        this.mContext = mContext;
         this.data = articles;
     }
 

@@ -11,7 +11,6 @@
         android:id="@+id/toolbar_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize">
 
@@ -26,7 +25,7 @@
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="false">
@@ -59,7 +58,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_health_records"
                         android:layout_width="match_parent"
-                        android:layout_height="98dp"></android.support.v7.widget.RecyclerView>
+                        android:layout_height="98dp" />
                 </LinearLayout>
 
 
@@ -77,9 +76,9 @@
                     <EditText
                         android:id="@+id/et_start_time"
                         style="@style/EditextNomarl.Base"
-                        android:maxLines="1"
                         android:layout_weight="1"
-                        android:hint="@string/directory_start_time" />
+                        android:hint="@string/directory_start_time"
+                        android:maxLines="1" />
 
                     <EditText
                         android:id="@+id/et_end_time"
@@ -106,9 +105,10 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_Desease"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/dimen_16"
+                    android:paddingRight="@dimen/dimen_16" />
 
-                </android.support.v7.widget.RecyclerView>
 
                 <Button
                     android:id="@+id/btn_save_director"
@@ -117,5 +117,5 @@
                     android:text="@string/save_director_disease" />
             </LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

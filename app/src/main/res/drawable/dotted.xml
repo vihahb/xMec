@@ -3,8 +3,8 @@
     android:shape="rectangle">
 
     <stroke
-        android:color="@color/fistText"
-        android:dashWidth="10px"
+        android:width="2dp"
+        android:color="@color/textHint"
         android:dashGap="10px"
-        android:width="1dp"/>
+        android:dashWidth="25px" />
 </shape>

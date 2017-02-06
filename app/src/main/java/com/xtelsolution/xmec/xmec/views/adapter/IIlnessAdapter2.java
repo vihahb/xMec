@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.xtelsolution.xmec.Entity.IIlness;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.Illnes
     public static final int Normal = 1;
     private Context mContext;
     private ArrayList<IIlness> mList;
+    private ItemClickListener itemClickListener;
 
     public IIlnessAdapter2(Context mContext, ArrayList<IIlness> mList) {
         this.mContext = mContext;
@@ -31,30 +33,32 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.Illnes
     @Override
     public IllnessViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         if (viewType == Normal) {
             view = inflater.inflate(R.layout.list_item_illness, null);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(mContext, DetailDiseaseActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                    mContext.startActivity(i);
-                }
-            });
+
         } else
             view = inflater.inflate(R.layout.item_button_add, parent, false);
+
+        view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
         return new IllnessViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(IllnessViewHolder holder, int position) {
+    public void onBindViewHolder(IllnessViewHolder holder, final int position) {
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                itemClickListener.onItemClickListener(mList.get(position), position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList.size() + 1;
     }
 
     class IllnessViewHolder extends RecyclerView.ViewHolder {
@@ -65,9 +69,11 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.Illnes
 
     @Override
     public int getItemViewType(int position) {
-        if (mList.get(position).isButton())
-            return mButton;
-        else
-            return Normal;
+        return mList.size() > position ? Normal : mButton;
+    }
+
+    public void setOnItemClickListener(ItemClickListener itemClickListener) {
+
+        this.itemClickListener = itemClickListener;
     }
 }

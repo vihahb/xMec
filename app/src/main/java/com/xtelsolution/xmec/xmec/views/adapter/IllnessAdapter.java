@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.Stick;
 import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
@@ -25,6 +26,7 @@ public class IllnessAdapter extends RecyclerView.Adapter {
     private List<Stick> data;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
+    private static ItemClickListener mItemClickListener;
 
     public IllnessAdapter(Context mContext, List<Stick> data) {
         this.mContext = mContext;
@@ -35,26 +37,28 @@ public class IllnessAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ITEM) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_illness, null);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(mContext, DetailDiseaseActivity.class);
-                    mContext.startActivity(i);
-                }
-            });
+            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+
             return new IllnessAdapter.IllnessViewHolder(view);
         } else if (viewType == VIEW_TYPE_LOADING) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.layout_more_progress, null);
+            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new IllnessAdapter.LoadingViewHolder(view);
         }
         return null;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof IllnessViewHolder) {
             IllnessViewHolder viewHolder = (IllnessViewHolder) holder;
             viewHolder.tvIllnessName.setText(data.get(position).getName());
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mItemClickListener.onItemClickListener(data.get(position), position);
+                }
+            });
         }
     }
 
@@ -113,5 +117,10 @@ public class IllnessAdapter extends RecyclerView.Adapter {
         int startIndex = data.size();
         data.addAll(startIndex, sticks);
         notifyItemRangeInserted(startIndex, sticks.size());
+    }
+
+
+    public void setOnItemClickListener(ItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
     }
 }

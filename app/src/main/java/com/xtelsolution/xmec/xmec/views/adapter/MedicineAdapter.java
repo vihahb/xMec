@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.Stick;
 import com.xtelsolution.xmec.xmec.views.activity.DetailHospitalActivity;
@@ -22,32 +23,50 @@ import java.util.List;
  */
 
 public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    List<Medicine> data;
+    private List<Medicine> data;
+    private Context mContext;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
+    private static ItemClickListener mItemClickListener;
 
-    public MedicineAdapter(List<Medicine> data) {
+    public MedicineAdapter(Context mContext, List<Medicine> data) {
         this.data = data;
+        this.mContext = mContext;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (viewType == VIEW_TYPE_ITEM) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mediacine, null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_mediacine, null);
+
+            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new MedicineAdapterViewHolder(view);
         } else if (viewType == VIEW_TYPE_LOADING) {
+
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_more_progress, null);
+
+            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new LoadingViewHolder(view);
         }
         return null;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MedicineAdapterViewHolder) {
-            MedicineAdapterViewHolder holder1 = (MedicineAdapterViewHolder) holder;
-            holder1.tvIllnessName.setText(data.get(position).getName());
+            MedicineAdapterViewHolder hd = (MedicineAdapterViewHolder) holder;
+            hd.tvIllnessName.setText(data.get(position).getName());
+
+
+            // action
+            hd.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mItemClickListener.onItemClickListener(data.get(position), position);
+                }
+            });
+
         }
     }
 
@@ -107,4 +126,12 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         data.addAll(startIndex, medicines);
         notifyItemRangeInserted(startIndex, medicines.size());
     }
+
+
+    // action to view
+
+    public void setOnItemClickListener(ItemClickListener itemViewHolderClickListener) {
+        this.mItemClickListener = itemViewHolderClickListener;
+    }
+
 }

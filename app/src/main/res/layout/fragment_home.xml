@@ -4,13 +4,13 @@
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:descendantFocusability="beforeDescendants">
+    android:background="@android:color/transparent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
+        android:descendantFocusability="blocksDescendants"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dimen_16"
         android:paddingRight="@dimen/dimen_8">

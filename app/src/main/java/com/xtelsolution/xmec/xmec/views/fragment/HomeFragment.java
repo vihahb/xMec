@@ -18,7 +18,10 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Stick;
+import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
+import com.xtelsolution.xmec.xmec.views.activity.MedicalDirectoryActivity;
 import com.xtelsolution.xmec.xmec.views.activity.ProfileActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.DiseaseApdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
@@ -46,6 +49,19 @@ public class HomeFragment extends Fragment {
         sticks = new ArrayList<>();
         sticks.addAll(createTempData(0));
         adapter = new DiseaseApdapter(getContext(), sticks);
+        adapter.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClickListener(Object item, int position) {
+                if (item != null) {
+                    Intent i = new Intent(mContext, DetailDiseaseActivity.class);
+                    mContext.startActivity(i);
+                } else {
+                    Intent i = new Intent(mContext, MedicalDirectoryActivity.class);
+                    mContext.startActivity(i);
+
+                }
+            }
+        });
     }
 
     @Nullable

@@ -17,7 +17,9 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
+import com.xtelsolution.xmec.sdk.utils.Utils;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicineAdapter;
 
 import java.util.ArrayList;
@@ -48,7 +50,7 @@ public class MedicineFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_find_medicine, container, false);
 
-        initview(view);
+        initView(view);
 
         return view;
     }
@@ -61,13 +63,14 @@ public class MedicineFragment extends Fragment {
 
         list = new ArrayList<>();
 
-        medicineAdapter = new MedicineAdapter(list);
+        medicineAdapter = new MedicineAdapter(mContext, list);
 
         handler = new Handler();
 
     }
 
-    private void initview(View view) {
+    private void initView(View view) {
+
         rvResultFindMediacine = (RecyclerView) view.findViewById(R.id.rvResultFindMediacine);
 
         rvResultFindMediacine.setAdapter(medicineAdapter);
@@ -107,7 +110,18 @@ public class MedicineFragment extends Fragment {
             }
         });
 
+        initControl();
+
         medicineAdapter.addAll(createTempData(0));
+    }
+
+    private void initControl() {
+        medicineAdapter.setOnItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClickListener(Object item, int position) {
+                Utils.showToast(mContext, "" + position);
+            }
+        });
     }
 
     private List<Medicine> createTempData(int size) {
@@ -121,4 +135,6 @@ public class MedicineFragment extends Fragment {
 
         return list;
     }
+
+
 }
