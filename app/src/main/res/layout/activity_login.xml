@@ -4,17 +4,19 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:focusableInTouchMode="true"
+    android:orientation="vertical"
     tools:context="com.xtelsolution.xmec.xmec.views.activity.LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -31,70 +33,83 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_login_layout"
-                    android:layout_marginRight="@dimen/margin_login_layout"
+                    android:layout_marginLeft="@dimen/dimen_16"
+                    android:layout_marginRight="@dimen/dimen_16"
                     android:clipToPadding="false"
                     android:orientation="vertical">
 
                     <EditText
                         android:id="@+id/editText2"
-                        style="@style/EditextLogin"
-                        android:maxLines="1"
-                        android:hint="@string/phone_number" />
+                        style="@style/EditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone_number"
+                        android:maxLines="1" />
 
                     <EditText
                         android:id="@+id/editText"
-                        style="@style/EditextLogin"
-                        android:inputType="textPassword"
-                        android:hint="@string/password" />
-
-                    <Button
-                        android:id="@+id/btnLogin"
+                        style="@style/EditProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        android:layout_margin="8dp"
-                        android:padding="8dp"
-                        android:background="@color/colorPrimary"
-                        android:text="@string/login"
-                        android:textColor="@color/icons" />
+                        android:hint="@string/password"
+                        android:inputType="textPassword" />
 
                     <LinearLayout
+                        android:paddingLeft="@dimen/dimen_16"
+                        android:paddingRight="@dimen/dimen_16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@color/divider"></View>
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <Button
+                            android:id="@+id/btnLogin"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_margin="8dp"
-                            android:text="Hoặc" />
+                            android:layout_marginTop="32dp"
+                            android:background="@color/colorPrimary"
+                            android:padding="8dp"
+                            android:text="@string/login"
+                            android:textColor="@color/icons" />
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@color/divider"></View>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@color/divider"></View>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="8dp"
+                                android:text="Hoặc" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@color/divider"></View>
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@color/facebook"
+                            android:padding="8dp"
+                            android:text="@string/login_fb"
+                            android:textColor="@color/icons" />
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:layout_margin="8dp"
-                        android:background="@color/facebook"
-                        android:text="@string/login_fb"
-                        android:textColor="@color/icons" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -107,7 +122,7 @@
         android:layout_gravity="bottom|right"
         android:text="@string/sign_up" />
 
-        <TextView
+    <TextView
         android:id="@+id/tv_forgot_pw"
         style="@style/TextViewUnderLine"
         android:layout_gravity="bottom|left"
