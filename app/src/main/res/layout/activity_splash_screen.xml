@@ -14,14 +14,15 @@
         android:layout_height="98dp"
         android:layout_gravity="center"
         android:layout_marginTop="200dp"
-        android:src="@drawable/medical_logo_white" />
+        android:src="@drawable/avatar" />
 
     <TextView
+        android:layout_marginTop="@dimen/dimen_12"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/sologan_text"
-        android:textColor="@color/primary_light"
-        android:textStyle="italic|bold"
-        android:id="@+id/textView" />
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textStyle="italic|bold" />
 </LinearLayout>

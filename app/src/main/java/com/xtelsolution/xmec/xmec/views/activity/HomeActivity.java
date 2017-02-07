@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ import android.widget.SlidingDrawer;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.sdk.utils.Utils;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.fragment.HomeFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.MapFragment;
@@ -141,18 +143,35 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        if (slidingDrawer.isOpened())
-            slidingDrawer.close();
-        else
-            super.onBackPressed();
-
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+    }
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (slidingDrawer.isOpened())
+            slidingDrawer.close();
+        else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Utils.showToast(this, "Please click BACK again to exit");
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
     }
 }

@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    tools:context="com.xtelsolution.xmec.xmec.views.activity.LoginActivity">
+    android:id="@+id/lg_content"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".xmec.views.activity.LoginActivity">
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_margin="32dp"
+        android:src="@drawable/avatar" />
 
     <ScrollView
+        android:id="@+id/LoginBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,14 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/img_logo"
-                    android:layout_width="98dp"
-                    android:layout_height="98dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="32dp"
-                    android:src="@drawable/medical_logo" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -55,11 +59,11 @@
                         android:inputType="textPassword" />
 
                     <LinearLayout
-                        android:paddingLeft="@dimen/dimen_16"
-                        android:paddingRight="@dimen/dimen_16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/dimen_16"
+                        android:paddingRight="@dimen/dimen_16">
 
                         <Button
                             android:id="@+id/btnLogin"
@@ -71,7 +75,11 @@
                             android:padding="8dp"
                             android:text="@string/login"
                             android:textColor="@color/icons" />
-
+                    <LinearLayout
+                        android:id="@+id/LoginBox2"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -108,6 +116,9 @@
                             android:padding="8dp"
                             android:text="@string/login_fb"
                             android:textColor="@color/icons" />
+
+                    </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -119,12 +130,17 @@
     <TextView
         android:id="@+id/tv_sign_up"
         style="@style/TextViewUnderLine"
-        android:layout_gravity="bottom|right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:text="@string/sign_up" />
 
     <TextView
         android:id="@+id/tv_forgot_pw"
         style="@style/TextViewUnderLine"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_gravity="bottom|left"
         android:text="@string/forgot_pw" />
-</android.support.design.widget.CoordinatorLayout>
+</com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout>

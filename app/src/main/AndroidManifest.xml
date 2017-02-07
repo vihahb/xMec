@@ -30,7 +30,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".xmec.views.activity.MainActivity" />
-        <activity android:name=".xmec.views.activity.LoginActivity" />
+        <activity
+            android:name=".xmec.views.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/HomeActivityTheme" />
         <activity
             android:name=".xmec.views.activity.RegisterActivity"
             android:parentActivityName=".xmec.views.activity.MainActivity"
