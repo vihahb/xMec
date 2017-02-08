@@ -168,5 +168,6 @@
         <item name="android:textColor">@color/colorAccent</item>
 
     </style>
-    "
+    <style name="AppLoginTheme" parent="Theme.AccountKit">
+    </style>
 </resources>

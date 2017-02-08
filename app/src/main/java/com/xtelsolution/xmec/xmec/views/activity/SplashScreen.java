@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.xtel.nipservicesdk.NipApplication;
 import com.xtelsolution.xmec.R;
 
 public class SplashScreen extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        NipApplication.context = this;
         init();
         new Handler().postDelayed(new Runnable() {
             @Override
