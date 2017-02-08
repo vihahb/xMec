@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,12 +20,20 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.accountkit.AccountKit;
+import com.facebook.accountkit.AccountKitLoginResult;
+import com.facebook.accountkit.PhoneNumber;
+import com.facebook.accountkit.ui.AccountKitActivity;
+import com.facebook.accountkit.ui.AccountKitConfiguration;
+import com.facebook.accountkit.ui.LoginType;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.callback.CallbacListener;
+import com.xtel.nipservicesdk.callback.CallbackListenerActive;
+import com.xtel.nipservicesdk.callback.CallbackListenerReactive;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Login;
+import com.xtel.nipservicesdk.model.entity.RESP_Reactive;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.sdk.utils.JsonHelper;
 import com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout;
@@ -185,7 +194,19 @@ public class LoginActivity extends BasicActivity {
 
             @Override
             public void onError(Error error) {
-                showToast(error.getMessage());
+                showLog(JsonHelper.toJson(error));
+                int errorCode = error.getCode();
+                switch (errorCode) {
+                    case 111:
+                        showToast("SĐT hoặc mật khẩu sai");
+                        break;
+                    case 112:
+                        showToast("Tài khoản chưa được kích hoạt");
+                        activeAccount(etPhone.getText().toString());
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
@@ -198,5 +219,59 @@ public class LoginActivity extends BasicActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         fbCallbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 99) {
+            AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
+            if (loginResult.getError() != null) {
+                showLog(loginResult.getError().toString());
+            } else if (loginResult.wasCancelled()) {
+                showLog("AccountKit was Cancelled");
+            } else {
+                if (loginResult.getAccessToken() != null) {
+                    showLog("Access Token: " + loginResult.getAccessToken());
+                } else {
+                    sendAuthenzationCode(loginResult.getAuthorizationCode());
+                }
+            }
+        }
+    }
+
+    public void activeAccount(String phone) {
+        final Intent intent = new Intent(LoginActivity.this, AccountKitActivity.class);
+        AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
+                new AccountKitConfiguration.AccountKitConfigurationBuilder(
+                        LoginType.PHONE,
+                        AccountKitActivity.ResponseType.CODE);
+        configurationBuilder.setInitialPhoneNumber(new PhoneNumber("+84", phone, null));
+        intent.putExtra(
+                AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
+                configurationBuilder.build());
+        startActivityForResult(intent, 99);
+    }
+
+    private void sendAuthenzationCode(final String code) {
+        callbackManager.reactiveNipAccount(etPhone.getText().toString(), true, new CallbackListenerReactive() {
+            @Override
+            public void onSuccess(RESP_Reactive reactive) {
+                Log.d("MY_TAG", com.xtel.nipservicesdk.utils.JsonHelper.toJson(reactive));
+                callbackManager.activeNipAccount(code, "PHONE-NUMBER", new CallbackListenerActive() {
+                    @Override
+                    public void onSuccess() {
+                        showToast("Xác nhận tài khoản thành công");
+                        startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        showLog(JsonHelper.toJson(error));
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Error error) {
+                showLog(JsonHelper.toJson(error));
+            }
+        });
     }
 }

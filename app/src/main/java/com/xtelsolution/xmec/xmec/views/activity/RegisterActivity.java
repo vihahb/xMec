@@ -1,14 +1,11 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.PhoneNumber;
@@ -24,7 +21,6 @@ import com.xtel.nipservicesdk.model.entity.RESP_Reactive;
 import com.xtel.nipservicesdk.model.entity.RESP_Register;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
-import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
 public class RegisterActivity extends BasicActivity {
     private CallbackManager callbackManager;
@@ -65,15 +61,14 @@ public class RegisterActivity extends BasicActivity {
             callbackManager.registerNipService(phone, password, null, true, new CallbackLisenerRegister() {
                 @Override
                 public void onSuccess(RESP_Register register) {
-
-                    onLoginPhone(phone);
+                    activeAccount(phone);
                 }
 
                 @Override
                 public void onError(Error error) {
                     if (error.getCode() == 103) {
                         showToast("Tài khoản đã tồn tại");
-                        onLoginPhone(phone);
+                        activeAccount(phone);
                     }
                 }
             });
@@ -87,7 +82,7 @@ public class RegisterActivity extends BasicActivity {
         callbackManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void onLoginPhone(String phone) {
+    public void activeAccount(String phone) {
         final Intent intent = new Intent(RegisterActivity.this, AccountKitActivity.class);
         AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
                 new AccountKitConfiguration.AccountKitConfigurationBuilder(
