@@ -1,16 +1,14 @@
 package com.xtelsolution.xmec.xmec.views.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xtelsolution.xmec.Entity.IIlness;
+import com.xtelsolution.xmec.entity.IIlness;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 
 import java.util.ArrayList;
 

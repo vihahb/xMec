@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import com.xtelsolution.xmec.Entity.IIlness;
+import com.xtelsolution.xmec.entity.IIlness;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.xmec.views.adapter.HealtRecoderAdapter;

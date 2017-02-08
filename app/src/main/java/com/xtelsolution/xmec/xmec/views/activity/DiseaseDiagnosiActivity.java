@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
@@ -15,7 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.xtelsolution.xmec.DataFinal;
-import com.xtelsolution.xmec.Entity.BodyMapPosition;
+import com.xtelsolution.xmec.entity.BodyMapPosition;
 import com.xtelsolution.xmec.R;
 
 public class DiseaseDiagnosiActivity extends AppCompatActivity {
@@ -42,6 +43,7 @@ public class DiseaseDiagnosiActivity extends AppCompatActivity {
         final int screenDensity = metrics.densityDpi;
         bodyMapPosition.setNameBodyPart(DataFinal.NAME_BODY_PARTS);
         bodyMapPosition.setPositionBody(DataFinal.POSITION_BODY_MAP);
+        Log.e("POSITIONBODY", "onTouch: ");
         imgBodyMap.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -49,6 +51,7 @@ public class DiseaseDiagnosiActivity extends AppCompatActivity {
                 bodyMapPosition.setX(x);
                 float y = getPointerCoords(imgBodyMap, motionEvent)[1] / screenDensity;
                 bodyMapPosition.setY(y);
+                Log.e("POSITIONBODY", "onTouch: "+x+"    "+y );
                 String namePart = bodyMapPosition.getNamePosition();
                 if (namePart != null) {
                     Intent i = new Intent(DiseaseDiagnosiActivity.this, DetailBodyPart.class);
@@ -67,7 +70,7 @@ public class DiseaseDiagnosiActivity extends AppCompatActivity {
                     bodyMapPosition.setPositionBody(DataFinal.POSITION_BODY_MAP);
                 } else {
                     imgBodyMap.setImageResource(R.drawable.nu_sau);
-                    bodyMapPosition.setNameBodyPart(DataFinal.NAME_BODY_PARTS);
+                    bodyMapPosition.setNameBodyPart(DataFinal.NAME_BODY_PARTS_BEHIND);
                     bodyMapPosition.setPositionBody(DataFinal.POSITION_BODY_MAP_BEHIND);
                 }
             }

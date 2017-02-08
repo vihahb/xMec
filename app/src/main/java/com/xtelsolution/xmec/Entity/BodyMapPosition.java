@@ -1,6 +1,4 @@
-package com.xtelsolution.xmec.Entity;
-
-import com.xtelsolution.xmec.DataFinal;
+package com.xtelsolution.xmec.entity;
 
 /**
  * Created by phimau on 1/23/2017.

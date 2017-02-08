@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec.Entity;
+package com.xtelsolution.xmec.entity;
 
 /**
  * Created by phimau on 1/18/2017.
