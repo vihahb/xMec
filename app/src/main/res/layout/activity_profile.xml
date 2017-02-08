@@ -14,7 +14,6 @@
         android:id="@+id/toolbar_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize">
 
@@ -29,49 +28,59 @@
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
 
-    <ScrollView
+    <com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <FrameLayout
+            android:id="@+id/layout_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal">
+
+            <agency.tango.android.avatarview.views.AvatarView
+                android:id="@+id/avatar_profile"
+                android:layout_width="@dimen/dimen_100"
+                android:layout_height="@dimen/dimen_100"
+                android:layout_gravity="center"
+                android:src="@drawable/avaplaceholder"
+                app:av_border_color="@android:color/white"
+                app:av_border_width="4dp" />
+
+            <ImageView
+                android:id="@+id/btnSelectImage"
+                android:layout_width="@dimen/dimen_36"
+                android:layout_height="@dimen/dimen_36"
+                android:layout_gravity="right|bottom"
+                android:src="@drawable/ic_select_img" />
+        </FrameLayout>
+
         <LinearLayout
+            android:paddingTop="@dimen/dimen_25"
+            android:id="@+id/boxInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/dimen_20">
-
-                <agency.tango.android.avatarview.views.AvatarView
-                    android:id="@+id/avatar_profile"
-                    android:layout_width="@dimen/dimen_120"
-                    android:layout_height="@dimen/dimen_120"
-                    android:layout_gravity="center"
-                    android:src="@drawable/avaplaceholder"
-                    app:av_border_color="@android:color/white"
-                    app:av_border_width="4dp" />
-
-                <ImageView
-                    android:id="@+id/btnSelectImage"
-                    android:layout_width="@dimen/dimen_36"
-                    android:layout_height="@dimen/dimen_36"
-                    android:layout_gravity="right|bottom"
-                    android:src="@drawable/ic_select_img" />
-            </FrameLayout>
+            <EditText
+                style="@style/EditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:hint="Họ và tên"
+                android:inputType="textPersonName" />
 
             <EditText
                 style="@style/EditProfile"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
-                android:hint="Họ và tên" />
-
-            <EditText
-                style="@style/EditProfile"
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:hint="Ngày sinh" />
+                android:hint="Ngày sinh"
+                android:inputType="date" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,26 +95,31 @@
                     android:layout_height="66dp"
                     android:layout_margin="0dp"
                     android:layout_weight="1"
-                    android:hint="Chiều cao" />
+                    android:hint="Chiều cao"
+                    android:inputType="numberDecimal" />
 
                 <EditText
+                    android:id="@+id/editText3"
                     style="@style/EditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="66dp"
                     android:layout_margin="0dp"
                     android:layout_weight="1"
                     android:hint="Cân nặng"
-                    android:id="@+id/editText3" />
+                    android:inputType="numberDecimal" />
             </LinearLayout>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_25"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginLeft="@dimen/dimen_25"
+                android:layout_marginRight="@dimen/dimen_25"
+                android:layout_marginBottom="@dimen/dimen_30"
                 android:background="@drawable/button_pressed_tim"
                 android:text="tạo thông tin"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </LinearLayout>
-    </ScrollView>
+    </com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout>
 </LinearLayout>

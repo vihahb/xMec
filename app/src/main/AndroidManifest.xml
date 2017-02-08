@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.xtelsolution.xmec">
 
     <!--
@@ -8,7 +9,7 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -36,8 +37,8 @@
             android:theme="@style/HomeActivityTheme" />
         <activity
             android:name=".xmec.views.activity.RegisterActivity"
-            android:parentActivityName=".xmec.views.activity.MainActivity"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".xmec.views.activity.LoginActivity"
+            android:theme="@style/NoACtionBar"/>
         <activity
             android:name=".xmec.views.activity.ConfirmOPTActivity"
             android:parentActivityName=".xmec.views.activity.RegisterActivity"
@@ -73,7 +74,7 @@
         <activity
             android:name=".xmec.views.activity.ProfileActivity"
             android:theme="@style/HomeActivityTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".xmec.views.widget.TempActivity"
             android:screenOrientation="portrait"
@@ -82,6 +83,21 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <meta-data
+            android:name="xtel_service_code"
+            android:value="@string/service_code_key" />
+        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+            android:value="@string/app_name" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FACEBOOK_APP_ID" />
+        <meta-data android:name="com.facebook.accountkit.ClientToken"
+            android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+
+        <activity
+            android:name="com.facebook.accountkit.ui.AccountKitActivity"
+            android:theme="@style/AppLoginTheme"
+            tools:replace="android:theme"/>
     </application>
 
 </manifest>

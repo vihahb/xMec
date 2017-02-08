@@ -9,4 +9,5 @@ import android.app.Activity;
 public interface BaseView {
     Activity getActivity();
     void showToast(String msg);
+    void showLog(String msg);
 }

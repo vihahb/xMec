@@ -68,6 +68,9 @@
     <string name="control_disease_phong_ngua">Phong ngừa</string>
     <string name="control_disease_dieu_tri">Điều trị</string>
     <string name="emtry_list_new_feed">Không có bài viết nào</string>
+    <string name="register_account">Đăng kí tài khoản</string>
 
-
+    <string name="service_code_key">XTL-XMEC</string>
+    <string name="FACEBOOK_APP_ID">1851247128486694</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">81a1002ad50275fa6ddf658fa6a0755f</string>
 </resources>

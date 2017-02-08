@@ -43,15 +43,17 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/editText2"
+                        android:id="@+id/etPhone"
                         style="@style/EditProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/phone_number"
+                        android:inputType="phone"
+                        android:imeOptions="actionNext"
                         android:maxLines="1" />
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/etPassword"
                         style="@style/EditProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
