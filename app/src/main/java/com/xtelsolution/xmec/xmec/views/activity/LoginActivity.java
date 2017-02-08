@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,7 +15,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.accountkit.AccountKit;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.model.entity.Error;
@@ -24,6 +28,8 @@ import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.sdk.utils.JsonHelper;
 import com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout;
+
+import java.util.Collections;
 
 /**
  * Created by phimau on 1/17/2017.
@@ -33,10 +39,11 @@ public class LoginActivity extends BasicActivity {
     private ImageView imgLogo;
     private TextView tvSignUp;
     private EditText etPhone, etPassword;
-    private Button btnLog;
+    private Button btnLoginbyPhone, btnLoginByFB;
     private KeyboardDetectorRelativeLayout content;
     private LinearLayout box2;
     private CallbackManager callbackManager;
+    private com.facebook.CallbackManager fbCallbackManager;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -48,16 +55,24 @@ public class LoginActivity extends BasicActivity {
         animation();
         if (checkApiVersion())
             imgLogo.setTransitionName("logo");
+
+
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
-        btnLog.setOnClickListener(new View.OnClickListener() {
+        btnLoginbyPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onPhoneLogin();
+            }
+        });
+        btnLoginByFB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFacebookLogin();
             }
         });
 
@@ -65,10 +80,12 @@ public class LoginActivity extends BasicActivity {
 
     private void init() {
         callbackManager = CallbackManager.create(this);
+        initFacebookSdk();
         AccountKit.initialize(getApplicationContext());
         imgLogo = (ImageView) findViewById(R.id.img_logo);
         tvSignUp = (TextView) findViewById(R.id.tv_sign_up);
-        btnLog = (Button) findViewById(R.id.btnLogin);
+        btnLoginbyPhone = (Button) findViewById(R.id.btnLogin);
+        btnLoginByFB = (Button) findViewById(R.id.btnLoginByFB);
         box2 = (LinearLayout) findViewById(R.id.LoginBox2);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -86,6 +103,42 @@ public class LoginActivity extends BasicActivity {
 //                imgLogo.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private void initFacebookSdk() {
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        fbCallbackManager = com.facebook.CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(fbCallbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        //showLog(JsonHelper.toJson(loginResult));
+                        showLog(loginResult.getAccessToken().getToken());
+                        callbackManager.LoginFaceook(loginResult.getAccessToken().getToken(), new CallbacListener() {
+                            @Override
+                            public void onSuccess(RESP_Login success) {
+                                showLog(JsonHelper.toJson(success));
+                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                finish();
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                showToast(JsonHelper.toJson(error));
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        showLog("Login Cancel");
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        showLog(exception.getMessage());
+                    }
+                });
     }
 
     public static boolean checkApiVersion() {
@@ -120,19 +173,30 @@ public class LoginActivity extends BasicActivity {
         });
         imgLogo.startAnimation(animTranslate);
     }
-    private void onPhoneLogin(){
+
+    private void onPhoneLogin() {
         callbackManager.LoginNipAcc(etPhone.getText().toString(), etPassword.getText().toString(), true, new CallbacListener() {
             @Override
             public void onSuccess(RESP_Login success) {
                 showLog(JsonHelper.toJson(success));
-                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
             }
 
             @Override
             public void onError(Error error) {
-                Toast.makeText(LoginActivity.this, JsonHelper.toJson(error), Toast.LENGTH_SHORT).show();
+                showToast(error.getMessage());
             }
         });
+    }
+
+    private void onFacebookLogin() {
+        LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Collections.singletonList("email"));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        fbCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
