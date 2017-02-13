@@ -10,6 +10,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/bg_shape_radius_white"
         android:orientation="vertical"
+        android:elevation="@dimen/dimen_6"
         android:padding="16dp"
         tools:context="com.xtelsolution.xmec.xmec.views.fragment.DetailDiseaseFragment">
 
