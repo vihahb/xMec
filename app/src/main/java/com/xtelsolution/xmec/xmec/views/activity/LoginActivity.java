@@ -184,6 +184,9 @@ public class LoginActivity extends BasicActivity {
     private void onPhoneLogin() {
         if (etPhone.getText().toString().trim().length()<=9) {
             etPhone.setError("Số điện thoại không hợp lệ");
+        }
+        else if(etPassword.getText().toString().length()==0){
+            etPassword.setError("Mật khẩu trống");
         } else {
             callbackManager.LoginNipAcc(etPhone.getText().toString(), etPassword.getText().toString(), true, new CallbacListener() {
                 @Override
