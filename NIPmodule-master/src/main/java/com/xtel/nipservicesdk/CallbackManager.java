@@ -239,12 +239,12 @@ public class CallbackManager {
         }
     }
 
-    public boolean checkNumber(String number) {
+    public boolean checkPhoneNumber(String number) {
         long number_long;
         boolean check = true;
 
         if (number.length() < 10 && number.length() > 11) {
-
+            check = false;
         } else {
             try {
                 number_long = Long.parseLong(number);
@@ -255,7 +255,6 @@ public class CallbackManager {
         }
 
         if (!check) {
-
             return false;
         } else {
             return true;
