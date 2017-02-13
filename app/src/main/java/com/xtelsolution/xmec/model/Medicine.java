@@ -18,7 +18,13 @@ public class Medicine {
     private String dosage;
     private String preservation;
 
-    public Medicine(int id, String name, String type, String group, String component, String indication, String contraindication, String drugInteraction, String sidEeffect, String warning,String dosage, String preservation) {
+    public Medicine(int id, String name, String type) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+    }
+
+    public Medicine(int id, String name, String type, String group, String component, String indication, String contraindication, String drugInteraction, String sidEeffect, String warning, String dosage, String preservation) {
         this.id = id;
         this.name = name;
         this.type = type;
