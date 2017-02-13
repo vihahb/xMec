@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -34,8 +33,8 @@ import com.xtel.nipservicesdk.callback.CallbackListenerReactive;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtel.nipservicesdk.model.entity.RESP_Reactive;
+import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
-import com.xtelsolution.xmec.sdk.utils.JsonHelper;
 import com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout;
 
 import java.util.Collections;
@@ -121,7 +120,6 @@ public class LoginActivity extends BasicActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        //showLog(JsonHelper.toJson(loginResult));
                         showLog(loginResult.getAccessToken().getToken());
                         callbackManager.LoginFaceook(loginResult.getAccessToken().getToken(), new CallbacListener() {
                             @Override
@@ -184,31 +182,36 @@ public class LoginActivity extends BasicActivity {
     }
 
     private void onPhoneLogin() {
-        callbackManager.LoginNipAcc(etPhone.getText().toString(), etPassword.getText().toString(), true, new CallbacListener() {
-            @Override
-            public void onSuccess(RESP_Login success) {
-                showLog(JsonHelper.toJson(success));
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                finish();
-            }
-
-            @Override
-            public void onError(Error error) {
-                showLog(JsonHelper.toJson(error));
-                int errorCode = error.getCode();
-                switch (errorCode) {
-                    case 111:
-                        showToast("SĐT hoặc mật khẩu sai");
-                        break;
-                    case 112:
-                        showToast("Tài khoản chưa được kích hoạt");
-                        activeAccount(etPhone.getText().toString());
-                        break;
-                    default:
-                        break;
+        if (etPhone.getText().toString().trim().length()<=9) {
+            etPhone.setError("Số điện thoại không hợp lệ");
+        } else {
+            callbackManager.LoginNipAcc(etPhone.getText().toString(), etPassword.getText().toString(), true, new CallbacListener() {
+                @Override
+                public void onSuccess(RESP_Login success) {
+                    showLog(JsonHelper.toJson(success));
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
                 }
-            }
-        });
+
+                @Override
+                public void onError(Error error) {
+                    showLog(JsonHelper.toJson(error));
+                    int errorCode = error.getCode();
+                    switch (errorCode) {
+                        case 111:
+                            showToast("SĐT hoặc mật khẩu sai");
+                            break;
+                        case 112:
+                            showToast("Tài khoản chưa được kích hoạt");
+                            activeAccount(etPhone.getText().toString());
+                            break;
+                        default:
+                            showToast("Đăng nhập thất bại");
+                            break;
+                    }
+                }
+            });
+        }
     }
 
     private void onFacebookLogin() {

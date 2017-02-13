@@ -6,29 +6,26 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.SlidingDrawer;
 
+import com.xtel.nipservicesdk.CallbackManager;
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
-import com.xtelsolution.xmec.sdk.utils.Utils;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.fragment.HomeFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.MapFragment;
@@ -41,7 +38,7 @@ import java.util.List;
 
 import eu.long1.spacetablayout.SpaceTabLayout;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BasicActivity {
 
     private SpaceTabLayout tabLayout;
     private ViewPager viewPager;
@@ -52,6 +49,8 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView imgHanderSliding;
     private String TAG = "HomeActivity";
     private BroadcastReceiver receiver;
+    private FragmentManager fragmentManager;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +58,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         init();
         initReceiver();
-        tabLayout.initialize(viewPager, getSupportFragmentManager(), fragmentList, savedInstanceState);
+        tabLayout.initialize(viewPager, fragmentManager, fragmentList, savedInstanceState);
         rvHosiptalCenter.setAdapter(adapter);
         rvHosiptalCenter.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         slidingDrawer.setVisibility(View.GONE);
         slidingDrawer.unlock();
-
     }
 
 
@@ -72,6 +70,8 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        fragmentManager = getSupportFragmentManager();
+        callbackManager = CallbackManager.create(this);
         tabLayout = (SpaceTabLayout) findViewById(R.id.spaceTabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         fragmentList = new ArrayList<>();
@@ -138,11 +138,30 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+        if (callbackManager.getCurrentSession()==null){
+            menu.getItem(0).setIcon(R.drawable.ic_action_login);
+        }else {
+            menu.getItem(0).setIcon(R.drawable.ic_action_logout);
+        }
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.action_login){
+            if (callbackManager.getCurrentSession()==null){
+                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+            }else {
+                LoginManager.logOut();
+                showToast("Đã đăng xuất");
+                item.setIcon(R.drawable.ic_action_login);
+            }
+        }
+        return true;
+    }
 
     @Override
     protected void onDestroy() {
@@ -163,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             this.doubleBackToExitPressedOnce = true;
-            Utils.showToast(this, "Please click BACK again to exit");
+            showToast("Please click BACK again to exit");
 
             new Handler().postDelayed(new Runnable() {
 

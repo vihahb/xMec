@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.NipApplication;
 import com.xtelsolution.xmec.R;
 
 public class SplashScreen extends AppCompatActivity {
     private ImageView imgLogo;
     private static final int SPLASH_TIME_OUT =2000;
+    private Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +26,6 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashScreen.this, LoginActivity.class);
                 Pair<View,String> pair = new Pair<View, String>(imgLogo,"logo");
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashScreen.this,pair);
                 startActivity(i,optionsCompat.toBundle());
@@ -43,5 +44,10 @@ public class SplashScreen extends AppCompatActivity {
 
     private void init() {
         imgLogo = (ImageView) findViewById(R.id.img_logo);
+        if (LoginManager.getCurrentSession()==null){
+            i = new Intent(SplashScreen.this,LoginActivity.class);
+        }else {
+            i = new Intent(SplashScreen.this,HomeActivity.class);
+        }
     }
 }

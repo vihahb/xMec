@@ -16,13 +16,9 @@ import android.widget.Button;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
-import com.xtelsolution.xmec.listener.RecyclerOnScrollListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.Stick;
-import com.xtelsolution.xmec.sdk.utils.Utils;
 import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 import com.xtelsolution.xmec.xmec.views.activity.DiseaseDiagnosiActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;

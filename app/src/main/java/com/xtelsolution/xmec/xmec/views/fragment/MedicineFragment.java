@@ -12,14 +12,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
-import com.xtelsolution.xmec.sdk.utils.Utils;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicineAdapter;
 
 import java.util.ArrayList;
@@ -58,15 +57,10 @@ public class MedicineFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mContext = getContext();
-
         list = new ArrayList<>();
-
         medicineAdapter = new MedicineAdapter(mContext, list);
-
         handler = new Handler();
-
     }
 
     private void initView(View view) {
@@ -119,7 +113,7 @@ public class MedicineFragment extends Fragment {
         medicineAdapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClickListener(Object item, int position) {
-                Utils.showToast(mContext, "" + position);
+                Toast.makeText(mContext, "" + position, Toast.LENGTH_SHORT).show();
             }
         });
     }

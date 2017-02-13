@@ -239,7 +239,7 @@ public class CallbackManager {
         }
     }
 
-    private boolean checkNumber(String number) {
+    public boolean checkNumber(String number) {
         long number_long;
         boolean check = true;
 
