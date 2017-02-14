@@ -63,6 +63,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(mContext, "AddMedicineViewHolder clicked", Toast.LENGTH_SHORT).show();
+                    addItem();
                 }
             });
         }
@@ -98,5 +99,8 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
-
+    public void addItem(){
+        mList.add(new Medicine(0,"Tên thuốc (Thêm)","Type"));
+        notifyDataSetChanged();
+    }
 }

@@ -22,6 +22,9 @@
         android:src="@drawable/ic_action_editt"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
+
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_alignParentRight="true" />
 
     <TextView
