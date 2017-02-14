@@ -45,7 +45,7 @@ public class SplashScreen extends AppCompatActivity {
     private void init() {
         imgLogo = (ImageView) findViewById(R.id.img_logo);
         if (LoginManager.getCurrentSession()==null){
-            i = new Intent(SplashScreen.this,LoginActivity.class);
+            i = new Intent(SplashScreen.this,HomeActivity.class);
         }else {
             i = new Intent(SplashScreen.this,HomeActivity.class);
         }

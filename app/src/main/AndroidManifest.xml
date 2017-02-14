@@ -75,6 +75,8 @@
             android:name=".xmec.views.activity.ProfileActivity"
             android:theme="@style/HomeActivityTheme"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".xmec.views.activity.AddIllnessActivity"
+            android:theme="@style/HomeActivityTheme"/>
         <activity
             android:name=".xmec.views.widget.TempActivity"
             android:screenOrientation="portrait"

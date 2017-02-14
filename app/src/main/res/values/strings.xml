@@ -73,4 +73,9 @@
     <string name="service_code_key">XTL-XMEC</string>
     <string name="FACEBOOK_APP_ID">1851247128486694</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">81a1002ad50275fa6ddf658fa6a0755f</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="add_illness">Thêm bệnh</string>
+    <string name="illness_name">Tên bệnh</string>
+    <string name="list_illness">Danh sách bệnh</string>
+    <string name="list_medicine">Danh sách thuốc</string>
 </resources>

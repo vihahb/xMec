@@ -44,9 +44,7 @@
     </style>
 
     <style name="MaterialTab" parent="HomeActivityTheme">
-
         <item name="colorAccent">@color/icons</item>
-
     </style>
 
     <style name="EditTextTime">
@@ -69,6 +67,9 @@
         <item name="android:textSize">@dimen/dimen14sp</item>
         <item name="android:lines">1</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="EditTextAddIllness" parent="EditProfile">
+        <item name="android:layout_weight">0.015</item>
     </style>
 
     <style name="EditTextTimeTow" parent="EditTextTime">

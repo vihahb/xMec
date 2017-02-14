@@ -138,22 +138,24 @@ public class HomeActivity extends BasicActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         if (callbackManager.getCurrentSession()==null){
             menu.getItem(0).setIcon(R.drawable.ic_action_login);
+            menu.getItem(0).setTitle(R.string.login);
         }else {
             menu.getItem(0).setIcon(R.drawable.ic_action_logout);
+            menu.getItem(0).setTitle(R.string.logout);
         }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.action_login){
+        if (item.getItemId()==R.id.action_login_logout){
             if (callbackManager.getCurrentSession()==null){
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                finish();
             }else {
                 LoginManager.logOut();
                 showToast("Đã đăng xuất");
@@ -182,7 +184,7 @@ public class HomeActivity extends BasicActivity {
             }
 
             this.doubleBackToExitPressedOnce = true;
-            showToast("Please click BACK again to exit");
+            showToast("Nhấn BACK 2 lần để thoát");
 
             new Handler().postDelayed(new Runnable() {
 

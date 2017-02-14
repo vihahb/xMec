@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.xtelsolution.xmec.entity.IIlness;
 import com.xtelsolution.xmec.R;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
  */
 
 public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.IllnessViewHolder> {
-    public static final int mButton = 2;
-    public static final int Normal = 1;
+    public static final int BUTTON = 2;
+    public static final int NORMAL = 1;
     private Context mContext;
     private ArrayList<IIlness> mList;
     private ItemClickListener itemClickListener;
@@ -32,7 +33,7 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.Illnes
     public IllnessViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        if (viewType == Normal) {
+        if (viewType == NORMAL) {
             view = inflater.inflate(R.layout.list_item_illness, null);
 
         } else
@@ -44,14 +45,16 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.Illnes
 
     @Override
     public void onBindViewHolder(IllnessViewHolder holder, final int position) {
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                itemClickListener.onItemClickListener(mList.get(position), position);
-            }
-        });
+        if (getItemViewType(position) == BUTTON) {
+            Toast.makeText(mContext, "BUTTON Clicked", Toast.LENGTH_SHORT).show();
+        } else {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemClickListener.onItemClickListener(mList.get(position), position);
+                }
+            });
+        }
     }
 
     @Override
@@ -67,11 +70,10 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<IIlnessAdapter2.Illnes
 
     @Override
     public int getItemViewType(int position) {
-        return mList.size() > position ? Normal : mButton;
+        return mList.size() > position ? NORMAL : BUTTON;
     }
 
     public void setOnItemClickListener(ItemClickListener itemClickListener) {
-
         this.itemClickListener = itemClickListener;
     }
 }

@@ -58,8 +58,8 @@ public class MedicalDirectoryActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClickListener(Object item, int position) {
-                Intent i = new Intent(mContext, DetailDiseaseActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                Intent i = new Intent(mContext, AddIllnessActivity.class);
+                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 mContext.startActivity(i);
             }
         });
