@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec.xmec.views.activity.inf;
+package com.xtelsolution.xmec.xmec.views.inf;
 
 import com.xtelsolution.xmec.model.RESP_LIST_MEDICAL;
 import com.xtelsolution.xmec.model.RESP_User;

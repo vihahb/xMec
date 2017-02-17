@@ -2,9 +2,7 @@ package com.xtelsolution.xmec.presenter;
 
 import android.util.Log;
 
-import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
-import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.common.Constant;
@@ -12,8 +10,7 @@ import com.xtelsolution.xmec.model.RESP_LIST_MEDICAL;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.model.UserModel;
-import com.xtelsolution.xmec.xmec.views.MyApplication;
-import com.xtelsolution.xmec.xmec.views.activity.inf.IHomeView;
+import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 
 /**
  * Created by phimau on 2/15/2017.

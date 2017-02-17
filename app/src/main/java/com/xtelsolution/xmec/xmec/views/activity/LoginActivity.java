@@ -195,7 +195,6 @@ public class LoginActivity extends BasicActivity {
                 @Override
                 public void onSuccess(RESP_Login success) {
                     Log.e("Session", "onSuccess: "+JsonHelper.toJson(success));
-                    SharedUtils.getInstance().putStringValue(Constant.USER_SESSION,success.getSession());
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
                 }

@@ -26,9 +26,20 @@ public class RESP_User extends RESP_Basic {
     @Expose
     private String avatar;
     @Expose
-    private Double weight;
+    private double weight;
     @Expose
-    private Double height;
+    private double height;
+
+    public RESP_User(String fullname, int gender, long birthday, String phonenumber, String address, String avatar, double weight, double height) {
+        this.fullname = fullname;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.phonenumber = phonenumber;
+        this.address = address;
+        this.avatar = avatar;
+        this.weight = weight;
+        this.height = height;
+    }
 
     public String getFullname() {
         return fullname;
@@ -78,7 +89,7 @@ public class RESP_User extends RESP_Basic {
         this.avatar = avatar;
     }
 
-    public Double getWeight() {
+    public double getWeight() {
         return weight;
     }
 
@@ -86,7 +97,7 @@ public class RESP_User extends RESP_Basic {
     this.weight = weight;
 }
 
-    public Double getHeight() {
+    public double getHeight() {
         return height;
     }
 

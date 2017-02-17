@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.xmec.views.MyApplication;
 
@@ -12,10 +13,13 @@ public class SharedPreferencesUtils {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    static final SharedPreferencesUtils instance = new SharedPreferencesUtils();
+    static SharedPreferencesUtils instance = new SharedPreferencesUtils();
 
     public static SharedPreferencesUtils getInstance() {
+        if (instance == null)
+            instance = new SharedPreferencesUtils();
         return instance;
+
     }
 
     private SharedPreferencesUtils() {
@@ -83,5 +87,31 @@ public class SharedPreferencesUtils {
             prepair();
         editor.remove(key);
         editor.commit();
+    }
+
+    public void saveUser(RESP_User user) {
+        if (editor == null)
+            prepair();
+        editor.putString(Constant.USER_FULL_NAME, user.getFullname());
+        editor.putInt(Constant.USER_GENDER, user.getGender());
+        editor.putLong(Constant.USER_BIRTHDAY, user.getBirthday());
+        editor.putString(Constant.USER_PHONE_NUMBER, user.getPhonenumber());
+        editor.putString(Constant.USER_ADDRESS, user.getAddress());
+        editor.putString(Constant.USER_AVATAR, user.getAvatar());
+        editor.putFloat(Constant.USER_WEIGHT, (float) user.getWeight());
+        editor.putFloat(Constant.USER_HEIGHT, (float) user.getHeight());
+        editor.commit();
+    }
+
+    public RESP_User getUser() {
+        String fullname = sharedPreferences.getString(Constant.USER_FULL_NAME, "");
+        int gender = sharedPreferences.getInt(Constant.USER_GENDER, 0);
+        long birthday = sharedPreferences.getLong(Constant.USER_BIRTHDAY, 0);
+        String numberphone = sharedPreferences.getString(Constant.USER_PHONE_NUMBER, "");
+        String address = sharedPreferences.getString(Constant.USER_ADDRESS, "");
+        String avatar = sharedPreferences.getString(Constant.USER_AVATAR, "");
+        double weight = (double) sharedPreferences.getFloat(Constant.USER_WEIGHT, 0);
+        double height =(double) sharedPreferences.getFloat(Constant.USER_HEIGHT, 0);
+        return new RESP_User(fullname,gender,birthday,numberphone,address,avatar,weight,height);
     }
 }

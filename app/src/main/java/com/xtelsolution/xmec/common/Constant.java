@@ -22,6 +22,14 @@ public class Constant {
     public static String[] NAME_BODY_PARTS={"Bàn Chân","Bàn Chân","Cẳng Chân","Cẳng Chân","Đùi","Đùi","Bàn tay","Bàn tay","Cánh tay","Cánh tay","Bắp tay","Bắp tay","Ngực","Bụng","Đầu"};
 
     public static final String USER_SESSION = "user_sesstion";
+    public static final String USER_FULL_NAME  = "user_fullname";
+    public static final String USER_GENDER  = "user_gender";
+    public static final String USER_BIRTHDAY= "user_birthday";
+    public static final String USER_PHONE_NUMBER= "user_phonenumber";
+    public static final String USER_ADDRESS= "user_address";
+    public static final String USER_AVATAR= "user_avatar";
+    public static final String USER_WEIGHT= "user_weight";
+    public static final String USER_HEIGHT= "user_height";
     public static final String PREFERENCE_NAME = "preference_xmec";
     public static final String SERVER_AUTHEN = "http://124.158.5.112:9180/nipum/";
     public static final String GET_USER = "v0.1/user";

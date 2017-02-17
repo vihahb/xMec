@@ -21,5 +21,8 @@ public class UserModel extends BasicModel{
     public void getMedicalReportBooks(String url, String session, ResponseHandle<RESP_LIST_MEDICAL> userResponseHandle){
         requestServer.getApi(url,session,userResponseHandle);
     }
+    public void updateInfoUser(String url, String userObj,String session,ResponseHandle responseHandle){
+        requestServer.putApi(url,userObj,session,responseHandle);
+    }
 
 }
