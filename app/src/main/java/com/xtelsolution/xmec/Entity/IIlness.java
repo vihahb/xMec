@@ -1,21 +1,28 @@
 package com.xtelsolution.xmec.entity;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by phimau on 1/22/2017.
  */
 
 public class IIlness {
-    private boolean isButton;
 
-    public IIlness(boolean isButton) {
-        this.isButton = isButton;
+    @Expose
+    private String name;
+
+    public IIlness(String name) {
+        this.name = name;
     }
 
-    public boolean isButton() {
-        return isButton;
+
+
+    public String getName() {
+        return name;
     }
 
-    public void setButton(boolean button) {
-        isButton = button;
+    public void setName(String name) {
+        this.name = name;
     }
+
 }

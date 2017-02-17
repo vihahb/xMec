@@ -126,7 +126,6 @@ public class MedicineFragment extends Fragment {
 
             list.add(new Medicine(i, "Tên thuốc số " + i, "a"));
         }
-
         return list;
     }
 

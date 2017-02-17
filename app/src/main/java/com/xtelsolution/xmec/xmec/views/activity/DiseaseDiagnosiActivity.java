@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.xtelsolution.xmec.DataFinal;
+import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.entity.BodyMapPosition;
 import com.xtelsolution.xmec.R;
 
@@ -41,8 +41,8 @@ public class DiseaseDiagnosiActivity extends AppCompatActivity {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         final int screenDensity = metrics.densityDpi;
-        bodyMapPosition.setNameBodyPart(DataFinal.NAME_BODY_PARTS);
-        bodyMapPosition.setPositionBody(DataFinal.POSITION_BODY_MAP);
+        bodyMapPosition.setNameBodyPart(Constant.NAME_BODY_PARTS);
+        bodyMapPosition.setPositionBody(Constant.POSITION_BODY_MAP);
         Log.e("POSITIONBODY", "onTouch: ");
         imgBodyMap.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -66,12 +66,12 @@ public class DiseaseDiagnosiActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
                 if (id == R.id.quarter_front) {
                     imgBodyMap.setImageResource(R.drawable.nu_truoc);
-                    bodyMapPosition.setNameBodyPart(DataFinal.NAME_BODY_PARTS);
-                    bodyMapPosition.setPositionBody(DataFinal.POSITION_BODY_MAP);
+                    bodyMapPosition.setNameBodyPart(Constant.NAME_BODY_PARTS);
+                    bodyMapPosition.setPositionBody(Constant.POSITION_BODY_MAP);
                 } else {
                     imgBodyMap.setImageResource(R.drawable.nu_sau);
-                    bodyMapPosition.setNameBodyPart(DataFinal.NAME_BODY_PARTS_BEHIND);
-                    bodyMapPosition.setPositionBody(DataFinal.POSITION_BODY_MAP_BEHIND);
+                    bodyMapPosition.setNameBodyPart(Constant.NAME_BODY_PARTS_BEHIND);
+                    bodyMapPosition.setPositionBody(Constant.POSITION_BODY_MAP_BEHIND);
                 }
             }
         });

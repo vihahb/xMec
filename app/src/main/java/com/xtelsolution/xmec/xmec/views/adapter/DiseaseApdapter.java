@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.xmec.views.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class DiseaseApdapter extends RecyclerView.Adapter {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_illness_2, null);
 
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-                return new DiseaseViewHolder(view);
+            return new DiseaseViewHolder(view);
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_button_add, null);
 
@@ -81,7 +82,7 @@ public class DiseaseApdapter extends RecyclerView.Adapter {
         public DiseaseViewHolder(View itemView) {
             super(itemView);
             tvIllnessName = (TextView) itemView.findViewById(R.id.tvIllnessName);
-            stt = (TextView) itemView.findViewById(R.id.stt);
+            stt = (TextView) itemView.findViewById(R.id.tv_stt);
         }
     }
 

@@ -40,8 +40,19 @@ public class MedicalDirectoryActivity extends AppCompatActivity {
 
         rcDesease.setAdapter(mAdapter);
         rcDesease.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        initControl();
         rvHealthReconder.setAdapter(healtRecoderAdapter);
         rvHealthReconder.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    private void initControl() {
+        mAdapter.setOnItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClickListener(Object item, int position) {
+                Intent i = new Intent(mContext, DetailDiseaseActivity.class);
+                mContext.startActivity(i);
+            }
+        });
     }
 
     private void init() {
@@ -51,20 +62,13 @@ public class MedicalDirectoryActivity extends AppCompatActivity {
 
         ArrayList<IIlness> iIlnesses = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            iIlnesses.add(new IIlness(false));
+            iIlnesses.add(new IIlness("Tên bệnh "+i));
         }
-        mAdapter = new IIlnessAdapter2(getApplicationContext(), iIlnesses);
+        mAdapter = new IIlnessAdapter2(getBaseContext(), iIlnesses);
         healtRecoderAdapter = new HealtRecoderAdapter(mContext);
-        mAdapter.setOnItemClickListener(new ItemClickListener() {
-            @Override
-            public void onItemClickListener(Object item, int position) {
-                Intent i = new Intent(mContext, AddIllnessActivity.class);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                mContext.startActivity(i);
-            }
-        });
         rcDesease.setNestedScrollingEnabled(false);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

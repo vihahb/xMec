@@ -1,0 +1,74 @@
+package com.xtelsolution.xmec.presenter;
+
+import android.util.Log;
+
+import com.xtel.nipservicesdk.CallbackManager;
+import com.xtel.nipservicesdk.callback.ResponseHandle;
+import com.xtel.nipservicesdk.model.LoginModel;
+import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.utils.SharedUtils;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.model.RESP_LIST_MEDICAL;
+import com.xtelsolution.xmec.model.RESP_User;
+import com.xtelsolution.xmec.model.SharedPreferencesUtils;
+import com.xtelsolution.xmec.model.UserModel;
+import com.xtelsolution.xmec.xmec.views.MyApplication;
+import com.xtelsolution.xmec.xmec.views.activity.inf.IHomeView;
+
+/**
+ * Created by phimau on 2/15/2017.
+ */
+
+public class HomePresenter {
+    private IHomeView view;
+
+    public HomePresenter(IHomeView view) {
+        this.view = view;
+    }
+
+    public void getUser() {
+        String sesstion = SharedUtils.getInstance().getStringValue(Constant.USER_SESSION);
+        String url = Constant.SERVER_XMEC + Constant.GET_USER;
+        Log.e("USer", "getUser: " +sesstion);
+        UserModel.getintance().getUser(url,sesstion , new ResponseHandle<RESP_User>(RESP_User.class) {
+            @Override
+            public void onSuccess(RESP_User obj) {
+                Log.d("USer", "onSuccess: " + obj.toString());
+                view.onGetUerSusscess(obj);
+            }
+
+            @Override
+            public void onError(Error error) {
+                switch (error.getCode()) {
+                    case 2:
+                        view.showToast("Session không hợp lệ");
+                        break;
+                    case -1:
+                        view.showToast("Lỗi hệ thống");
+                }
+            }
+        });
+
+    }
+    public void getMedicalReportBooks(){
+        String session = SharedPreferencesUtils.getInstance().getStringValue(Constant.USER_SESSION);
+        String url = Constant.SERVER_XMEC+Constant.GET_MEDIACAL_REPORT_BOOK;
+        UserModel.getintance().getMedicalReportBooks(url, session, new ResponseHandle<RESP_LIST_MEDICAL>(RESP_LIST_MEDICAL.class) {
+            @Override
+            public void onSuccess(RESP_LIST_MEDICAL obj) {
+                view.onGetMediacalListSusscess(obj);
+            }
+
+            @Override
+            public void onError(Error error) {
+                switch (error.getCode()) {
+                    case 2:
+                        view.showToast("Session không hợp lệ");
+                        break;
+                    case -1:
+                        view.showToast("Lỗi hệ thống");
+                }
+            }
+        });
+    }
+}

@@ -34,7 +34,10 @@ import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtel.nipservicesdk.model.entity.RESP_Reactive;
 import com.xtel.nipservicesdk.utils.JsonHelper;
+import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout;
 
 import java.util.Collections;
@@ -191,7 +194,8 @@ public class LoginActivity extends BasicActivity {
             callbackManager.LoginNipAcc(etPhone.getText().toString(), etPassword.getText().toString(), true, new CallbacListener() {
                 @Override
                 public void onSuccess(RESP_Login success) {
-                    showLog(JsonHelper.toJson(success));
+                    Log.e("Session", "onSuccess: "+JsonHelper.toJson(success));
+                    SharedUtils.getInstance().putStringValue(Constant.USER_SESSION,success.getSession());
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
                 }

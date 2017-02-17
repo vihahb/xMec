@@ -39,13 +39,10 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         View view;
         if (viewType == VIEW_TYPE_ITEM) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_mediacine, null);
-
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new MedicineAdapterViewHolder(view);
         } else if (viewType == VIEW_TYPE_LOADING) {
-
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_more_progress, null);
-
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new LoadingViewHolder(view);
         }
@@ -57,8 +54,6 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof MedicineAdapterViewHolder) {
             MedicineAdapterViewHolder hd = (MedicineAdapterViewHolder) holder;
             hd.tvIllnessName.setText(data.get(position).getName());
-
-
             // action
             hd.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +61,6 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     mItemClickListener.onItemClickListener(data.get(position), position);
                 }
             });
-
         }
     }
 
@@ -93,7 +87,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
         return data.size() <= position ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
-    }
+}
 
 
     @Override
@@ -126,9 +120,6 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         data.addAll(startIndex, medicines);
         notifyItemRangeInserted(startIndex, medicines.size());
     }
-
-
-    // action to view
 
     public void setOnItemClickListener(ItemClickListener itemViewHolderClickListener) {
         this.mItemClickListener = itemViewHolderClickListener;
