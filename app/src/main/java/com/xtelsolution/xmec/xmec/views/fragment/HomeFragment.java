@@ -142,8 +142,8 @@ public class HomeFragment extends BasicFragment implements IHomeView {
     public void onGetUerSusscess(RESP_User user) {
         tvName.setText(user.getFullname());
         tvBirthday.setText(user.getBirthDayasString());
-        tvHeight.setText(user.getHeight().toString());
-        tvWeight.setText(user.getWeight().toString());
+        tvHeight.setText(String.valueOf(user.getHeight()));
+        tvWeight.setText(String.valueOf(user.getWeight()));
 //        setImage(imgAvatar,user.getAvatar());
     }
 
