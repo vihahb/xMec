@@ -37,6 +37,7 @@
             android:layout_gravity="center">
 
             <agency.tango.android.avatarview.views.AvatarView
+                android:id="@+id/img_avatar"
                 android:layout_width="@dimen/avatar_size"
                 android:layout_height="@dimen/avatar_size"
                 android:src="@drawable/avaplaceholder"
@@ -56,9 +57,10 @@
             style="@style/EditextNomarl.Base" />
         <EditText
             android:id="@+id/et_birth_day"
-            android:hint="@string/name"
+            android:hint="@string/birthday"
             android:drawableEnd="@drawable/ic_calendar"
-            style="@style/EditextNomarl.Base" />
+            style="@style/EditextNomarl.Base"
+            android:drawableRight="@drawable/ic_calendar" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -67,16 +69,19 @@
                 android:id="@+id/et_height"
                 android:layout_weight="1"
                 android:hint="@string/height"
+                android:inputType="numberDecimal"
                 android:layout_marginRight="8dp"
                 style="@style/EditextNomarl.Base"/>
             <EditText
                 android:id="@+id/et_weight"
                 android:layout_weight="1"
+                android:inputType="numberDecimal"
                 android:hint="@string/weight"
                 style="@style/EditextNomarl.Base"/>
         </LinearLayout>
     </LinearLayout>
     <Button
+        android:id="@+id/btn_update_info"
         android:layout_width="match_parent"
         android:background="@drawable/bg_button_radius_tim"
         android:textColor="@color/icons"

@@ -22,6 +22,7 @@ import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
 import com.xtelsolution.xmec.model.RESP_LIST_MEDICAL;
 import com.xtelsolution.xmec.model.RESP_MEDICAL;
 import com.xtelsolution.xmec.model.RESP_User;
+import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.HomePresenter;
 import com.xtelsolution.xmec.xmec.views.activity.ProfileActivity;
 import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
@@ -57,9 +58,6 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         sticks.addAll(createTempData(0));
         Log.e("TAG", "DiseaseApdapter: "+ sticks.size()+"");
         adapter = new MedicalDirectoryAdapter(sticks,getContext());
-
-
-
     }
 
     @Nullable
@@ -145,6 +143,7 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         tvHeight.setText(String.valueOf(user.getHeight()));
         tvWeight.setText(String.valueOf(user.getWeight()));
 //        setImage(imgAvatar,user.getAvatar());
+        SharedPreferencesUtils.getInstance().saveUser(user);
     }
 
     @Override

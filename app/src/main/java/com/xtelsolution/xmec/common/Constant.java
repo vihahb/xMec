@@ -33,7 +33,7 @@ public class Constant {
     public static final String PREFERENCE_NAME = "preference_xmec";
     public static final String SERVER_AUTHEN = "http://124.158.5.112:9180/nipum/";
     public static final String GET_USER = "v0.1/user";
-    public static final String SERVER_XMEC = "http://192.168.29.110:8080/";
+    public static final String SERVER_XMEC = "http://192.168.29.105:8080/";
     public static final String GET_MEDIACAL_REPORT_BOOK = "/v0.1/user/medical-report-book";
 
 

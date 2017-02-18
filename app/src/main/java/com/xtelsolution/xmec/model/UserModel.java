@@ -1,6 +1,8 @@
 package com.xtelsolution.xmec.model;
 
 import com.xtel.nipservicesdk.callback.ResponseHandle;
+import com.xtel.nipservicesdk.model.*;
+import com.xtel.nipservicesdk.model.BasicModel;
 import com.xtelsolution.xmec.common.Constant;
 
 /**

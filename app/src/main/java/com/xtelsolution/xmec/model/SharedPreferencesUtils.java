@@ -38,6 +38,16 @@ public class SharedPreferencesUtils {
         editor.commit();
     }
 
+    public void putFloatValue(String name,float value){
+        if (editor == null)
+            prepair();
+        editor.putFloat(name, value);
+        editor.commit();
+    }
+    public float getFloatValue(String name){
+        return sharedPreferences.getFloat(name,-1);
+    }
+
     public long getLongValue(String name) {
         return sharedPreferences.getLong(name, -1);
     }

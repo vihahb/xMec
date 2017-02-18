@@ -27,10 +27,11 @@ public class HomePresenter {
         String sesstion = SharedUtils.getInstance().getStringValue(Constant.USER_SESSION);
         String url = Constant.SERVER_XMEC + Constant.GET_USER;
         Log.e("USer", "getUser: " +sesstion);
-        UserModel.getintance().getUser(url,sesstion , new ResponseHandle<RESP_User>(RESP_User.class) {
+        UserModel.getintance().getUser(url,"V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR" , new ResponseHandle<RESP_User>(RESP_User.class) {
             @Override
             public void onSuccess(RESP_User obj) {
                 Log.d("USer", "onSuccess: " + obj.toString());
+                SharedPreferencesUtils.getInstance().saveUser(obj);
                 view.onGetUerSusscess(obj);
             }
 
@@ -50,7 +51,7 @@ public class HomePresenter {
     public void getMedicalReportBooks(){
         String session = SharedPreferencesUtils.getInstance().getStringValue(Constant.USER_SESSION);
         String url = Constant.SERVER_XMEC+Constant.GET_MEDIACAL_REPORT_BOOK;
-        UserModel.getintance().getMedicalReportBooks(url, session, new ResponseHandle<RESP_LIST_MEDICAL>(RESP_LIST_MEDICAL.class) {
+        UserModel.getintance().getMedicalReportBooks(url, "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_LIST_MEDICAL>(RESP_LIST_MEDICAL.class) {
             @Override
             public void onSuccess(RESP_LIST_MEDICAL obj) {
                 view.onGetMediacalListSusscess(obj);
