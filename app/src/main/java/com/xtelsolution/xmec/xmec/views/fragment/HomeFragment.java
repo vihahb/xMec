@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
@@ -54,7 +55,7 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         mContext = getContext();
         sticks = new ArrayList<>();
         homePresenter = new HomePresenter(this);
-        homePresenter.getUser();
+//        homePresenter.getUser();
         sticks.addAll(createTempData(0));
         Log.e("TAG", "DiseaseApdapter: "+ sticks.size()+"");
         adapter = new MedicalDirectoryAdapter(sticks,getContext());
@@ -142,7 +143,7 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         tvBirthday.setText(user.getBirthDayasString());
         tvHeight.setText(String.valueOf(user.getHeight()));
         tvWeight.setText(String.valueOf(user.getWeight()));
-//        setImage(imgAvatar,user.getAvatar());
+        setImage(imgAvatar,user.getAvatar());
         SharedPreferencesUtils.getInstance().saveUser(user);
     }
 

@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.common;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Admin on 1/23/2017.
@@ -31,9 +32,20 @@ public class Constant {
     public static final String USER_WEIGHT= "user_weight";
     public static final String USER_HEIGHT= "user_height";
     public static final String PREFERENCE_NAME = "preference_xmec";
+
+    public static final String MEDICAL_NAME="name";
+    public static final String MEDICAL_BEGIN_TIME="begin_time";
+    public static final String MEDICAL_END_TIME="end_time";
+    public static final String MEDICAL_TYPE="type";
+    public static final String MEDICAL_NOTE="note";
+    public static final String MEDICAL_RESOURCES="resources";
+
+
     public static final String SERVER_AUTHEN = "http://124.158.5.112:9180/nipum/";
-    public static final String GET_USER = "v0.1/user";
-    public static final String SERVER_XMEC = "http://192.168.29.105:8080/";
+    public static final String GET_USER = "/user";
+    public static final String ADD_MEDICAL = "user/medical-report-book";
+
+    public static final String SERVER_XMEC = "http://192.168.29.105:8080/v0.1";
     public static final String GET_MEDIACAL_REPORT_BOOK = "/v0.1/user/medical-report-book";
 
 
@@ -42,4 +54,14 @@ public class Constant {
         Date date = new Date(times);
         return sdf.format(date);
     }
+//    public static String parseListString(List<String> list){
+//        String rs ="[";
+//        for (int i=0;i<list.size();i++){
+//            rs+=list.get(i);
+//            if (i<list.size()-1)
+//                rs+=",";
+//        }
+//        rs+="]";
+//        return rs;
+//    }
 }

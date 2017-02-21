@@ -1,12 +1,13 @@
 package com.xtelsolution.xmec.entity;
 
 import com.google.gson.annotations.Expose;
+import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 
 /**
  * Created by phimau on 2/14/2017.
  */
 
-public class MedicalDirectory {
+public class MedicalDirectory extends RESP_Basic {
 
     @Expose
     private String name;
@@ -16,6 +17,8 @@ public class MedicalDirectory {
     private long end_time;
     @Expose
     private int type;
+    @Expose
+    private String note;
 
     public int getType() {
         return type;

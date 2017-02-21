@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import android.widget.SlidingDrawer;
 
 import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
@@ -67,6 +69,11 @@ public class HomeActivity extends BasicActivity {
 
 
     private void init() {
+        List<String> list = new ArrayList<>();
+        list.add("phimh");
+        list.add("hungnt");
+        list.add("hungtt");
+        Log.d(TAG, "init: "+ JsonHelper.toJson(list));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);

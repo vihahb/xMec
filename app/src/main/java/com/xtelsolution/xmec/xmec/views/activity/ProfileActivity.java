@@ -68,6 +68,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         avatarView = (AvatarView) findViewById(R.id.avatar_profile);
         btnSelectImage = (ImageView) findViewById(R.id.btnSelectImage);
+        btnSelectImage.setClickable(true);
         boxInput = (LinearLayout) findViewById(R.id.boxInput);
         layout_avatar = (FrameLayout) findViewById(R.id.layout_avatar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -96,17 +97,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnSelectImage:
-                new PickerBuilder((Activity) mContext, PickerBuilder.SELECT_FROM_GALLERY)
-                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
-                            @Override
-                            public void onImageReceived(Uri imageUri) {
-                                Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
-                                avatarView.setImageURI(imageUri);
-                            }
-                        })
-                        .start();
-                break;
+
             case R.id.btn_update_info:
                 String name = etName.getText().toString();
                 double height = Double.valueOf(etHeight.getText().toString());
@@ -158,6 +149,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             public void onFocusChange(View view, boolean b) {
                 if (b)
                     showDatePicker();
+            }
+        });
+        btnSelectImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Toast.makeText(mContext, "Mau Van Diep", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
     }
