@@ -27,6 +27,7 @@ public class UpdateInfoPresenter {
 
     public void updateProfile(final String name, final long birthDay, final double hegiht, final double weight, String urlAvatar) {
         String url = Constant.SERVER_XMEC+Constant.GET_USER;
+        Log.e("TEST", "updateProfile: "+url );
         JsonObject jsonUser = new JsonObject();
         jsonUser.addProperty(Constant.USER_FULL_NAME,name);
         jsonUser.addProperty(Constant.USER_GENDER,SharedPreferencesUtils.getInstance().getIntValue(Constant.USER_GENDER));
@@ -37,11 +38,9 @@ public class UpdateInfoPresenter {
         jsonUser.addProperty(Constant.USER_HEIGHT,hegiht);
         jsonUser.addProperty(Constant.USER_WEIGHT,weight);
         Log.e("UpdateInfoPresenter", "updateProfile: "+jsonUser.toString());
-
-
-        UserModel.getintance().updateInfoUser(url, jsonUser.toString(), "V5BDuS4BFpiMjgfAZBrkQ pb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_User>(RESP_User.class) {
+        UserModel.getintance().updateInfoUser(url, jsonUser.toString(), "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
             @Override
-            public void onSuccess(RESP_User obj) {
+            public void onSuccess(RESP_Basic obj) {
                 view.onUpdateProfileSuccess();
                 Log.e("TEST", "onSuccess: ");
                 SharedPreferencesUtils.getInstance().putStringValue(Constant.USER_FULL_NAME,name);
@@ -49,10 +48,11 @@ public class UpdateInfoPresenter {
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_HEIGHT,(float) hegiht);
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_WEIGHT,(float) weight);
             }
-
             @Override
             public void onError(Error error) {
+                Log.e("ERR", "onError: "+error.getCode());
                 switch (error.getCode()) {
+
                     case 2:
                         view.showToast("Session không hợp lệ");
                         break;

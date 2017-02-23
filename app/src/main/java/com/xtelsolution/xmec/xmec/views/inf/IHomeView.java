@@ -11,4 +11,5 @@ public interface IHomeView   {
     void showToast(String msg);
     void onGetUerSusscess(RESP_User user);
     void onGetMediacalListSusscess(RESP_LIST_MEDICAL user);
+    void showProcessbar();
 }

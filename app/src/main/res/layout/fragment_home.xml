@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <agency.tango.android.avatarview.views.AvatarView
                         android:id="@+id/img_avatar"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
@@ -72,10 +72,10 @@
                             android:layout_marginTop="16dp">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/dimen_25"
+                                android:layout_width="@dimen/dimen_22"
+                                android:layout_height="@dimen/dimen_22"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_action_name" />
+                                android:src="@drawable/ic_height" />
 
                             <TextView
                                 android:id="@+id/tv_profile_height"
@@ -122,6 +122,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/img_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|top"

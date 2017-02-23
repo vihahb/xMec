@@ -2,12 +2,15 @@ package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +27,9 @@ import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.NetWorkInfo;
+import com.xtelsolution.xmec.common.Task;
+import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.UpdateInfoPresenter;
@@ -31,9 +37,11 @@ import com.xtelsolution.xmec.xmec.views.inf.IProfileView;
 import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
 
+import java.io.IOException;
+
 import agency.tango.android.avatarview.views.AvatarView;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener,IProfileView {
+public class ProfileActivity extends BasicActivity implements View.OnClickListener,IProfileView,UploadFileListener{
     private ImageView btnSelectImage;
     private AvatarView avatarView;
     private Context mContext;
@@ -47,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button btnUpdateInfo;
     private DatePickerFragment datePicker;
     private UpdateInfoPresenter presenter;
+    private String urlAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,15 +108,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()) {
 
             case R.id.btn_update_info:
-                String name = etName.getText().toString();
-                double height = Double.valueOf(etHeight.getText().toString());
-                double weight = Double.valueOf(etWeight.getText().toString());
-                long birthday = datePicker.getTimeinMilisecond();
-                String urlAvatar ="sdasdasdasdad";
-                if (birthday==0){
-                    birthday = SharedPreferencesUtils.getInstance().getLongValue(Constant.USER_BIRTHDAY);
+                if (!NetWorkInfo.isOnline(mContext)){
+                    showToastNoInternet();
                 }
-                presenter.updateProfile(name,birthday,height,weight,urlAvatar);
+                updateProfile();
 
         }
     }
@@ -151,11 +155,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     showDatePicker();
             }
         });
-        btnSelectImage.setOnTouchListener(new View.OnTouchListener() {
+        btnSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                Toast.makeText(mContext, "Mau Van Diep", Toast.LENGTH_SHORT).show();
-                return false;
+            public void onClick(View view) {
+                if (!NetWorkInfo.isOnline(mContext))
+                    return;
+                uploadAvatar();
             }
         });
     }
@@ -166,7 +171,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         etBirthday.setText(Constant.getDate(birthday));
         etHeight.setText(String.valueOf(height));
         etWeight.setText(String.valueOf(weight));
+        setImage(avatarView,url);
+        urlAvatar=url;
     }
+
 
     @Override
     public void onUpdateProfileSuccess() {
@@ -185,6 +193,46 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void showLog(String msg) {
+
+    }
+    private void showToastNoInternet(){
+        Toast.makeText(mContext, "Không kết nối internet", Toast.LENGTH_SHORT).show();
+    }
+    private void updateProfile(){
+        String name = etName.getText().toString();
+        double height = Double.valueOf(etHeight.getText().toString());
+        double weight = Double.valueOf(etWeight.getText().toString());
+        long birthday = datePicker.getTimeinMilisecond();
+        if (birthday==0){
+            birthday = SharedPreferencesUtils.getInstance().getLongValue(Constant.USER_BIRTHDAY);
+        }
+        birthday=birthday/1000;
+        presenter.updateProfile(name,(birthday),height,weight,urlAvatar);
+    }
+    private void uploadAvatar(){
+        new PickerBuilder(ProfileActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
+                .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+                    @Override
+                    public void onImageReceived(Uri imageUri) {
+                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
+                        try {
+                            Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                            new Task.ConvertImage(mContext, false, ProfileActivity.this).execute(avatar);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+    }
+
+    @Override
+    public void onSuccess(String url) {
+        urlAvatar =url;
+        Log.e("URLAVART", "onSuccess: "+url );
+    }
+
+    @Override
+    public void onError(String e) {
 
     }
 }

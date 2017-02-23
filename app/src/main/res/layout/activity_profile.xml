@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:clickable="true"
             android:layout_gravity="center_horizontal">
 
             <agency.tango.android.avatarview.views.AvatarView
@@ -54,8 +55,6 @@
                 android:id="@+id/btnSelectImage"
                 android:layout_width="@dimen/dimen_36"
                 android:layout_height="@dimen/dimen_36"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_gravity="right|bottom"
                 android:src="@drawable/ic_select_img" />
         </FrameLayout>

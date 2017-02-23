@@ -21,7 +21,7 @@ public abstract class ResponseHandle<T extends RESP_Basic> {
     }
 
     public void onSuccess(String result) {
-        Log.e("response", result);
+
         try {
             boolean isJson;
             isJson = !(result == null || result.isEmpty());

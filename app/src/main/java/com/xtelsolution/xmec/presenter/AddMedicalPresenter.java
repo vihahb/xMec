@@ -1,13 +1,23 @@
 package com.xtelsolution.xmec.presenter;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.NetworkInfo;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.google.gson.JsonObject;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.Task;
+import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
 import com.xtelsolution.xmec.model.RESP_ID;
+import com.xtelsolution.xmec.xmec.views.MyApplication;
+import com.xtelsolution.xmec.xmec.views.activity.MedicalDirectoryActivity;
 import com.xtelsolution.xmec.xmec.views.inf.IAddMedicalView;
 
 import java.util.List;
@@ -47,5 +57,20 @@ public class AddMedicalPresenter {
                 }
             }
         });
+    }
+    public void postImage(Bitmap bitmap, Context context){
+        new Task.ConvertImage(context, false, new UploadFileListener() {
+            @Override
+            public void onSuccess(String url) {
+                Log.e("onSuccess", "onSuccess: "+url);
+                view.onUploadImageSussces(url);
+            }
+
+            @Override
+            public void onError(String e) {
+
+            }
+        }).execute(bitmap);
+
     }
 }

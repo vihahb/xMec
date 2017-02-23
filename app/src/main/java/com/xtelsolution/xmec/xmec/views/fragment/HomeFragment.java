@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class HomeFragment extends BasicFragment implements IHomeView {
     private HomePresenter homePresenter;
     private Context mContext;
     private ArrayList<RESP_MEDICAL> sticks;
+    private ImageView imgGender;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,9 +58,7 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         mContext = getContext();
         sticks = new ArrayList<>();
         homePresenter = new HomePresenter(this);
-//        homePresenter.getUser();
         sticks.addAll(createTempData(0));
-        Log.e("TAG", "DiseaseApdapter: "+ sticks.size()+"");
         adapter = new MedicalDirectoryAdapter(sticks,getContext());
     }
 
@@ -66,13 +67,14 @@ public class HomeFragment extends BasicFragment implements IHomeView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initUI(view);
+        initControl();
+        homePresenter.getUser();
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         rvDisease = (RecyclerView) view.findViewById(R.id.rvDisease);
         rvDisease.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -81,9 +83,7 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spcategorize);
         spinner.setItems("Bệnh", "Thuốc");
         NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
-
         scrollView.setOnScrollChangeListener(new EndlessParentScrollListener(manager) {
-
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
 
@@ -114,6 +114,12 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         tvWeight = (TextView) view.findViewById(R.id.tv_profile_weight);
         tvName = (TextView) view.findViewById(R.id.tv_profile_name);
         imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
+        imgGender = (ImageView) view.findViewById(R.id.img_gender);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setTitle("Đang tải");
+    }
+    private void initControl(){
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,11 +150,19 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         tvHeight.setText(String.valueOf(user.getHeight()));
         tvWeight.setText(String.valueOf(user.getWeight()));
         setImage(imgAvatar,user.getAvatar());
+        if (user.getGender()==2)
+            imgGender.setImageResource(R.drawable.ic_action_name);
         SharedPreferencesUtils.getInstance().saveUser(user);
+        progressDialog.dismiss();
     }
 
     @Override
     public void onGetMediacalListSusscess(RESP_LIST_MEDICAL user) {
 
+    }
+
+    @Override
+    public void showProcessbar() {
+        progressDialog.show();
     }
 }

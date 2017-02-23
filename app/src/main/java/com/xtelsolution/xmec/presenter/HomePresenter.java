@@ -24,6 +24,7 @@ public class HomePresenter {
     }
 
     public void getUser() {
+        view.showProcessbar();
         String sesstion = SharedUtils.getInstance().getStringValue(Constant.USER_SESSION);
         String url = Constant.SERVER_XMEC + Constant.GET_USER;
         Log.e("USer", "getUser: " +sesstion);
@@ -34,7 +35,6 @@ public class HomePresenter {
                 SharedPreferencesUtils.getInstance().saveUser(obj);
                 view.onGetUerSusscess(obj);
             }
-
             @Override
             public void onError(Error error) {
                 switch (error.getCode()) {

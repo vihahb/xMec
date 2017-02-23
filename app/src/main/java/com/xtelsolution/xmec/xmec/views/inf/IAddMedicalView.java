@@ -5,9 +5,10 @@ package com.xtelsolution.xmec.xmec.views.inf;
  */
 
 public interface IAddMedicalView extends BaseView {
-    void onUploadImageSussces();
+    void onUploadImageSussces(String url);
     void showProcessBar();
     void hideProcessBar();
     void onAddMedicalSuccess();
+
 
 }
