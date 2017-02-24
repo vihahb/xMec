@@ -4,15 +4,12 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
 /**
@@ -50,7 +47,7 @@ public class BasicFragment extends Fragment implements BaseView{
 
     @Override
     public void showLog(String msg) {
-        Log.d("MY_TAG",msg);
+        xLog.d(msg);
     }
 
     @Override

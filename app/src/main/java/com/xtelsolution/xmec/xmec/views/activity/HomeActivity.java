@@ -123,11 +123,11 @@ public class HomeActivity extends BasicActivity {
                 if (intent.getAction().equals(Constant.ACTION_HIDE_BOTTOM_BAR)) {
                     tabLayout.animate().translationY(tabLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
 //                    tabLayout.setVisibility(View.GONE);
-                    xLog.i(TAG, "Action hide");
+                    xLog.i(TAG+ ": Action hide");
                 } else if (intent.getAction().equals(Constant.ACTION_SHOW_BOTTOM_BAR)) {
                     tabLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
 //                    tabLayout.setVisibility(View.VISIBLE);
-                    xLog.i(TAG, "Action show");
+                    xLog.i(TAG+ ": Action show");
                 }
             }
         };

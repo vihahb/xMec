@@ -5,12 +5,12 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
 /**
@@ -46,7 +46,7 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
 
     @Override
     public void showLog(String msg) {
-        Log.d("MY_TAG",msg);
+        xLog.d(msg);
     }
 
     @Override

@@ -9,28 +9,29 @@ import android.util.Log;
 
 public class xLog {
     private static final boolean DEBUG_MODE = true;
+    private static final String DEBUG_TAG = "xMec_DEBUG";
 
-    public static void e(String TAG, String msg) {
+    public static void e(String msg) {
         if (DEBUG_MODE && msg != null)
-            Log.e(TAG, msg);
+            Log.e(DEBUG_TAG, msg);
     }
 
-    public static void d(String TAG, String msg) {
+    public static void d(String msg) {
         if (DEBUG_MODE && msg != null)
-            Log.d(TAG, msg);
+            Log.d(DEBUG_TAG, msg);
     }
 
 
-    public static void i(String TAG, String msg) {
+    public static void i(String msg) {
         if (DEBUG_MODE && msg != null)
-            Log.i(TAG, msg);
+            Log.i(DEBUG_TAG, msg);
 
 
     }
 
-    public static void w(String TAG, String msg) {
+    public static void w(String msg) {
         if (DEBUG_MODE && msg != null)
-            Log.w(TAG, msg);
+            Log.w(DEBUG_TAG, msg);
 
     }
 }
