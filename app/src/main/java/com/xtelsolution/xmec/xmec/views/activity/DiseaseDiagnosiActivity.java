@@ -16,7 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.entity.BodyMapPosition;
+import com.xtelsolution.xmec.model.entity.BodyMapPosition;
 import com.xtelsolution.xmec.R;
 
 public class DiseaseDiagnosiActivity extends AppCompatActivity {

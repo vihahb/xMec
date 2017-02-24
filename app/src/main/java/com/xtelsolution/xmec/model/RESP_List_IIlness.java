@@ -2,7 +2,7 @@ package com.xtelsolution.xmec.model;
 
 import com.google.gson.annotations.Expose;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
-import com.xtelsolution.xmec.entity.IIlness;
+import com.xtelsolution.xmec.model.entity.IIlness;
 
 import java.util.ArrayList;
 

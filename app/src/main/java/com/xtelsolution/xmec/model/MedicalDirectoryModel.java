@@ -2,7 +2,7 @@ package com.xtelsolution.xmec.model;
 
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
-import com.xtelsolution.xmec.entity.MedicalDirectory;
+import com.xtelsolution.xmec.model.entity.MedicalDirectory;
 
 /**
  * Created by phimau on 2/21/2017.

@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.xtelsolution.xmec.entity.IIlness;
+import com.xtelsolution.xmec.model.entity.IIlness;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.xmec.views.activity.AddIllnessActivity;
-import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by phimau on 1/22/2017.

@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec.entity;
+package com.xtelsolution.xmec.model.entity;
 
 import com.google.gson.annotations.Expose;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;

@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.entity.MedicalDirectory;
 import com.xtelsolution.xmec.model.RESP_MEDICAL;
 import com.xtelsolution.xmec.xmec.views.activity.MedicalDirectoryActivity;
 
