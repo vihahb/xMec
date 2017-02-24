@@ -1,22 +1,68 @@
 package com.xtelsolution.xmec.xmec.views.fragment;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
 /**
  * Created by phimau on 2/15/2017.
  */
 
-public abstract class BasicFragment extends Fragment {
+public class BasicFragment extends Fragment implements BaseView{
 
-    protected void setImage(ImageView img,String url) {
+    private ProgressDialog progressDialog;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initProgressDialog();
+    }
+
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+    }
+
+    protected void setImage(ImageView img, String url) {
         Picasso.with(getContext())
                 .load(url)
                 .placeholder(R.drawable.avatar)
                 .error(R.drawable.avatar)
                 .into(img);
+    }
+
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLog(String msg) {
+        Log.d("MY_TAG",msg);
+    }
+
+    @Override
+    public void showProgressDialog(String title) {
+        progressDialog.setTitle(title);
+        progressDialog.show();
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
     }
 }

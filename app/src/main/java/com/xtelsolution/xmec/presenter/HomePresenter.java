@@ -24,7 +24,7 @@ public class HomePresenter {
     }
 
     public void getUser() {
-        view.showProcessbar();
+        view.showProgressDialog("Đang tải...");
         String sesstion = SharedUtils.getInstance().getStringValue(Constant.USER_SESSION);
         String url = Constant.SERVER_XMEC + Constant.GET_USER;
         Log.e("USer", "getUser: " +sesstion);
@@ -38,7 +38,7 @@ public class HomePresenter {
             }
             @Override
             public void onError(Error error) {
-                view.hidePRocessbar();
+                view.dismissProgressDialog();
                 switch (error.getCode()) {
                     case 2:
                         view.showToast("Session không hợp lệ");
@@ -50,7 +50,7 @@ public class HomePresenter {
         });
 
     }
-    public void getMedicalReportBooks(){
+    private void getMedicalReportBooks(){
         String session = SharedPreferencesUtils.getInstance().getStringValue(Constant.USER_SESSION);
         String url = Constant.SERVER_XMEC+Constant.GET_MEDIACAL_REPORT_BOOK;
         UserModel.getintance().getMedicalReportBooks(url, "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_LIST_MEDICAL>(RESP_LIST_MEDICAL.class) {
@@ -61,7 +61,7 @@ public class HomePresenter {
 
             @Override
             public void onError(Error error) {
-                view.hidePRocessbar();
+                view.dismissProgressDialog();
                 switch (error.getCode()) {
                     case 2:
                         view.showToast("Session không hợp lệ");

@@ -50,7 +50,6 @@ public class HomeFragment extends BasicFragment implements IHomeView {
     private Context mContext;
     private ArrayList<RESP_MEDICAL> sticks;
     private ImageView imgGender;
-    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,10 +114,6 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         tvName = (TextView) view.findViewById(R.id.tv_profile_name);
         imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
         imgGender = (ImageView) view.findViewById(R.id.img_gender);
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(false);
-        progressDialog.setTitle("Đang tải");
     }
     private void initControl(){
         btnProfile.setOnClickListener(new View.OnClickListener() {
@@ -154,21 +149,10 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         if (user.getGender()==2)
             imgGender.setImageResource(R.drawable.ic_action_name);
         SharedPreferencesUtils.getInstance().saveUser(user);
-        progressDialog.dismiss();
     }
 
     @Override
     public void onGetMediacalListSusscess(RESP_LIST_MEDICAL user) {
 
-    }
-
-    @Override
-    public void showProcessbar() {
-        progressDialog.show();
-    }
-
-    @Override
-    public void hidePRocessbar() {
-        progressDialog.dismiss();
     }
 }

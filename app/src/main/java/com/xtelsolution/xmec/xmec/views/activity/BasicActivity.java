@@ -1,6 +1,9 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
@@ -15,6 +18,22 @@ import com.xtelsolution.xmec.xmec.views.inf.BaseView;
  */
 
 public class BasicActivity extends AppCompatActivity implements BaseView{
+
+
+    private ProgressDialog progressDialog;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        initProgressDialog();
+    }
+
+    private void initProgressDialog() {
+        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+    }
+
     @Override
     public Activity getActivity() {
         return this;
@@ -29,6 +48,20 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
     public void showLog(String msg) {
         Log.d("MY_TAG",msg);
     }
+
+    @Override
+    public void showProgressDialog(String title) {
+        progressDialog.setTitle(title);
+        progressDialog.show();
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+    }
+
     protected void setImage(ImageView img, String url) {
         Picasso.with(this)
                 .load(url)

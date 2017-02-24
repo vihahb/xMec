@@ -10,4 +10,6 @@ public interface BaseView {
     Activity getActivity();
     void showToast(String msg);
     void showLog(String msg);
+    void showProgressDialog(String title);
+    void dismissProgressDialog();
 }

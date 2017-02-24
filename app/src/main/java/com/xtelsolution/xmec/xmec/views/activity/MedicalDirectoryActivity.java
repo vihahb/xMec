@@ -184,15 +184,6 @@ public class MedicalDirectoryActivity extends BasicActivity implements IAddMedic
         Log.d("URL", "onUploadImageSussces: "+url);
     }
 
-    @Override
-    public void showProcessBar() {
-
-    }
-
-    @Override
-    public void hideProcessBar() {
-
-    }
 
     @Override
     public void onAddMedicalSuccess() {

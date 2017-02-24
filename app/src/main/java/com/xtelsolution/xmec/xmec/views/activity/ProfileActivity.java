@@ -178,25 +178,12 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
 
     @Override
     public void onUpdateProfileSuccess() {
-        Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+        showToast("Cập nhật thành công");
     }
 
-    @Override
-    public Activity getActivity() {
-        return null;
-    }
 
-    @Override
-    public void showToast(String msg) {
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showLog(String msg) {
-
-    }
     private void showToastNoInternet(){
-        Toast.makeText(mContext, "Không kết nối internet", Toast.LENGTH_SHORT).show();
+        showToast("Không kết nối internet");
     }
     private void updateProfile(){
         String name = etName.getText().toString();
@@ -214,7 +201,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                 .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                     @Override
                     public void onImageReceived(Uri imageUri) {
-                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
+                        showToast("Got image - " + imageUri);
                         try {
                             Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                             new Task.ConvertImage(mContext, false, ProfileActivity.this).execute(avatar);
