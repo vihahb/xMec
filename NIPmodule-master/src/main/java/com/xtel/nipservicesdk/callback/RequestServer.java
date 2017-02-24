@@ -1,6 +1,7 @@
 package com.xtel.nipservicesdk.callback;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.xtel.nipservicesdk.NipApplication;
 import com.xtel.nipservicesdk.R;
@@ -150,11 +151,12 @@ public class RequestServer {
                     builder.header(Cts.SESSION, params[2]);
 
                 Request request = builder.build();
-
                 Response response = client.newCall(request).execute();
                 return response.body().string();
             } catch (IOException e) {
+                isSuccess=false;
                 e.printStackTrace();
+                Log.d("sssss", "doInBackground: ");
                 return null;
             }
         }
@@ -162,10 +164,13 @@ public class RequestServer {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (isSuccess)
+            if (isSuccess) {
                 responseHandle.onSuccess(s);
-            else
+                Log.e("onPostExecute", "onPostExecute: ");
+            } else {
                 responseHandle.onError(new Error(-1, NipApplication.context.getString(R.string.error), NipApplication.context.getString(R.string.can_not_request)));
+                Log.e("onError", "onPostExecute: ");
+            }
         }
     }
 

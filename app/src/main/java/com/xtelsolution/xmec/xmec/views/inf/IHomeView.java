@@ -12,4 +12,5 @@ public interface IHomeView   {
     void onGetUerSusscess(RESP_User user);
     void onGetMediacalListSusscess(RESP_LIST_MEDICAL user);
     void showProcessbar();
+    void hidePRocessbar();
 }

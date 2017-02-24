@@ -34,9 +34,11 @@ public class HomePresenter {
                 Log.d("USer", "onSuccess: " + obj.toString());
                 SharedPreferencesUtils.getInstance().saveUser(obj);
                 view.onGetUerSusscess(obj);
+                getMedicalReportBooks();
             }
             @Override
             public void onError(Error error) {
+                view.hidePRocessbar();
                 switch (error.getCode()) {
                     case 2:
                         view.showToast("Session không hợp lệ");
@@ -59,6 +61,7 @@ public class HomePresenter {
 
             @Override
             public void onError(Error error) {
+                view.hidePRocessbar();
                 switch (error.getCode()) {
                     case 2:
                         view.showToast("Session không hợp lệ");

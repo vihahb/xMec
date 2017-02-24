@@ -42,7 +42,7 @@ public class UpdateInfoPresenter {
             @Override
             public void onSuccess(RESP_Basic obj) {
                 view.onUpdateProfileSuccess();
-                Log.e("TEST", "onSuccess: ");
+                Log.e("TEST", "onSuccess: "+obj.toString());
                 SharedPreferencesUtils.getInstance().putStringValue(Constant.USER_FULL_NAME,name);
                 SharedPreferencesUtils.getInstance().putLongValue(Constant.USER_BIRTHDAY,birthDay);
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_HEIGHT,(float) hegiht);

@@ -117,6 +117,7 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         imgGender = (ImageView) view.findViewById(R.id.img_gender);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
         progressDialog.setTitle("Đang tải");
     }
     private void initControl(){
@@ -164,5 +165,10 @@ public class HomeFragment extends BasicFragment implements IHomeView {
     @Override
     public void showProcessbar() {
         progressDialog.show();
+    }
+
+    @Override
+    public void hidePRocessbar() {
+        progressDialog.dismiss();
     }
 }
