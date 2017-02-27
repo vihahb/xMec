@@ -71,6 +71,8 @@
     <string name="emtry_list_new_feed">Không có bài viết nào</string>
     <string name="register_account">Đăng kí tài khoản</string>
     <string name="update_process">Đang cập nhật</string>
+    <string name="add_medical">Đang thêm y bạ</string>
+    <string name="add_medical_success">Thêm y bạ thành công</string>
 
     <string name="service_code_key">XTL-XMEC</string>
     <string name="FACEBOOK_APP_ID">1851247128486694</string>

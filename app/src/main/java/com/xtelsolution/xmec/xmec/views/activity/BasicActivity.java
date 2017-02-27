@@ -53,7 +53,7 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
     public void showProgressDialog(String title) {
         if (progressDialog==null)
             initProgressDialog();
-        progressDialog.setTitle(title);
+        progressDialog.setMessage(title);
         progressDialog.show();
     }
 

@@ -48,7 +48,8 @@ public class Constant {
     public static final String SERVER_UPLOAD = "http://124.158.5.112:9180/s/files/upload";
     public static final String MEDICAL_REPORT_BOOK = "user/medical-report-book";
 
-    public static final String SERVER_XMEC = "http://192.168.29.104:8080/v0.1";
+    public static final String SERVER_XMEC = "http://192.168.29.105:8080/v0.1/";
+    public static final String GET_MEDIACAL_REPORT_BOOK = "user/medical-report-book?page=1&pagesize=30";
 
 
     public static String getDate(long times){

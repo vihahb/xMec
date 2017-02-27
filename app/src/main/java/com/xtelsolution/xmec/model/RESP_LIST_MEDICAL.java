@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class RESP_LIST_MEDICAL extends RESP_Basic {
     @Expose
-    private ArrayList<RESP_MEDICAL> list;
+    private ArrayList<RESP_MEDICAL> data;
 
     public ArrayList<RESP_MEDICAL> getList() {
-        return list;
+        return data;
     }
 
     public void setList(ArrayList<RESP_MEDICAL> list) {
-        this.list = list;
+        this.data = list;
     }
 }

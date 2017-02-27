@@ -123,16 +123,6 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         });
     }
 
-    private List<RESP_MEDICAL> createTempData(int size) {
-        List<RESP_MEDICAL> sticks = new ArrayList<>();
-
-        for (int i = size; i < size + 10; i++) {
-
-            sticks.add(new RESP_MEDICAL("Tên Y Bạ ",1487236138575l,0l,0));
-        }
-        return sticks;
-    }
-
     @Override
     public void showToast(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();

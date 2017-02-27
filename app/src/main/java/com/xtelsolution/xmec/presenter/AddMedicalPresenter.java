@@ -8,6 +8,7 @@ import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.utils.JsonHelper;
+import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.Task;
 import com.xtelsolution.xmec.common.xLog;
@@ -30,6 +31,7 @@ public class AddMedicalPresenter {
     }
     public void addMedicalDirectorry(String name,long beginTime,long endTime,int type,String note,List<String> resources){
         String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK;
+        view.showProgressDialog(view.getActivity().getResources().getString(R.string.add_medical));
         Log.e("ADD", "addMedicalDirectorry: "+url);
         RESP_MEDICAL_DETAIL resp_medical_detail = new RESP_MEDICAL_DETAIL();
         resp_medical_detail.setName(name);
@@ -44,18 +46,21 @@ public class AddMedicalPresenter {
         }
         resp_medical_detail.setResources(listRS);
         xLog.d("STRING" + "addMedicalDirectorry: "+JsonHelper.toJson(resp_medical_detail));
-        MedicalDirectoryModel.getinstance().addMedicalDirectory(url,JsonHelper.toJson(resp_medical_detail), LoginModel.getInstance().getSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
+        MedicalDirectoryModel.getinstance().addMedicalDirectory(url,JsonHelper.toJson(resp_medical_detail), "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
+                view.showProgressDialog(view.getActivity().getResources().getString(R.string.add_medical_success));
                 view.onAddMedicalSuccess();
+                view.dismissProgressDialog();
             }
 
             @Override
             public void onError(Error error) {
                 xLog.e("ADD"+ "onError: "+error.getMessage());
+                view.dismissProgressDialog();
                 switch (error.getCode()) {
                     case 2:
-                        xLog.d("EEE"+ "onError: "+error.toString());
+//                        LoginModel.getInstance().getNewSession();
                         break;
                     case -1:
                         view.showToast("Lỗi hệ thống");
