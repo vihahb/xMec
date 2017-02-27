@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Admin on 1/23/2017.
@@ -45,14 +46,13 @@ public class Constant {
     public static final String SERVER_AUTHEN = "http://124.158.5.112:9180/nipum/";
     public static final String GET_USER = "/user";
     public static final String SERVER_UPLOAD = "http://124.158.5.112:9180/s/files/upload";
-    public static final String ADD_MEDICAL = "user/medical-report-book";
+    public static final String MEDICAL_REPORT_BOOK = "user/medical-report-book";
 
     public static final String SERVER_XMEC = "http://192.168.29.104:8080/v0.1";
-    public static final String GET_MEDIACAL_REPORT_BOOK = "/v0.1/user/medical-report-book?page=1&pagesize=30";
 
 
     public static String getDate(long times){
-        DateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat sdf= new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         Date date = new Date(times);
         return sdf.format(date);
     }

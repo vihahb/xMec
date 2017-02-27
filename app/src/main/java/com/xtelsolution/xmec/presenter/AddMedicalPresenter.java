@@ -10,6 +10,7 @@ import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.Task;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
 import com.xtelsolution.xmec.model.RESP_ID;
@@ -28,7 +29,7 @@ public class AddMedicalPresenter {
         this.view =view;
     }
     public void addMedicalDirectorry(String name,long beginTime,long endTime,int type,String note,List<String> resources){
-        String url = Constant.SERVER_XMEC+Constant.ADD_MEDICAL;
+        String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK;
         Log.e("ADD", "addMedicalDirectorry: "+url);
         RESP_MEDICAL_DETAIL resp_medical_detail = new RESP_MEDICAL_DETAIL();
         resp_medical_detail.setName(name);
@@ -42,8 +43,8 @@ public class AddMedicalPresenter {
             listRS[i]=resources.get(i);
         }
         resp_medical_detail.setResources(listRS);
-        Log.d("STRING", "addMedicalDirectorry: "+JsonHelper.toJson(resp_medical_detail));
-        MedicalDirectoryModel.getInstance().addMedicalDirectory(url,JsonHelper.toJson(resp_medical_detail), LoginModel.getInstance().getSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
+        xLog.d("STRING" + "addMedicalDirectorry: "+JsonHelper.toJson(resp_medical_detail));
+        MedicalDirectoryModel.getinstance().addMedicalDirectory(url,JsonHelper.toJson(resp_medical_detail), LoginModel.getInstance().getSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
                 view.onAddMedicalSuccess();
@@ -51,10 +52,10 @@ public class AddMedicalPresenter {
 
             @Override
             public void onError(Error error) {
-                Log.e("ADD", "onError: "+error.getMessage() );
+                xLog.e("ADD"+ "onError: "+error.getMessage());
                 switch (error.getCode()) {
                     case 2:
-                        Log.d("EEE", "onError: "+error.toString());
+                        xLog.d("EEE"+ "onError: "+error.toString());
                         break;
                     case -1:
                         view.showToast("Lỗi hệ thống");
@@ -66,7 +67,7 @@ public class AddMedicalPresenter {
         new Task.ConvertImage(context, isBigImage, new UploadFileListener() {
             @Override
             public void onSuccess(String url) {
-                Log.e("onSuccess", "onSuccess: "+url);
+                xLog.e("onSuccess" + "onSuccess: "+url);
                 view.onUploadImageSussces(url);
             }
             @Override

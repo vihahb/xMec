@@ -6,6 +6,7 @@ import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
 import com.xtelsolution.xmec.model.RESP_LIST_MEDICAL;
 import com.xtelsolution.xmec.model.RESP_User;
@@ -28,8 +29,8 @@ public class HomePresenter {
         view.showProgressDialog("Đang tải...");
 //        String sesstion = SharedUtils.getInstance().getStringValue(Constant.USER_SESSION);
         String url = Constant.SERVER_XMEC + Constant.GET_USER;
-        Log.e("USer", "getUser: " +url);
-        UserModel.getintance().getUser(url,"V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR" , new ResponseHandle<RESP_User>(RESP_User.class) {
+        Log.e("USer", "getUser: " + url);
+        UserModel.getintance().getUser(url, "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_User>(RESP_User.class) {
             @Override
             public void onSuccess(RESP_User obj) {
                 Log.d("USer", "onSuccess: " + obj.toString());
@@ -37,6 +38,7 @@ public class HomePresenter {
                 view.onGetUerSusscess(obj);
                 getMedicalReportBooks();
             }
+
             @Override
             public void onError(Error error) {
                 view.dismissProgressDialog();
@@ -51,9 +53,10 @@ public class HomePresenter {
         });
 
     }
-    private void getMedicalReportBooks(){
+
+    private void getMedicalReportBooks() {
         String session = SharedPreferencesUtils.getInstance().getStringValue(Constant.USER_SESSION);
-        String url = Constant.SERVER_XMEC+Constant.GET_MEDIACAL_REPORT_BOOK;
+        String url = Constant.SERVER_XMEC + Constant.MEDICAL_REPORT_BOOK + "?page=1&pagesize=30";
         Log.d("URL", "getMedicalReportBooks: ");
         MedicalDirectoryModel.getinstance().getMedicalReportBooks(url, "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_LIST_MEDICAL>(RESP_LIST_MEDICAL.class) {
             @Override
@@ -61,6 +64,7 @@ public class HomePresenter {
                 view.onGetMediacalListSusscess(obj);
                 view.dismissProgressDialog();
             }
+
             @Override
             public void onError(Error error) {
                 view.dismissProgressDialog();
@@ -70,7 +74,7 @@ public class HomePresenter {
                         break;
                     case -1:
                         view.showToast(error.getMessage());
-                        Log.d("sdasdasd", "onError: "+error.getMessage());
+                        xLog.d("onError: " + error.getMessage());
                         break;
                 }
             }

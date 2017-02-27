@@ -23,7 +23,7 @@ public class MedicalDirectoryModel extends com.xtel.nipservicesdk.model.BasicMod
     public void addMedicalDirectory(String url,String obj ,String session,ResponseHandle<RESP_ID> responseHandle) {
         requestServer.postApi(url,obj,session,responseHandle);
     }
-    public void deleteMedicalDirectory(String url, String ojb , String session, ResponseHandle<RESP_Basic> responseHandle){
-
+    public void deleteMedicalDirectory(String url, String id , String session, ResponseHandle<RESP_Basic> responseHandle){
+        requestServer.deleteApi(url,id,session,responseHandle);
     }
 }
