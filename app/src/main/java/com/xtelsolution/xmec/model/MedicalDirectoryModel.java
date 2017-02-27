@@ -10,11 +10,12 @@ import com.xtelsolution.xmec.model.entity.MedicalDirectory;
 
 public class MedicalDirectoryModel extends com.xtel.nipservicesdk.model.BasicModel {
     private static MedicalDirectoryModel instance = new MedicalDirectoryModel();
-    public static  MedicalDirectoryModel getInstance(){
+    public static  MedicalDirectoryModel getinstance(){
         return instance;
     }
-    public void getListMedicalDirectory(String url , String obj, String session, ResponseHandle<MedicalDirectory> responseHandle){
-        requestServer.putApi(url,obj,session,responseHandle);
+
+    public void getMedicalReportBooks(String url, String session, ResponseHandle<RESP_LIST_MEDICAL> userResponseHandle){
+        requestServer.getApi(url,session,userResponseHandle);
     }
     public void getMedicalDirectoryDetail(String url,String obj,String session,ResponseHandle<MedicalDirectory> responseHandle){
         requestServer.putApi(url,obj,session,responseHandle);

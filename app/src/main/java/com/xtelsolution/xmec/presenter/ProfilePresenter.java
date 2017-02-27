@@ -8,6 +8,7 @@ import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
+import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
@@ -18,14 +19,15 @@ import com.xtelsolution.xmec.xmec.views.inf.IProfileView;
  * Created by phimau on 2/17/2017.
  */
 
-public class UpdateInfoPresenter {
+public class ProfilePresenter {
     private IProfileView view;
 
-    public UpdateInfoPresenter(IProfileView view) {
+    public ProfilePresenter(IProfileView view) {
         this.view = view;
     }
 
     public void updateProfile(final String name, final long birthDay, final double hegiht, final double weight, String urlAvatar) {
+        view.showProgressDialog(view.getActivity().getResources().getString(R.string.update_process));
         String url = Constant.SERVER_XMEC+Constant.GET_USER;
         Log.e("TEST", "updateProfile: "+url );
         JsonObject jsonUser = new JsonObject();
@@ -37,7 +39,7 @@ public class UpdateInfoPresenter {
         jsonUser.addProperty(Constant.USER_AVATAR,urlAvatar);
         jsonUser.addProperty(Constant.USER_HEIGHT,hegiht);
         jsonUser.addProperty(Constant.USER_WEIGHT,weight);
-        Log.e("UpdateInfoPresenter", "updateProfile: "+jsonUser.toString());
+        Log.e("ProfilePresenter", "updateProfile: "+jsonUser.toString());
         UserModel.getintance().updateInfoUser(url, jsonUser.toString(), "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
             @Override
             public void onSuccess(RESP_Basic obj) {
@@ -47,9 +49,11 @@ public class UpdateInfoPresenter {
                 SharedPreferencesUtils.getInstance().putLongValue(Constant.USER_BIRTHDAY,birthDay);
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_HEIGHT,(float) hegiht);
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_WEIGHT,(float) weight);
+                view.dismissProgressDialog();
             }
             @Override
             public void onError(Error error) {
+                view.dismissProgressDialog();
                 Log.e("ERR", "onError: "+error.getCode());
                 switch (error.getCode()) {
 
@@ -57,7 +61,7 @@ public class UpdateInfoPresenter {
                         view.showToast("Session không hợp lệ");
                         break;
                     case -1:
-                        view.showToast("Lỗi hệ thống");
+                        view.showToast(error.getMessage());
                 }
             }
         });

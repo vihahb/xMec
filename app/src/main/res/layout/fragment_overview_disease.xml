@@ -70,14 +70,15 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="8dp"
-                    android:src="@drawable/medical_tonometer" />
+                    android:src="@drawable/medical_tonometer"
+                    android:id="@+id/imageView" />
 
                 <TextView
                     android:id="@+id/tv_diagnose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/symptom"
+                    android:text="@string/diagnose"
                     android:textColor="@color/fistText" />
             </LinearLayout>
 

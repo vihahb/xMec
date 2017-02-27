@@ -2,11 +2,8 @@ package com.xtelsolution.xmec.presenter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
@@ -16,8 +13,7 @@ import com.xtelsolution.xmec.common.Task;
 import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
 import com.xtelsolution.xmec.model.RESP_ID;
-import com.xtelsolution.xmec.xmec.views.MyApplication;
-import com.xtelsolution.xmec.xmec.views.activity.MedicalDirectoryActivity;
+import com.xtelsolution.xmec.model.RESP_MEDICAL_DETAIL;
 import com.xtelsolution.xmec.xmec.views.inf.IAddMedicalView;
 
 import java.util.List;
@@ -33,14 +29,21 @@ public class AddMedicalPresenter {
     }
     public void addMedicalDirectorry(String name,long beginTime,long endTime,int type,String note,List<String> resources){
         String url = Constant.SERVER_XMEC+Constant.ADD_MEDICAL;
-        JsonObject object = new JsonObject();
-        object.addProperty(Constant.MEDICAL_NAME,name);
-        object.addProperty(Constant.MEDICAL_BEGIN_TIME,beginTime);
-        object.addProperty(Constant.MEDICAL_END_TIME,endTime);
-        object.addProperty(Constant.MEDICAL_TYPE,type);
-        object.addProperty(Constant.MEDICAL_NOTE,note);
-        object.addProperty(Constant.MEDICAL_RESOURCES, JsonHelper.toJson(resources));
-        MedicalDirectoryModel.getInstance().addMedicalDirectory(url, object.toString(), LoginModel.getInstance().getSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
+        Log.e("ADD", "addMedicalDirectorry: "+url);
+        RESP_MEDICAL_DETAIL resp_medical_detail = new RESP_MEDICAL_DETAIL();
+        resp_medical_detail.setName(name);
+        resp_medical_detail.setBegin_time(beginTime/1000);
+        resp_medical_detail.setEnd_time(endTime/1000);
+        resp_medical_detail.setType(type);
+        resp_medical_detail.setNote(note);
+        int size =resources.size();
+        String[] listRS = new String[size];
+        for (int i = 0; i <size; i++) {
+            listRS[i]=resources.get(i);
+        }
+        resp_medical_detail.setResources(listRS);
+        Log.d("STRING", "addMedicalDirectorry: "+JsonHelper.toJson(resp_medical_detail));
+        MedicalDirectoryModel.getInstance().addMedicalDirectory(url,JsonHelper.toJson(resp_medical_detail), LoginModel.getInstance().getSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
                 view.onAddMedicalSuccess();
@@ -48,9 +51,10 @@ public class AddMedicalPresenter {
 
             @Override
             public void onError(Error error) {
+                Log.e("ADD", "onError: "+error.getMessage() );
                 switch (error.getCode()) {
                     case 2:
-                        view.showToast("Session không hợp lệ");
+                        Log.d("EEE", "onError: "+error.toString());
                         break;
                     case -1:
                         view.showToast("Lỗi hệ thống");
@@ -58,14 +62,13 @@ public class AddMedicalPresenter {
             }
         });
     }
-    public void postImage(Bitmap bitmap, Context context){
-        new Task.ConvertImage(context, false, new UploadFileListener() {
+    public void postImage(Bitmap bitmap,boolean isBigImage, Context context){
+        new Task.ConvertImage(context, isBigImage, new UploadFileListener() {
             @Override
             public void onSuccess(String url) {
                 Log.e("onSuccess", "onSuccess: "+url);
                 view.onUploadImageSussces(url);
             }
-
             @Override
             public void onError(String e) {
 

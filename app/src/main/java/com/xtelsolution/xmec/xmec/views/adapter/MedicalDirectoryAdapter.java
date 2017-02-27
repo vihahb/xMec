@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.model.RESP_MEDICAL;
-import com.xtelsolution.xmec.xmec.views.activity.MedicalDirectoryActivity;
+import com.xtelsolution.xmec.xmec.views.activity.AddMedicalActivity;
 
 import java.util.ArrayList;
 
@@ -91,7 +91,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(mContext,MedicalDirectoryActivity.class);
+                    Intent i = new Intent(mContext,AddMedicalActivity.class);
                     mContext.startActivity(i);
                 }
             });
@@ -102,6 +102,12 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public int getItemViewType(int position) {
         return list.size() <= position ? VIEW_TYPE_ADD_BUTTON : VIEW_TYPE_ITEM;
+    }
+
+    public void addAll(ArrayList<RESP_MEDICAL> data){
+        int startIndex = list.size();
+        list.addAll(startIndex,data);
+        notifyItemRangeInserted(startIndex,data.size());
     }
 
     @Override

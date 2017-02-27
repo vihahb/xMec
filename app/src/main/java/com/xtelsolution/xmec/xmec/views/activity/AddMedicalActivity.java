@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicalDirectoryActivity extends BasicActivity implements IAddMedicalView {
+public class AddMedicalActivity extends BasicActivity implements IAddMedicalView {
     private Toolbar mToolbar;
     private IIlnessAdapter2 mAdapter;
     private HealtRecoderAdapter healtRecoderAdapter;
@@ -57,17 +57,15 @@ public class MedicalDirectoryActivity extends BasicActivity implements IAddMedic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_directory);
-        mContext = MedicalDirectoryActivity.this;
+        mContext = AddMedicalActivity.this;
         init();
-
+        Log.e("TEST", "onViewCreated: "+etBeginTime.getClass().getSimpleName());
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-
         etEndTime.setInputType(InputType.TYPE_NULL);
         etBeginTime.setInputType(InputType.TYPE_NULL);
-
         rcDesease.setAdapter(mAdapter);
         rcDesease.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         initControl();
@@ -143,14 +141,14 @@ public class MedicalDirectoryActivity extends BasicActivity implements IAddMedic
     }
 
     private void AddHeathRecoder() {
-        new PickerBuilder(MedicalDirectoryActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
+        new PickerBuilder(AddMedicalActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
                 .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                     @Override
                     public void onImageReceived(Uri imageUri) {
                         Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
                         try {
                             Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                            presenter.postImage(avatar, getBaseContext());
+                            presenter.postImage(avatar, true,getBaseContext());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -198,6 +196,6 @@ public class MedicalDirectoryActivity extends BasicActivity implements IAddMedic
 
     @Override
     public Activity getActivity() {
-        return MedicalDirectoryActivity.this;
+        return AddMedicalActivity.this;
     }
 }

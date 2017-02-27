@@ -9,5 +9,5 @@ import com.xtelsolution.xmec.model.RESP_User;
 
 public interface IHomeView  extends BaseView {
     void onGetUerSusscess(RESP_User user);
-    void onGetMediacalListSusscess(RESP_LIST_MEDICAL user);
+    void onGetMediacalListSusscess(RESP_LIST_MEDICAL list_medical);
 }

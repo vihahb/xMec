@@ -29,7 +29,7 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
     }
 
     private void initProgressDialog() {
-        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
     }
@@ -51,6 +51,8 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
 
     @Override
     public void showProgressDialog(String title) {
+        if (progressDialog==null)
+            initProgressDialog();
         progressDialog.setTitle(title);
         progressDialog.show();
     }

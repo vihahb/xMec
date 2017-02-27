@@ -46,6 +46,7 @@
     <string name="detail_text">Chi tiết</string>
     <string name="define_disease"><b>Khái quán:</b> ABC là Bệnh gì gì đấy................ ..............</string>
     <string name="symptom"><b>Triêu chứng:</b> triệu trứng của bệnh là cái gì đó viết ở đây.</string>
+    <string name="diagnose"><b>Chuẩn đoán:</b> Phương pháp chuẩn đoán bệnh (xet nghiệm máu,đến gặp bác sĩ....).</string>
     <string name="treatment"><b>Điều trị:</b></string>
     <string name="disease_diagnosi">Chuẩn đoán bệnh</string>
     <string name="male">Nam</string>
@@ -69,6 +70,7 @@
     <string name="control_disease_dieu_tri">Điều trị</string>
     <string name="emtry_list_new_feed">Không có bài viết nào</string>
     <string name="register_account">Đăng kí tài khoản</string>
+    <string name="update_process">Đang cập nhật</string>
 
     <string name="service_code_key">XTL-XMEC</string>
     <string name="FACEBOOK_APP_ID">1851247128486694</string>

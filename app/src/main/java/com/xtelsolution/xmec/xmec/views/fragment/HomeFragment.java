@@ -48,17 +48,16 @@ public class HomeFragment extends BasicFragment implements IHomeView {
     private TextView tvWeight;
     private HomePresenter homePresenter;
     private Context mContext;
-    private ArrayList<RESP_MEDICAL> sticks;
+    private ArrayList<RESP_MEDICAL> mlistMedica;
     private ImageView imgGender;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
-        sticks = new ArrayList<>();
         homePresenter = new HomePresenter(this);
-        sticks.addAll(createTempData(0));
-        adapter = new MedicalDirectoryAdapter(sticks,getContext());
+        mlistMedica = new ArrayList<>();
+        adapter = new MedicalDirectoryAdapter(mlistMedica,getContext());
     }
 
     @Nullable
@@ -152,7 +151,8 @@ public class HomeFragment extends BasicFragment implements IHomeView {
     }
 
     @Override
-    public void onGetMediacalListSusscess(RESP_LIST_MEDICAL user) {
+    public void onGetMediacalListSusscess(RESP_LIST_MEDICAL list_medical) {
+        adapter.addAll(list_medical.getList());
 
     }
 }

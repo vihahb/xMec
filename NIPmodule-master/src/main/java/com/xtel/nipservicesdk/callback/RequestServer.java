@@ -166,10 +166,9 @@ public class RequestServer {
             super.onPostExecute(s);
             if (isSuccess) {
                 responseHandle.onSuccess(s);
-                Log.e("onPostExecute", "onPostExecute: ");
+
             } else {
                 responseHandle.onError(new Error(-1, NipApplication.context.getString(R.string.error), NipApplication.context.getString(R.string.can_not_request)));
-                Log.e("onError", "onPostExecute: ");
             }
         }
     }

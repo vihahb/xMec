@@ -36,7 +36,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public DatePickerFragment(EditText etTime) {
         this.etTime = etTime;
     }
-
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         Log.e("TIME", "onDateSet: "+i+"       "+i1+"        "+i2);
@@ -62,5 +61,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     public void setTimeinMilisecond(long timeinMilisecond) {
         this.timeinMilisecond = timeinMilisecond;
+        etTime.setText(Constant.getDate(timeinMilisecond));
     }
 }

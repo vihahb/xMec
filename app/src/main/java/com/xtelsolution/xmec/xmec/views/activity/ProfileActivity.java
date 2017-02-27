@@ -1,28 +1,22 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
@@ -30,9 +24,8 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.Task;
 import com.xtelsolution.xmec.listener.UploadFileListener;
-import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
-import com.xtelsolution.xmec.presenter.UpdateInfoPresenter;
+import com.xtelsolution.xmec.presenter.ProfilePresenter;
 import com.xtelsolution.xmec.xmec.views.inf.IProfileView;
 import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
@@ -40,6 +33,9 @@ import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
 import java.io.IOException;
 
 import agency.tango.android.avatarview.views.AvatarView;
+import de.psdev.formvalidations.Field;
+import de.psdev.formvalidations.Form;
+import de.psdev.formvalidations.validations.NotEmpty;
 
 public class ProfileActivity extends BasicActivity implements View.OnClickListener,IProfileView,UploadFileListener{
     private ImageView btnSelectImage;
@@ -54,8 +50,9 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     private EditText etWeight;
     private Button btnUpdateInfo;
     private DatePickerFragment datePicker;
-    private UpdateInfoPresenter presenter;
+    private ProfilePresenter presenter;
     private String urlAvatar;
+    private Form mForm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +60,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         setContentView(R.layout.activity_profile);
         mContext = this;
         initUI();
-        presenter= new UpdateInfoPresenter(this);
+        presenter= new ProfilePresenter(this);
         presenter.getProfile();
 
     }
@@ -91,8 +88,19 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         etBirthday.setInputType(InputType.TYPE_NULL);
         btnUpdateInfo = (Button) findViewById(R.id.btn_update_info);
         btnSelectImage.setOnClickListener(this);
+
+
         animation();
         initControl();
+        initValidate();
+    }
+
+    private void initValidate() {
+        mForm = Form.create();
+        mForm.addField(Field.using(etName).validate(NotEmpty.build()));
+        mForm.addField(Field.using(etHeight).validate(NotEmpty.build()));
+        mForm.addField(Field.using(etWeight).validate(NotEmpty.build()));
+
     }
 
     @Override
@@ -110,6 +118,10 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
             case R.id.btn_update_info:
                 if (!NetWorkInfo.isOnline(mContext)){
                     showToastNoInternet();
+                }
+                if (!mForm.isValid()) {
+                    Toast.makeText(mContext, "Không được để trống", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 updateProfile();
 
@@ -168,7 +180,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     @Override
     public void onLoadProfileSuccess(String name, long birthday, double height, double weight, String url) {
         etName.setText(name);
-        etBirthday.setText(Constant.getDate(birthday));
+        datePicker.setTimeinMilisecond(birthday);
         etHeight.setText(String.valueOf(height));
         etWeight.setText(String.valueOf(weight));
         setImage(avatarView,url);
