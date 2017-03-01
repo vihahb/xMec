@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,15 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
         @Override
         public void onProviderEnabled(String s) {
+            showToast("onProviderEnabled");
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            }
+            Location lastKnownLocationGPS = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (lastKnownLocationGPS != null) {
+                myLongitude = lastKnownLocationGPS.getLongitude();
+                myLatitude = lastKnownLocationGPS.getLatitude();
+            }
         }
 
         @Override
@@ -75,13 +84,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
             view = inflater.inflate(R.layout.fragment_health_center, container, false);
             initview();
             initControl();
-            mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            isCheckPermission = PermissionHelper.checkOnlyPermission(Manifest.permission.ACCESS_FINE_LOCATION, getActivity(), 98);
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            } else {
-                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 50, mLocationListener);
-            }
 
         }
         return view;
@@ -91,7 +94,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         btnCurrentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isLocationEnable()){
+                if (!isLocationEnable()) {
                     showToast("Bạn chưa chia sẻ vị trí");
                     return;
                 }
@@ -108,7 +111,22 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initMap();
+        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        isCheckPermission = PermissionHelper.checkOnlyPermission(Manifest.permission.ACCESS_FINE_LOCATION, getActivity(), 98);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            xLog.e("AAA");
+
+        } else {
+            Log.e("LOg", "onViewCreated: ");
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 3, mLocationListener);
+            Location lastKnownLocationGPS = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (lastKnownLocationGPS != null) {
+                myLongitude = lastKnownLocationGPS.getLongitude();
+                myLatitude = lastKnownLocationGPS.getLatitude();
+            }
+        }
     }
+
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
