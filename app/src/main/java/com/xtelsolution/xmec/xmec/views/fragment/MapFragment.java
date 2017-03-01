@@ -80,7 +80,8 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             } else {
-            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 50, mLocationListener);}
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 50, mLocationListener);
+            }
 
         }
         return view;
@@ -90,7 +91,11 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         btnCurrentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude,myLongitude),15));
+                if (!isLocationEnable()){
+                    showToast("Bạn chưa chia sẻ vị trí");
+                    return;
+                }
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), 15));
             }
         });
     }
@@ -114,9 +119,12 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if (isCheckPermission) {
-            xLog.e("isCheckPermission" + "Done");
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude,myLongitude),13));
-
+            if (isLocationEnable()) {
+                xLog.e("isCheckPermission" + "Done");
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), 13));
+            } else {
+                showToast("Bạn chưa chia sẻ vị trí");
+            }
         }
     }
 
@@ -124,5 +132,12 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     public void onPermissionGranted() {
         isCheckPermission = true;
         onMapReady(mMap);
+    }
+
+    private boolean isLocationEnable() {
+        if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            return true;
+        }
+        return false;
     }
 }
