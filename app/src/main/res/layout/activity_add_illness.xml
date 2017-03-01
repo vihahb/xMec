@@ -20,30 +20,32 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar_top"
-        android:layout_above="@+id/btnSaveIllness">
+        android:layout_above="@+id/btnSaveIllness"
+        android:layout_below="@id/toolbar_top">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <AutoCompleteTextView
+                android:id="@+id/etFindIllness"
                 style="@style/EditTextAddIllness"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
-                android:hint="@string/illness_name"
-                android:id="@+id/editText" />
+                android:hint="@string/illness_name" />
 
             <EditText
+                android:id="@+id/editText2"
                 style="@style/EditTextAddIllness"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/directory_disease_note"
-                android:id="@+id/editText2" />
+                android:hint="@string/directory_disease_note" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,27 +60,28 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvMedicineWithEditButton"
-                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dimen_16"
                 android:layout_marginRight="@dimen/dimen_16"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_marginTop="@dimen/dimen_16" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
     <Button
         android:id="@id/btnSaveIllness"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/bg_btn_home_search"
         android:padding="8dp"
         android:text="@string/add_illness"
         android:textAllCaps="false"
         android:textColor="@color/icons"
-        android:textSize="@dimen/dimen20sp"/>
+        android:textSize="@dimen/dimen20sp" />
 </RelativeLayout>

@@ -27,7 +27,7 @@ public class HomePresenter {
 
     public void getUser() {
         view.showProgressDialog("Đang tải...");
-//        String sesstion = SharedUtils.getInstance().getStringValue(Constant.USER_SESSION);
+        String sesstion = SharedPreferencesUtils.getInstance().getStringValue(Constant.USER_SESSION);
         String url = Constant.SERVER_XMEC + Constant.GET_USER;
         Log.e("USer", "getUser: " +url);
         UserModel.getintance().getUser(url,"V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR" , new ResponseHandle<RESP_User>(RESP_User.class) {
@@ -47,6 +47,8 @@ public class HomePresenter {
                         break;
                     case -1:
                         view.showToast(error.getMessage());
+                        SharedPreferencesUtils.getInstance().putStringValue(Constant.USER_AVATAR,"dasdasda");
+
                 }
             }
         });

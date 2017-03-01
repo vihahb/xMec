@@ -52,7 +52,7 @@ public class BasicFragment extends Fragment implements BaseView{
 
     @Override
     public void showProgressDialog(String title) {
-        progressDialog.setTitle(title);
+        progressDialog.setMessage(title);
         progressDialog.show();
     }
 

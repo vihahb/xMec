@@ -13,6 +13,7 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.Stick;
+import com.xtelsolution.xmec.model.entity.Illness;
 import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 
 import java.util.List;
@@ -23,12 +24,12 @@ import java.util.List;
 
 public class IllnessAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private List<Stick> data;
+    private List<Illness> data;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private static ItemClickListener mItemClickListener;
 
-    public IllnessAdapter(Context mContext, List<Stick> data) {
+    public IllnessAdapter(Context mContext, List<Illness> data) {
         this.mContext = mContext;
         this.data = data;
     }
@@ -93,11 +94,11 @@ public class IllnessAdapter extends RecyclerView.Adapter {
         return position;
     }
 
-    public void add(Stick stick) {
+    public void add(Illness stick) {
         insert(stick, data.size());
     }
 
-    public void insert(Stick stick, int position) {
+    public void insert(Illness stick, int position) {
         data.add(position, stick);
         notifyItemInserted(position);
     }
@@ -113,7 +114,7 @@ public class IllnessAdapter extends RecyclerView.Adapter {
         notifyItemRangeRemoved(0, size);
     }
 
-    public void addAll(List<Stick> sticks) {
+    public void addAll(List<Illness> sticks) {
         int startIndex = data.size();
         data.addAll(startIndex, sticks);
         notifyItemRangeInserted(startIndex, sticks.size());
@@ -122,5 +123,11 @@ public class IllnessAdapter extends RecyclerView.Adapter {
 
     public void setOnItemClickListener(ItemClickListener itemClickListener) {
         this.mItemClickListener = itemClickListener;
+    }
+    public void addAllNew(List<Illness> data){
+        this.data.clear();
+        this.data.addAll(data);
+        notifyDataSetChanged();
+
     }
 }

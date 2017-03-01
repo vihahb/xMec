@@ -56,7 +56,6 @@ public class ProfilePresenter {
                 view.dismissProgressDialog();
                 Log.e("ERR", "onError: "+error.getCode());
                 switch (error.getCode()) {
-
                     case 2:
                         view.showToast("Session không hợp lệ");
                         break;

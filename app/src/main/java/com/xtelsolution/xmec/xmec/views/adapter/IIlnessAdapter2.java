@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.xtelsolution.xmec.model.entity.IIlness;
+import com.xtelsolution.xmec.model.entity.Illness;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.xmec.views.activity.AddIllnessActivity;
@@ -24,10 +24,10 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final int BUTTON = 2;
     public static final int NORMAL = 1;
     private Context mContext;
-    private ArrayList<IIlness> mList;
+    private ArrayList<Illness> mList;
     private ItemClickListener itemClickListener;
 
-    public IIlnessAdapter2(Context mContext, ArrayList<IIlness> mList) {
+    public IIlnessAdapter2(Context mContext, ArrayList<Illness> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -97,7 +97,7 @@ public class IIlnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
          return mList.size() <= position ? BUTTON : NORMAL;
     }
 
-    public  void addAll(ArrayList<IIlness> data){
+    public  void addAll(ArrayList<Illness> data){
         int startIndex = data.size();
         mList.addAll(startIndex,data);
         notifyItemRangeInserted(startIndex,data.size());

@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.xtelsolution.xmec.common.NetWorkInfo;
-import com.xtelsolution.xmec.model.entity.IIlness;
+import com.xtelsolution.xmec.model.entity.Illness;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.presenter.AddMedicalPresenter;
@@ -127,9 +127,9 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
         btnSavaDirectory = (Button) findViewById(R.id.btn_save_director);
         etNote = (EditText) findViewById(R.id.et_note);
         btnAddHelthReconder = (ImageView) findViewById(R.id.btn_add_healty_recoder);
-        ArrayList<IIlness> iIlnesses = new ArrayList<>();
+        ArrayList<Illness> iIlnesses = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            iIlnesses.add(new IIlness("Tên bệnh " + i));
+            iIlnesses.add(new Illness("Tên bệnh " + i));
         }
         mAdapter = new IIlnessAdapter2(getBaseContext(), iIlnesses);
         listUrl = new ArrayList<>();
