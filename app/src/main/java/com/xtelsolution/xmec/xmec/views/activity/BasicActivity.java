@@ -19,7 +19,7 @@ import com.xtelsolution.xmec.xmec.views.inf.BaseView;
  * Created by HUNGNT on 1/17/2017.
  */
 
-public class BasicActivity extends AppCompatActivity implements BaseView {
+public class BasicActivity extends AppCompatActivity implements BaseView{
 
 
     private ProgressDialog progressDialog;
@@ -53,7 +53,7 @@ public class BasicActivity extends AppCompatActivity implements BaseView {
 
     @Override
     public void showProgressDialog(String title) {
-        if (progressDialog == null)
+        if (progressDialog==null)
             initProgressDialog();
         progressDialog.setMessage(title);
         progressDialog.show();
@@ -61,7 +61,7 @@ public class BasicActivity extends AppCompatActivity implements BaseView {
 
     @Override
     public void dismissProgressDialog() {
-        if (progressDialog.isShowing()) {
+        if (progressDialog.isShowing()){
             progressDialog.dismiss();
         }
     }

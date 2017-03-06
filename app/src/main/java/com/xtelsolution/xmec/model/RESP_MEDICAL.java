@@ -9,6 +9,8 @@ import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 
 public class RESP_MEDICAL extends RESP_Basic {
     @Expose
+    private int id;
+    @Expose
     private String name;
     @Expose
     private long begin_time;
@@ -17,7 +19,7 @@ public class RESP_MEDICAL extends RESP_Basic {
     @Expose
     private int type;
 
-    public RESP_MEDICAL(String name, long begin_time, long end_time, int type) {
+    public RESP_MEDICAL(int id,String name, long begin_time, long end_time, int type) {
         this.name = name;
         this.begin_time = begin_time;
         this.end_time = end_time;
@@ -34,6 +36,14 @@ public class RESP_MEDICAL extends RESP_Basic {
 
     public long getEnd_time() {
         return end_time;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setEnd_time(long end_time) {

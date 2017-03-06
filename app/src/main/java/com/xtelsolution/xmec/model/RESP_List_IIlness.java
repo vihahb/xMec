@@ -2,7 +2,7 @@ package com.xtelsolution.xmec.model;
 
 import com.google.gson.annotations.Expose;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
-import com.xtelsolution.xmec.model.entity.IIlness;
+import com.xtelsolution.xmec.model.entity.Illness;
 
 import java.util.ArrayList;
 
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 
 public class RESP_List_IIlness extends RESP_Basic {
     @Expose
-    private ArrayList<IIlness> list;
+    private ArrayList<Illness> data;
 
-    public ArrayList<IIlness> getList() {
-        return list;
+    public ArrayList<Illness> getList() {
+        return data;
     }
 
-    public void setList(ArrayList<IIlness> list) {
-        this.list = list;
+    public void setList(ArrayList<Illness> list) {
+        this.data = list;
     }
 }
