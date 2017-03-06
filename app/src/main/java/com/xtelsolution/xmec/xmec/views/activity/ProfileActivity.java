@@ -26,7 +26,7 @@ import com.xtelsolution.xmec.common.Task;
 import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.ProfilePresenter;
-import com.xtelsolution.xmec.xmec.views.inf.IProfileView;
+import com.xtelsolution.xmec.listener.IProfileView;
 import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
 

@@ -1,15 +1,19 @@
 package com.xtelsolution.xmec.xmec.views.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
 import com.xtelsolution.xmec.R;
-import com.xtelsolution.xmec.model.Article;
+import com.xtelsolution.xmec.model.entity.Article;
+import com.xtelsolution.xmec.xmec.views.activity.NewsDetailActivity;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +37,28 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof NewsFeedViewHolder){
+            final Article article = data.get(position);
+            ((NewsFeedViewHolder) holder).tvAuthorName.setText(article.getAuthor().getName());
+            ((NewsFeedViewHolder) holder).tvNewsFeedTitle.setText(article.getNewsFeed().getTitle());
+            ((NewsFeedViewHolder) holder).tvTypename.setText(article.getType_name());
+            ((NewsFeedViewHolder) holder).tvNewsPubTime.setText(article.getNewsFeed().getPubDate());
+            ((NewsFeedViewHolder) holder).tvViews.setText(article.getTotal_view()+" Lượt xem");
+            ((NewsFeedViewHolder) holder).tvLikes.setText(article.getTotal_like()+" Thích");
+            ((NewsFeedViewHolder) holder).tvComments.setText(article.getTotal_comment()+" Bình luận");
+            Ion.with(mContext).load(article.getAuthor().getAvatar_url()).intoImageView(((NewsFeedViewHolder) holder).imgAuthorAvatar);
+            Ion.with(mContext).load(article.getNewsFeed().getDescription()).intoImageView(((NewsFeedViewHolder) holder).imgNewsPhoto);
+            ((NewsFeedViewHolder) holder).imgPlayIcon.setVisibility(View.GONE);
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, NewsDetailActivity.class);
+                    intent.putExtra(NewsDetailActivity.TAG_NEWS_URL,article.getNewsFeed().getLink());
+                    mContext.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
@@ -42,8 +67,28 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
     }
 
     private class NewsFeedViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvNewsFeedTitle;
+        TextView tvAuthorName;
+        TextView tvTypename;
+        TextView tvNewsPubTime;
+        TextView tvViews,tvLikes,tvComments;
+        ImageView imgNewsPhoto;
+        ImageView imgPlayIcon;
+        ImageView imgAuthorAvatar;
+
         private NewsFeedViewHolder(View itemView) {
             super(itemView);
+            tvNewsFeedTitle = (TextView) itemView.findViewById(R.id.tvNewsFeedTitle);
+            tvAuthorName = (TextView) itemView.findViewById(R.id.tvAuthorName);
+            tvTypename = (TextView) itemView.findViewById(R.id.tvTypeName);
+            tvNewsPubTime = (TextView) itemView.findViewById(R.id.tvNewsPubTime);
+            tvViews = (TextView) itemView.findViewById(R.id.tvViews);
+            tvLikes = (TextView) itemView.findViewById(R.id.tvLikes);
+            tvComments = (TextView) itemView.findViewById(R.id.tvComments);
+            imgNewsPhoto = (ImageView) itemView.findViewById(R.id.imgNewsPhoto);
+            imgPlayIcon = (ImageView) itemView.findViewById(R.id.imgPlayIcon);
+            imgAuthorAvatar = (ImageView) itemView.findViewById(R.id.imgAuthorAvatar);
         }
     }
 

@@ -16,9 +16,12 @@ import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.model.Article;
+import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.listener.RecyclerOnScrollListener;
+import com.xtelsolution.xmec.presenter.NewsFeedPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsFeedAdapter;
+import com.xtelsolution.xmec.xmec.views.inf.INewsFeedView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,23 +30,26 @@ import java.util.List;
  * Created by HUNGNT on 1/20/2017.
  */
 
-public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
+public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener,INewsFeedView {
 
     private Context mContext;
-
     private NewsFeedAdapter adapter;
-
     private SuperRecyclerView recyclerView;
-
     private List<Article> articleList;
-
     private Handler mHandler;
-
     private LinearLayoutManager manager;
+    private NewsFeedPresenter presenter;
+    private String rss_url;
+
+    public NewsFragment(String rss_url) {
+        this.rss_url = rss_url;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        presenter = new NewsFeedPresenter(this);
 
         mContext = getContext();
 
@@ -85,8 +91,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setupMoreListener(this, 10);
 
         setDataToView();
-
         initControll();
+        presenter.loadNewsFeed(rss_url);
     }
 
     private void initControll() {
@@ -94,13 +100,11 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setOnScrollListener(new RecyclerOnScrollListener(manager) {
             @Override
             public void onHide() {
-
                 mContext.sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
             }
 
             @Override
             public void onShow() {
-
                 mContext.sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
             }
 
@@ -115,43 +119,29 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setAdapter(adapter);
     }
 
-    private List<Article> createTempleatData() {
 
-        List<Article> articles = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-
-            Article article = new Article();
-
-            article.setId(i);
-
-            articles.add(article);
-        }
-
-        return articles;
-    }
 
 
     @Override
     public void onRefresh() {
-
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-
-                adapter.clear();
-
-                adapter.addAll(createTempleatData());
-            }
-        }, 1000);
+        presenter.loadNewsFeed(rss_url);
+        recyclerView.setRefreshing(false);
     }
 
     @Override
     public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
 
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                adapter.addAll(createTempleatData());
-            }
-        }, 1000);
+//        mHandler.postDelayed(new Runnable() {
+//            public void run() {
+//                adapter.addAll(createTempleatData());
+//            }
+//        }, 1000);
+    }
+
+    @Override
+    public void loadNewsFeed(ArrayList<Article> data) {
+        adapter.clear();
+        adapter.addAll(data);
+        adapter.notifyDataSetChanged();
     }
 }

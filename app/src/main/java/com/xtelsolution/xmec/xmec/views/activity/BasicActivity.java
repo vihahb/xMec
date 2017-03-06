@@ -2,8 +2,10 @@ package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,7 +19,7 @@ import com.xtelsolution.xmec.xmec.views.inf.BaseView;
  * Created by HUNGNT on 1/17/2017.
  */
 
-public class BasicActivity extends AppCompatActivity implements BaseView{
+public class BasicActivity extends AppCompatActivity implements BaseView {
 
 
     private ProgressDialog progressDialog;
@@ -51,7 +53,7 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
 
     @Override
     public void showProgressDialog(String title) {
-        if (progressDialog==null)
+        if (progressDialog == null)
             initProgressDialog();
         progressDialog.setMessage(title);
         progressDialog.show();
@@ -59,16 +61,31 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
 
     @Override
     public void dismissProgressDialog() {
-        if (progressDialog.isShowing()){
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
 
     protected void setImage(ImageView img, String url) {
-        Picasso.with(this)
-                .load(url)
-                .placeholder(R.drawable.avatar)
-                .error(R.drawable.avatar)
-                .into(img);
+        if (url == null || url.trim().length()==0) {
+            img.setImageResource(R.drawable.avatar);
+        } else {
+            Picasso.with(this)
+                    .load(url)
+                    .placeholder(R.drawable.avatar)
+                    .error(R.drawable.avatar)
+                    .into(img);
+        }
+    }
+    public void showAleartDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("");
+        builder.setMessage("");
+        builder.setNegativeButton("OKE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
     }
 }

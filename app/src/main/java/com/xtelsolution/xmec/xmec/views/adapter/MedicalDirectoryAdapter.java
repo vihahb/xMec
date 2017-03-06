@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_MEDICAL;
 import com.xtelsolution.xmec.xmec.views.activity.AddMedicalActivity;
 
@@ -26,6 +27,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_ADD_BUTTON = 1;
     private Context mContext;
+    private ItemClickListener listener;
     public MedicalDirectoryAdapter(ArrayList<RESP_MEDICAL> data,Context context) {
         this.list = data;
         this.mContext =context;
@@ -48,7 +50,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof MedicalDirectoryViewHolder) {
             RESP_MEDICAL directory = list.get(position);
@@ -56,10 +58,13 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
             viewhodlder.tvMedicalDirectoryName.setText(directory.getName());
             viewhodlder.tvStt.setText(position+ 1+"");
             viewhodlder.tvTimeStamp.setText(Constant.getDate(directory.getBegin_time()));
+            //setonClick
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, "Mau Hong Phi", Toast.LENGTH_SHORT).show();
+                    if (position>=0&&position < list.size()){
+                        listener.onItemClickListener(list.get(position),position);
+                    }
                 }
             });
         }
@@ -69,30 +74,29 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    class MedicalDirectoryViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvMedicalDirectoryName;
-        public TextView tvTimeStamp;
-        public TextView tvStt;
+    private class MedicalDirectoryViewHolder extends RecyclerView.ViewHolder {
+        TextView tvMedicalDirectoryName;
+        TextView tvTimeStamp;
+        TextView tvStt;
 
         public MedicalDirectoryViewHolder(View itemView) {
             super(itemView);
             tvStt = (TextView) itemView.findViewById(R.id.tv_stt);
             tvMedicalDirectoryName = (TextView) itemView.findViewById(R.id.tvIllnessName);
             tvTimeStamp = (TextView) itemView.findViewById(R.id.tv_time_stamp);
-
         }
     }
-    class MedicalDirectoryButtonViewHolder extends RecyclerView.ViewHolder {
-        public Button btnAdd;
+    private class MedicalDirectoryButtonViewHolder extends RecyclerView.ViewHolder {
+        private Button btnAdd;
 
-        public MedicalDirectoryButtonViewHolder(View itemView) {
+        MedicalDirectoryButtonViewHolder(View itemView) {
             super(itemView);
             btnAdd = (Button) itemView.findViewById(R.id.it_btn_add);
+            final int position = getLayoutPosition();
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(mContext,AddMedicalActivity.class);
-                    mContext.startActivity(i);
+                    mContext.startActivity(new Intent(mContext,AddMedicalActivity.class));
                 }
             });
 
@@ -113,5 +117,9 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public int getItemCount() {
         return list.size()+1;
+    }
+
+    public void setOnClickListener(ItemClickListener onClickListener){
+        this.listener = onClickListener;
     }
 }

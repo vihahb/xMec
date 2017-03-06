@@ -13,7 +13,7 @@
         android:padding="8dp">
 
         <agency.tango.android.avatarview.views.AvatarView
-            android:id="@+id/imgNewsThumble"
+            android:id="@+id/imgAuthorAvatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentLeft="true"
@@ -26,15 +26,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginLeft="8dp"
-            android:layout_toEndOf="@+id/imgNewsThumble"
-            android:layout_toLeftOf="@+id/btnOptions"
-            android:layout_toRightOf="@+id/imgNewsThumble"
-            android:layout_toStartOf="@+id/btnOptions"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingEnd="8dp"
-            android:paddingStart="8dp">
+            android:paddingStart="8dp"
+            android:layout_toLeftOf="@+id/btnOptions"
+            android:layout_toStartOf="@id/btnOptions"
+            android:layout_toRightOf="@+id/imgAuthorAvatar"
+            android:layout_toEndOf="@+id/imgAuthorAvatar">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,22 +41,34 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvAuthorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Admin 1"
                     android:textStyle="bold" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:text="&#9654; Bài thuốc hay"
+                    android:text="&#9654;"
+                    android:textColor="#ff8359"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvTypeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="Bài thuốc hay"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="#ff8359"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvNewsPubTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 phút trước" />
@@ -86,6 +97,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/imgNewsPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:layout_centerInParent="true"
@@ -94,6 +106,7 @@
                 android:src="@drawable/thumble_news_placeholder" />
 
             <ImageView
+                android:id="@+id/imgPlayIcon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerInParent="true"
@@ -101,6 +114,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tvNewsFeedTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_8"
@@ -112,7 +126,6 @@
             android:text="Mẹo bảo quản thuốc lâu, không bị mốc và có thể tái
 sử đụng khi cần! "
             android:textColor="@color/textTitleNewFeed"
-
             android:textStyle="bold" />
 
         <RelativeLayout

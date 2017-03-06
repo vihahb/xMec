@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.xtel.nipservicesdk.utils.JsonHelper;
+import com.xtelsolution.xmec.callbacks.RSSGetter;
 import com.xtelsolution.xmec.model.RESP_MEDICAL;
 
 import java.security.MessageDigest;
@@ -32,6 +33,7 @@ public class MyApplication extends Application {
         PACKAGE_NAME = context.getPackageName();
 //        getKeyHash(PACKAGE_NAME);
         Log.v("Pkg name", PACKAGE_NAME);
+
     }
 
     private void getKeyHash(String pkg_name) {
