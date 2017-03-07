@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.entity.NewsFeed;
 import com.xtelsolution.xmec.model.entity.NewsFeeds;
-import com.xtelsolution.xmec.xmec.views.inf.OnNewsFeedLoadedListener;
+import com.xtelsolution.xmec.listener.OnNewsFeedLoadedListener;
 
 import java.io.IOException;
 import java.util.ArrayList;

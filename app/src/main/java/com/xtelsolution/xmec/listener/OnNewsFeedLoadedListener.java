@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec.xmec.views.inf;
+package com.xtelsolution.xmec.listener;
 
 import com.xtelsolution.xmec.model.entity.NewsFeed;
 

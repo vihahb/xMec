@@ -5,7 +5,7 @@ import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.model.entity.NewsAuthor;
 import com.xtelsolution.xmec.model.entity.NewsFeed;
 import com.xtelsolution.xmec.xmec.views.inf.INewsFeedView;
-import com.xtelsolution.xmec.xmec.views.inf.OnNewsFeedLoadedListener;
+import com.xtelsolution.xmec.listener.OnNewsFeedLoadedListener;
 
 import java.util.ArrayList;
 

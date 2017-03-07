@@ -2,14 +2,13 @@ package com.xtelsolution.xmec.presenter;
 
 import com.xtelsolution.xmec.callbacks.NewsHtmlLoader;
 import com.xtelsolution.xmec.common.xLog;
-import com.xtelsolution.xmec.listener.LoadNewsListener;
+import com.xtelsolution.xmec.listener.LoadNewsDetailListener;
 import com.xtelsolution.xmec.xmec.views.inf.INewsDetailView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,7 +24,7 @@ public class NewsDetailPresenter {
     }
 
     public void loadNews(String url) {
-        new NewsHtmlLoader(new LoadNewsListener() {
+        new NewsHtmlLoader(new LoadNewsDetailListener() {
             @Override
             public void onPrepare() {
                 view.showProgressDialog("Đang tải....");
