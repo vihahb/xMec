@@ -10,4 +10,5 @@ import java.util.ArrayList;
 
 public interface INewsFeedView extends BaseView{
     void loadNewsFeed(ArrayList<Article> data);
+    String getTitleString();
 }

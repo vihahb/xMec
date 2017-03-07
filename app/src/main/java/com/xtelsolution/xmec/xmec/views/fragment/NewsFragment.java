@@ -16,7 +16,6 @@ import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.listener.RecyclerOnScrollListener;
 import com.xtelsolution.xmec.presenter.NewsFeedPresenter;
@@ -30,7 +29,7 @@ import java.util.List;
  * Created by HUNGNT on 1/20/2017.
  */
 
-public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener,INewsFeedView {
+public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener, INewsFeedView {
 
     private Context mContext;
     private NewsFeedAdapter adapter;
@@ -39,10 +38,11 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
     private Handler mHandler;
     private LinearLayoutManager manager;
     private NewsFeedPresenter presenter;
-    private String rss_url;
+    private String rss_url,typeName;
 
-    public NewsFragment(String rss_url) {
+    public NewsFragment(String rss_url,String typeName) {
         this.rss_url = rss_url;
+        this.typeName = typeName;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
 
             @Override
             public void onLoadMore() {
-
+                recyclerView.setLoadingMore(false);
             }
         });
     }
@@ -118,8 +118,6 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
     private void setDataToView() {
         recyclerView.setAdapter(adapter);
     }
-
-
 
 
     @Override
@@ -143,5 +141,10 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
         adapter.clear();
         adapter.addAll(data);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public String getTitleString() {
+        return typeName;
     }
 }
