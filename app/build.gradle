@@ -53,6 +53,8 @@ dependencies {
     compile 'com.facebook.android:account-kit-sdk:4.19.0'
     compile 'de.psdev.formvalidations:formvalidations:1.1.2'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.balysv:material-ripple:1.0.2'
     compile 'org.jsoup:jsoup:1.10.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile project(':NIPmodule-master')
 }

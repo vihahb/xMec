@@ -29,7 +29,7 @@ import java.util.List;
  * Created by HUNGNT on 1/20/2017.
  */
 
-public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener, INewsFeedView {
+public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.OnRefreshListener, /*OnMoreListener,*/ INewsFeedView {
 
     private Context mContext;
     private NewsFeedAdapter adapter;
@@ -38,9 +38,9 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
     private Handler mHandler;
     private LinearLayoutManager manager;
     private NewsFeedPresenter presenter;
-    private String rss_url,typeName;
+    private String rss_url, typeName;
 
-    public NewsFragment(String rss_url,String typeName) {
+    public NewsFragment(String rss_url, String typeName) {
         this.rss_url = rss_url;
         this.typeName = typeName;
     }
@@ -86,9 +86,9 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
 
         recyclerView.setRefreshListener(this);
 
-        recyclerView.setLoadingMore(true);
+//        recyclerView.setLoadingMore(false);
 
-        recyclerView.setupMoreListener(this, 10);
+//        recyclerView.setupMoreListener(this, 10);
 
         setDataToView();
         initControll();
@@ -126,15 +126,15 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
         recyclerView.setRefreshing(false);
     }
 
-    @Override
-    public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-
+//    @Override
+//    public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
+//
 //        mHandler.postDelayed(new Runnable() {
 //            public void run() {
 //                adapter.addAll(createTempleatData());
 //            }
 //        }, 1000);
-    }
+//    }
 
     @Override
     public void loadNewsFeed(ArrayList<Article> data) {

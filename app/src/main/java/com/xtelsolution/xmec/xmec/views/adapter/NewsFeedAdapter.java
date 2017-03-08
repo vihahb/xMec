@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.xmec.views.activity.NewsDetailActivity;
@@ -37,24 +38,25 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof NewsFeedViewHolder){
+        if (holder instanceof NewsFeedViewHolder) {
             final Article article = data.get(position);
-            ((NewsFeedViewHolder) holder).tvAuthorName.setText(article.getAuthor().getName());
-            ((NewsFeedViewHolder) holder).tvNewsFeedTitle.setText(article.getNewsFeed().getTitle());
-            ((NewsFeedViewHolder) holder).tvTypename.setText(article.getType_name());
-            ((NewsFeedViewHolder) holder).tvNewsPubTime.setText(article.getNewsFeed().getPubDate());
-            ((NewsFeedViewHolder) holder).tvViews.setText(article.getTotal_view()+" Lượt xem");
-            ((NewsFeedViewHolder) holder).tvLikes.setText(article.getTotal_like()+" Thích");
-            ((NewsFeedViewHolder) holder).tvComments.setText(article.getTotal_comment()+" Bình luận");
-            Ion.with(mContext).load(article.getAuthor().getAvatar_url()).intoImageView(((NewsFeedViewHolder) holder).imgAuthorAvatar);
-            Ion.with(mContext).load(article.getNewsFeed().getDescription()).intoImageView(((NewsFeedViewHolder) holder).imgNewsPhoto);
-            ((NewsFeedViewHolder) holder).imgPlayIcon.setVisibility(View.GONE);
+            NewsFeedViewHolder viewHolder = (NewsFeedViewHolder) holder;
+            viewHolder.tvAuthorName.setText(article.getAuthor().getName());
+            viewHolder.tvNewsFeedTitle.setText(article.getNewsFeed().getTitle());
+            viewHolder.tvTypename.setText(article.getType_name());
+            viewHolder.tvNewsPubTime.setText(article.getNewsFeed().getPubDate());
+            viewHolder.tvViews.setText(String.format(mContext.getResources().getString(R.string.total_view), article.getTotal_view()));
+            viewHolder.tvLikes.setText(String.format(mContext.getResources().getString(R.string.total_like), article.getTotal_like()));
+            viewHolder.tvComments.setText(String.format(mContext.getResources().getString(R.string.total_comment), article.getTotal_comment()));
+            Picasso.with(mContext).load(article.getAuthor().getAvatar_url()).into((viewHolder).imgAuthorAvatar);
+            Picasso.with(mContext).load(article.getNewsFeed().getDescription()).into((viewHolder).imgNewsPhoto);
+            (viewHolder).imgPlayIcon.setVisibility(View.GONE);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, NewsDetailActivity.class);
-                    intent.putExtra(NewsDetailActivity.TAG_NEWS_URL,article.getNewsFeed().getLink());
+                    intent.putExtra(NewsDetailActivity.TAG_NEWS_URL, article.getNewsFeed().getLink());
                     mContext.startActivity(intent);
                 }
             });
@@ -72,7 +74,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
         TextView tvAuthorName;
         TextView tvTypename;
         TextView tvNewsPubTime;
-        TextView tvViews,tvLikes,tvComments;
+        TextView tvViews, tvLikes, tvComments;
         ImageView imgNewsPhoto;
         ImageView imgPlayIcon;
         ImageView imgAuthorAvatar;
