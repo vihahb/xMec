@@ -84,4 +84,9 @@
     <string name="illness_name">Tên bệnh</string>
     <string name="list_illness">Danh sách bệnh</string>
     <string name="list_medicine">Danh sách thuốc</string>
+
+
+    <string name="total_like">%d Thích</string>
+    <string name="total_view">%d Lượt xem</string>
+    <string name="total_comment">%d Bình luận</string>
 </resources>

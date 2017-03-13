@@ -1,11 +1,9 @@
 package com.xtelsolution.xmec.presenter;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
-import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 import com.xtelsolution.xmec.R;
@@ -13,7 +11,7 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.model.UserModel;
-import com.xtelsolution.xmec.xmec.views.inf.IProfileView;
+import com.xtelsolution.xmec.listener.IProfileView;
 
 /**
  * Created by phimau on 2/17/2017.

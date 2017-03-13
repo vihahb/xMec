@@ -27,6 +27,7 @@ import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.callbacks.RSSGetter;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.presenter.MapPresenter;
@@ -67,6 +68,9 @@ public class HomeActivity extends BasicActivity {
         rvHosiptalCenter.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         slidingDrawer.setVisibility(View.GONE);
         slidingDrawer.unlock();
+
+        ////Test function
+//        new RSSGetter().execute("http://songkhoe.vn/widget.rss");
     }
 
 
