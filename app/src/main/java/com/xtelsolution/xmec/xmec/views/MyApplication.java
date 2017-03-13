@@ -8,9 +8,6 @@ import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
 
-import com.xtel.nipservicesdk.utils.JsonHelper;
-import com.xtelsolution.xmec.model.RESP_MEDICAL;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 

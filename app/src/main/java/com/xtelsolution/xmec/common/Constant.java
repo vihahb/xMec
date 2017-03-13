@@ -34,6 +34,8 @@ public class Constant {
     public static final String USER_HEIGHT= "height";
     public static final String PREFERENCE_NAME = "preference_xmec";
 
+    public static final String MEDICAL_ID = "medical_id";
+
 
     public static final String MEDICAL_NAME="name";
     public static final String MEDICAL_BEGIN_TIME="begin_time";
@@ -44,11 +46,13 @@ public class Constant {
 
 
     public static final String SERVER_AUTHEN = "http://124.158.5.112:9180/nipum/";
-    public static final String GET_USER = "/user";
+    public static final String GET_USER = "user";
     public static final String SERVER_UPLOAD = "http://124.158.5.112:9180/s/files/upload";
     public static final String MEDICAL_REPORT_BOOK = "user/medical-report-book";
+    public static final String ILLNESS = "user/medical-report-book/illness";
 
-    public static final String SERVER_XMEC = "http://192.168.29.105:8080/v0.1/";
+    public static final String SERVER_XMEC = "http://192.168.29.107:8080/v0.1/";
+
     public static final String GET_MEDIACAL_REPORT_BOOK = "user/medical-report-book?page=1&pagesize=30";
 
 

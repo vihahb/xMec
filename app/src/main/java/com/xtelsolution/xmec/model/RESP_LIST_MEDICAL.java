@@ -9,15 +9,15 @@ import java.util.ArrayList;
  * Created by phimau on 2/15/2017.
  */
 
-public class RESP_LIST_MEDICAL extends RESP_Basic {
+public class RESP_List_Medical extends RESP_Basic {
     @Expose
-    private ArrayList<RESP_MEDICAL> data;
+    private ArrayList<RESP_Medical> data;
 
-    public ArrayList<RESP_MEDICAL> getList() {
+    public ArrayList<RESP_Medical> getList() {
         return data;
     }
 
-    public void setList(ArrayList<RESP_MEDICAL> list) {
+    public void setList(ArrayList<RESP_Medical> list) {
         this.data = list;
     }
 }

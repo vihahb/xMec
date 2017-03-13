@@ -12,8 +12,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--android:name="android.support.multidex.MultiDexApplication"-->
 
+    <!-- android:name="android.support.multidex.MultiDexApplication" -->
     <application
         android:name=".xmec.views.MyApplication"
         android:allowBackup="true"
@@ -39,7 +39,7 @@
         <activity
             android:name=".xmec.views.activity.RegisterActivity"
             android:parentActivityName=".xmec.views.activity.LoginActivity"
-            android:theme="@style/NoACtionBar"/>
+            android:theme="@style/NoACtionBar" />
         <activity
             android:name=".xmec.views.activity.ConfirmOPTActivity"
             android:parentActivityName=".xmec.views.activity.RegisterActivity"
@@ -76,9 +76,10 @@
             android:name=".xmec.views.activity.ProfileActivity"
             android:theme="@style/HomeActivityTheme"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".xmec.views.activity.AddIllnessActivity"
+        <activity
+            android:name=".xmec.views.activity.AddIllnessActivity"
             android:parentActivityName=".xmec.views.activity.AddMedicalActivity"
-            android:theme="@style/HomeActivityTheme"/>
+            android:theme="@style/HomeActivityTheme" />
         <activity
             android:name=".xmec.views.widget.TempActivity"
             android:screenOrientation="portrait"
@@ -91,17 +92,23 @@
         <meta-data
             android:name="xtel_service_code"
             android:value="@string/service_code_key" />
-        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+        <meta-data
+            android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/FACEBOOK_APP_ID" />
-        <meta-data android:name="com.facebook.accountkit.ClientToken"
+        <meta-data
+            android:name="com.facebook.accountkit.ClientToken"
             android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
 
         <activity
             android:name="com.facebook.accountkit.ui.AccountKitActivity"
             android:theme="@style/AppLoginTheme"
-            tools:replace="android:theme"/>
+            tools:replace="android:theme" />
+        <activity
+            android:name=".xmec.views.activity.DetailMedicalActivity"
+            android:theme="@style/HomeActivityTheme" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.NipApplication;
+import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
 
 public class SplashScreen extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         NipApplication.context = this;
         init();
+        PermissionHelper.checkListPermission(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},this,99);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

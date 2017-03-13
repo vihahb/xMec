@@ -1,7 +1,6 @@
 package com.xtelsolution.xmec.model;
 
 import com.xtel.nipservicesdk.callback.ResponseHandle;
-import com.xtel.nipservicesdk.model.*;
 import com.xtel.nipservicesdk.model.BasicModel;
 import com.xtelsolution.xmec.common.Constant;
 
@@ -20,7 +19,7 @@ public class UserModel extends BasicModel{
     public void getUser(String url, String session, ResponseHandle<RESP_User> userResponseHandle){
         requestServer.getApi(url,session,userResponseHandle);
     }
-    public void getMedicalReportBooks(String url, String session, ResponseHandle<RESP_LIST_MEDICAL> userResponseHandle){
+    public void getMedicalReportBooks(String url, String session, ResponseHandle<RESP_List_Medical> userResponseHandle){
         requestServer.getApi(url,session,userResponseHandle);
     }
     public void updateInfoUser(String url, String userObj,String session,ResponseHandle responseHandle){

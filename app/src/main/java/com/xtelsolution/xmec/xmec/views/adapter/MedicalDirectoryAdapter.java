@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.model.RESP_MEDICAL;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
+import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.xmec.views.activity.AddMedicalActivity;
 
 import java.util.ArrayList;
@@ -22,11 +22,12 @@ import java.util.ArrayList;
  */
 
 public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<RESP_MEDICAL> list;
+    private ArrayList<RESP_Medical> list;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_ADD_BUTTON = 1;
     private Context mContext;
-    public MedicalDirectoryAdapter(ArrayList<RESP_MEDICAL> data,Context context) {
+    private ItemClickListener itemClickListener;
+    public MedicalDirectoryAdapter(ArrayList<RESP_Medical> data, Context context) {
         this.list = data;
         this.mContext =context;
     }
@@ -48,10 +49,10 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof MedicalDirectoryViewHolder) {
-            RESP_MEDICAL directory = list.get(position);
+            final RESP_Medical directory = list.get(position);
             MedicalDirectoryViewHolder viewhodlder = (MedicalDirectoryViewHolder) holder;
             viewhodlder.tvMedicalDirectoryName.setText(directory.getName());
             viewhodlder.tvStt.setText(position+ 1+"");
@@ -59,7 +60,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, "Mau Hong Phi", Toast.LENGTH_SHORT).show();
+                    itemClickListener.onItemClickListener((RESP_Medical)(list.get(position)),position);
                 }
             });
         }
@@ -104,7 +105,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
         return list.size() <= position ? VIEW_TYPE_ADD_BUTTON : VIEW_TYPE_ITEM;
     }
 
-    public void addAll(ArrayList<RESP_MEDICAL> data){
+    public void addAll(ArrayList<RESP_Medical> data){
         int startIndex = list.size();
         list.addAll(startIndex,data);
         notifyItemRangeInserted(startIndex,data.size());
@@ -113,5 +114,9 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public int getItemCount() {
         return list.size()+1;
+    }
+
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 }
