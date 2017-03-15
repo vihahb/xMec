@@ -2,50 +2,17 @@ package com.xtelsolution.xmec.model;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+
 /**
- * Created by phimau on 2/24/2017.
+ * Created by phimau on 3/8/2017.
  */
 
-public class RESP_MEDICAL_DETAIL   {
-
-    @Expose
-    private String name;
-    @Expose
-    private long begin_time;
-    @Expose
-    private long end_time;
-    @Expose
-    private int type;
+public class RESP_Medical_Detail extends RESP_Medical {
     @Expose
     private String note;
     @Expose
-    private String[] resources;
-
-
-
-    public long getBegin_time() {
-        return begin_time;
-    }
-
-    public void setBegin_time(long begin_time) {
-        this.begin_time = begin_time;
-    }
-
-    public long getEnd_time() {
-        return end_time;
-    }
-
-    public void setEnd_time(long end_time) {
-        this.end_time = end_time;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private List<Resource> resources;
 
     public String getNote() {
         return note;
@@ -55,19 +22,11 @@ public class RESP_MEDICAL_DETAIL   {
         this.note = note;
     }
 
-    public String[] getResources() {
+    public List<Resource> getResources() {
         return resources;
     }
 
-    public void setResources(String[] resources) {
+    public void setResources(List<Resource> resources) {
         this.resources = resources;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
     }
 }

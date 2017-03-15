@@ -1,12 +1,13 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,26 +21,36 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.NetWorkInfo;
-import com.xtelsolution.xmec.model.entity.Illness;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
+import com.xtelsolution.xmec.model.RESP_List_IIlness;
+import com.xtelsolution.xmec.model.REQ_Medical_Detail;
+import com.xtelsolution.xmec.model.RESP_Medical_Detail;
+import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.presenter.AddMedicalPresenter;
+import com.xtelsolution.xmec.presenter.DetailMedicalPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HealtRecoderAdapter;
-import com.xtelsolution.xmec.xmec.views.adapter.IIlnessAdapter2;
+import com.xtelsolution.xmec.xmec.views.adapter.ImageViewAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IAddMedicalView;
+import com.xtelsolution.xmec.xmec.views.inf.IDetailMedicalView;
 import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
+import com.xtelsolution.xmec.xmec.views.smallviews.DialogImageViewer;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddMedicalActivity extends BasicActivity implements IAddMedicalView {
+import de.psdev.formvalidations.Field;
+import de.psdev.formvalidations.Form;
+import de.psdev.formvalidations.validations.NotEmpty;
+
+public class AddMedicalActivity extends BasicActivity implements IAddMedicalView, ItemClickListener, IDetailMedicalView {
     private Toolbar mToolbar;
-    private IIlnessAdapter2 mAdapter;
     private HealtRecoderAdapter healtRecoderAdapter;
-    private RecyclerView rcDesease;
     private RecyclerView rvHealthReconder;
     private Context mContext;
     private EditText etName;
@@ -49,9 +60,14 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
     private Button btnSavaDirectory;
     private DatePickerFragment pickerBeginTime;
     private DatePickerFragment pickerEndTime;
-    private List<String> listUrl;
+    private List<Resource> resourceList;
     private AddMedicalPresenter presenter;
     private ImageView btnAddHelthReconder;
+    private ImageViewAdapter imageViewAdapter;
+    private int idMedical;
+    private Form mForm;
+    private DetailMedicalPresenter detailMedicalPresenter;
+    private DialogImageViewer dialogImageViewer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,28 +75,24 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
         setContentView(R.layout.activity_medical_directory);
         mContext = AddMedicalActivity.this;
         init();
-        Log.e("TEST", "onViewCreated: "+etBeginTime.getClass().getSimpleName());
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        idMedical = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
         etEndTime.setInputType(InputType.TYPE_NULL);
         etBeginTime.setInputType(InputType.TYPE_NULL);
-        rcDesease.setAdapter(mAdapter);
-        rcDesease.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         initControl();
+        initValidate();
         rvHealthReconder.setAdapter(healtRecoderAdapter);
         rvHealthReconder.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.HORIZONTAL, false));
+        imageViewAdapter = new ImageViewAdapter(resourceList, mContext);
+        dialogImageViewer.setAdapter(imageViewAdapter);
+        if (idMedical != -1) {
+            detailMedicalPresenter.getDetailMedical(idMedical);
+            btnSavaDirectory.setText(getResources().getText(R.string.update_medical));
+        } else {
+            dialogImageViewer.btnRemove.setVisibility(View.GONE);
+        }
     }
 
     private void initControl() {
-        mAdapter.setOnItemClickListener(new ItemClickListener() {
-            @Override
-            public void onItemClickListener(Object item, int position) {
-                Intent i = new Intent(mContext, DetailDiseaseActivity.class);
-                mContext.startActivity(i);
-            }
-        });
         etEndTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -102,7 +114,14 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
                     Toast.makeText(mContext, "Không kết nối Internet", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                addMedicalDirectory();
+                if (idMedical == -1) {
+                    if (!mForm.isValid()) {
+                        showToast("Không được để trống");
+                        return;
+                    }
+                    addMedicalDirectory();
+                } else
+                    updateMedicalDirectory();
             }
         });
         btnAddHelthReconder.setOnClickListener(new View.OnClickListener() {
@@ -115,11 +134,23 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
                 AddHeathRecoder();
             }
         });
+        healtRecoderAdapter.setOnItemClickListener(this);
+        dialogImageViewer.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToast("Xóa ảnh "+dialogImageViewer.getCurrentPosiion());
+
+            }
+        });
     }
+
 
     private void init() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_top);
-        rcDesease = (RecyclerView) findViewById(R.id.rv_Desease);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         rvHealthReconder = (RecyclerView) findViewById(R.id.rv_health_records);
         etName = (EditText) findViewById(R.id.et_directory_name);
         etBeginTime = (EditText) findViewById(R.id.et_start_time);
@@ -127,17 +158,16 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
         btnSavaDirectory = (Button) findViewById(R.id.btn_save_director);
         etNote = (EditText) findViewById(R.id.et_note);
         btnAddHelthReconder = (ImageView) findViewById(R.id.btn_add_healty_recoder);
-        ArrayList<Illness> iIlnesses = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            iIlnesses.add(new Illness("Tên bệnh " + i));
-        }
-        mAdapter = new IIlnessAdapter2(getBaseContext(), iIlnesses);
-        listUrl = new ArrayList<>();
-        healtRecoderAdapter = new HealtRecoderAdapter(mContext,listUrl);
-        rcDesease.setNestedScrollingEnabled(false);
+
+        resourceList = new ArrayList<>();
+        healtRecoderAdapter = new HealtRecoderAdapter(mContext, resourceList);
+
         pickerBeginTime = new DatePickerFragment(etBeginTime);
         pickerEndTime = new DatePickerFragment(etEndTime);
         presenter = new AddMedicalPresenter(this);
+        detailMedicalPresenter = new DetailMedicalPresenter(this);
+        dialogImageViewer = new DialogImageViewer(mContext);
+        mForm = Form.create();
     }
 
     private void AddHeathRecoder() {
@@ -148,7 +178,8 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
                         Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
                         try {
                             Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                            presenter.postImage(avatar, true,getBaseContext());
+                            presenter.postImage(avatar, true, getBaseContext());
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -156,12 +187,22 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
                 }).start();
     }
 
+    private void updateMedicalDirectory() {
+        String name = etName.getText().toString();
+        String note = etNote.getText().toString();
+        long beginTime = pickerBeginTime.getTimeinMilisecond();
+        long endTime = pickerEndTime.getTimeinMilisecond();
+        detailMedicalPresenter.updateMedicalDirectory(idMedical, name, beginTime, endTime, 1, note, resourceList);
+
+    }
+
+
     private void addMedicalDirectory() {
         String name = etName.getText().toString();
         String note = etNote.getText().toString();
         long beginTime = pickerBeginTime.getTimeinMilisecond();
         long endTime = pickerEndTime.getTimeinMilisecond();
-        presenter.addMedicalDirectorry(name, beginTime, endTime, 1, note, listUrl);
+        presenter.addMedicalDirectorry(name, beginTime, endTime, 1, note, resourceList);
     }
 
     @Override
@@ -177,9 +218,10 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
 
     @Override
     public void onUploadImageSussces(String url) {
-        listUrl.add(url);
-        healtRecoderAdapter.add(url);
-        Log.d("URL", "onUploadImageSussces: "+url);
+        xLog.e("SIZE ADAPTER " + healtRecoderAdapter.getItemCount());
+        healtRecoderAdapter.add(new Resource(url));
+        imageViewAdapter.notifyDataSetChanged();
+        Log.d("URL", "onUploadImageSussces: " + url);
     }
 
 
@@ -198,4 +240,42 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
     public Activity getActivity() {
         return AddMedicalActivity.this;
     }
+
+    @Override
+    public void onItemClickListener(Object item, int position) {
+        Toast.makeText(mContext, imageViewAdapter.getCount() + "  ", Toast.LENGTH_SHORT).show();
+        dialogImageViewer.show();
+
+    }
+
+    @Override
+    public void onLoadMedicalFinish(RESP_Medical_Detail obj) {
+        etName.setText(obj.getName());
+        etNote.setText(obj.getNote());
+        etBeginTime.setText(Constant.getDate(obj.getBegin_time()));
+        pickerBeginTime.setTimeinMilisecond(obj.getBegin_time());
+        etEndTime.setText(Constant.getDate(obj.getEnd_time()));
+        pickerEndTime.setTimeinMilisecond(obj.getEnd_time());
+        healtRecoderAdapter.addAll(obj.getResources());
+        imageViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadListIllnessFinish(RESP_List_IIlness data) {
+
+    }
+
+    @Override
+    public void onUpdateMedicalFinish() {
+        showToast("Cập nhật thành công");
+    }
+
+    private void initValidate() {
+        mForm = Form.create();
+        mForm.addField(Field.using(etName).validate(NotEmpty.build()));
+        mForm.addField(Field.using(etBeginTime).validate(NotEmpty.build()));
+        mForm.addField(Field.using(etNote).validate(NotEmpty.build()));
+        mForm.addField(Field.using(etEndTime).validate(NotEmpty.build()));
+    }
+
 }

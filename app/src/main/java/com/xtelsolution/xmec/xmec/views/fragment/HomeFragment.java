@@ -1,7 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,22 +15,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
+import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.ConfirmDialogListener;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.RESP_LIST_MEDICAL;
-import com.xtelsolution.xmec.model.RESP_MEDICAL;
+import com.xtelsolution.xmec.model.RESP_List_Medical;
+import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.HomePresenter;
+import com.xtelsolution.xmec.xmec.views.activity.DetailMedicalActivity;
 import com.xtelsolution.xmec.xmec.views.activity.ProfileActivity;
 import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicalDirectoryAdapter;
-import com.xtelsolution.xmec.xmec.views.widget.ConfirmDialog;
 
 import java.util.ArrayList;
 
@@ -39,18 +37,18 @@ import java.util.ArrayList;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class HomeFragment extends BasicFragment implements IHomeView {
+public class HomeFragment extends BasicFragment implements IHomeView,ItemClickListener {
     private MedicalDirectoryAdapter adapter;
     private RecyclerView rvDisease;
     private ImageView imgAvatar;
     private TextView btnProfile;
-    private TextView tvName;
-    private TextView tvBirthday;
-    private TextView tvHeight;
-    private TextView tvWeight;
+    private LoaderTextView tvName;
+    private LoaderTextView tvBirthday;
+    private LoaderTextView tvHeight;
+    private LoaderTextView tvWeight;
     private HomePresenter homePresenter;
     private Context mContext;
-    private ArrayList<RESP_MEDICAL> mlistMedica;
+    private ArrayList<RESP_Medical> mlistMedica;
     private ImageView imgGender;
 
     @Override
@@ -59,36 +57,8 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         mContext = getContext();
         homePresenter = new HomePresenter(this);
         mlistMedica = new ArrayList<>();
-        adapter = new MedicalDirectoryAdapter(mlistMedica, getContext());
-        adapter.setOnClickListener(new ItemClickListener() {
-            @Override
-            public void onItemClickListener(Object item, int position) {
-                final RESP_MEDICAL obj = (RESP_MEDICAL) item;
-                ConfirmDialog.showDialog(getContext(), "Xóa Y bạ", "Xóa Y Bạ: " + obj.getName(), new ConfirmDialogListener() {
-
-                    @Override
-                    public void onConfirm(DialogInterface dialog, int which) {
-//                        homePresenter.deleteMedicalReportItem("{ \"id\": 14 }");
-                        JsonObject jsonObject = new JsonObject();
-                        jsonObject.addProperty("id", 14);
-
-                        Log.e("jsonObject", jsonObject.toString());
-                        homePresenter.deleteMedicalReportItem(jsonObject.toString());
-
-                    }
-
-                    @Override
-                    public void onCance(DialogInterface dialog) {
-
-                    }
-
-                    @Override
-                    public void onExit(DialogInterface dialog, int which) {
-
-                    }
-                });
-            }
-        });
+        adapter = new MedicalDirectoryAdapter(mlistMedica,getContext());
+        adapter.setItemClickListener(this);
     }
 
     @Nullable
@@ -97,6 +67,7 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initUI(view);
         initControl();
+        showViewLoader();
         homePresenter.getUser();
         return view;
     }
@@ -120,11 +91,13 @@ public class HomeFragment extends BasicFragment implements IHomeView {
 
             @Override
             public void onHide() {
+
                 mContext.sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
             }
 
             @Override
             public void onShow() {
+
                 mContext.sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
             }
         });
@@ -136,15 +109,14 @@ public class HomeFragment extends BasicFragment implements IHomeView {
 
     public void initUI(View view) {
         btnProfile = (TextView) view.findViewById(R.id.btnProfile);
-        tvBirthday = (TextView) view.findViewById(R.id.tv_birthday);
-        tvHeight = (TextView) view.findViewById(R.id.tv_profile_height);
-        tvWeight = (TextView) view.findViewById(R.id.tv_profile_weight);
-        tvName = (TextView) view.findViewById(R.id.tv_profile_name);
+        tvBirthday = (LoaderTextView) view.findViewById(R.id.tv_birthday);
+        tvHeight = (LoaderTextView) view.findViewById(R.id.tv_profile_height);
+        tvWeight = (LoaderTextView) view.findViewById(R.id.tv_profile_weight);
+        tvName = (LoaderTextView) view.findViewById(R.id.tv_profile_name);
         imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
         imgGender = (ImageView) view.findViewById(R.id.img_gender);
     }
-
-    private void initControl() {
+    private void initControl(){
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,15 +136,29 @@ public class HomeFragment extends BasicFragment implements IHomeView {
         tvBirthday.setText(user.getBirthDayasString());
         tvHeight.setText(String.valueOf(user.getHeight()));
         tvWeight.setText(String.valueOf(user.getWeight()));
-        setImage(imgAvatar, user.getAvatar());
-        if (user.getGender() == 2)
+        setImage(imgAvatar,user.getAvatar());
+        if (user.getGender()==2)
             imgGender.setImageResource(R.drawable.ic_action_name);
         SharedPreferencesUtils.getInstance().saveUser(user);
     }
 
     @Override
-    public void onGetMediacalListSusscess(RESP_LIST_MEDICAL list_medical) {
+    public void onGetMediacalListSusscess(RESP_List_Medical list_medical) {
         adapter.addAll(list_medical.getList());
 
+    }
+
+    @Override
+    public void onItemClickListener(Object item, int position) {
+        Intent intent = new Intent(getActivity(), DetailMedicalActivity.class);
+        intent.putExtra(Constant.MEDICAL_ID,((RESP_Medical)item).getId());
+        startActivity(intent);
+    }
+    private void showViewLoader(){
+        Log.e("MY", "showViewLoader: ");
+        tvWeight.resetLoader();
+        tvHeight.resetLoader();
+        tvName.resetLoader();
+        tvBirthday.resetLoader();
     }
 }

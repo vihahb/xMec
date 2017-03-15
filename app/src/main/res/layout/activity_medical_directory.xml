@@ -24,24 +24,22 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
-
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="false">
-
-        <android.support.design.widget.CoordinatorLayout
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginLeft="@dimen/activity_vertical_margin1"
                     android:layout_marginRight="@dimen/activity_vertical_margin1"
@@ -52,9 +50,9 @@
                         android:id="@+id/btn_add_healty_recoder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:focusable="true"
-                        android:clickable="true"
                         android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:src="@drawable/ic_image_add_health_record" />
 
                     <android.support.v7.widget.RecyclerView
@@ -96,28 +94,27 @@
                     android:hint="@string/directory_disease_note"
                     android:maxLines="5" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    style="@style/TextviewBlod"
-                    android:layout_width="wrap_content"
+                <Gallery
+                    android:id="@+id/gallery"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:text="@string/list_disease" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_Desease"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/dimen_16"
-                    android:paddingRight="@dimen/dimen_16" />
+                    android:background="#a3a1a1" />
 
 
+            </LinearLayout>
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp">
                 <Button
                     android:id="@+id/btn_save_director"
                     style="@style/ButtonRadius"
                     android:layout_gravity="bottom"
                     android:text="@string/save_director_disease" />
-            </LinearLayout>
-        </android.support.design.widget.CoordinatorLayout>
-    </android.support.v4.widget.NestedScrollView>
+            </android.support.design.widget.CoordinatorLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>

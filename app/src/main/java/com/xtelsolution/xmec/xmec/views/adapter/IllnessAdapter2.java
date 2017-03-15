@@ -20,14 +20,14 @@ import java.util.ArrayList;
  * Created by phimau on 1/22/2017.
  */
 
-public class IIlnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int BUTTON = 2;
     public static final int NORMAL = 1;
     private Context mContext;
     private ArrayList<Illness> mList;
     private ItemClickListener itemClickListener;
 
-    public IIlnessAdapter2(Context mContext, ArrayList<Illness> mList) {
+    public IllnessAdapter2(Context mContext, ArrayList<Illness> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }

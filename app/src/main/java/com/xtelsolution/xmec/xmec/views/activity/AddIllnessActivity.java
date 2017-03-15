@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.AutoCompleteTextView;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.entity.Illness;
@@ -26,9 +27,8 @@ public class AddIllnessActivity extends BasicActivity {
     private RecyclerView recyclerView;
     private Toolbar mToolbar;
     private AutoCompleteTextView etFindIllness;
-    private IllnessAdapter mAdapter;
-//    private Str
     private Context mContext;
+    private int idMedical;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,8 @@ public class AddIllnessActivity extends BasicActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         initRecycleView();
+        idMedical =getIntent().getIntExtra(Constant.MEDICAL_ID,-1);
+        
     }
 
     private void initRecycleView() {
@@ -67,9 +69,7 @@ public class AddIllnessActivity extends BasicActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_top);
         etFindIllness= (AutoCompleteTextView) findViewById(R.id.etFindIllness);
         recyclerView = (RecyclerView) findViewById(R.id.rvMedicineWithEditButton);
-        mAdapter = new IllnessAdapter(mContext,createTempData(7));
         etFindIllness.setThreshold(3);
-//        etFindIllness.setAdapter(mAdapter);
 
     }
     private List<Illness> createTempData(int size) {

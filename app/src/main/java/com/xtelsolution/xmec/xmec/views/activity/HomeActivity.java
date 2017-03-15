@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -29,6 +30,7 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.callbacks.RSSGetter;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.presenter.MapPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.fragment.HomeFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.MapFragment;
@@ -113,7 +115,6 @@ public class HomeActivity extends BasicActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
-
     }
 
     public void initReceiver() {
@@ -201,5 +202,11 @@ public class HomeActivity extends BasicActivity {
                 }
             }, 2000);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 }
