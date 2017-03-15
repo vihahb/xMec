@@ -1,6 +1,5 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,35 +9,43 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.xtelsolution.xmec.R;
-import com.xtelsolution.xmec.presenter.NewsDetailPresenter;
-import com.xtelsolution.xmec.xmec.views.inf.INewsDetailView;
+import com.xtelsolution.xmec.presenter.IllnessDetailPresenter;
+import com.xtelsolution.xmec.xmec.views.inf.IIllnessDetailview;
 
-public class NewsDetailActivity extends BasicActivity implements INewsDetailView{
+/**
+ * Created by HUNGNT on 3/14/2017.
+ */
 
-    public static final String TAG_NEWS_URL = "news_url";
+public class IllnessDetailActivity extends BasicActivity implements IIllnessDetailview{
+
+    public static final String ILLNESS_URL = "illness_url";
     private WebView webViewNews;
     private LinearLayout loLoading;
-    private NewsDetailPresenter presenter;
+    IllnessDetailPresenter presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
-        startActivity(new Intent(this,IllnessDetailActivity.class));
-        String url = getIntent().getExtras().getString(TAG_NEWS_URL);
         init();
         initWebView();
-        presenter.loadNews(url);
+//        String mainUrl = getIntent().getExtras().getString(ILLNESS_URL);
+        String mainUrl = "http://diendan.songkhoe.vn/chi-tiet-trieu-chung-cua-benh-bai-liet-s2531-1136-451328.html";
+        if (mainUrl!=null){
+            presenter.loadIllnessDetail(mainUrl);
+        }else {
+            showToast("Có lỗi xảy ra");
+            finish();
+        }
     }
 
     private void init() {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Tin tức");
-        presenter = new NewsDetailPresenter(this);
+        getSupportActionBar().setTitle("Chi tiết bệnh");
+        presenter = new IllnessDetailPresenter(this);
         loLoading = (LinearLayout) findViewById(R.id.loLoading);
     }
-
     private void initWebView() {
         webViewNews = (WebView) findViewById(R.id.webviewNews);
         webViewNews.setWebChromeClient(new WebChromeClient());
@@ -64,11 +71,10 @@ public class NewsDetailActivity extends BasicActivity implements INewsDetailView
             loLoading.setVisibility(View.GONE);
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==android.R.id.home)
             finish();
-       return true;
+        return true;
     }
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 
 public interface OnNewsFeedLoadedListener {
+    void onPrepare();
     void onSucess(ArrayList<NewsFeed> list);
     void onError();
 }

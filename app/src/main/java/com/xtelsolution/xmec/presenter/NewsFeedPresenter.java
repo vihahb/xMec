@@ -23,6 +23,11 @@ public class NewsFeedPresenter {
     public void loadNewsFeed(String url){
         new RSSGetter(new OnNewsFeedLoadedListener() {
             @Override
+            public void onPrepare() {
+
+            }
+
+            @Override
             public void onSucess(ArrayList<NewsFeed> list) {
 //                view.loadNewsFeed(list);
 //                TOI NAY BAT DAU TU DAY

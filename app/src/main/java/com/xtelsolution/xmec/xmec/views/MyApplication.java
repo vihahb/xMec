@@ -9,8 +9,15 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.xtel.nipservicesdk.utils.JsonHelper;
+import com.xtelsolution.xmec.callbacks.NewsHtmlLoader;
 import com.xtelsolution.xmec.callbacks.RSSGetter;
+import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.listener.LoadNewsDetailListener;
 import com.xtelsolution.xmec.model.RESP_MEDICAL;
+import com.xtelsolution.xmec.model.entity.Illness;
+import com.xtelsolution.xmec.model.entity.IllnessTemple;
+
+import org.jsoup.nodes.Document;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,7 +40,23 @@ public class MyApplication extends Application {
         PACKAGE_NAME = context.getPackageName();
 //        getKeyHash(PACKAGE_NAME);
         Log.v("Pkg name", PACKAGE_NAME);
+        new NewsHtmlLoader(new LoadNewsDetailListener() {
+            @Override
+            public void onPrepare() {
 
+            }
+
+            @Override
+            public void onSucess(Document result) {
+                IllnessTemple temple = IllnessTemple.fromDocument(result);
+                xLog.d(temple.getName()+" : "+temple.getDetail());
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        }).execute("http://diendan.songkhoe.vn/chi-tiet-trieu-chung-benh-khop-do-than-kinh-s2528-1265-470229.html");
     }
 
     private void getKeyHash(String pkg_name) {
