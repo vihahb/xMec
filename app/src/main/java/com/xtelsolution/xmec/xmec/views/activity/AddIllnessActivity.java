@@ -6,14 +6,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
-import com.xtelsolution.xmec.model.entity.Illness;
-import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;
+import com.xtelsolution.xmec.model.entity.Disease;
+import com.xtelsolution.xmec.xmec.views.adapter.DiseaseAutoCompleteAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicineAdapterWithEditButton;
+import com.xtelsolution.xmec.xmec.views.smallviews.DelayAutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +28,10 @@ import java.util.List;
 public class AddIllnessActivity extends BasicActivity {
     private RecyclerView recyclerView;
     private Toolbar mToolbar;
-    private AutoCompleteTextView etFindIllness;
+    private DelayAutoCompleteTextView etFindDisease;
+    private ProgressBar progressBar;
     private Context mContext;
+
     private int idMedical;
 
     @Override
@@ -42,6 +46,10 @@ public class AddIllnessActivity extends BasicActivity {
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         initRecycleView();
         idMedical =getIntent().getIntExtra(Constant.MEDICAL_ID,-1);
+
+        etFindDisease.setThreshold(3);
+        etFindDisease.setLoadingIndicator(progressBar);
+        etFindDisease.setAdapter(new DiseaseAutoCompleteAdapter());
         
     }
 
@@ -67,17 +75,18 @@ public class AddIllnessActivity extends BasicActivity {
 
     private void initUI() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_top);
-        etFindIllness= (AutoCompleteTextView) findViewById(R.id.etFindIllness);
+        etFindDisease= (DelayAutoCompleteTextView) findViewById(R.id.etFindIllness);
         recyclerView = (RecyclerView) findViewById(R.id.rvMedicineWithEditButton);
-        etFindIllness.setThreshold(3);
+        progressBar = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+
 
     }
-    private List<Illness> createTempData(int size) {
-        List<Illness> sticks = new ArrayList<>();
+    private List<Disease> createTempData(int size) {
+        List<Disease> sticks = new ArrayList<>();
 
         for (int i = size; i < size + 10; i++) {
 
-            sticks.add(new Illness(i, "Tên Bệnh " + i));
+            sticks.add(new Disease(i, "Tên Bệnh " + i));
         }
         return sticks;
     }

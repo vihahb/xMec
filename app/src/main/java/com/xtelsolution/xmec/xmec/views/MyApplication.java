@@ -8,13 +8,9 @@ import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
 
-import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.callbacks.NewsHtmlLoader;
-import com.xtelsolution.xmec.callbacks.RSSGetter;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.LoadNewsDetailListener;
-import com.xtelsolution.xmec.model.RESP_MEDICAL;
-import com.xtelsolution.xmec.model.entity.Illness;
 import com.xtelsolution.xmec.model.entity.IllnessTemple;
 
 import org.jsoup.nodes.Document;

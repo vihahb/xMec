@@ -18,8 +18,7 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.Stick;
-import com.xtelsolution.xmec.model.entity.Illness;
+import com.xtelsolution.xmec.model.entity.Disease;
 import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 import com.xtelsolution.xmec.xmec.views.activity.DiseaseDiagnosiActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;
@@ -52,7 +51,7 @@ public class SearchFragment extends Fragment {
 
     private IllnessAdapter illnessAdapter;
 
-    private List<Illness> listMedicines;
+    private List<Disease> listMedicines;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,12 +159,12 @@ public class SearchFragment extends Fragment {
         rvResultFindIllness.setNestedScrollingEnabled(false);
     }
 
-    private List<Illness> createTempData(int size) {
-        List<Illness> sticks = new ArrayList<>();
+    private List<Disease> createTempData(int size) {
+        List<Disease> sticks = new ArrayList<>();
 
         for (int i = size; i < size + 10; i++) {
 
-            sticks.add(new Illness(i, "Tên Bệnh " + i));
+            sticks.add(new Disease(i, "Tên Bệnh " + i));
         }
         return sticks;
     }

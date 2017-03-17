@@ -1,20 +1,15 @@
 package com.xtelsolution.xmec.xmec.views.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.Medicine;
-import com.xtelsolution.xmec.model.Stick;
-import com.xtelsolution.xmec.model.entity.Illness;
-import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
+import com.xtelsolution.xmec.model.entity.Disease;
 
 import java.util.List;
 
@@ -24,12 +19,12 @@ import java.util.List;
 
 public class IllnessAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private List<Illness> data;
+    private List<Disease> data;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private static ItemClickListener mItemClickListener;
 
-    public IllnessAdapter(Context mContext, List<Illness> data) {
+    public IllnessAdapter(Context mContext, List<Disease> data) {
         this.mContext = mContext;
         this.data = data;
     }
@@ -94,11 +89,11 @@ public class IllnessAdapter extends RecyclerView.Adapter {
         return position;
     }
 
-    public void add(Illness stick) {
+    public void add(Disease stick) {
         insert(stick, data.size());
     }
 
-    public void insert(Illness stick, int position) {
+    public void insert(Disease stick, int position) {
         data.add(position, stick);
         notifyItemInserted(position);
     }
@@ -114,7 +109,7 @@ public class IllnessAdapter extends RecyclerView.Adapter {
         notifyItemRangeRemoved(0, size);
     }
 
-    public void addAll(List<Illness> sticks) {
+    public void addAll(List<Disease> sticks) {
         int startIndex = data.size();
         data.addAll(startIndex, sticks);
         notifyItemRangeInserted(startIndex, sticks.size());
@@ -124,7 +119,7 @@ public class IllnessAdapter extends RecyclerView.Adapter {
     public void setOnItemClickListener(ItemClickListener itemClickListener) {
         this.mItemClickListener = itemClickListener;
     }
-    public void addAllNew(List<Illness> data){
+    public void addAllNew(List<Disease> data){
         this.data.clear();
         this.data.addAll(data);
         notifyDataSetChanged();

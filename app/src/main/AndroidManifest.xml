@@ -58,7 +58,7 @@
             android:parentActivityName=".xmec.views.activity.HomeActivity"
             android:theme="@style/HomeActivityTheme" />
         <activity
-            android:name=".xmec.views.activity.AddMedicalActivity"
+            android:name=".xmec.views.activity.AddMedicalDetailActivity"
             android:parentActivityName=".xmec.views.activity.HomeActivity"
             android:theme="@style/HomeActivityTheme" />
         <activity
@@ -78,7 +78,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".xmec.views.activity.AddIllnessActivity"
-            android:parentActivityName=".xmec.views.activity.AddMedicalActivity"
+            android:parentActivityName=".xmec.views.activity.AddMedicalDetailActivity"
             android:theme="@style/HomeActivityTheme" />
         <activity
             android:name=".xmec.views.widget.TempActivity"

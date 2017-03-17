@@ -2,10 +2,13 @@ package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +16,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +28,7 @@ import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.RESP_List_IIlness;
+import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.presenter.AddMedicalPresenter;
@@ -135,7 +139,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         dialogImageViewer.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Xóa ảnh "+dialogImageViewer.getCurrentPosiion());
+                showToast("Xóa ảnh " + dialogImageViewer.getCurrentPosiion());
 
             }
         });
@@ -165,6 +169,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         medicalDetailPresenter = new MedicalDetailPresenter(this);
         dialogImageViewer = new DialogImageViewer(mContext);
         mForm = Form.create();
+
     }
 
     private void AddHeathRecoder() {
@@ -205,8 +210,38 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        if (idMedical != -1)
+            inflater.inflate(R.menu.menu_remove_medical, menu);
+        else
+            inflater.inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_login_logout:
+                break;
+            case R.id.action_remove_medical:
+                final AlertDialog alertDialog = new AlertDialog.Builder(AddMedicalDetailActivity.this).create();
+                alertDialog.setMessage(getResources().getString(R.string.remove_medical_confirm));
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                medicalDetailPresenter.removeMedical(idMedical);
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Không",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                alertDialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showDatePicker(DatePickerFragment datePicker) {
@@ -258,13 +293,19 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     }
 
     @Override
-    public void onLoadListIllnessFinish(RESP_List_IIlness data) {
+    public void onLoadListIllnessFinish(RESP_List_Disease data) {
 
     }
 
     @Override
     public void onUpdateMedicalFinish() {
         showToast("Cập nhật thành công");
+    }
+
+    @Override
+    public void onRemoveMedicalSuccess() {
+        Intent i = new Intent(AddMedicalDetailActivity.this,HomeActivity.class);
+        startActivity(i);
     }
 
     private void initValidate() {

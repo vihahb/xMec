@@ -10,23 +10,21 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.xtelsolution.xmec.R;
-import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.entity.Illness;
+import com.xtelsolution.xmec.model.entity.Disease;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by phimau on 2/28/2017.
  */
 
 public class IllnessDropDownAdapter extends BaseAdapter implements Filterable {
-    private ArrayList<Illness> mData;
-    private ArrayList<Illness> mSuggestion;
+    private ArrayList<Disease> mData;
+    private ArrayList<Disease> mSuggestion;
 
     private Context mContext;
 
-    public IllnessDropDownAdapter(Context mContext, ArrayList<Illness> mData) {
+    public IllnessDropDownAdapter(Context mContext, ArrayList<Disease> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -64,7 +62,7 @@ public class IllnessDropDownAdapter extends BaseAdapter implements Filterable {
         return new Filter() {
             @Override
             public CharSequence convertResultToString(Object resultValue) {
-                return ((Illness) resultValue).getName();
+                return ((Disease) resultValue).getName();
             }
 
             @Override

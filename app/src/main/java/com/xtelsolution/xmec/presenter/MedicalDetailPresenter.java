@@ -9,9 +9,9 @@ import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
-import com.xtelsolution.xmec.model.IllnessModel;
+import com.xtelsolution.xmec.model.DiseaseModel;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
-import com.xtelsolution.xmec.model.RESP_List_IIlness;
+import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.REQ_Medical_Detail;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
@@ -48,9 +48,9 @@ public class MedicalDetailPresenter {
     public void getListIllness(int id){
 
         String url =Constant.SERVER_XMEC+Constant.ILLNESS+"/"+id;
-        IllnessModel.getInstance().getListIllness(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_List_IIlness>(RESP_List_IIlness.class) {
+        DiseaseModel.getInstance().getListIllness(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_List_Disease>(RESP_List_Disease.class) {
             @Override
-            public void onSuccess(RESP_List_IIlness obj) {
+            public void onSuccess(RESP_List_Disease obj) {
                 view.onLoadListIllnessFinish(obj);
             }
 
@@ -98,6 +98,30 @@ public class MedicalDetailPresenter {
                 }
             }
         });
+    }
+    public void removeMedical(int id){
+        view.showProgressDialog("Đang Xóa");
+        String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK+"/"+id;
+        MedicalDirectoryModel.getinstance().deleteMedicalDirectory(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
+            @Override
+            public void onSuccess(RESP_Basic obj) {
+                view.onRemoveMedicalSuccess();
+                view.dismissProgressDialog();
+            }
+
+            @Override
+            public void onError(Error error) {
+                view.dismissProgressDialog();
+                switch (error.getCode()){
+                    case -1:
+                        view.showToast("Lỗi hệ thống");
+                        break;
+                    case  2:
+                        view.showToast("Phiên làm việc không hợp lệ");
+                }
+            }
+        });
+
     }
 
 }

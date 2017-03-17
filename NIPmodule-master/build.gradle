@@ -38,6 +38,7 @@ dependencies {
     compile 'com.koushikdutta.ion:ion:2.+'
 
 
+    androidTestCompile 'junit:junit:4.12'
 }
 
 //task deleteJar(type: Delete){

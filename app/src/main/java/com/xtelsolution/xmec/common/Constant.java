@@ -52,6 +52,7 @@ public class Constant {
     public static final String MEDICAL_REPORT_BOOK = "user/medical-report-book";
     public static final String ILLNESS = "user/medical-report-book/illness";
     public static final String HEALTHY_CENTER = "healthy-center";
+    public static final String Disease = "disease";
 
     public static final String SERVER_XMEC = "http://192.168.29.105:8080/v0.1/";
 

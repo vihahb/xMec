@@ -16,10 +16,10 @@ import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.RESP_List_IIlness;
+import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
-import com.xtelsolution.xmec.model.entity.Illness;
+import com.xtelsolution.xmec.model.entity.Disease;
 import com.xtelsolution.xmec.presenter.MedicalDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HealtRecoderAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter2;
@@ -47,7 +47,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     private MedicalDetailPresenter presenter;
     private int id;
     private List<Resource> listUrl;
-    private ArrayList<Illness> illnesses;
+    private ArrayList<Disease> diseases;
 
 
     @Override
@@ -64,11 +64,11 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         mContext =getBaseContext();
 
         listUrl = new ArrayList<>();
-        illnesses = new ArrayList<>();
+        diseases = new ArrayList<>();
         presenter = new MedicalDetailPresenter(this);
         healtRecoderAdapter = new HealtRecoderAdapter(mContext,listUrl);
         imageViewAdapter = new ImageViewAdapter(listUrl,mContext);
-        illnessAdapter = new IllnessAdapter2(mContext,illnesses);
+        illnessAdapter = new IllnessAdapter2(mContext, diseases);
 
         rcHealthReconder.setAdapter(healtRecoderAdapter);
         rcHealthReconder.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -127,12 +127,17 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     }
 
     @Override
-    public void onLoadListIllnessFinish(RESP_List_IIlness data) {
+    public void onLoadListIllnessFinish(RESP_List_Disease data) {
         illnessAdapter.addAll(data.getList());
     }
 
     @Override
     public void onUpdateMedicalFinish() {
+
+    }
+
+    @Override
+    public void onRemoveMedicalSuccess() {
 
     }
 

@@ -74,6 +74,8 @@
     <string name="add_medical">Đang thêm y bạ</string>
     <string name="add_medical_success">Thêm y bạ thành công</string>
     <string name="title_toobar_detail_medical">Chi tiết y bạ </string>
+    <string name="remove_medical">Xóa Y bạ </string>
+    <string name="remove_medical_confirm">Bạn có muốn xóa y bạ ?</string>
     <string name="tel">Tel </string>
     <string name="fax">Fax </string>
     <string name="address">Địa chỉ </string>
