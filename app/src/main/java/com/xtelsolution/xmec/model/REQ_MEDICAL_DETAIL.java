@@ -7,7 +7,7 @@ import com.xtel.nipservicesdk.model.entity.RESP_Basic;
  * Created by phimau on 2/24/2017.
  */
 
-public class REQ_Medical_Detail extends RESP_Basic {
+public class REQ_Medical_Detail  {
     @Expose
     private int id;
     @Expose

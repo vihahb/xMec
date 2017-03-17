@@ -74,6 +74,9 @@
     <string name="add_medical">Đang thêm y bạ</string>
     <string name="add_medical_success">Thêm y bạ thành công</string>
     <string name="title_toobar_detail_medical">Chi tiết y bạ </string>
+    <string name="tel">Tel </string>
+    <string name="fax">Fax </string>
+    <string name="address">Địa chỉ </string>
 
     <string name="service_code_key">XTL-XMEC</string>
     <string name="FACEBOOK_APP_ID">1851247128486694</string>
@@ -81,6 +84,7 @@
     <string name="logout">Đăng xuất</string>
     <string name="add_illness">Thêm bệnh</string>
     <string name="update_medical">Cập nhật y bạ</string>
+    <string name="update_medical_success">Cập nhật Thành công</string>
     <string name="illness_name">Tên bệnh</string>
     <string name="list_illness">Danh sách bệnh</string>
     <string name="list_medicine">Danh sách thuốc</string>

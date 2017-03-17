@@ -7,7 +7,6 @@ import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 import com.xtel.nipservicesdk.utils.JsonHelper;
-import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.IllnessModel;
@@ -16,7 +15,7 @@ import com.xtelsolution.xmec.model.RESP_List_IIlness;
 import com.xtelsolution.xmec.model.REQ_Medical_Detail;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
-import com.xtelsolution.xmec.xmec.views.inf.IDetailMedicalView;
+import com.xtelsolution.xmec.xmec.views.inf.IMedicalDetailView;
 
 import java.util.List;
 
@@ -24,10 +23,10 @@ import java.util.List;
  * Created by phimau on 3/6/2017.
  */
 
-public class DetailMedicalPresenter {
-    private IDetailMedicalView view;
+public class MedicalDetailPresenter {
+    private IMedicalDetailView view;
 
-    public DetailMedicalPresenter(IDetailMedicalView view) {
+    public MedicalDetailPresenter(IMedicalDetailView view) {
         this.view = view;
     }
 
@@ -83,7 +82,6 @@ public class DetailMedicalPresenter {
         MedicalDirectoryModel.getinstance().updateMedicalDirectory(url,JsonHelper.toJson(REQ_medicalDetail), "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
             @Override
             public void onSuccess(RESP_Basic obj) {
-                view.showToast(view.getActivity().getResources().getString(R.string.add_medical_success));
                 view.onUpdateMedicalFinish();
                 view.dismissProgressDialog();
             }

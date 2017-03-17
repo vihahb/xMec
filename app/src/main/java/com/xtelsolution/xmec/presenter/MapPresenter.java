@@ -13,9 +13,24 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.SphericalUtil;
+import com.xtel.nipservicesdk.callback.ResponseHandle;
+import com.xtel.nipservicesdk.model.LoginModel;
+import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.utils.PermissionHelper;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.model.HealthyCareModel;
+import com.xtelsolution.xmec.model.RESP_List_Map_Healthy_Care;
+import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
 import com.xtelsolution.xmec.xmec.views.inf.IMapView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by phimau on 3/1/2017.
@@ -27,7 +42,8 @@ public class MapPresenter {
     private LocationManager mLocationManager;
     private double lat;
     private double log;
-    private boolean isCheckPermission;
+    private double radius;
+    private HashMap<Integer,Boolean> listPos;
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -55,6 +71,8 @@ public class MapPresenter {
     public MapPresenter(IMapView view) {
         this.view = view;
         mActivity = view.getActivity();
+        radius =500;
+        listPos = new HashMap<>();
 
     }
 
@@ -85,6 +103,30 @@ public class MapPresenter {
         }
 
 
+    }
+
+    public void getHospitals(){
+        String location = "lat="+lat+"&lng="+log;
+        String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"?"+location+"radius="+radius;
+
+        HealthyCareModel.getInstance().getHospital(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
+            @Override
+            public void onSuccess(RESP_List_Map_Healthy_Care obj) {
+                List<RESP_Map_Healthy_Care> result = obj.getData();
+                List<RESP_Map_Healthy_Care>  data = new ArrayList<>();
+                for (RESP_Map_Healthy_Care mapHealthyCare:result) {
+                    if (listPos.get(mapHealthyCare.getId())==null){
+                        listPos.put(mapHealthyCare.getId(),true);
+                        data.add(mapHealthyCare);
+                    }
+                }
+                view.onGetListHealtyCareSuccess(result);
+            }
+            @Override
+            public void onError(Error error) {
+
+            }
+        });
     }
 
     private boolean isLocationEnable() {

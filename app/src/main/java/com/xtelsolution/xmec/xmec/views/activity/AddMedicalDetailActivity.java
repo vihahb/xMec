@@ -1,13 +1,11 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,15 +25,14 @@ import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_List_IIlness;
-import com.xtelsolution.xmec.model.REQ_Medical_Detail;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.presenter.AddMedicalPresenter;
-import com.xtelsolution.xmec.presenter.DetailMedicalPresenter;
+import com.xtelsolution.xmec.presenter.MedicalDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HealtRecoderAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.ImageViewAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IAddMedicalView;
-import com.xtelsolution.xmec.xmec.views.inf.IDetailMedicalView;
+import com.xtelsolution.xmec.xmec.views.inf.IMedicalDetailView;
 import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.smallviews.DialogImageViewer;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
@@ -48,7 +45,7 @@ import de.psdev.formvalidations.Field;
 import de.psdev.formvalidations.Form;
 import de.psdev.formvalidations.validations.NotEmpty;
 
-public class AddMedicalActivity extends BasicActivity implements IAddMedicalView, ItemClickListener, IDetailMedicalView {
+public class AddMedicalDetailActivity extends BasicActivity implements IAddMedicalView, ItemClickListener, IMedicalDetailView {
     private Toolbar mToolbar;
     private HealtRecoderAdapter healtRecoderAdapter;
     private RecyclerView rvHealthReconder;
@@ -66,14 +63,14 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
     private ImageViewAdapter imageViewAdapter;
     private int idMedical;
     private Form mForm;
-    private DetailMedicalPresenter detailMedicalPresenter;
+    private MedicalDetailPresenter medicalDetailPresenter;
     private DialogImageViewer dialogImageViewer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_directory);
-        mContext = AddMedicalActivity.this;
+        mContext = AddMedicalDetailActivity.this;
         init();
         idMedical = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
         etEndTime.setInputType(InputType.TYPE_NULL);
@@ -85,7 +82,7 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
         imageViewAdapter = new ImageViewAdapter(resourceList, mContext);
         dialogImageViewer.setAdapter(imageViewAdapter);
         if (idMedical != -1) {
-            detailMedicalPresenter.getDetailMedical(idMedical);
+            medicalDetailPresenter.getDetailMedical(idMedical);
             btnSavaDirectory.setText(getResources().getText(R.string.update_medical));
         } else {
             dialogImageViewer.btnRemove.setVisibility(View.GONE);
@@ -165,13 +162,13 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
         pickerBeginTime = new DatePickerFragment(etBeginTime);
         pickerEndTime = new DatePickerFragment(etEndTime);
         presenter = new AddMedicalPresenter(this);
-        detailMedicalPresenter = new DetailMedicalPresenter(this);
+        medicalDetailPresenter = new MedicalDetailPresenter(this);
         dialogImageViewer = new DialogImageViewer(mContext);
         mForm = Form.create();
     }
 
     private void AddHeathRecoder() {
-        new PickerBuilder(AddMedicalActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
+        new PickerBuilder(AddMedicalDetailActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
                 .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                     @Override
                     public void onImageReceived(Uri imageUri) {
@@ -192,7 +189,7 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
         String note = etNote.getText().toString();
         long beginTime = pickerBeginTime.getTimeinMilisecond();
         long endTime = pickerEndTime.getTimeinMilisecond();
-        detailMedicalPresenter.updateMedicalDirectory(idMedical, name, beginTime, endTime, 1, note, resourceList);
+        medicalDetailPresenter.updateMedicalDirectory(idMedical, name, beginTime, endTime, 1, note, resourceList);
 
     }
 
@@ -238,7 +235,7 @@ public class AddMedicalActivity extends BasicActivity implements IAddMedicalView
 
     @Override
     public Activity getActivity() {
-        return AddMedicalActivity.this;
+        return AddMedicalDetailActivity.this;
     }
 
     @Override

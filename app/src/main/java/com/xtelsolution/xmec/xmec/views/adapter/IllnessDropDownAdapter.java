@@ -87,7 +87,7 @@ public class IllnessDropDownAdapter extends BaseAdapter implements Filterable {
             }
 
             @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
 
             }
         };

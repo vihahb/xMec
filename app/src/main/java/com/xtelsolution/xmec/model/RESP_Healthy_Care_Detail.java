@@ -10,6 +10,8 @@ public class RESP_Healthy_Care_Detail extends RESP_Map_Healthy_Care {
     @Expose
     private String openTime;
     @Expose
+    private String address;
+    @Expose
     private int voteRate;
     @Expose
     private String numPhone;
@@ -66,6 +68,14 @@ public class RESP_Healthy_Care_Detail extends RESP_Map_Healthy_Care {
 
     public void setVoteRate(int voteRate) {
         this.voteRate = voteRate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
 

@@ -49,51 +49,47 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <com.elyeproj.loaderviewlibrary.LoaderTextView
+                        <TextView
                             android:id="@+id/tv_profile_name"
-                            android:layout_width="wrap_content"
-                            app:width_weight="0.9"
-                            app:use_gradient="true"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:text="Mau Hong Phi"
+                            android:layout_marginRight="@dimen/dimen_8"
                             android:textColor="@color/primaryText"
                             android:textStyle="bold" />
 
-                        <com.elyeproj.loaderviewlibrary.LoaderTextView
+                        <TextView
                             android:id="@+id/tv_birthday"
-                            app:use_gradient="true"
-                            android:layout_width="wrap_content"
-                            app:width_weight="0.9"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="07/12/1996"
+                            android:layout_marginRight="@dimen/dimen_8"
                             android:textColor="@color/textHint"
-                            android:textSize="11sp" />
+                            android:textSize="11sp"
+                            />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp">
 
                             <ImageView
                                 android:layout_width="@dimen/dimen_22"
                                 android:layout_height="@dimen/dimen_22"
+                                android:layout_marginLeft="@dimen/dimen_5"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/ic_height" />
 
-                            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                            <TextView
                                 android:id="@+id/tv_profile_height"
-                                android:layout_width="wrap_content"
-                                app:width_weight="0.4"
-                                app:use_gradient="true"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="174" />
+                                android:layout_marginRight="@dimen/dimen_8" />
                         </LinearLayout>
 
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <ImageView
@@ -102,14 +98,13 @@
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/ic_weight" />
 
-                            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                            <TextView
                                 android:id="@+id/tv_profile_weight"
-                                android:layout_width="wrap_content"
-                                app:use_gradient="true"
-                                app:width_weight="0.4"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="74" />
+                                android:layout_marginRight="@dimen/dimen_8"
+                           />
                         </LinearLayout>
 
                     </LinearLayout>

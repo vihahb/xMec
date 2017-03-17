@@ -17,20 +17,19 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_List_IIlness;
-import com.xtelsolution.xmec.model.REQ_Medical_Detail;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.model.entity.Illness;
-import com.xtelsolution.xmec.presenter.DetailMedicalPresenter;
+import com.xtelsolution.xmec.presenter.MedicalDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HealtRecoderAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter2;
 import com.xtelsolution.xmec.xmec.views.adapter.ImageViewAdapter;
-import com.xtelsolution.xmec.xmec.views.inf.IDetailMedicalView;
+import com.xtelsolution.xmec.xmec.views.inf.IMedicalDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailMedicalActivity extends BasicActivity implements IDetailMedicalView,ItemClickListener {
+public class MedicalDetailActivity extends BasicActivity implements IMedicalDetailView,ItemClickListener {
     private Toolbar mToolbar;
     private TextView toolBarTille;
     private Context mContext;
@@ -45,7 +44,7 @@ public class DetailMedicalActivity extends BasicActivity implements IDetailMedic
     private LoaderTextView tvName;
     private LoaderTextView tvTime;
     private TextView btnUpdateMedical;
-    private DetailMedicalPresenter presenter;
+    private MedicalDetailPresenter presenter;
     private int id;
     private List<Resource> listUrl;
     private ArrayList<Illness> illnesses;
@@ -66,7 +65,7 @@ public class DetailMedicalActivity extends BasicActivity implements IDetailMedic
 
         listUrl = new ArrayList<>();
         illnesses = new ArrayList<>();
-        presenter = new DetailMedicalPresenter(this);
+        presenter = new MedicalDetailPresenter(this);
         healtRecoderAdapter = new HealtRecoderAdapter(mContext,listUrl);
         imageViewAdapter = new ImageViewAdapter(listUrl,mContext);
         illnessAdapter = new IllnessAdapter2(mContext,illnesses);
@@ -92,7 +91,7 @@ public class DetailMedicalActivity extends BasicActivity implements IDetailMedic
         btnUpdateMedical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(DetailMedicalActivity.this,AddMedicalActivity.class);
+                Intent i = new Intent(MedicalDetailActivity.this,AddMedicalDetailActivity.class);
                 i.putExtra(Constant.MEDICAL_ID,id);
                 startActivityForResult(i,95);
             }
@@ -112,6 +111,7 @@ public class DetailMedicalActivity extends BasicActivity implements IDetailMedic
         dialog=new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialog.setContentView(R.layout.image_viewer_dialog);
         viewPager = (ViewPager) dialog.findViewById(R.id.viewpager);
+        btnUpdateMedical = (TextView) findViewById(R.id.btn_update_medical);
 
     }
 

@@ -26,7 +26,7 @@ import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.HomePresenter;
-import com.xtelsolution.xmec.xmec.views.activity.DetailMedicalActivity;
+import com.xtelsolution.xmec.xmec.views.activity.MedicalDetailActivity;
 import com.xtelsolution.xmec.xmec.views.activity.ProfileActivity;
 import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicalDirectoryAdapter;
@@ -42,10 +42,10 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
     private RecyclerView rvDisease;
     private ImageView imgAvatar;
     private TextView btnProfile;
-    private LoaderTextView tvName;
-    private LoaderTextView tvBirthday;
-    private LoaderTextView tvHeight;
-    private LoaderTextView tvWeight;
+    private TextView tvName;
+    private TextView tvBirthday;
+    private TextView tvHeight;
+    private TextView tvWeight;
     private HomePresenter homePresenter;
     private Context mContext;
     private ArrayList<RESP_Medical> mlistMedica;
@@ -67,7 +67,7 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initUI(view);
         initControl();
-        showViewLoader();
+
         homePresenter.getUser();
         return view;
     }
@@ -109,10 +109,10 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
 
     public void initUI(View view) {
         btnProfile = (TextView) view.findViewById(R.id.btnProfile);
-        tvBirthday = (LoaderTextView) view.findViewById(R.id.tv_birthday);
-        tvHeight = (LoaderTextView) view.findViewById(R.id.tv_profile_height);
-        tvWeight = (LoaderTextView) view.findViewById(R.id.tv_profile_weight);
-        tvName = (LoaderTextView) view.findViewById(R.id.tv_profile_name);
+        tvBirthday = (TextView) view.findViewById(R.id.tv_birthday);
+        tvHeight = (TextView) view.findViewById(R.id.tv_profile_height);
+        tvWeight = (TextView) view.findViewById(R.id.tv_profile_weight);
+        tvName = (TextView) view.findViewById(R.id.tv_profile_name);
         imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
         imgGender = (ImageView) view.findViewById(R.id.img_gender);
     }
@@ -150,15 +150,9 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
 
     @Override
     public void onItemClickListener(Object item, int position) {
-        Intent intent = new Intent(getActivity(), DetailMedicalActivity.class);
+        Intent intent = new Intent(getActivity(), MedicalDetailActivity.class);
         intent.putExtra(Constant.MEDICAL_ID,((RESP_Medical)item).getId());
         startActivity(intent);
     }
-    private void showViewLoader(){
-        Log.e("MY", "showViewLoader: ");
-        tvWeight.resetLoader();
-        tvHeight.resetLoader();
-        tvName.resetLoader();
-        tvBirthday.resetLoader();
-    }
+
 }

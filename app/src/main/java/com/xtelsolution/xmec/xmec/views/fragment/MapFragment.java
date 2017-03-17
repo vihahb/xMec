@@ -2,6 +2,7 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,24 +26,31 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.model.RESP_List_Map_Healthy_Care;
+import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
 import com.xtelsolution.xmec.presenter.MapPresenter;
+import com.xtelsolution.xmec.xmec.views.activity.DetailHospitalActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IMapView;
+
+import java.util.List;
 
 /**
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView {
+public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView,GoogleMap.OnMarkerClickListener {
     private View view;
     private GoogleMap mMap;
-    private Marker marker;
+    private Marker mMarker;
     private FloatingActionButton btnCurrentLocation;
     private boolean isCheckPermission;
     private MapPresenter presenter;
@@ -78,6 +86,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         super.onViewCreated(view, savedInstanceState);
         initMap();
         presenter.initPermission();
+        presenter.getHospitals();
     }
 
 
@@ -89,9 +98,10 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
         if (isCheckPermission) {
             presenter.getCurrentLocation();
-            marker =mMap.addMarker(new MarkerOptions().position(new LatLng(0f,0f)));
+            mMarker =mMap.addMarker(new MarkerOptions().position(new LatLng(0f,0f)));
         }
     }
 
@@ -115,7 +125,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public void onLocationChange(LatLng latLng) {
-        marker.setPosition(latLng);
+        mMarker.setPosition(latLng);
     }
 
     @Override
@@ -127,7 +137,25 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         presenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
+    @Override
+    public void onGetListHealtyCareSuccess(List<RESP_Map_Healthy_Care> data) {
+        for (int i =0;i<data.size();i++){
+            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLatitude(),data.get(i).getLongitude())).title(data.get(i).getName()));
+            if (data.get(i).getType()==1)
+                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_hospital));
+            else
+                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_drug_store));
+            marker.setTag(i);
+        }
+    }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Intent i = new Intent(getActivity(), DetailHospitalActivity.class);
+        i.putExtra(Constant.HEALTHY_CENTER_ID,(int)marker.getTag());
+        startActivity(i);
+        return false;
     }
 }

@@ -13,7 +13,7 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Medical;
-import com.xtelsolution.xmec.xmec.views.activity.AddMedicalActivity;
+import com.xtelsolution.xmec.xmec.views.activity.AddMedicalDetailActivity;
 
 import java.util.ArrayList;
 
@@ -92,7 +92,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(mContext,AddMedicalActivity.class);
+                    Intent i = new Intent(mContext,AddMedicalDetailActivity.class);
                     mContext.startActivity(i);
                 }
             });
