@@ -128,6 +128,5 @@ public class IllnessAdapter extends RecyclerView.Adapter {
         this.data.clear();
         this.data.addAll(data);
         notifyDataSetChanged();
-
     }
 }
