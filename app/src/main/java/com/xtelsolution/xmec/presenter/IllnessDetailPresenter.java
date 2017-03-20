@@ -30,8 +30,7 @@ public class IllnessDetailPresenter {
 
             @Override
             public void onSucess(Document result) {
-                view.loadWebView(parseDocument(result));
-                view.showProgressView(false);
+                getLinkDetail(result);
             }
 
             @Override
@@ -54,5 +53,26 @@ public class IllnessDetailPresenter {
             e.printStackTrace();
             return null;
         }
+    }
+    private void getLinkDetail(Document document){
+        String url = document.select("a.top-total-lnk").first().attr("abs:href");
+        new NewsHtmlLoader(new LoadNewsDetailListener() {
+            @Override
+            public void onPrepare() {
+
+            }
+
+            @Override
+            public void onSucess(Document result) {
+                view.loadWebView(parseDocument(result));
+                view.showProgressView(false);
+            }
+
+            @Override
+            public void onError() {
+                view.showToast("Có lỗi xảy ra!");
+                view.showProgressView(false);
+            }
+        }).execute(url);
     }
 }

@@ -33,11 +33,37 @@ public class RSSGetter extends AsyncTask<String, Integer, ArrayList<NewsFeed>> {
 
     @Override
     protected ArrayList<NewsFeed> doInBackground(String... params) {
-        xLog.d("URL: " + params[0]);
+        ArrayList<NewsFeed> list = new ArrayList<>();
+        for (String param : params) {
+            ArrayList<NewsFeed> listSub = loadUrl(param);
+            if (listSub != null)
+                list.addAll(listSub);
+        }
+//        try {
+//            OkHttpClient client = new OkHttpClient();
+//            Request.Builder builder = new Request.Builder();
+//            builder.url(params[0]);
+//            Request request = builder.build();
+//            Response response = client.newCall(request).execute();
+//            ArrayList<NewsFeed> list = NewsFeeds.parse(response.body().byteStream());
+//            return list;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            xLog.e("RSSGetter-IOException:" + e.getMessage());
+//            return null;
+//        }
+        return list;
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<NewsFeed> list) {
+        callback.onSucess(list);
+    }
+    private ArrayList<NewsFeed> loadUrl(String url){
         try {
             OkHttpClient client = new OkHttpClient();
             Request.Builder builder = new Request.Builder();
-            builder.url(params[0]);
+            builder.url(url);
             Request request = builder.build();
             Response response = client.newCall(request).execute();
             ArrayList<NewsFeed> list = NewsFeeds.parse(response.body().byteStream());
@@ -47,10 +73,5 @@ public class RSSGetter extends AsyncTask<String, Integer, ArrayList<NewsFeed>> {
             xLog.e("RSSGetter-IOException:" + e.getMessage());
             return null;
         }
-    }
-
-    @Override
-    protected void onPostExecute(ArrayList<NewsFeed> list) {
-        callback.onSucess(list);
     }
 }

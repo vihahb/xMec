@@ -14,6 +14,7 @@
         android:paddingTop="20dp">
 
         <ImageView
+            android:id="@+id/imgNewsPhoto"
             android:layout_width="135dp"
             android:layout_height="76dp"
             android:maxWidth="120dp"
@@ -21,6 +22,7 @@
             android:src="@drawable/placeholder_news" />
 
         <TextView
+            android:id="@+id/tvNewsFeedTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -34,6 +36,7 @@
             android:textSize="11sp" />
 
         <TextView
+            android:id="@+id/tvNewsPubTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_8"

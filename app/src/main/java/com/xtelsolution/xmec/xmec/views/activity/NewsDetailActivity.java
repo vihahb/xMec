@@ -24,7 +24,6 @@ public class NewsDetailActivity extends BasicActivity implements INewsDetailView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
-        startActivity(new Intent(this,IllnessDetailActivity.class));
         String url = getIntent().getExtras().getString(TAG_NEWS_URL);
         init();
         initWebView();

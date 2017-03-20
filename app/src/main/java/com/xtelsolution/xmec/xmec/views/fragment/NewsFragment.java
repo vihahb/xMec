@@ -123,7 +123,7 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         presenter.loadNewsFeed(rss_url);
-        recyclerView.setRefreshing(false);
+        recyclerView.setRefreshing(true);
     }
 
 //    @Override
@@ -141,6 +141,7 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
         adapter.clear();
         adapter.addAll(data);
         adapter.notifyDataSetChanged();
+        recyclerView.setRefreshing(false);
     }
 
     @Override
