@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -260,7 +261,13 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
     @Override
     public void onAddMedicalSuccess() {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(AddMedicalDetailActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        },500);
     }
 
     @Override

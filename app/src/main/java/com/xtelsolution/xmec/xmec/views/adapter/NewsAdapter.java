@@ -17,12 +17,13 @@ import com.xtelsolution.xmec.xmec.views.activity.NewsDetailActivity;
 import java.util.ArrayList;
 
 public class NewsAdapter extends RecyclerView.Adapter {
-
+    public static final String TAG_NEWS_URL = "news_url";
     private Context mContext;
     private ArrayList<NewsFeed> data;
-
-    public NewsAdapter(Context mContext) {
+//    private onItem
+    public NewsAdapter(Context mContext,ArrayList<NewsFeed> data) {
         this.mContext = mContext;
+        this.data =data;
     }
 
     @Override
@@ -32,12 +33,21 @@ public class NewsAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NewsViewHolder) {
             ((NewsViewHolder) holder).tvNewsTitle.setText(data.get(position).getTitle());
             ((NewsViewHolder) holder).tvNewsPubTime.setText(data.get(position).getPubDate());
             Picasso.with(mContext).load(data.get(position).getDescription()).into((((NewsViewHolder) holder).imgNewsPhoto));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(mContext,NewsDetailActivity.class);
+                    i.putExtra(TAG_NEWS_URL,data.get(position).getLink());
+                    mContext.startActivity(i);
+                }
+            });
         }
+
     }
 
     @Override

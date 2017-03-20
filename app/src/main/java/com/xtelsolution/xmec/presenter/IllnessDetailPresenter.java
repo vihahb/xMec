@@ -76,3 +76,4 @@ public class IllnessDetailPresenter {
         }).execute(url);
     }
 }
+

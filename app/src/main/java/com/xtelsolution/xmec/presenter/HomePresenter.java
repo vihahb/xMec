@@ -25,6 +25,7 @@ public class HomePresenter {
     }
 
     public void getUser() {
+        view.showProgressDialog("Đang tải");
         String sesstion = SharedPreferencesUtils.getInstance().getStringValue(Constant.USER_SESSION);
         String url = Constant.SERVER_XMEC + Constant.GET_USER;
         Log.e("USer", "getUser: " +url);
@@ -44,6 +45,7 @@ public class HomePresenter {
                         view.showToast("Session không hợp lệ");
                         break;
                     case -1:
+                        view.dismissProgressDialog();
                         xLog.e(error.getMessage());
                         view.showToast(error.getMessage());
                         SharedPreferencesUtils.getInstance().putStringValue(Constant.USER_AVATAR,"dasdasda");
@@ -61,6 +63,7 @@ public class HomePresenter {
             @Override
             public void onSuccess(RESP_List_Medical obj) {
                 view.onGetMediacalListSusscess(obj);
+                view.dismissProgressDialog();
             }
             @Override
             public void onError(Error error) {
@@ -69,7 +72,8 @@ public class HomePresenter {
                         view.showToast("Session không hợp lệ");
                         break;
                     case -1:
-                        view.showToast(error.getMessage());
+//
+                        view.showToast("Lỗi hệ thống");
                         xLog.d("onError: " + error.getMessage());
                         break;
                 }

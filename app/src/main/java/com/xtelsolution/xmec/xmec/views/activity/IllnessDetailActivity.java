@@ -34,6 +34,8 @@ public class IllnessDetailActivity extends BasicActivity implements IIllnessDeta
         String mainUrl = getIntent().getExtras().getString(Constant.ILLNESS_URL);
         xLog.e(Constant.LOGPHI+mainUrl);
         if (mainUrl!=null){
+            mainUrl.replace("http://diendan.songkhoe.vn/dien-dan","http://diendan.songkhoe.vn/chi-tiet-tong-quan-ve");
+            xLog.e(Constant.LOGPHI+"url "+mainUrl);
             presenter.loadIllnessDetail(mainUrl);
         }else {
             showToast("Có lỗi xảy ra");

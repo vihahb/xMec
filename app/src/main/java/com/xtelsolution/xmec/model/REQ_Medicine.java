@@ -8,6 +8,8 @@ import com.google.gson.annotations.Expose;
 
 public class REQ_Medicine  {
     @Expose
+    private int id_disease;
+    @Expose
     private String name;
     @Expose
     private int id_medicine;
@@ -15,6 +17,20 @@ public class REQ_Medicine  {
     public REQ_Medicine( String name, int id_medicine) {
         this.name = name;
         this.id_medicine = id_medicine;
+    }
+
+    public REQ_Medicine(int id, String name, int id_medicine) {
+        this.id_disease = id;
+        this.name = name;
+        this.id_medicine = id_medicine;
+    }
+
+    public int getId_disease() {
+        return id_disease;
+    }
+
+    public void setId_disease(int id_disease) {
+        this.id_disease = id_disease;
     }
 
     public String getName() {

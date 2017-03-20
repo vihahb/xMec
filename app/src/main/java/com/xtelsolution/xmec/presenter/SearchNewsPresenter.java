@@ -1,6 +1,7 @@
 package com.xtelsolution.xmec.presenter;
 
 import com.xtelsolution.xmec.callbacks.RSSGetter;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.OnNewsFeedLoadedListener;
 import com.xtelsolution.xmec.model.entity.NewsFeed;
 import com.xtelsolution.xmec.xmec.views.inf.ISearchNewsView;
@@ -25,12 +26,15 @@ public class SearchNewsPresenter {
     public ArrayList<NewsFeed> searchNews(String querry) {
         ArrayList<NewsFeed> listResult = new ArrayList<>();
         if (data != null && data.size() > 0) {
+            xLog.e("sssss"+data.size());
             for (NewsFeed newsFeed : data) {
+                xLog.e("ssss"+newsFeed.getTitle());
                 if (newsFeed.getTitle() != null && newsFeed.getTitle().contains(querry)) {
                     listResult.add(newsFeed);
                 }
             }
         }
+        view.updateResult(listResult);
         return listResult;
     }
 

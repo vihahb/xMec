@@ -38,11 +38,11 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (viewType == VIEW_TYPE_ITEM) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_mediacine, null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_mediacine, parent,false);
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new MedicineAdapterViewHolder(view);
         } else if (viewType == VIEW_TYPE_LOADING) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_more_progress, null);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_more_progress,  parent,false);
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new LoadingViewHolder(view);
         }

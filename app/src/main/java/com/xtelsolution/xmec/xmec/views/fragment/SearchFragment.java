@@ -10,19 +10,25 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.entity.Disease;
+import com.xtelsolution.xmec.model.entity.NewsFeed;
+import com.xtelsolution.xmec.presenter.SearchNewsPresenter;
 import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 import com.xtelsolution.xmec.xmec.views.activity.DiseaseDiagnosiActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
+import com.xtelsolution.xmec.xmec.views.inf.ISearchNewsView;
 import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginHorizontal;
 
 import java.util.ArrayList;
@@ -32,41 +38,31 @@ import java.util.List;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class SearchFragment extends Fragment {
+
+public class SearchFragment extends BasicFragment implements ISearchNewsView {
     private final String TAG = SearchFragment.class.getName();
-
-
     private RecyclerView rvResultFindNews, rvResultFindIllness;
-
     private Button btnDiseaseDiagnos;
-
     private NestedScrollView NscrollView;
-
-
     private Handler handler;
-
     private NewsAdapter adapter;
-
     private Context mContext;
-
     private IllnessAdapter illnessAdapter;
-
     private List<Disease> listMedicines;
+    private SearchNewsPresenter newsPresenter;
+    private ArrayList<NewsFeed> mNewsFeeds;
+    private EditText etFindAll;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mContext = getContext();
-
         handler = new Handler();
-
         listMedicines = new ArrayList<>();
-
-        adapter = new NewsAdapter(getContext());
-
+        mNewsFeeds = new ArrayList<>();
+        adapter = new NewsAdapter(getContext(), mNewsFeeds);
         illnessAdapter = new IllnessAdapter(mContext, listMedicines);
-
+        newsPresenter = new SearchNewsPresenter(this);
     }
 
     @Nullable
@@ -79,7 +75,7 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initView();
+        initView(view);
 
         initRecyclerView();
 
@@ -97,7 +93,6 @@ public class SearchFragment extends Fragment {
     private void initRecyclerView() {
         //////////////////////////////////////////////////
         rvResultFindNews.setAdapter(adapter);
-
         rvResultFindNews.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         RecyclerViewMarginHorizontal decoration = new RecyclerViewMarginHorizontal((int) (getContext().getResources().getDisplayMetrics().density * 8f + 0.5f));
@@ -146,17 +141,30 @@ public class SearchFragment extends Fragment {
 
     }
 
-    private void initView() {
+    private void initView(View view) {
 
         rvResultFindNews = (RecyclerView) getActivity().findViewById(R.id.rvResultFindNews);
-
         rvResultFindIllness = (RecyclerView) getActivity().findViewById(R.id.rvResultFindIllnesses);
-
         NscrollView = (NestedScrollView) getActivity().findViewById(R.id.NscrollView);
-
         btnDiseaseDiagnos = (Button) getActivity().findViewById(R.id.btn_Disease_Dianosi);
-
+        etFindAll = (EditText) view.findViewById(R.id.etSearch1);
         rvResultFindIllness.setNestedScrollingEnabled(false);
+        etFindAll.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (etFindAll.getRight() - etFindAll.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        Toast.makeText(mContext, "hshasd", Toast.LENGTH_SHORT).show();
+                        newsPresenter.searchNews(etFindAll.getText().toString());
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private List<Disease> createTempData(int size) {
@@ -167,5 +175,12 @@ public class SearchFragment extends Fragment {
             sticks.add(new Disease(i, "Tên Bệnh " + i));
         }
         return sticks;
+    }
+
+    @Override
+    public void updateResult(ArrayList<NewsFeed> listNewsFeeds) {
+        mNewsFeeds.clear();
+        mNewsFeeds.addAll(listNewsFeeds);
+        adapter.notifyDataSetChanged();
     }
 }

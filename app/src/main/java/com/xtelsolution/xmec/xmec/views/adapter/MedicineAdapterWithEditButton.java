@@ -46,7 +46,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
             view = inflater.inflate(R.layout.list_item_medicine_with_editbtn, null);
             return new MedicineViewHolder(view);
         } else {
-            view = inflater.inflate(R.layout.item_button_add, parent, false);
+            view = inflater.inflate(R.layout.item_button_add_medicine, parent, false);
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new AddMedicineViewHolder(view);
         }
@@ -67,7 +67,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
             medicineViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClickListener.onItemClickListener(mList.get(position), position);
+                    itemClickListener.onItemClickListener(mList.get(position-1), position-1);
                 }
             });
         } else {

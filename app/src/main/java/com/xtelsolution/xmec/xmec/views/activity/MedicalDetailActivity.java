@@ -77,9 +77,12 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         illnessAdapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClickListener(Object item, int position) {
-                Intent i = new Intent(MedicalDetailActivity.this,IllnessDetailActivity.class);
-                i.putExtra(Constant.ILLNESS_URL,((RESP_Disease) item).getLink());
-                startActivity(i);
+                String link =((RESP_Disease) item).getLink();
+                if ( link!= null&&link.length()==0) {
+                    Intent i = new Intent(MedicalDetailActivity.this, IllnessDetailActivity.class);
+                    i.putExtra(Constant.ILLNESS_URL, link);
+                    startActivity(i);
+                }
             }
         });
         rcHealthReconder.setAdapter(healtRecoderAdapter);
@@ -95,7 +98,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         id = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
 
         presenter.getDetailMedical(id);
-        presenter.getListIllness(id);
+//        presenter.getListIllness(id);
 
     }
 

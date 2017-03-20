@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.xmec.views.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -150,16 +151,16 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
         listMedicine = new ArrayList<>();
         medicineAdapterWithEditButton = new MedicineAdapterWithEditButton(this, listMedicine);
         medicineAdapterWithEditButton.setButtonAdapterClickListener(this);
-        medicineAdapterWithEditButton.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onItemClickListener(Object item, int position) {
-                if (item == null) {
-                    showToast("Item Null: " + position);
-                } else {
-                    showToast("Item: " + position);
-                }
-            }
-        });
+//        medicineAdapterWithEditButton.setItemClickListener(new ItemClickListener() {
+//            @Override
+//            public void onItemClickListener(Object item, int position) {
+//                if (item == null) {
+//                    showToast("Item Null: " + position);
+//                } else {
+//                    showToast("Item: " + position);
+//                }
+//            }
+//        });
         recyclerView.setAdapter(medicineAdapterWithEditButton);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
@@ -187,14 +188,28 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
 
     @Override
     public void onAddDiseaseSuccess(int idDisease) {
-        showToast("Thêm bệnh thành công ");
-        uidDisease = idDisease;
+        showToast("Thêm bệnh thành công");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(AddIllnessActivity.this,MedicalDetailActivity.class);
+                i.putExtra(Constant.MEDICAL_ID,idMedical);
+                startActivity(i);
+            }
+        },500);
     }
 
     @Override
     public void onAddMedicineSuccess(int id) {
-        showToast("Đã thêm thuốc có id "+id);
-        mDialog.dismiss();
+        showToast("Thêm bệnh thành công");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(AddIllnessActivity.this,MedicalDetailActivity.class);
+                i.putExtra(Constant.MEDICAL_ID,idMedical);
+                startActivity(i);
+            }
+        },500);
     }
 
     @Override

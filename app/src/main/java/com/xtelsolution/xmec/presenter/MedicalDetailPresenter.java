@@ -32,18 +32,28 @@ public class MedicalDetailPresenter {
         this.view = view;
     }
 
-    public void getDetailMedical(int id){
+    public void getDetailMedical(final int id){
+        view.showProgressDialog("Đang tải");
         Log.e("sdasdadasd", "getDetailMedical: " +id);
         String url= Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK+"/"+id;
         MedicalDirectoryModel.getinstance().getMedicalDirectoryDetail(url, "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_Medical_Detail>(RESP_Medical_Detail.class) {
             @Override
             public void onSuccess(RESP_Medical_Detail obj) {
                 view.onLoadMedicalFinish(obj);
+                getListIllness(id);
             }
 
             @Override
             public void onError(Error error) {
+                view.dismissProgressDialog();
                 xLog.e(error.getMessage());
+                switch (error.getCode()) {
+                    case 2:
+                        view.showToast("Session không hợp lệ");
+                        break;
+                    case -1:
+                        view.showToast("Lỗi hệ thống ");
+                }
             }
         });
     }
@@ -53,20 +63,21 @@ public class MedicalDetailPresenter {
         DiseaseModel.getInstance().getListIllness(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_List_Disease_With_Link>(RESP_List_Disease_With_Link.class) {
             @Override
             public void onSuccess(RESP_List_Disease_With_Link obj) {
-                view.onLoadListIllnessFinish(obj.getData());
                 List<RESP_Disease> resp_diseases = obj.getData();
                 view.onLoadListIllnessFinish(resp_diseases);
+                view.dismissProgressDialog();
             }
 
             @Override
             public void onError(Error error) {
+                view.dismissProgressDialog();
                 xLog.e(Constant.LOGPHI+error.toString());
                 switch (error.getCode()) {
                     case 2:
                         view.showToast("Session không hợp lệ");
                         break;
                     case -1:
-                        view.showToast(error.getMessage());
+                        view.showToast("Lỗi hệ thống ");
                 }
             }
         });
