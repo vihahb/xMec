@@ -28,6 +28,7 @@ import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
+import com.xtelsolution.xmec.model.RESP_Disease;
 import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
@@ -293,9 +294,10 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     }
 
     @Override
-    public void onLoadListIllnessFinish(RESP_List_Disease data) {
+    public void onLoadListIllnessFinish(List<RESP_Disease> data) {
 
     }
+
 
     @Override
     public void onUpdateMedicalFinish() {

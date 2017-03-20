@@ -38,6 +38,7 @@
     <string name="list_disease">Danh sách bệnh</string>
     <string name="directory_disease_note">Ghi chú</string>
     <string name="save_director_disease">Lưu Y bạ</string>
+    <string name="add_medicine">Thêm thuốc</string>
     <string name="add_disease">Thêm bệnh</string>
     <string name="title_activity_test_tab">TestTab</string>
     <string name="action_settings">Settings</string>
@@ -88,6 +89,7 @@
     <string name="update_medical">Cập nhật y bạ</string>
     <string name="update_medical_success">Cập nhật Thành công</string>
     <string name="illness_name">Tên bệnh</string>
+    <string name="medical_name">Tên Thuốc</string>
     <string name="list_illness">Danh sách bệnh</string>
     <string name="list_medicine">Danh sách thuốc</string>
 

@@ -11,8 +11,10 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.DiseaseModel;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
+import com.xtelsolution.xmec.model.RESP_Disease;
 import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.REQ_Medical_Detail;
+import com.xtelsolution.xmec.model.RESP_List_Disease_With_Link;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.xmec.views.inf.IMedicalDetailView;
@@ -46,20 +48,28 @@ public class MedicalDetailPresenter {
         });
     }
     public void getListIllness(int id){
-
         String url =Constant.SERVER_XMEC+Constant.ILLNESS+"/"+id;
-        DiseaseModel.getInstance().getListIllness(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_List_Disease>(RESP_List_Disease.class) {
+        xLog.e(Constant.LOGPHI+ "url"+url);
+        DiseaseModel.getInstance().getListIllness(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_List_Disease_With_Link>(RESP_List_Disease_With_Link.class) {
             @Override
-            public void onSuccess(RESP_List_Disease obj) {
-                view.onLoadListIllnessFinish(obj);
+            public void onSuccess(RESP_List_Disease_With_Link obj) {
+                view.onLoadListIllnessFinish(obj.getData());
+                List<RESP_Disease> resp_diseases = obj.getData();
+                view.onLoadListIllnessFinish(resp_diseases);
             }
 
             @Override
             public void onError(Error error) {
-                xLog.e(error.getMessage());
+                xLog.e(Constant.LOGPHI+error.toString());
+                switch (error.getCode()) {
+                    case 2:
+                        view.showToast("Session không hợp lệ");
+                        break;
+                    case -1:
+                        view.showToast(error.getMessage());
+                }
             }
         });
-
     }
     public void updateMedicalDirectory(int id,String name,long beginTime,long endTime,int type,String note,List<Resource> resources){
         view.showProgressDialog("Đang cập nhật");
@@ -102,7 +112,7 @@ public class MedicalDetailPresenter {
     public void removeMedical(int id){
         view.showProgressDialog("Đang Xóa");
         String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK+"/"+id;
-        MedicalDirectoryModel.getinstance().deleteMedicalDirectory(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
+        MedicalDirectoryModel.getinstance().deleteMedicalDirectory(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
             @Override
             public void onSuccess(RESP_Basic obj) {
                 view.onRemoveMedicalSuccess();

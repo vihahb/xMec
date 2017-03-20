@@ -50,12 +50,17 @@ public class Constant {
     public static final String GET_USER = "user";
     public static final String SERVER_UPLOAD = "http://124.158.5.112:9180/s/files/upload";
     public static final String MEDICAL_REPORT_BOOK = "user/medical-report-book";
-    public static final String ILLNESS = "user/medical-report-book/illness";
+    public static final String ILLNESS = "user/medical-report-book/disease";
     public static final String HEALTHY_CENTER = "healthy-center";
-    public static final String Disease = "disease";
+    public static final String Disease = "user/disease";
+    public static final String DISEASE = "user/medical-report-book/disease";
+    public static final String MEDICINE = "user/medical-report-book/disease/medicine";
+    public static final String MEDICINE_SEARCH = "user/medicine";
+    public static final String LOGPHI = "LOGPHI";
+    public static final String ILLNESS_URL = "illness_url";
 
-    public static final String SERVER_XMEC = "http://192.168.29.105:8080/v0.1/";
-
+    public static final String SERVER_XMEC = "http://192.168.100.19:8010/v0.1/";
+    public static final String LOCAL_SECCION="V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR";
     public static final String GET_MEDIACAL_REPORT_BOOK = "user/medical-report-book?page=1&pagesize=30";
 
 

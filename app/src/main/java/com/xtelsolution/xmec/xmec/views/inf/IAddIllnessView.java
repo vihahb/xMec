@@ -5,4 +5,6 @@ package com.xtelsolution.xmec.xmec.views.inf;
  */
 
 public interface IAddIllnessView extends BaseView {
+    void onAddDiseaseSuccess(int id);
+    void onAddMedicineSuccess(int id);
 }

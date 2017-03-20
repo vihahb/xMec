@@ -7,13 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.listener.list.ButtonAdapterClickListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
+import com.xtelsolution.xmec.model.REQ_Medicine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HUNGNT on 2/14/2017.
@@ -24,10 +29,11 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
     public static final int BUTTON = 2;
     public static final int NORMAL = 1;
     private Context mContext;
-    private ArrayList<Medicine> mList;
+    private List<REQ_Medicine> mList;
     private ItemClickListener itemClickListener;
+    private ButtonAdapterClickListener buttonAdapterClickListener;
 
-    public MedicineAdapterWithEditButton(Context mContext, ArrayList<Medicine> mList) {
+    public MedicineAdapterWithEditButton(Context mContext, List<REQ_Medicine> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -51,19 +57,25 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MedicineViewHolder) {
             MedicineViewHolder medicineViewHolder = (MedicineViewHolder) holder;
+            ((MedicineViewHolder) holder).tvNameMedical.setText(mList.get(position).getName());
+            ((MedicineViewHolder) holder).btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    buttonAdapterClickListener.onRemoveButtonClick(mList.get(position),position);
+                }
+            });
             medicineViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClickListener.onItemClickListener(mList.get(position),position);
+                    itemClickListener.onItemClickListener(mList.get(position), position);
                 }
             });
-        }else {
-            AddMedicineViewHolder addMedicineViewHolder= (AddMedicineViewHolder) holder;
+        } else {
+            AddMedicineViewHolder addMedicineViewHolder = (AddMedicineViewHolder) holder;
             addMedicineViewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "AddMedicineViewHolder clicked", Toast.LENGTH_SHORT).show();
-                    addItem();
+                    buttonAdapterClickListener.onButtonAdapterClickListener((Button) v);
                 }
             });
         }
@@ -82,8 +94,13 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
     }
 
     private class MedicineViewHolder extends RecyclerView.ViewHolder {
+        public TextView tvNameMedical;
+        public ImageView btnRemove;
+
         public MedicineViewHolder(View itemView) {
             super(itemView);
+            tvNameMedical = (TextView) itemView.findViewById(R.id.tv_medicine_name);
+            btnRemove = (ImageView) itemView.findViewById(R.id.btn_remove);
         }
     }
 
@@ -99,8 +116,26 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
-    public void addItem(){
-        mList.add(new Medicine(0,"Tên thuốc (Thêm)","Type"));
+    //    public void addItem(){
+//        mList.add(new Medicine(0,"Tên thuốc (Thêm)","Type"));
+//        notifyDataSetChanged();
+//    }
+    public void addAll(List<REQ_Medicine> data) {
+        mList.addAll(data);
         notifyDataSetChanged();
+    }
+
+    public void add(REQ_Medicine medicine) {
+        mList.add(medicine);
+        notifyItemInserted(mList.size() - 1);
+    }
+
+    public void removeItem(int index){
+        mList.remove(index);
+        notifyItemRemoved(index);
+    }
+
+    public void setButtonAdapterClickListener(ButtonAdapterClickListener buttonAdapterClickListener) {
+        this.buttonAdapterClickListener = buttonAdapterClickListener;
     }
 }

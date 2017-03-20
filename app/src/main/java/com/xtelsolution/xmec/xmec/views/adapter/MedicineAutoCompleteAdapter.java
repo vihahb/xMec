@@ -1,6 +1,5 @@
 package com.xtelsolution.xmec.xmec.views.adapter;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +10,13 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.xtel.nipservicesdk.commons.Cts;
-import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.model.RESP_ID;
 import com.xtelsolution.xmec.model.RESP_List_Disease;
+import com.xtelsolution.xmec.model.RESP_List_Medicine;
+import com.xtelsolution.xmec.model.RESP_Medicine;
 import com.xtelsolution.xmec.model.entity.Disease;
 
 import java.io.IOException;
@@ -28,15 +29,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by phimau on 3/17/2017.
+ * Created by phimau on 3/19/2017.
  */
 
-public class DiseaseAutoCompleteAdapter extends BaseAdapter implements Filterable {
-    private static final int MAX_RESULTS = 10;
-    private static final String url =Constant.SERVER_XMEC+Constant.Disease+"?name=";
-    //    private
-    private List<Disease> resultList = new ArrayList<Disease>();
-
+public class MedicineAutoCompleteAdapter extends BaseAdapter implements Filterable {
+    private static final String url = Constant.SERVER_XMEC+Constant.MEDICINE_SEARCH+"?name=";
+    private List<RESP_Medicine> resultList = new ArrayList<>();
     @Override
     public int getCount() {
         return resultList.size();
@@ -72,11 +70,11 @@ public class DiseaseAutoCompleteAdapter extends BaseAdapter implements Filterabl
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
                 xLog.e(constraint.toString());
-                List<Disease> diseases = new ArrayList<>();
+                List<RESP_Medicine> diseases = new ArrayList<>();
                 if (constraint != null&&constraint.length()>1) {
                     try {
                         xLog.e(Constant.LOGPHI+url+constraint.toString()+"&size=10");
-                        diseases = new GetToServer().execute(url+constraint.toString()+"&size=10", Constant.LOCAL_SECCION).get();
+                        diseases = new MedicineAutoCompleteAdapter.GetToServer().execute(url+constraint.toString()+"&size=10", Constant.LOCAL_SECCION).get();
                     } catch (InterruptedException e) {
                         xLog.e(e.getMessage());
                     } catch (ExecutionException e) {
@@ -93,7 +91,7 @@ public class DiseaseAutoCompleteAdapter extends BaseAdapter implements Filterabl
                 resultList.clear();
                 if (results != null && results.count > 0) {
                     xLog.e(Constant.LOGPHI+resultList.toString());
-                    resultList.addAll((List<Disease>) results.values);
+                    resultList.addAll((List<RESP_Medicine>) results.values);
                     xLog.e(Constant.LOGPHI+resultList.toString());
                     notifyDataSetChanged();
                 } else {
@@ -105,12 +103,9 @@ public class DiseaseAutoCompleteAdapter extends BaseAdapter implements Filterabl
     }
 
 
-    private class GetToServer extends AsyncTask<String, Integer, List<Disease>> {
-        private boolean isSuccess = true;
-
-
+    private class GetToServer extends AsyncTask<String, Integer, List<RESP_Medicine>> {
         @Override
-        protected List<Disease> doInBackground(String... params) {
+        protected List<RESP_Medicine> doInBackground(String... params) {
             try {
                 OkHttpClient client = new OkHttpClient();
 
@@ -125,11 +120,11 @@ public class DiseaseAutoCompleteAdapter extends BaseAdapter implements Filterabl
                 Response response = client.newCall(request).execute();
 
                 String jsonObjet = response.body().string();
-                RESP_List_Disease t = null;
+                RESP_List_Medicine t = null;
                 try {
-                    t = JsonHelper.getObjectNoException(jsonObjet, RESP_List_Disease.class);
-                    xLog.e(Constant.LOGPHI+"   "+t.getList().toString());
-                    return t.getList();
+                    t = JsonHelper.getObjectNoException(jsonObjet, RESP_List_Medicine.class);
+                    xLog.e(Constant.LOGPHI+"   "+t.getData().toString());
+                    return t.getData();
                 } catch (Exception e) {
                     xLog.e(e.getMessage());
                 }
@@ -141,8 +136,9 @@ public class DiseaseAutoCompleteAdapter extends BaseAdapter implements Filterabl
         }
 
         @Override
-        protected void onPostExecute(List<Disease> s) {
+        protected void onPostExecute(List<RESP_Medicine> s) {
             super.onPostExecute(s);
         }
     }
 }
+

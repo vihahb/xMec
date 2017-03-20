@@ -19,6 +19,7 @@ public class RESP_Map_Healthy_Care extends RESP_Basic {
     @Expose
     private int type;
 
+
     public int getId() {
         return id;
     }

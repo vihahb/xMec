@@ -16,19 +16,19 @@
         android:src="@drawable/ic_medicine" />
 
     <ImageView
-        android:id="@+id/btnEdit"
+        android:id="@+id/btn_remove"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_action_editt"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-
+        android:clickable="true"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_alignParentRight="true" />
 
     <TextView
-        android:id="@+id/tvIllnessName"
+        android:id="@+id/tv_medicine_name"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:gravity="center_vertical"

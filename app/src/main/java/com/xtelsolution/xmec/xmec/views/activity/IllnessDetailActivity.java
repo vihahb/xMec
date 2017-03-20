@@ -9,6 +9,8 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.presenter.IllnessDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.inf.IIllnessDetailview;
 
@@ -18,7 +20,7 @@ import com.xtelsolution.xmec.xmec.views.inf.IIllnessDetailview;
 
 public class IllnessDetailActivity extends BasicActivity implements IIllnessDetailview{
 
-    public static final String ILLNESS_URL = "illness_url";
+
     private WebView webViewNews;
     private LinearLayout loLoading;
     IllnessDetailPresenter presenter;
@@ -29,8 +31,8 @@ public class IllnessDetailActivity extends BasicActivity implements IIllnessDeta
         setContentView(R.layout.activity_news_detail);
         init();
         initWebView();
-//        String mainUrl = getIntent().getExtras().getString(ILLNESS_URL);
-        String mainUrl = "http://diendan.songkhoe.vn/chi-tiet-trieu-chung-cua-benh-bai-liet-s2531-1136-451328.html";
+        String mainUrl = getIntent().getExtras().getString(Constant.ILLNESS_URL);
+        xLog.e(Constant.LOGPHI+mainUrl);
         if (mainUrl!=null){
             presenter.loadIllnessDetail(mainUrl);
         }else {

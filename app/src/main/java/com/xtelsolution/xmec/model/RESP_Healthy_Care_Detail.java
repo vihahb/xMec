@@ -22,6 +22,7 @@ public class RESP_Healthy_Care_Detail extends RESP_Map_Healthy_Care {
     @Expose
     private String urlAvatar;
 
+
     public String getUrlAvatar() {
         return urlAvatar;
     }

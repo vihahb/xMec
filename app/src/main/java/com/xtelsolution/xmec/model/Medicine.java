@@ -1,11 +1,15 @@
 package com.xtelsolution.xmec.model;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by Admin on 2/3/2017.
  */
 
 public class Medicine {
+    @Expose
     private int id;
+    @Expose
     private String name;
     private String type;
     private String group;

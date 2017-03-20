@@ -12,10 +12,16 @@ public class DiseaseModel extends BasicModel {
     public static DiseaseModel getInstance(){
         return instance;
     }
-    public void getListIllness(String url, String session, ResponseHandle<RESP_List_Disease> responseHandle){
+    public void getListIllness(String url, String session, ResponseHandle<RESP_List_Disease_With_Link> responseHandle){
         requestServer.getApi(url,session,responseHandle);
     }
     public void findDisease(String url, String session, ResponseHandle<RESP_List_Disease> responseHandle){
         requestServer.getApi(url,session,responseHandle);
+    }
+    public void addDisease(String url,String obj,String session,ResponseHandle<RESP_ID> responseHandle){
+        requestServer.postApi(url,obj,session,responseHandle);
+    }
+    public void addMedicine(String url,String obj,String session,ResponseHandle<RESP_ID> responseHandle){
+        requestServer.postApi(url,obj,session,responseHandle);
     }
 }

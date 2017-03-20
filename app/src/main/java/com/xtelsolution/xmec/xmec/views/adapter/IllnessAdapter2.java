@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.xtelsolution.xmec.listener.list.ButtonAdapterClickListener;
+import com.xtelsolution.xmec.model.RESP_Disease;
+import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.entity.Disease;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
@@ -25,10 +28,11 @@ public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final int BUTTON = 2;
     public static final int NORMAL = 1;
     private Context mContext;
-    private ArrayList<Disease> mList;
+    private ArrayList<RESP_Disease> mList;
     private ItemClickListener itemClickListener;
+    private ButtonAdapterClickListener buttonAdapterClickListener;
 
-    public IllnessAdapter2(Context mContext, ArrayList<Disease> mList) {
+    public IllnessAdapter2(Context mContext, ArrayList<RESP_Disease> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -85,9 +89,7 @@ public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
             btnAdd.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(mContext, AddIllnessActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(i);
+                    buttonAdapterClickListener.onButtonAdapterClickListener(btnAdd);
                 }
             });
         }
@@ -98,8 +100,8 @@ public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
          return mList.size() <= position ? BUTTON : NORMAL;
     }
 
-    public  void addAll(List<Disease> data){
-        int startIndex = data.size();
+    public  void addAll(List<RESP_Disease> data){
+        int startIndex = mList.size();
         mList.addAll(startIndex,data);
         notifyItemRangeInserted(startIndex,data.size());
     }
@@ -112,5 +114,9 @@ public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void setOnItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
+    }
+
+    public void setButtonAdapterClickListener(ButtonAdapterClickListener buttonAdapterClickListener) {
+        this.buttonAdapterClickListener = buttonAdapterClickListener;
     }
 }
