@@ -36,7 +36,7 @@ import java.util.List;
  * Created by phimau on 3/1/2017.
  */
 
-public class MapPresenter {
+public class MapPresenter extends BasePresenter {
     private IMapView view;
     private Activity mActivity;
     private LocationManager mLocationManager;
@@ -106,6 +106,8 @@ public class MapPresenter {
     }
 
     public void getHospitals(){
+        if (!checkConnnecttion(view))
+            return;
         String location = "lat="+lat+"&lng="+log;
         String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"?"+location+"radius="+radius;
 

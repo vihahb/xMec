@@ -13,7 +13,7 @@ import com.xtelsolution.xmec.xmec.views.inf.ISearchMedicineView;
  * Created by phimau on 3/21/2017.
  */
 
-public class FindMedicinePresenter {
+public class FindMedicinePresenter extends BasePresenter {
     private ISearchMedicineView view;
 
     public FindMedicinePresenter(ISearchMedicineView view) {
@@ -21,6 +21,8 @@ public class FindMedicinePresenter {
     }
 
     public void searchMedicine(String key) {
+        if (!checkConnnecttion(view))
+            return;
         String url = Constant.SERVER_XMEC + Constant.MEDICINE_SEARCH + "?name=" + key + "&size=15";
         MedicineModel.getInstance().findMedicine(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_List_Medicine_Compact>(RESP_List_Medicine_Compact.class) {
             @Override

@@ -13,10 +13,10 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_medicine" />
+        android:src="@drawable/ic_virus" />
 
     <ImageView
-        android:id="@+id/btn_remove"
+        android:id="@+id/btn_edit"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_action_editt"
@@ -28,7 +28,7 @@
         android:layout_alignParentRight="true" />
 
     <TextView
-        android:id="@+id/tv_medicine_name"
+        android:id="@+id/tvIllnessName"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:gravity="center_vertical"

@@ -24,12 +24,14 @@ import java.util.List;
  * Created by phimau on 2/21/2017.
  */
 
-public class AddMedicalPresenter {
+public class AddMedicalPresenter extends BasePresenter {
     private IAddMedicalView view;
     public AddMedicalPresenter(IAddMedicalView view){
         this.view =view;
     }
     public void addMedicalDirectorry(String name,long beginTime,long endTime,int type,String note,List<Resource> resources){
+        if (!checkConnnecttion(view))
+            return;
         String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK;
         view.showProgressDialog(view.getActivity().getResources().getString(R.string.add_medical));
         Log.e("ADD", "addMedicalDirectorry: "+url);
@@ -70,6 +72,8 @@ public class AddMedicalPresenter {
         });
     }
     public void postImage(Bitmap bitmap,boolean isBigImage, Context context){
+        if (!checkConnnecttion(view))
+            return;
         new Task.ConvertImage(context, isBigImage, new UploadFileListener() {
             @Override
             public void onSuccess(String url) {

@@ -13,13 +13,15 @@ import com.xtelsolution.xmec.xmec.views.inf.IHeathyCareDetailView;
  * Created by phimau on 3/16/2017.
  */
 
-public class HeathyCareDetailPresenter  {
+public class HeathyCareDetailPresenter extends BasePresenter  {
     private IHeathyCareDetailView view;
 
     public HeathyCareDetailPresenter(IHeathyCareDetailView view) {
         this.view = view;
     }
     public void getHeathyCareDetail(int id){
+        if (!checkConnnecttion(view))
+            return;
         String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"/"+id;
         HealthyCareModel.getInstance().getDetailHospital(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_Healthy_Care_Detail>(RESP_Healthy_Care_Detail.class) {
             @Override

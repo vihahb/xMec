@@ -1,7 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
-import com.xtelsolution.xmec.listener.list.ButtonAdapterClickListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.REQ_Medicine;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +26,8 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
     private Context mContext;
     private List<REQ_Medicine> mList;
     private ItemClickListener itemClickListener;
-    private ButtonAdapterClickListener buttonAdapterClickListener;
+    private ItemClickListener.ItemIconClickListener iconClickListener;
+    private ItemClickListener.ButtonAdapterClickListener buttonAdapterClickListener;
 
     public MedicineAdapterWithEditButton(Context mContext, List<REQ_Medicine> mList) {
         this.mContext = mContext;
@@ -61,13 +57,13 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
             ((MedicineViewHolder) holder).btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    buttonAdapterClickListener.onRemoveButtonClick(mList.get(position),position);
+                    iconClickListener.onItemIconClickListener(mList.get(position),position);
                 }
             });
             medicineViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClickListener.onItemClickListener(mList.get(position-1), position-1);
+                    itemClickListener.onItemClickListener(mList.get(position), position);
                 }
             });
         } else {
@@ -135,7 +131,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
         notifyItemRemoved(index);
     }
 
-    public void setButtonAdapterClickListener(ButtonAdapterClickListener buttonAdapterClickListener) {
+    public void setButtonAdapterClickListener(ItemClickListener.ButtonAdapterClickListener buttonAdapterClickListener) {
         this.buttonAdapterClickListener = buttonAdapterClickListener;
     }
 }

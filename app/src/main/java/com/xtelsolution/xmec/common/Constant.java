@@ -59,7 +59,7 @@ public class Constant {
     public static final String LOGPHI = "LOGPHI";
     public static final String ILLNESS_URL = "illness_url";
 
-    public static final String SERVER_XMEC = "http://192.168.0.103:8010/v0.1/";
+    public static final String SERVER_XMEC = "http://192.168.29.108:8010/v0.1/";
     public static final String LOCAL_SECCION="V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR";
     public static final String GET_MEDIACAL_REPORT_BOOK = "user/medical-report-book?page=1&pagesize=30";
 

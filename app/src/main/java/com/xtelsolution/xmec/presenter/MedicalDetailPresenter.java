@@ -25,7 +25,7 @@ import java.util.List;
  * Created by phimau on 3/6/2017.
  */
 
-public class MedicalDetailPresenter {
+public class MedicalDetailPresenter extends BasePresenter {
     private IMedicalDetailView view;
 
     public MedicalDetailPresenter(IMedicalDetailView view) {
@@ -33,6 +33,8 @@ public class MedicalDetailPresenter {
     }
 
     public void getDetailMedical(final int id){
+        if (!checkConnnecttion(view))
+            return;
         view.showProgressDialog("Đang tải");
         Log.e("sdasdadasd", "getDetailMedical: " +id);
         String url= Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK+"/"+id;
@@ -58,6 +60,8 @@ public class MedicalDetailPresenter {
         });
     }
     public void getListIllness(int id){
+        if (!checkConnnecttion(view))
+            return;
         String url =Constant.SERVER_XMEC+Constant.ILLNESS+"/"+id;
         xLog.e(Constant.LOGPHI+ "url"+url);
         DiseaseModel.getInstance().getListIllness(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_List_Disease_With_Link>(RESP_List_Disease_With_Link.class) {
@@ -83,6 +87,8 @@ public class MedicalDetailPresenter {
         });
     }
     public void updateMedicalDirectory(int id,String name,long beginTime,long endTime,int type,String note,List<Resource> resources){
+        if (!checkConnnecttion(view))
+            return;
         view.showProgressDialog("Đang cập nhật");
         String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK;
         Log.e("ADD", "addMedicalDirectorry: "+url);
@@ -121,6 +127,8 @@ public class MedicalDetailPresenter {
         });
     }
     public void removeMedical(int id){
+        if (!checkConnnecttion(view))
+            return;
         view.showProgressDialog("Đang Xóa");
         String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK+"/"+id;
         MedicalDirectoryModel.getinstance().deleteMedicalDirectory(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_Basic>(RESP_Basic.class) {

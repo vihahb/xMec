@@ -17,7 +17,7 @@ import com.xtelsolution.xmec.listener.IProfileView;
  * Created by phimau on 2/17/2017.
  */
 
-public class ProfilePresenter {
+public class ProfilePresenter extends BasePresenter {
     private IProfileView view;
 
     public ProfilePresenter(IProfileView view) {
@@ -25,6 +25,8 @@ public class ProfilePresenter {
     }
 
     public void updateProfile(final String name, final long birthDay, final double hegiht, final double weight, String urlAvatar) {
+        if (!checkConnnecttion(view))
+            return;
         view.showProgressDialog(view.getActivity().getResources().getString(R.string.update_process));
         String url = Constant.SERVER_XMEC+Constant.GET_USER;
         Log.e("TEST", "updateProfile: "+url );

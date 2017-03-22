@@ -13,17 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.xLog;
-import com.xtelsolution.xmec.listener.list.ButtonAdapterClickListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.REQ_Medicine;
 import com.xtelsolution.xmec.model.RESP_Medicine;
 import com.xtelsolution.xmec.model.entity.Disease;
@@ -42,7 +38,7 @@ import java.util.List;
  * Created by HUNGNT on 2/14/2017.
  */
 
-public class AddIllnessActivity extends BasicActivity implements IAddIllnessView, ButtonAdapterClickListener {
+public class AddIllnessActivity extends BasicActivity implements IAddIllnessView,ItemClickListener.ButtonAdapterClickListener,ItemClickListener.ItemIconClickListener {
     private RecyclerView recyclerView;
     private Toolbar mToolbar;
     private DelayAutoCompleteTextView etFindDisease;
@@ -218,13 +214,13 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
     }
 
     @Override
-    public void onRemoveButtonClick(Object obj, final int position) {
+    public void onItemIconClickListener(Object item, final int positon) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddIllnessActivity.this);
         alertDialog.setTitle("Bạn có muốn xóa Thuốc này?");
         alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                medicineAdapterWithEditButton.removeItem(position);
+                medicineAdapterWithEditButton.removeItem(positon);
                 dialogInterface.dismiss();
             }
         });

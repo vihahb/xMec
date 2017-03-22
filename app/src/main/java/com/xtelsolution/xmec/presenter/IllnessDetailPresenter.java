@@ -14,7 +14,7 @@ import java.io.InputStream;
  * Created by HUNGNT on 3/14/2017.
  */
 
-public class IllnessDetailPresenter {
+public class IllnessDetailPresenter extends BasePresenter{
     IIllnessDetailview view;
 
     public IllnessDetailPresenter(IIllnessDetailview view) {
@@ -22,6 +22,8 @@ public class IllnessDetailPresenter {
     }
 
     public void loadIllnessDetail(String url) {
+        if (!checkConnnecttion(view))
+            return;
         new NewsHtmlLoader(new LoadNewsDetailListener() {
             @Override
             public void onPrepare() {

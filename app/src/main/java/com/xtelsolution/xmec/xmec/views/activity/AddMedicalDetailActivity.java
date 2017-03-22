@@ -25,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
@@ -113,10 +112,6 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         btnSavaDirectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!NetWorkInfo.isOnline(getBaseContext())) {
-                    Toast.makeText(mContext, "Không kết nối Internet", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 if (idMedical == -1) {
                     if (!mForm.isValid()) {
                         showToast("Không được để trống");
@@ -130,10 +125,6 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         btnAddHelthReconder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!NetWorkInfo.isOnline(getBaseContext())) {
-                    Toast.makeText(mContext, "Không kết nối Internet", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 AddHeathRecoder();
             }
         });

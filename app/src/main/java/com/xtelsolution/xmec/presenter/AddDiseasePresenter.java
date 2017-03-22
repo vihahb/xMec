@@ -29,7 +29,7 @@ import java.util.List;
  * Created by phimau on 3/7/2017.
  */
 
-public class AddDiseasePresenter {
+public class AddDiseasePresenter extends BasePresenter {
     private IAddIllnessView view;
 
     public AddDiseasePresenter(IAddIllnessView view) {
@@ -37,6 +37,10 @@ public class AddDiseasePresenter {
     }
 
     public void addDeisease(int idMedical, String name, int idDisease, String note, final List<REQ_Medicine> medicines) {
+        if (!checkConnnecttion(view)){
+            return;
+        }
+
         view.showProgressDialog("Đang thêm bệnh");
         String url = Constant.SERVER_XMEC + Constant.DISEASE;
         REQ_Add_Disease disease = new REQ_Add_Disease(idMedical, name, idDisease, note);
@@ -64,15 +68,27 @@ public class AddDiseasePresenter {
 
             @Override
             public void onError(Error error) {
-                view.dismissProgressDialog();
-                Log.e("ERR", "onError: " + error.getCode());
-                switch (error.getCode()) {
-                    case 2:
-                        view.showToast("Session không hợp lệ");
-                        break;
-                    case -1:
-                        view.showToast(error.getMessage());
-                }
+                handlerError(view,error);
+            }
+        });
+    }
+
+    public void addDisease(int idMedical, String name, int idDisease, String note, List<REQ_Medicine> medicines) {
+        if (!checkConnnecttion(view))
+            return;
+        view.showProgressDialog("Đang Thêm bệnh");
+        String url = Constant.SERVER_XMEC + Constant.DISEASE;
+        REQ_Add_Disease disease = new REQ_Add_Disease(idMedical, name, idDisease, note, medicines);
+        xLog.e(Constant.LOGPHI + JsonHelper.toJson(disease));
+        DiseaseModel.getInstance().addDisease(url, JsonHelper.toJson(disease), Constant.LOCAL_SECCION, new ResponseHandle<RESP_ID>(RESP_ID.class) {
+            @Override
+            public void onSuccess(RESP_ID obj) {
+                view.onAddMedicineSuccess(obj.getId());
+            }
+
+            @Override
+            public void onError(Error error) {
+                handlerError(view, error);
             }
         });
     }
@@ -120,15 +136,7 @@ public class AddDiseasePresenter {
 
             @Override
             public void onError(Error error) {
-                view.dismissProgressDialog();
-                Log.e("ERR", "onError: " + error.getCode());
-                switch (error.getCode()) {
-                    case 2:
-                        view.showToast("Session không hợp lệ");
-                        break;
-                    case -1:
-                        view.showToast(error.getMessage());
-                }
+                handlerError(view, error);
             }
         });
     }
