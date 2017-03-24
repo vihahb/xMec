@@ -37,6 +37,7 @@ import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout;
 
@@ -195,6 +196,7 @@ public class LoginActivity extends BasicActivity {
                 @Override
                 public void onSuccess(RESP_Login success) {
                     Log.e("Session", "onSuccess: "+JsonHelper.toJson(success));
+                    xLog.e(Constant.LOGPHI+success.getSession());
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
                 }

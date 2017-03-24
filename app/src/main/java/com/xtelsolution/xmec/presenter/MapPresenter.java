@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
@@ -44,6 +45,7 @@ public class MapPresenter extends BasePresenter {
     private double log;
     private double radius;
     private HashMap<Integer,Boolean> listPos;
+    private final int GETLOCATION=1;
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -105,13 +107,11 @@ public class MapPresenter extends BasePresenter {
 
     }
 
-    public void getHospitals(){
-        if (!checkConnnecttion(view))
-            return;
-        String location = "lat="+lat+"&lng="+log;
-        String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"?"+location+"radius="+radius;
+    public void getHospitals(final Object...param){
 
-        HealthyCareModel.getInstance().getHospital(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
+        String location = "lat="+lat+"&lng="+log;
+        String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"?"+location+"&radius="+radius;
+        HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
             public void onSuccess(RESP_List_Map_Healthy_Care obj) {
                 List<RESP_Map_Healthy_Care> result = obj.getData();
@@ -123,12 +123,19 @@ public class MapPresenter extends BasePresenter {
                     }
                 }
                 view.onGetListHealtyCareSuccess(result);
+                view.dismissProgressDialog();
             }
             @Override
             public void onError(Error error) {
-
+                handlerError(view,error,param);
             }
         });
+    }
+
+    public void checkGetHospital(){
+        if (!checkConnnecttion(view))
+            return;
+        getHospitals(GETLOCATION);
     }
 
     private boolean isLocationEnable() {
@@ -144,5 +151,17 @@ public class MapPresenter extends BasePresenter {
                 Log.e("MY", "onRequestPermissionsResult: ");
                 initPermission();
             }
+    }
+
+    @Override
+    public void onGetNewSessionSuccess(Object... param) {
+        switch ((int)param[0]){
+            case GETLOCATION:
+                getHospitals(param);
+                break;
+//            case GETMEDICAL:
+//                getMedicalReportBooks();
+//                break;
+        }
     }
 }

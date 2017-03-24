@@ -94,7 +94,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         rcDesease.setLayoutManager(new LinearLayoutManager(mContext));
         id = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
 
-        presenter.getDetailMedical(id);
+        presenter.checkGetDetailMedical(id);
 //        presenter.getListIllness(id);
 
     }

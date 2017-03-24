@@ -17,6 +17,7 @@ import java.io.InputStream;
 public class IllnessDetailPresenter extends BasePresenter{
     IIllnessDetailview view;
 
+
     public IllnessDetailPresenter(IIllnessDetailview view) {
         this.view = view;
     }
@@ -76,6 +77,18 @@ public class IllnessDetailPresenter extends BasePresenter{
                 view.showProgressView(false);
             }
         }).execute(url);
+    }
+
+    @Override
+    public void onGetNewSessionSuccess(Object... param) {
+//        switch ((int)param[0]){
+//            case GETUSER:
+//                getUser(param);
+//                break;
+//            case GETMEDICAL:
+//                getMedicalReportBooks();
+//                break;
+//        }
     }
 }
 

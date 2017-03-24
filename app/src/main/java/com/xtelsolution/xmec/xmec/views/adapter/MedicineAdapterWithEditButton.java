@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.REQ_Medicine;
 
@@ -57,7 +58,8 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
             ((MedicineViewHolder) holder).btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    iconClickListener.onItemIconClickListener(mList.get(position),position);
+                    xLog.e(position+"VITRI");
+                    iconClickListener.onItemIconClickListener(mList.get(position), position);
                 }
             });
             medicineViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +114,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
+
     //    public void addItem(){
 //        mList.add(new Medicine(0,"Tên thuốc (Thêm)","Type"));
 //        notifyDataSetChanged();
@@ -126,12 +129,24 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
         notifyItemInserted(mList.size() - 1);
     }
 
-    public void removeItem(int index){
+    public void removeItem(int index) {
         mList.remove(index);
-        notifyItemRemoved(index);
+        notifyDataSetChanged();
+        getItem(100);
+    }
+
+    public void setIconClickListener(ItemClickListener.ItemIconClickListener iconClickListener) {
+        this.iconClickListener = iconClickListener;
     }
 
     public void setButtonAdapterClickListener(ItemClickListener.ButtonAdapterClickListener buttonAdapterClickListener) {
         this.buttonAdapterClickListener = buttonAdapterClickListener;
+    }
+
+    public void getItem(int index) {
+        for (REQ_Medicine medicine : mList) {
+            xLog.e("ITEM" + medicine.toString());
+
+        }
     }
 }

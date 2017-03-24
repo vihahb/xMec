@@ -149,7 +149,6 @@ public class LoginModel extends BasicModel {
         authenNip.setAuthenticationid(SharedUtils.getInstance().getStringValue(Cts.USER_AUTH_ID));
         authenNip.setService_code(service_code);
         authenNip.setDevInfo(DeviceInfo.getDeviceObject());
-
         String url_authen = Cts.URL_NIP + Cts.API_SESSION_AUTHENTICATE;
         requestServer.postApi(url_authen, JsonHelper.toJson(authenNip), null, responseHandle);
     }

@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.REQ_Medicine;
 import com.xtelsolution.xmec.model.RESP_Medicine;
@@ -128,8 +129,11 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
             @Override
             public void onClick(View view) {
 //                presenter.addMedicine(idMedical,uidDisease,idDisease,etFindDisease.getText().toString(),etFindMedicine.getText().toString(),idMecine,etNote.getText().toString());
-//                listMedicine.add(new REQ_Medicine(etFindMedicine.getText().toString(),idMecine));
+
                 medicineAdapterWithEditButton.add(new REQ_Medicine(etFindMedicine.getText().toString(),idMecine));
+//                xLog.e(medicineAdapterWithEditButton.getItemCount()+"  COUNT");
+                medicineAdapterWithEditButton.getItem(0);
+
                 idMecine=-1;
                 mDialog.dismiss();
 
@@ -139,24 +143,24 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
     }
 
     private void addDisease() {
-        presenter.addDeisease(idMedical, etFindDisease.getText().toString(), idDisease, etNote.getText().toString(),listMedicine);
+        presenter.checkAddDisease(idMedical, etFindDisease.getText().toString(), idDisease, etNote.getText().toString(),listMedicine);
     }
-
 
     private void initRecycleView() {
         listMedicine = new ArrayList<>();
         medicineAdapterWithEditButton = new MedicineAdapterWithEditButton(this, listMedicine);
         medicineAdapterWithEditButton.setButtonAdapterClickListener(this);
-//        medicineAdapterWithEditButton.setItemClickListener(new ItemClickListener() {
-//            @Override
-//            public void onItemClickListener(Object item, int position) {
-//                if (item == null) {
-//                    showToast("Item Null: " + position);
-//                } else {
-//                    showToast("Item: " + position);
-//                }
-//            }
-//        });
+        medicineAdapterWithEditButton.setIconClickListener(this);
+        medicineAdapterWithEditButton.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClickListener(Object item, int position) {
+                if (item == null) {
+                    showToast("Item Null: " + position);
+                } else {
+                    showToast("Item: " + position);
+                }
+            }
+        });
         recyclerView.setAdapter(medicineAdapterWithEditButton);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }

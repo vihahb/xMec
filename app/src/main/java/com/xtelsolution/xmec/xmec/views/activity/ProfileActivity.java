@@ -1,9 +1,11 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -23,6 +25,7 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.Task;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.ProfilePresenter;
@@ -116,9 +119,6 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         switch (view.getId()) {
 
             case R.id.btn_update_info:
-                if (!NetWorkInfo.isOnline(mContext)){
-                    showToastNoInternet();
-                }
                 if (!mForm.isValid()) {
                     Toast.makeText(mContext, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
@@ -191,12 +191,17 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     @Override
     public void onUpdateProfileSuccess() {
         showToast("Cập nhật thành công");
+        final Intent i = new Intent(ProfileActivity.this,HomeActivity.class);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(i);
+            }
+        },300);
+
     }
 
 
-    private void showToastNoInternet(){
-        showToast("Không kết nối internet");
-    }
     private void updateProfile(){
         String name = etName.getText().toString();
         double height = Double.valueOf(etHeight.getText().toString());
@@ -206,7 +211,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
             birthday = SharedPreferencesUtils.getInstance().getLongValue(Constant.USER_BIRTHDAY);
         }
         birthday=birthday/1000;
-        presenter.updateProfile(name,(birthday),height,weight,urlAvatar);
+        presenter.checkUpdateProfile(name,(birthday),height,weight,urlAvatar);
     }
     private void uploadAvatar(){
         new PickerBuilder(ProfileActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
@@ -227,11 +232,10 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     @Override
     public void onSuccess(String url) {
         urlAvatar =url;
-        Log.e("URLAVART", "onSuccess: "+url );
     }
 
     @Override
     public void onError(String e) {
-
+        xLog.e(e.toString());
     }
 }

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
@@ -31,46 +32,55 @@ import java.util.List;
 
 public class AddDiseasePresenter extends BasePresenter {
     private IAddIllnessView view;
+    private final int ADD_DISEASE = 1;
+//    private final int =1;
 
     public AddDiseasePresenter(IAddIllnessView view) {
         this.view = view;
     }
-
-    public void addDeisease(int idMedical, String name, int idDisease, String note, final List<REQ_Medicine> medicines) {
-        if (!checkConnnecttion(view)){
-            return;
-        }
-
+//    int idMedical, String name, int idDisease, String note, final List<REQ_Medicine> medicines
+    public void addDeisease(final Object...param) {
         view.showProgressDialog("Đang thêm bệnh");
         String url = Constant.SERVER_XMEC + Constant.DISEASE;
-        REQ_Add_Disease disease = new REQ_Add_Disease(idMedical, name, idDisease, note);
+        int idMedical = (int) param[1];
+        String name = (String) param[2];
+        int idDisease = (int) param[3];
+        String note = (String) param[4];
+        final List<REQ_Medicine> medicines = (List<REQ_Medicine>) param[5];
+        REQ_Add_Disease disease = new REQ_Add_Disease(idMedical,name,idDisease,note,medicines);
         xLog.e(Constant.LOGPHI + JsonHelper.toJson(disease));
-        DiseaseModel.getInstance().addDisease(url, JsonHelper.toJson(disease), Constant.LOCAL_SECCION, new ResponseHandle<RESP_ID>(RESP_ID.class) {
+        DiseaseModel.getInstance().addDisease(url, JsonHelper.toJson(disease), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(final RESP_ID obj) {
 
-                if (medicines.size() > 0) {
-                    for (final REQ_Medicine medicine : medicines) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (medicine.equals(medicines.get(medicines.size() - 1)))
-                                    addMedicineReal(obj.getId(), medicine.getName(), medicine.getId_medicine(), true);
-                                else
-                                    addMedicineReal(obj.getId(), medicine.getName(), medicine.getId_medicine(), false);
-                            }
-                        }, 50);
-                    }
-                } else {
+//                if (medicines.size() > 0) {
+//                    for (final REQ_Medicine medicine : medicines) {
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                if (medicine.equals(medicines.get(medicines.size() - 1)))
+//                                    addMedicineReal(obj.getId(), medicine.getName(), medicine.getId_medicine(), true);
+//                                else
+//                                    addMedicineReal(obj.getId(), medicine.getName(), medicine.getId_medicine(), false);
+//                            }
+//                        }, 50);
+//                    }
+//                } else {
                     view.onAddDiseaseSuccess(obj.getId());
-                }
+//                }
             }
-
             @Override
             public void onError(Error error) {
-                handlerError(view,error);
+                handlerError(view, error,ADD_DISEASE,param);
             }
         });
+    }
+
+    public void  checkAddDisease(int idMedical,String name,int idDisease,String note,List<REQ_Medicine> medicines) {
+        if (!checkConnnecttion(view)) {
+            return;
+        }
+        addDeisease(ADD_DISEASE,idMedical,name,idDisease,note,medicines);
     }
 
     public void addDisease(int idMedical, String name, int idDisease, String note, List<REQ_Medicine> medicines) {
@@ -80,7 +90,7 @@ public class AddDiseasePresenter extends BasePresenter {
         String url = Constant.SERVER_XMEC + Constant.DISEASE;
         REQ_Add_Disease disease = new REQ_Add_Disease(idMedical, name, idDisease, note, medicines);
         xLog.e(Constant.LOGPHI + JsonHelper.toJson(disease));
-        DiseaseModel.getInstance().addDisease(url, JsonHelper.toJson(disease), Constant.LOCAL_SECCION, new ResponseHandle<RESP_ID>(RESP_ID.class) {
+        DiseaseModel.getInstance().addDisease(url, JsonHelper.toJson(disease), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
                 view.onAddMedicineSuccess(obj.getId());
@@ -88,7 +98,7 @@ public class AddDiseasePresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error);
+//                handlerError(view, error);
             }
         });
     }
@@ -124,8 +134,8 @@ public class AddDiseasePresenter extends BasePresenter {
         xLog.e(Constant.LOGPHI + "idDisease  " + uidDisease + "----name " + name + "----- id_medical" + idmedicine);
         String urlMedicine = Constant.SERVER_XMEC + Constant.MEDICINE;
         xLog.e(Constant.LOGPHI + "url search medicine " + urlMedicine);
-        REQ_Medicine medicine = new REQ_Medicine(uidDisease, name, idmedicine);
-        MedicineModel.getInstance().addMedicine(urlMedicine, JsonHelper.toJson(medicine), Constant.LOCAL_SECCION, new ResponseHandle<RESP_ID>(RESP_ID.class) {
+        REQ_Medicine medicine = new REQ_Medicine( name, idmedicine);
+        MedicineModel.getInstance().addMedicine(urlMedicine, JsonHelper.toJson(medicine), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
                 if (islast) {
@@ -136,9 +146,18 @@ public class AddDiseasePresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error);
+//                handlerError(view, error);
             }
         });
+    }
+
+
+    @Override
+    public void onGetNewSessionSuccess(Object... param) {
+        switch ((int)param[0]){
+            case ADD_DISEASE:
+                addDeisease(param);
+        }
     }
 }
 

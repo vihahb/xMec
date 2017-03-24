@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.utils.JsonHelper;
@@ -26,14 +27,19 @@ import java.util.List;
 
 public class AddMedicalPresenter extends BasePresenter {
     private IAddMedicalView view;
+    private final int ADDMEDICAL=1;
     public AddMedicalPresenter(IAddMedicalView view){
         this.view =view;
     }
-    public void addMedicalDirectorry(String name,long beginTime,long endTime,int type,String note,List<Resource> resources){
-        if (!checkConnnecttion(view))
-            return;
+//    String name,long beginTime,long endTime,int type,String note,List<Resource> resources
+    public void addMedicalDirectorry(final Object...param){
+        String name = (String) param[1];
+        long beginTime = (long) param[2];
+        long endTime = (long) param[3];
+        int type = (int) param[4];
+        String note = (String) param[5];
+        List<Resource> resources = (List<Resource>) param[6];
         String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK;
-        view.showProgressDialog(view.getActivity().getResources().getString(R.string.add_medical));
         Log.e("ADD", "addMedicalDirectorry: "+url);
         REQ_Medical_Detail REQ_medicalDetail = new REQ_Medical_Detail();
         REQ_medicalDetail.setName(name);
@@ -48,7 +54,7 @@ public class AddMedicalPresenter extends BasePresenter {
         }
         REQ_medicalDetail.setResources(listRS);
         xLog.d("STRING" + "addMedicalDirectorry: "+JsonHelper.toJson(REQ_medicalDetail));
-        MedicalDirectoryModel.getinstance().addMedicalDirectory(url,JsonHelper.toJson(REQ_medicalDetail), "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR", new ResponseHandle<RESP_ID>(RESP_ID.class) {
+        MedicalDirectoryModel.getinstance().addMedicalDirectory(url,JsonHelper.toJson(REQ_medicalDetail), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
                 view.showProgressDialog(view.getActivity().getResources().getString(R.string.add_medical_success));
@@ -59,17 +65,15 @@ public class AddMedicalPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                xLog.e("ADD"+ "onError: "+error.getMessage());
-                view.dismissProgressDialog();
-                switch (error.getCode()) {
-                    case 2:
-//                        LoginModel.getInstance().getNewSession();
-                        break;
-                    case -1:
-                        view.showToast("Lỗi hệ thống");
-                }
+               handlerError(view,error,param);
             }
         });
+    }
+    public void checkAddMedical(String name,long beginTime,long endTime,int type,String note,List<Resource> resources){
+        if (!checkConnnecttion(view))
+            return;
+        view.showProgressDialog(view.getActivity().getResources().getString(R.string.add_medical));
+        addMedicalDirectorry(ADDMEDICAL,name,beginTime,endTime,type,note,resources);
     }
     public void postImage(Bitmap bitmap,boolean isBigImage, Context context){
         if (!checkConnnecttion(view))
@@ -86,5 +90,17 @@ public class AddMedicalPresenter extends BasePresenter {
             }
         }).execute(bitmap);
 
+    }
+
+    @Override
+    public void onGetNewSessionSuccess(Object... param) {
+        switch ((int)param[0]){
+            case ADDMEDICAL:
+                addMedicalDirectorry(param);
+                break;
+//            case GETMEDICAL:
+//                getMedicalReportBooks();
+//                break;
+        }
     }
 }

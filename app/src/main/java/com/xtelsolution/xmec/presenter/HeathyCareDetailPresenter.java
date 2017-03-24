@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.presenter;
 
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
@@ -23,7 +24,7 @@ public class HeathyCareDetailPresenter extends BasePresenter  {
         if (!checkConnnecttion(view))
             return;
         String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"/"+id;
-        HealthyCareModel.getInstance().getDetailHospital(url, LoginModel.getInstance().getSession(), new ResponseHandle<RESP_Healthy_Care_Detail>(RESP_Healthy_Care_Detail.class) {
+        HealthyCareModel.getInstance().getDetailHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Healthy_Care_Detail>(RESP_Healthy_Care_Detail.class) {
             @Override
             public void onSuccess(RESP_Healthy_Care_Detail obj) {
                 view.onGetHeathyCareSuccess(obj);
@@ -36,4 +37,9 @@ public class HeathyCareDetailPresenter extends BasePresenter  {
         });
     }
 
+
+    @Override
+    public void onGetNewSessionSuccess(Object... param) {
+
+    }
 }
