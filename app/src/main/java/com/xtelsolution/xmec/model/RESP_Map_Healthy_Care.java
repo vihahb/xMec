@@ -13,12 +13,21 @@ public class RESP_Map_Healthy_Care extends RESP_Basic {
     @Expose
     private String name;
     @Expose
+    private String address;
+    @Expose
     private double latitude;
     @Expose
     private double longitude;
     @Expose
     private int type;
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public int getId() {
         return id;
