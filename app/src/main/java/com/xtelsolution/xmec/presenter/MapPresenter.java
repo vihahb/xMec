@@ -44,14 +44,16 @@ public class MapPresenter extends BasePresenter {
     private double lat;
     private double log;
     private double radius;
-    private HashMap<Integer,Boolean> listPos;
-    private final int GETLOCATION=1;
+    private HashMap<Integer, Boolean> listPos;
+    private final int GETLOCATION = 1;
+    private boolean isMapInit = false;
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
             lat = location.getLatitude();
             log = location.getLongitude();
-            view.onLocationChange(new LatLng(lat,log));
+            if (isMapInit)
+                view.onLocationChange(new LatLng(lat, log));
         }
 
         @Override
@@ -73,7 +75,7 @@ public class MapPresenter extends BasePresenter {
     public MapPresenter(IMapView view) {
         this.view = view;
         mActivity = view.getActivity();
-        radius =500;
+        radius = 500;
         listPos = new HashMap<>();
 
     }
@@ -87,6 +89,11 @@ public class MapPresenter extends BasePresenter {
 
     }
 
+    public void initMap() {
+        isMapInit =true;
+        view.onLocationChange(new LatLng(lat, log));
+    }
+
     public void initPermission() {
 
         mLocationManager = (LocationManager) view.getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -94,12 +101,12 @@ public class MapPresenter extends BasePresenter {
             view.getFragmentView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
             return;
         } else {
-            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, mLocationListener);
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300, 10, mLocationListener);
             Location lastKnownLocationGPS = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (lastKnownLocationGPS != null) {
                 lat = lastKnownLocationGPS.getLatitude();
                 log = lastKnownLocationGPS.getLongitude();
-                Log.e("MY", "initPermission: "+lat+"    "+log );
+                Log.e("MY", "initPermission: " + lat + "    " + log);
             }
             view.onPermissionGranted();
         }
@@ -107,32 +114,33 @@ public class MapPresenter extends BasePresenter {
 
     }
 
-    public void getHospitals(final Object...param){
+    public void getHospitals(final Object... param) {
 
-        String location = "lat="+lat+"&lng="+log;
-        String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"?"+location+"&radius="+radius;
+        String location = "lat=" + lat + "&lng=" + log;
+        String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius;
         HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
             public void onSuccess(RESP_List_Map_Healthy_Care obj) {
                 List<RESP_Map_Healthy_Care> result = obj.getData();
-                List<RESP_Map_Healthy_Care>  data = new ArrayList<>();
-                for (RESP_Map_Healthy_Care mapHealthyCare:result) {
-                    if (listPos.get(mapHealthyCare.getId())==null){
-                        listPos.put(mapHealthyCare.getId(),true);
+                List<RESP_Map_Healthy_Care> data = new ArrayList<>();
+                for (RESP_Map_Healthy_Care mapHealthyCare : result) {
+                    if (listPos.get(mapHealthyCare.getId()) == null) {
+                        listPos.put(mapHealthyCare.getId(), true);
                         data.add(mapHealthyCare);
                     }
                 }
                 view.onGetListHealtyCareSuccess(result);
                 view.dismissProgressDialog();
             }
+
             @Override
             public void onError(Error error) {
-                handlerError(view,error,param);
+                handlerError(view, error, param);
             }
         });
     }
 
-    public void checkGetHospital(){
+    public void checkGetHospital() {
         if (!checkConnnecttion(view))
             return;
         getHospitals(GETLOCATION);
@@ -155,7 +163,7 @@ public class MapPresenter extends BasePresenter {
 
     @Override
     public void onGetNewSessionSuccess(Object... param) {
-        switch ((int)param[0]){
+        switch ((int) param[0]) {
             case GETLOCATION:
                 getHospitals(param);
                 break;
