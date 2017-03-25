@@ -44,6 +44,7 @@ public abstract class BasePresenter {
                         SharedUtils.getInstance().putStringValue(Cts.USER_SESSION, obj.getSession());
                         onGetNewSessionSuccess(param);
                         xLog.e("SESSION "+obj.toString() );
+
                     }
                     @Override
                     public void onError(Error error) {

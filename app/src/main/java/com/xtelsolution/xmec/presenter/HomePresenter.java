@@ -36,7 +36,7 @@ public class HomePresenter extends BasePresenter {
         view.showProgressDialog(view.getActivity().getResources().getString(R.string.loadding));
         String url = Constant.SERVER_XMEC+Constant.GET_USER;
         xLog.e("URL  "+url);
-        UserModel.getintance().getUser(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_User>(RESP_User.class) {
+        UserModel.getintance().getUser(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_User>(RESP_User.class) {
             @Override
             public void onSuccess(RESP_User obj) {
                 SharedPreferencesUtils.getInstance().saveUser(obj);
