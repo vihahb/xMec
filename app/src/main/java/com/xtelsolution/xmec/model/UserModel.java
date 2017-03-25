@@ -16,12 +16,12 @@ public class UserModel extends BasicModel{
     public String getSession(){
        return SharedPreferencesUtils.getInstance().getStringValue(Constant.USER_SESSION);
     }
-    public void getUser(String url, String session, ResponseHandle<RESP_User> userResponseHandle){
-        requestServer.getApi(url,session,userResponseHandle);
+    public void getUser(String url, String session, ResponseHandle<RESP_User> responseHandle){
+        requestServer.getApi(url,session,responseHandle);
     }
-    public void getMedicalReportBooks(String url, String session, ResponseHandle<RESP_List_Medical> userResponseHandle){
-        requestServer.getApi(url,session,userResponseHandle);
-    }
+//    public void getMedicalReportBooks(String url, String session, ResponseHandle<RESP_List_Medical> responseHandle){
+//        requestServer.getApi(url,session,responseHandle);
+//    }
     public void updateInfoUser(String url, String userObj,String session,ResponseHandle responseHandle){
         requestServer.putApi(url,userObj,session,responseHandle);
     }

@@ -169,9 +169,7 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView {
 
     private List<Disease> createTempData(int size) {
         List<Disease> sticks = new ArrayList<>();
-
         for (int i = size; i < size + 10; i++) {
-
             sticks.add(new Disease(i, "Tên Bệnh " + i));
         }
         return sticks;

@@ -73,6 +73,7 @@
     <string name="register_account">Đăng kí tài khoản</string>
     <string name="update_process">Đang cập nhật</string>
     <string name="add_medical">Đang thêm y bạ</string>
+    <string name="loadding">Đang tải</string>
     <string name="add_medical_success">Thêm y bạ thành công</string>
     <string name="title_toobar_detail_medical">Chi tiết y bạ </string>
     <string name="remove_medical">Xóa Y bạ </string>

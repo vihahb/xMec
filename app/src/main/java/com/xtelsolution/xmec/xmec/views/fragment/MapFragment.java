@@ -86,7 +86,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         super.onViewCreated(view, savedInstanceState);
         initMap();
         presenter.initPermission();
-        presenter.checkGetHospital();
+//        presenter.checkGetHospital();
     }
 
 

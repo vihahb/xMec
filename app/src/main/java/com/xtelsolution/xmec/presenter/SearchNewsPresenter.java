@@ -24,6 +24,8 @@ public class SearchNewsPresenter {
 
 
     public ArrayList<NewsFeed> searchNews(String querry) {
+        if (querry.length()<4)
+            return null;
         ArrayList<NewsFeed> listResult = new ArrayList<>();
         if (data != null && data.size() > 0) {
             xLog.e("sssss"+data.size());
