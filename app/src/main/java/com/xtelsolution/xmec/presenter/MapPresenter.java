@@ -118,8 +118,9 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     }
 
     public void getHospitals(final Object... param) {
-        String location = "lat=" + lat + "&lng=" + log;
+        String location = "lat=" + lat + "&lng=" + log+"&type=1";
         String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius;
+        xLog.e(url);
         HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
             public void onSuccess(RESP_List_Map_Healthy_Care obj) {
@@ -205,10 +206,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         }
         if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED && mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    googleApiClient, locationRequest, this);
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                googleApiClient, locationRequest, this);
+
     }
 
     @Override
