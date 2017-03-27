@@ -52,12 +52,15 @@ public class NewsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        if (data != null)
+            return data.size();
+        else return 0;
     }
 
     private class NewsViewHolder extends RecyclerView.ViewHolder {
         ImageView imgNewsPhoto;
         TextView tvNewsTitle, tvNewsPubTime;
+
         public NewsViewHolder(View itemView) {
             super(itemView);
             imgNewsPhoto = (ImageView) itemView.findViewById(R.id.imgNewsPhoto);

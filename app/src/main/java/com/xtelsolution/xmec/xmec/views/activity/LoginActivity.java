@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.xmec.views.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
@@ -284,5 +285,10 @@ public class LoginActivity extends BasicActivity {
                 showLog(JsonHelper.toJson(error));
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
