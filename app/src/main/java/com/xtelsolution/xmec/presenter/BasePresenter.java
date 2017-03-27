@@ -39,10 +39,10 @@ public abstract class BasePresenter {
             case 2:
                 count++;
                 synchronized (Constant.iGetNewSession) {
-                    if (Constant.iGetNewSession) {
-                        onGetNewSessionSuccess(param);
-                        Constant.iGetNewSession = false;
-                    } else {
+//                    if (Constant.iGetNewSession) {
+//                        onGetNewSessionSuccess(param);
+//                        Constant.iGetNewSession = false;
+//                    } else {
                         String service_code = LoginModel.getInstance().getServiceCode(view.getActivity());
                         xLog.e(Constant.LOGPHI + "service_code" + service_code);
                         LoginModel.getInstance().getNewSession(service_code, new ResponseHandle<RESP_Login>(RESP_Login.class) {
@@ -66,7 +66,7 @@ public abstract class BasePresenter {
                                 view.getActivity().startActivity(i);
                             }
                         });
-                    }
+//                    }
                 }
 
                 break;
