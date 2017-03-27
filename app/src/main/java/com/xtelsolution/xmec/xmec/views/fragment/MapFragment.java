@@ -84,9 +84,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initMap();
         presenter.initPermission();
-        presenter.getHospitals();
     }
 
 
@@ -102,12 +100,16 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         if (isCheckPermission) {
             presenter.getCurrentLocation();
             mMarker =mMap.addMarker(new MarkerOptions().position(new LatLng(0f,0f)));
+            presenter.initMap();
+//            presenter.checkGetHospital();
         }
     }
 
     @Override
     public void onPermissionGranted() {
         isCheckPermission = true;
+        initMap();
+
     }
 
     @Override

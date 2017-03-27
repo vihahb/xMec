@@ -82,13 +82,13 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
     public void onGetHeathyCareSuccess(RESP_Healthy_Care_Detail healthyCare) {
         tvAddress.setText(getResources().getString(R.string.address)+healthyCare.getAddress());
         tvFax.setText(getResources().getString(R.string.fax)+healthyCare.getFax());
-        tvNumPhone.setText(getResources().getString(R.string.tel)+healthyCare.getNumPhone());
+        tvNumPhone.setText(getResources().getString(R.string.tel)+healthyCare.getNum_phone());
         tvName.setText(healthyCare.getName());
         tvIntroduce.setText(healthyCare.getIntroduce());
-        tvVoteRate.setText(healthyCare.getVoteRate());
+        tvVoteRate.setText(healthyCare.getVote_rate());
         tvWorkTime.setText(healthyCare.getOpenTime());
-        if (healthyCare.getUrlAvatar()!=null)
-            setImage(imgAvatar,healthyCare.getUrlAvatar());
+        if (healthyCare.getUrl_avatar()!=null)
+            setImage(imgAvatar,healthyCare.getUrl_avatar());
         else
             imgAvatar.setImageResource(R.drawable.ic_avatar_hospital);
 

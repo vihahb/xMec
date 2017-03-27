@@ -24,10 +24,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.NetWorkInfo;
-import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Disease;
 import com.xtelsolution.xmec.model.RESP_List_Disease;
@@ -88,7 +87,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         imageViewAdapter = new ImageViewAdapter(resourceList, mContext);
         dialogImageViewer.setAdapter(imageViewAdapter);
         if (idMedical != -1) {
-            medicalDetailPresenter.getDetailMedical(idMedical);
+            medicalDetailPresenter.checkGetDetailMedical(idMedical);
             btnSavaDirectory.setText(getResources().getText(R.string.update_medical));
         } else {
             dialogImageViewer.btnRemove.setVisibility(View.GONE);
@@ -113,15 +112,11 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         btnSavaDirectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!NetWorkInfo.isOnline(getBaseContext())) {
-                    Toast.makeText(mContext, "Không kết nối Internet", Toast.LENGTH_SHORT).show();
+                if (!mForm.isValid()) {
+                    showToast("Không được để trống");
                     return;
                 }
                 if (idMedical == -1) {
-                    if (!mForm.isValid()) {
-                        showToast("Không được để trống");
-                        return;
-                    }
                     addMedicalDirectory();
                 } else
                     updateMedicalDirectory();
@@ -130,10 +125,6 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         btnAddHelthReconder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!NetWorkInfo.isOnline(getBaseContext())) {
-                    Toast.makeText(mContext, "Không kết nối Internet", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 AddHeathRecoder();
             }
         });
@@ -196,7 +187,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         String note = etNote.getText().toString();
         long beginTime = pickerBeginTime.getTimeinMilisecond();
         long endTime = pickerEndTime.getTimeinMilisecond();
-        medicalDetailPresenter.updateMedicalDirectory(idMedical, name, beginTime, endTime, 1, note, resourceList);
+        medicalDetailPresenter.checkUpdateMedical(idMedical, name, beginTime, endTime, 1, note, resourceList);
 
     }
 
@@ -206,7 +197,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         String note = etNote.getText().toString();
         long beginTime = pickerBeginTime.getTimeinMilisecond();
         long endTime = pickerEndTime.getTimeinMilisecond();
-        presenter.addMedicalDirectorry(name, beginTime, endTime, 1, note, resourceList);
+        presenter.checkAddMedical(name, beginTime, endTime, 1, note, resourceList);
     }
 
     @Override
@@ -230,7 +221,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                medicalDetailPresenter.removeMedical(idMedical);
+                                medicalDetailPresenter.checkRemoveMedical(idMedical);
                             }
                         });
                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Không",

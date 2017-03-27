@@ -97,7 +97,7 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
                     if(event.getRawX() >= (etFindMedicine.getRight() - etFindMedicine.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         xLog.e("setOnTouchListener");
                         medicineAdapter.clear();
-                        presenter.searchMedicine(etFindMedicine.getText().toString());
+                        presenter.checkSearchMedicine(etFindMedicine.getText().toString());
                         return true;
                     }
                 }

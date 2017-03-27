@@ -12,8 +12,11 @@ import android.widget.ImageView;
 
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.NipApplication;
+import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
 
 public class SplashScreen extends AppCompatActivity {
     private ImageView imgLogo;
@@ -48,9 +51,10 @@ public class SplashScreen extends AppCompatActivity {
     private void init() {
         imgLogo = (ImageView) findViewById(R.id.img_logo);
         if (LoginManager.getCurrentSession()==null){
-            i = new Intent(SplashScreen.this,HomeActivity.class);
+            i = new Intent(SplashScreen.this,LoginActivity.class);
         }else {
             i = new Intent(SplashScreen.this,HomeActivity.class);
+            xLog.e(Constant.LOGPHI+ LoginManager.getCurrentSession());
         }
     }
 }

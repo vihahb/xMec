@@ -14,14 +14,17 @@ import java.io.InputStream;
  * Created by HUNGNT on 3/14/2017.
  */
 
-public class IllnessDetailPresenter {
+public class IllnessDetailPresenter extends BasePresenter{
     IIllnessDetailview view;
+
 
     public IllnessDetailPresenter(IIllnessDetailview view) {
         this.view = view;
     }
 
     public void loadIllnessDetail(String url) {
+        if (!checkConnnecttion(view))
+            return;
         new NewsHtmlLoader(new LoadNewsDetailListener() {
             @Override
             public void onPrepare() {
@@ -74,6 +77,18 @@ public class IllnessDetailPresenter {
                 view.showProgressView(false);
             }
         }).execute(url);
+    }
+
+    @Override
+    public void onGetNewSessionSuccess(Object... param) {
+//        switch ((int)param[0]){
+//            case GETUSER:
+//                getUser(param);
+//                break;
+//            case GETMEDICAL:
+//                getMedicalReportBooks();
+//                break;
+//        }
     }
 }
 

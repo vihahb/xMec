@@ -68,7 +68,8 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         initUI(view);
         initControl();
 
-        homePresenter.getUser();
+        homePresenter.checkGetUser();
+//        homePresenter.checkGetUser();
         return view;
     }
 

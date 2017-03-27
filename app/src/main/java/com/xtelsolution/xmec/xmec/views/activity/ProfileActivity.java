@@ -1,9 +1,11 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -19,10 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.Task;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.ProfilePresenter;
@@ -37,7 +41,7 @@ import de.psdev.formvalidations.Field;
 import de.psdev.formvalidations.Form;
 import de.psdev.formvalidations.validations.NotEmpty;
 
-public class ProfileActivity extends BasicActivity implements View.OnClickListener,IProfileView,UploadFileListener{
+public class ProfileActivity extends BasicActivity implements View.OnClickListener, IProfileView, UploadFileListener {
     private ImageView btnSelectImage;
     private AvatarView avatarView;
     private Context mContext;
@@ -53,6 +57,8 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     private ProfilePresenter presenter;
     private String urlAvatar;
     private Form mForm;
+    private MaterialSpinner spSex;
+    private int gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         setContentView(R.layout.activity_profile);
         mContext = this;
         initUI();
-        presenter= new ProfilePresenter(this);
+        presenter = new ProfilePresenter(this);
         presenter.getProfile();
 
     }
@@ -88,11 +94,42 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         etBirthday.setInputType(InputType.TYPE_NULL);
         btnUpdateInfo = (Button) findViewById(R.id.btn_update_info);
         btnSelectImage.setOnClickListener(this);
-
+        spSex = (MaterialSpinner) findViewById(R.id.spcategorize);
+        spSex.setItems("Giới tính", "Nam", "Nữ");
 
         animation();
         initControl();
         initValidate();
+    }
+
+    private void initControl() {
+        btnUpdateInfo.setOnClickListener(this);
+        etBirthday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b)
+                    showDatePicker();
+            }
+        });
+        btnSelectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!NetWorkInfo.isOnline(mContext))
+                    return;
+                uploadAvatar();
+            }
+        });
+        spSex.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                if (position == 0)
+                    gender = 3;
+                else if (position == 1)
+                    gender = 2;
+                else if (position == 2)
+                    gender = 1;
+            }
+        });
     }
 
     private void initValidate() {
@@ -116,9 +153,6 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         switch (view.getId()) {
 
             case R.id.btn_update_info:
-                if (!NetWorkInfo.isOnline(mContext)){
-                    showToastNoInternet();
-                }
                 if (!mForm.isValid()) {
                     Toast.makeText(mContext, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
@@ -158,57 +192,55 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         datePicker.show(getSupportFragmentManager(), "datepicker");
     }
 
-    private void initControl() {
-        btnUpdateInfo.setOnClickListener(this);
-        etBirthday.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b)
-                    showDatePicker();
-            }
-        });
-        btnSelectImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!NetWorkInfo.isOnline(mContext))
-                    return;
-                uploadAvatar();
-            }
-        });
-    }
+
+
 
     @Override
-    public void onLoadProfileSuccess(String name, long birthday, double height, double weight, String url) {
+    public void onLoadProfileSuccess(String name, long birthday, double height, double weight, String url, int sex) {
         etName.setText(name);
         datePicker.setTimeinMilisecond(birthday);
         etHeight.setText(String.valueOf(height));
         etWeight.setText(String.valueOf(weight));
-        setImage(avatarView,url);
-        urlAvatar=url;
+        Toast.makeText(mContext, "  "+sex, Toast.LENGTH_SHORT).show();
+        setImage(avatarView, url);
+//        gender=sex;
+        urlAvatar = url;
+        if (sex==1)
+            spSex.setSelectedIndex(2);
+        else if (sex==2)
+            spSex.setSelectedIndex(1);
+        else
+            spSex.setSelectedIndex(0);
     }
 
 
     @Override
     public void onUpdateProfileSuccess() {
         showToast("Cập nhật thành công");
+        final Intent i = new Intent(ProfileActivity.this, HomeActivity.class);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(i);
+            }
+        }, 300);
+
     }
 
 
-    private void showToastNoInternet(){
-        showToast("Không kết nối internet");
-    }
-    private void updateProfile(){
+    private void updateProfile() {
         String name = etName.getText().toString();
         double height = Double.valueOf(etHeight.getText().toString());
         double weight = Double.valueOf(etWeight.getText().toString());
         long birthday = datePicker.getTimeinMilisecond();
-        if (birthday==0){
+        if (birthday == 0) {
             birthday = SharedPreferencesUtils.getInstance().getLongValue(Constant.USER_BIRTHDAY);
         }
-        birthday=birthday/1000;
-        presenter.updateProfile(name,(birthday),height,weight,urlAvatar);
+        birthday = birthday / 1000;
+        presenter.checkUpdateProfile(name, (birthday), height, weight, urlAvatar, gender);
     }
-    private void uploadAvatar(){
+
+    private void uploadAvatar() {
         new PickerBuilder(ProfileActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
                 .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                     @Override
@@ -226,12 +258,11 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
 
     @Override
     public void onSuccess(String url) {
-        urlAvatar =url;
-        Log.e("URLAVART", "onSuccess: "+url );
+        urlAvatar = url;
     }
 
     @Override
     public void onError(String e) {
-
+        xLog.e(e.toString());
     }
 }

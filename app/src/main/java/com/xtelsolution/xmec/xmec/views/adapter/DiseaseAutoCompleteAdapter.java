@@ -10,6 +10,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.commons.Cts;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.utils.JsonHelper;
@@ -76,7 +77,7 @@ public class DiseaseAutoCompleteAdapter extends BaseAdapter implements Filterabl
                 if (constraint != null&&constraint.length()>1) {
                     try {
                         xLog.e(Constant.LOGPHI+url+constraint.toString()+"&size=10");
-                        diseases = new GetToServer().execute(url+constraint.toString()+"&size=10", Constant.LOCAL_SECCION).get();
+                        diseases = new GetToServer().execute(url+constraint.toString()+"&size=10", LoginManager.getCurrentSession()).get();
                     } catch (InterruptedException e) {
                         xLog.e(e.getMessage());
                     } catch (ExecutionException e) {

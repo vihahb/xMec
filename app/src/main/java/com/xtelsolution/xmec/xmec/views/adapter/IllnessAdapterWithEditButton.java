@@ -1,21 +1,17 @@
 package com.xtelsolution.xmec.xmec.views.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.xtelsolution.xmec.listener.list.ButtonAdapterClickListener;
 import com.xtelsolution.xmec.model.RESP_Disease;
-import com.xtelsolution.xmec.model.RESP_List_Disease;
-import com.xtelsolution.xmec.model.entity.Disease;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.xmec.views.activity.AddIllnessActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +20,16 @@ import java.util.List;
  * Created by phimau on 1/22/2017.
  */
 
-public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class IllnessAdapterWithEditButton extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int BUTTON = 2;
     public static final int NORMAL = 1;
     private Context mContext;
     private ArrayList<RESP_Disease> mList;
     private ItemClickListener itemClickListener;
-    private ButtonAdapterClickListener buttonAdapterClickListener;
+    private ItemClickListener.ItemIconClickListener iconClickListener;
+    private ItemClickListener.ButtonAdapterClickListener buttonAdapterClickListener;
 
-    public IllnessAdapter2(Context mContext, ArrayList<RESP_Disease> mList) {
+    public IllnessAdapterWithEditButton(Context mContext, ArrayList<RESP_Disease> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -42,7 +39,7 @@ public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
         View view;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         if (viewType == NORMAL) {
-            view = inflater.inflate(R.layout.list_item_illness, parent,false);
+            view = inflater.inflate(R.layout.item_disease_with_edit_button, parent,false);
             return new IllnessViewHolder(view);
 
         } else
@@ -58,8 +55,13 @@ public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     itemClickListener.onItemClickListener(mList.get(position),position);
+                }
+            });
+            viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    iconClickListener.onItemIconClickListener(mList.get(position),position);
                 }
             });
         }
@@ -75,9 +77,11 @@ public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class IllnessViewHolder extends RecyclerView.ViewHolder {
         public TextView tvNameIllness;
+        public ImageView btnEdit;
         public IllnessViewHolder(View itemView) {
             super(itemView);
             tvNameIllness = (TextView) itemView.findViewById(R.id.tvIllnessName);
+            btnEdit = (ImageView) itemView.findViewById(R.id.btn_edit);
         }
     }
 
@@ -116,7 +120,11 @@ public class IllnessAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.itemClickListener = itemClickListener;
     }
 
-    public void setButtonAdapterClickListener(ButtonAdapterClickListener buttonAdapterClickListener) {
+    public void setIconClickListener(ItemClickListener.ItemIconClickListener iconClickListener) {
+        this.iconClickListener = iconClickListener;
+    }
+
+    public void setButtonAdapterClickListener(ItemClickListener.ButtonAdapterClickListener buttonAdapterClickListener) {
         this.buttonAdapterClickListener = buttonAdapterClickListener;
     }
 }

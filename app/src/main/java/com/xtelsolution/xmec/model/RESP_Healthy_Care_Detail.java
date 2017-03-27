@@ -10,25 +10,39 @@ public class RESP_Healthy_Care_Detail extends RESP_Map_Healthy_Care {
     @Expose
     private String openTime;
     @Expose
-    private String address;
+    private int vote_rate;
     @Expose
-    private int voteRate;
-    @Expose
-    private String numPhone;
+    private String num_phone;
     @Expose
     private String fax;
     @Expose
     private String introduce;
     @Expose
-    private String urlAvatar;
+    private String url_avatar;
 
 
-    public String getUrlAvatar() {
-        return urlAvatar;
+    public String getOpenTime() {
+        return openTime;
     }
 
-    public void setUrlAvatar(String urlAvatar) {
-        this.urlAvatar = urlAvatar;
+    public void setOpenTime(String openTime) {
+        this.openTime = openTime;
+    }
+
+    public int getVote_rate() {
+        return vote_rate;
+    }
+
+    public void setVote_rate(int vote_rate) {
+        this.vote_rate = vote_rate;
+    }
+
+    public String getNum_phone() {
+        return num_phone;
+    }
+
+    public void setNum_phone(String num_phone) {
+        this.num_phone = num_phone;
     }
 
     public String getFax() {
@@ -47,36 +61,12 @@ public class RESP_Healthy_Care_Detail extends RESP_Map_Healthy_Care {
         this.introduce = introduce;
     }
 
-    public String getNumPhone() {
-        return numPhone;
+    public String getUrl_avatar() {
+        return url_avatar;
     }
 
-    public void setNumPhone(String numPhone) {
-        this.numPhone = numPhone;
-    }
-
-    public String getOpenTime() {
-        return openTime;
-    }
-
-    public void setOpenTime(String openTime) {
-        this.openTime = openTime;
-    }
-
-    public int getVoteRate() {
-        return voteRate;
-    }
-
-    public void setVoteRate(int voteRate) {
-        this.voteRate = voteRate;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUrl_avatar(String url_avatar) {
+        this.url_avatar = url_avatar;
     }
 }
 

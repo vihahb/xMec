@@ -17,23 +17,20 @@ import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
-import com.xtelsolution.xmec.listener.list.ButtonAdapterClickListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Disease;
-import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
-import com.xtelsolution.xmec.model.entity.Disease;
 import com.xtelsolution.xmec.presenter.MedicalDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HealtRecoderAdapter;
-import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter2;
+import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapterWithEditButton;
 import com.xtelsolution.xmec.xmec.views.adapter.ImageViewAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IMedicalDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicalDetailActivity extends BasicActivity implements IMedicalDetailView, ItemClickListener, ButtonAdapterClickListener {
+public class MedicalDetailActivity extends BasicActivity implements IMedicalDetailView, ItemClickListener,ItemClickListener.ButtonAdapterClickListener ,ItemClickListener.ItemIconClickListener {
     private Toolbar mToolbar;
     private TextView toolBarTille;
     private Context mContext;
@@ -43,7 +40,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     private ImageViewAdapter imageViewAdapter;
     private ViewPager viewPager;
     private Dialog dialog;
-    private IllnessAdapter2 illnessAdapter;
+    private IllnessAdapterWithEditButton illnessAdapter;
     private LoaderTextView tvNote;
     private LoaderTextView tvName;
     private LoaderTextView tvTime;
@@ -72,13 +69,15 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         presenter = new MedicalDetailPresenter(this);
         healtRecoderAdapter = new HealtRecoderAdapter(mContext, listUrl);
         imageViewAdapter = new ImageViewAdapter(listUrl, mContext);
-        illnessAdapter = new IllnessAdapter2(mContext, diseases);
+        illnessAdapter = new IllnessAdapterWithEditButton(mContext, diseases);
         illnessAdapter.setButtonAdapterClickListener(this);
+        illnessAdapter.setIconClickListener(this);
         illnessAdapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClickListener(Object item, int position) {
                 String link =((RESP_Disease) item).getLink();
-                if ( link!= null&&link.length()==0) {
+                xLog.e("LINK  "+link);
+                if ( link!= null&&link.length()!=0) {
                     Intent i = new Intent(MedicalDetailActivity.this, IllnessDetailActivity.class);
                     i.putExtra(Constant.ILLNESS_URL, link);
                     startActivity(i);
@@ -97,7 +96,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         rcDesease.setLayoutManager(new LinearLayoutManager(mContext));
         id = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
 
-        presenter.getDetailMedical(id);
+        presenter.checkGetDetailMedical(id);
 //        presenter.getListIllness(id);
 
     }
@@ -128,7 +127,6 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         dialog.setContentView(R.layout.image_viewer_dialog);
         viewPager = (ViewPager) dialog.findViewById(R.id.viewpager);
         btnUpdateMedical = (TextView) findViewById(R.id.btn_update_medical);
-
     }
 
 
@@ -174,8 +172,11 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         startActivity(i);
     }
 
-    @Override
-    public void onRemoveButtonClick(Object obj, int position) {
 
+    @Override
+    public void onItemIconClickListener(Object item, int positon) {
+        Intent i = new Intent(MedicalDetailActivity.this,AddIllnessActivity.class);
+        i.putExtra(Constant.MEDICAL_ID,id);
+        startActivity(i);
     }
 }
