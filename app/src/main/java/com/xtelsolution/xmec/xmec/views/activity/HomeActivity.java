@@ -92,7 +92,7 @@ public class HomeActivity extends BasicActivity {
         rvHosiptalCenter = (RecyclerView) slidingDrawer.findViewById(R.id.rv_hospital_center);
         adapter = new HospitalCenterAdapter(getApplicationContext(), HomeActivity.this);
         imgHanderSliding = (ImageView) slidingDrawer.findViewById(R.id.handleImageView);
-        viewPager.setOffscreenPageLimit(5);
+//        viewPager.setOffscreenPageLimit(5);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

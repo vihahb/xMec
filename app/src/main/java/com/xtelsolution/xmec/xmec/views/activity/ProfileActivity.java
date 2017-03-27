@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -111,12 +112,13 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                     showDatePicker();
             }
         });
-        btnSelectImage.setOnClickListener(new View.OnClickListener() {
+        btnSelectImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (!NetWorkInfo.isOnline(mContext))
-                    return;
+                    return false;
                 uploadAvatar();
+                return false;
             }
         });
         spSex.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
@@ -128,6 +130,21 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                     gender = 2;
                 else if (position == 2)
                     gender = 1;
+            }
+        });
+        layout_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!NetWorkInfo.isOnline(mContext))
+                    return;
+                uploadAvatar();
+            }
+        });
+        layout_avatar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                uploadAvatar();
+                return false;
             }
         });
     }

@@ -155,9 +155,9 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Intent i = new Intent(getActivity(), DetailHospitalActivity.class);
-        i.putExtra(Constant.HEALTHY_CENTER_ID,(int)marker.getTag());
-        startActivity(i);
+//        Intent i = new Intent(getActivity(), DetailHospitalActivity.class);
+//        i.putExtra(Constant.HEALTHY_CENTER_ID,(int)marker.getTag());
+//        startActivity(i);
         return false;
     }
 }
