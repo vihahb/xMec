@@ -16,7 +16,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.model.HealthyCareModel;
 import com.xtelsolution.xmec.model.RESP_Healthy_Care_Detail;
+import com.xtelsolution.xmec.presenter.HeathyCareDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.inf.IHeathyCareDetailView;
 
 public class DetailHospitalActivity extends BasicActivity implements OnMapReadyCallback,IHeathyCareDetailView {
@@ -29,6 +32,8 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
     private TextView tvWorkTime;
     private TextView tvVoteRate;
     private ImageView imgAvatar;
+    private int id;
+    private HeathyCareDetailPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,10 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
+        id = getIntent().getIntExtra(Constant.HEALTHY_CENTER_ID,-1);
+        presenter = new HeathyCareDetailPresenter(this);
+        presenter.checkGetHealthCare(id);
 
     }
 

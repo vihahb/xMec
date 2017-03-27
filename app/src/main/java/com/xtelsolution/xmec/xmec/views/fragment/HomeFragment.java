@@ -56,9 +56,7 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         super.onCreate(savedInstanceState);
         mContext = getContext();
         homePresenter = new HomePresenter(this);
-        mlistMedica = new ArrayList<>();
-        adapter = new MedicalDirectoryAdapter(mlistMedica,getContext());
-        adapter.setItemClickListener(this);
+
     }
 
     @Nullable
@@ -67,9 +65,10 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initUI(view);
         initControl();
-
+        mlistMedica = new ArrayList<>();
+        adapter = new MedicalDirectoryAdapter(mlistMedica,getContext());
+        adapter.setItemClickListener(this);
         homePresenter.checkGetUser();
-//        homePresenter.checkGetUser();
         return view;
     }
 

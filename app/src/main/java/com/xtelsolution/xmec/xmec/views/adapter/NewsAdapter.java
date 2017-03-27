@@ -37,7 +37,7 @@ public class NewsAdapter extends RecyclerView.Adapter {
         if (holder instanceof NewsViewHolder) {
             ((NewsViewHolder) holder).tvNewsTitle.setText(data.get(position).getTitle());
             ((NewsViewHolder) holder).tvNewsPubTime.setText(data.get(position).getPubDate());
-//            Picasso.with(mContext).load(data.get(position).getDescription()).into((((NewsViewHolder) holder).imgNewsPhoto));
+           Picasso.with(mContext).load(data.get(position).getDescription()).into((((NewsViewHolder) holder).imgNewsPhoto));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

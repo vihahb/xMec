@@ -51,7 +51,7 @@ public class Constant {
     public static final String SERVER_UPLOAD = "http://124.158.5.112:9180/s/files/upload";
     public static final String MEDICAL_REPORT_BOOK = "user/medical-report-book";
     public static final String ILLNESS = "user/medical-report-book/disease";
-    public static final String HEALTHY_CENTER = "healthy-center";
+    public static final String HEALTHY_CENTER = "user/medical-center";
     public static final String Disease = "user/disease";
     public static final String DISEASE = "user/medical-report-book/disease";
     public static final String MEDICINE = "user/medical-report-book/disease/medicine";

@@ -96,6 +96,8 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     public void initMap() {
         isMapInit = true;
         view.onLocationChange(new LatLng(lat, log));
+
+
     }
 
     public void initPermission() {
@@ -118,8 +120,8 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     }
 
     public void getHospitals(final Object... param) {
-        String location = "lat=" + lat + "&lng=" + log+"&type=1";
-        String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius;
+        String location = "latitude=" + lat + "&longitude=" + log;
+        String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius+"&type=1";
         xLog.e(url);
         HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
@@ -192,6 +194,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
                 lat = location.getLatitude();
                 log = location.getLongitude();
                 view.onGetCurrentLocationFinish(new LatLng(lat, log));
+                checkGetHospital();
             }
         }
 

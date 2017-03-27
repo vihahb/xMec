@@ -16,14 +16,14 @@ import com.xtelsolution.xmec.xmec.views.inf.IHeathyCareDetailView;
 
 public class HeathyCareDetailPresenter extends BasePresenter  {
     private IHeathyCareDetailView view;
-
+    private final int GETHEALTHCAREDETAIl =1;
     public HeathyCareDetailPresenter(IHeathyCareDetailView view) {
         this.view = view;
     }
-    public void getHeathyCareDetail(int id){
-        if (!checkConnnecttion(view))
-            return;
+    private void getHeathyCareDetail(final Object...param){
+        int id = (int) param[1];
         String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"/"+id;
+        xLog.e( url);
         HealthyCareModel.getInstance().getDetailHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Healthy_Care_Detail>(RESP_Healthy_Care_Detail.class) {
             @Override
             public void onSuccess(RESP_Healthy_Care_Detail obj) {
@@ -32,14 +32,23 @@ public class HeathyCareDetailPresenter extends BasePresenter  {
 
             @Override
             public void onError(Error error) {
-                xLog.e(error.getMessage());
+                handlerError(view,error,param);
             }
         });
     }
 
+    public void checkGetHealthCare(int id){
+        if (!checkConnnecttion(view))
+            return;
+        getHeathyCareDetail(GETHEALTHCAREDETAIl,id);
+    }
 
     @Override
     public void onGetNewSessionSuccess(Object... param) {
-
+        switch ((int)param[0]){
+            case 1:
+                getHeathyCareDetail(param);
+                break;
+        }
     }
 }

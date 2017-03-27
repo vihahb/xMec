@@ -49,7 +49,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
             viewHolder.tvLikes.setText(String.format(mContext.getResources().getString(R.string.total_like), article.getTotal_like()));
             viewHolder.tvComments.setText(String.format(mContext.getResources().getString(R.string.total_comment), article.getTotal_comment()));
 //            Picasso.with(mContext).load(article.getAuthor().getAvatar_url()).into((viewHolder).imgAuthorAvatar);
-//            Picasso.with(mContext).load(article.getNewsFeed().getDescription()).into((viewHolder).imgNewsPhoto);
+            Picasso.with(mContext).load(article.getNewsFeed().getDescription()).into((viewHolder).imgNewsPhoto);
             (viewHolder).imgPlayIcon.setVisibility(View.GONE);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
