@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Disease;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
@@ -75,7 +76,8 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
             @Override
             public void onItemClickListener(Object item, int position) {
                 String link =((RESP_Disease) item).getLink();
-                if ( link!= null&&link.length()==0) {
+                xLog.e("LINK  "+link);
+                if ( link!= null&&link.length()!=0) {
                     Intent i = new Intent(MedicalDetailActivity.this, IllnessDetailActivity.class);
                     i.putExtra(Constant.ILLNESS_URL, link);
                     startActivity(i);

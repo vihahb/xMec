@@ -128,13 +128,9 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
         btnAddMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                presenter.addMedicine(idMedical,uidDisease,idDisease,etFindDisease.getText().toString(),etFindMedicine.getText().toString(),idMecine,etNote.getText().toString());
-
                 medicineAdapterWithEditButton.add(new REQ_Medicine(etFindMedicine.getText().toString(),idMecine));
-//                xLog.e(medicineAdapterWithEditButton.getItemCount()+"  COUNT");
-                medicineAdapterWithEditButton.getItem(0);
-
                 idMecine=-1;
+                etFindMedicine.setText(null);
                 mDialog.dismiss();
 
             }

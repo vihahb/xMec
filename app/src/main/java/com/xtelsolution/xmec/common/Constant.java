@@ -57,6 +57,7 @@ public class Constant {
     public static final String MEDICINE = "user/medical-report-book/disease/medicine";
     public static final String MEDICINE_SEARCH = "user/medicine";
     public static final String LOGPHI = "LOGPHI  ";
+    public static  Boolean iGetNewSession = false ;
     public static final String ILLNESS_URL = "illness_url";
 
     public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";

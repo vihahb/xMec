@@ -131,7 +131,8 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
 
     public void removeItem(int index) {
         mList.remove(index);
-        notifyDataSetChanged();
+        notifyItemRemoved(index);
+        notifyItemRangeChanged(index,getItemCount()-1);
         getItem(100);
     }
 
