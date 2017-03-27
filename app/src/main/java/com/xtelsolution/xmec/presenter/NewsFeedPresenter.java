@@ -31,7 +31,7 @@ public class NewsFeedPresenter {
             public void onSucess(ArrayList<NewsFeed> list) {
 //                view.loadNewsFeed(list);
 //                TOI NAY BAT DAU TU DAY
-                NewsAuthor author = new NewsAuthor("songkhoe.vn","http://hungntph04073.esy.es/upload/yte_suckhoe.png","http://songkhoe.vn");
+                NewsAuthor author = new NewsAuthor("songkhoe.vn","file:///android_asset/yte_suckhoe.png","http://songkhoe.vn");
                 ArrayList<Article> articleArrayList = new ArrayList<Article>();
                 if (list!=null){
                     for (int i = 0; i < list.size(); i++) {
