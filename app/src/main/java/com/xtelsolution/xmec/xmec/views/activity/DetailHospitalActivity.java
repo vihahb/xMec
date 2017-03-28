@@ -11,12 +11,16 @@ import android.widget.TextView;
 
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.elyeproj.loaderviewlibrary.LoaderTextView;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.HealthyCareModel;
 import com.xtelsolution.xmec.model.RESP_Healthy_Care_Detail;
 import com.xtelsolution.xmec.presenter.HeathyCareDetailPresenter;
@@ -33,6 +37,7 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
     private TextView tvVoteRate;
     private ImageView imgAvatar;
     private int id;
+    private GoogleMap mMap;
     private HeathyCareDetailPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,7 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
 
         id = getIntent().getIntExtra(Constant.HEALTHY_CENTER_ID,-1);
         presenter = new HeathyCareDetailPresenter(this);
-        presenter.checkGetHealthCare(id);
+
 
     }
 
@@ -84,7 +89,9 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap = googleMap;
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        presenter.checkGetHealthCare(id);
     }
 
     @Override
@@ -94,13 +101,17 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
         tvNumPhone.setText(getResources().getString(R.string.tel)+healthyCare.getNum_phone());
         tvName.setText(healthyCare.getName());
         tvIntroduce.setText(healthyCare.getIntroduce());
-        tvVoteRate.setText(healthyCare.getVote_rate());
-        tvWorkTime.setText(healthyCare.getOpenTime());
+        tvVoteRate.setText(healthyCare.getVote_rate()+  " ");
+        xLog.e(healthyCare.getVote_rate()+"33");
+        tvWorkTime.setText(healthyCare.getOpenTime()+"");
+        xLog.e(healthyCare.getOpenTime()+"33");
         if (healthyCare.getUrl_avatar()!=null)
             setImage(imgAvatar,healthyCare.getUrl_avatar());
         else
             imgAvatar.setImageResource(R.drawable.ic_avatar_hospital);
-
+        LatLng latLng = new LatLng(healthyCare.getLatitude(),healthyCare.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
+        mMap.addMarker(new MarkerOptions().position(latLng));
     }
 
 

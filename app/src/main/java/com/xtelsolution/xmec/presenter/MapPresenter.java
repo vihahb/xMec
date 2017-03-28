@@ -81,7 +81,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     public MapPresenter(IMapView view) {
         this.view = view;
         mActivity = view.getActivity();
-        radius = 500;
+        radius = 2;
         listPos = new HashMap<>();
     }
 
@@ -106,8 +106,6 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
             view.getFragmentView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
             return;
         } else {
-            view.onPermissionGranted();
-
             if (googleApiClient == null) {
                 googleApiClient = new GoogleApiClient.Builder(mActivity)
                         .addConnectionCallbacks(this)
@@ -120,7 +118,9 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     }
 
     public void getHospitals(final Object... param) {
-        String location = "latitude=" + lat + "&longitude=" + log;
+        double latitude = (double) param[1];
+        double longitude = (double) param[2];
+        String location = "latitude=" + latitude + "&longitude=" + longitude;
         String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius+"&type=1";
         xLog.e(url);
         HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
@@ -145,10 +145,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         });
     }
 
-    public void checkGetHospital() {
+    public void checkGetHospital(double lat,double lng) {
         if (!checkConnnecttion(view))
             return;
-        getHospitals(GETLOCATION);
+        getHospitals(GETLOCATION,lat,lng);
     }
 
     private boolean isLocationEnable() {
@@ -194,7 +194,8 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
                 lat = location.getLatitude();
                 log = location.getLongitude();
                 view.onGetCurrentLocationFinish(new LatLng(lat, log));
-                checkGetHospital();
+                checkGetHospital(lat,log);
+                view.onMapCreateSuccess();
             }
         }
 

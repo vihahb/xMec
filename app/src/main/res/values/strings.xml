@@ -78,9 +78,9 @@
     <string name="title_toobar_detail_medical">Chi tiết y bạ </string>
     <string name="remove_medical">Xóa Y bạ </string>
     <string name="remove_medical_confirm">Bạn có muốn xóa y bạ ?</string>
-    <string name="tel">Tel </string>
-    <string name="fax">Fax </string>
-    <string name="address">Địa chỉ </string>
+    <string name="tel">Tel: \t</string>
+    <string name="fax">Fax: \t</string>
+    <string name="address">Địa chỉ: \t</string>
 
     <string name="service_code_key">XTL-XMEC</string>
     <string name="FACEBOOK_APP_ID">1851247128486694</string>

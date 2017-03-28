@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 
 public class RESP_Healthy_Care_Detail extends RESP_Map_Healthy_Care {
     @Expose
-    private String openTime;
+    private String open_time;
     @Expose
     private int vote_rate;
     @Expose
@@ -22,11 +22,11 @@ public class RESP_Healthy_Care_Detail extends RESP_Map_Healthy_Care {
 
 
     public String getOpenTime() {
-        return openTime;
+        return open_time;
     }
 
     public void setOpenTime(String openTime) {
-        this.openTime = openTime;
+        this.open_time = openTime;
     }
 
     public int getVote_rate() {

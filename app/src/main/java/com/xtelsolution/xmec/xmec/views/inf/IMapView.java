@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 public interface IMapView extends BaseView {
-    void onPermissionGranted();
+    void onMapCreateSuccess();
     void onProviderDisabled();
     void onGetCurrentLocationFinish(LatLng latLng);
     void onGetListHealtyCareSuccess(List<RESP_Map_Healthy_Care> data);

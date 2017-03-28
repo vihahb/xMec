@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -52,13 +53,14 @@ import java.util.List;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView, GoogleMap.OnMarkerClickListener {
+public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveCanceledListener ,GoogleMap.OnCameraIdleListener{
     private View view;
     private GoogleMap mMap;
     private Marker mMarker;
     private FloatingActionButton btnCurrentLocation;
     private boolean isCheckPermission;
     private MapPresenter presenter;
+    private boolean isMapCreated = false;
 
 
     @Nullable
@@ -106,12 +108,15 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
             presenter.getCurrentLocation();
             mMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(0f, 0f)));
             presenter.initMap();
-            presenter.checkGetHospital();
+            isMapCreated = true;
+            mMap.setOnCameraIdleListener(this);
+            mMap.setOnCameraMoveCanceledListener(this);
+
         }
     }
 
     @Override
-    public void onPermissionGranted() {
+    public void onMapCreateSuccess() {
         isCheckPermission = true;
         initMap();
 
@@ -161,14 +166,40 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     @Override
     public boolean onMarkerClick(Marker marker) {
         Intent i = new Intent(getActivity(), DetailHospitalActivity.class);
-        i.putExtra(Constant.HEALTHY_CENTER_ID,(int) marker.getTag());
+        i.putExtra(Constant.HEALTHY_CENTER_ID, (int) marker.getTag());
         startActivity(i);
         return false;
     }
 
     private Bitmap scaleBimap(int id) {
-        Bitmap b = BitmapFactory.decodeResource(getResources(),id);
+        Bitmap b = BitmapFactory.decodeResource(getResources(), id);
         Bitmap bhalfsize = Bitmap.createScaledBitmap(b, 64, 64, false);
         return bhalfsize;
+    }
+
+//    @Override
+//    public void onCameraMoveCanceled() {
+//        xLog.e(mMap.getCameraPosition().target.latitude+"           "+mMap.getCameraPosition().target.longitude);
+//        if (isCheckPermission){
+//            presenter.checkGetHospital(mMap.getCameraPosition().target.latitude,mMap.getCameraPosition().target.longitude);
+//        }
+//    }
+
+
+    @Override
+    public void onCameraMoveCanceled() {
+        xLog.e(mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
+        presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
+    }
+
+//    @Override
+//    public void onCameraMove() {
+//        xLog.e(mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
+//        presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
+//    }
+    @Override
+    public void onCameraIdle() {
+        xLog.e(mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
+        presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
     }
 }
