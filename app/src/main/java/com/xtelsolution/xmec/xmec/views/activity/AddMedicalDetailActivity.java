@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.listener.ChoosePictureListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Disease;
 import com.xtelsolution.xmec.model.RESP_List_Disease;
@@ -38,6 +39,7 @@ import com.xtelsolution.xmec.xmec.views.adapter.HealtRecoderAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.ImageViewAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IAddMedicalView;
 import com.xtelsolution.xmec.xmec.views.inf.IMedicalDetailView;
+import com.xtelsolution.xmec.xmec.views.smallviews.BottomSheetChoosePicture;
 import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.smallviews.DialogImageViewer;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
@@ -70,6 +72,9 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     private Form mForm;
     private MedicalDetailPresenter medicalDetailPresenter;
     private DialogImageViewer dialogImageViewer;
+    private BottomSheetChoosePicture bottomSheetChoosePicture;
+    private ImageView btnGetImageFormGallery;
+    private ImageView btnGetImageFormCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +96,38 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
             btnSavaDirectory.setText(getResources().getText(R.string.update_medical));
         } else {
             dialogImageViewer.btnRemove.setVisibility(View.GONE);
+        }
+    }
+
+
+    private void init() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_top);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        rvHealthReconder = (RecyclerView) findViewById(R.id.rv_health_records);
+        etName = (EditText) findViewById(R.id.et_directory_name);
+        etBeginTime = (EditText) findViewById(R.id.et_start_time);
+        etEndTime = (EditText) findViewById(R.id.et_end_time);
+        btnSavaDirectory = (Button) findViewById(R.id.btn_save_director);
+        etNote = (EditText) findViewById(R.id.et_note);
+        btnAddHelthReconder = (ImageView) findViewById(R.id.btn_add_healty_recoder);
+
+        resourceList = new ArrayList<>();
+        healtRecoderAdapter = new HealtRecoderAdapter(mContext, resourceList);
+
+        pickerBeginTime = new DatePickerFragment(etBeginTime);
+        pickerEndTime = new DatePickerFragment(etEndTime);
+        presenter = new AddMedicalPresenter(this);
+        medicalDetailPresenter = new MedicalDetailPresenter(this);
+        dialogImageViewer = new DialogImageViewer(mContext);
+        mForm = Form.create();
+
+        bottomSheetChoosePicture = new BottomSheetChoosePicture();
+        if (bottomSheetChoosePicture!=null) {
+//            btnGetImageFormGallery = (ImageView) bottomSheetChoosePicture.getDialog().findViewById(R.id.btn_choose_picure);
+//            btnGetImageFormCamera = (ImageView) bottomSheetChoosePicture.getDialog().findViewById(R.id.btn_take_picture);
         }
     }
 
@@ -125,7 +162,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         btnAddHelthReconder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddHeathRecoder();
+                bottomSheetChoosePicture.show(getSupportFragmentManager(),"CHONANH");
             }
         });
         healtRecoderAdapter.setOnItemClickListener(this);
@@ -136,50 +173,97 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
             }
         });
-    }
+        bottomSheetChoosePicture.setChoosePictureListener(new ChoosePictureListener() {
+            @Override
+            public void onTakeNewPicture() {
+                new PickerBuilder(AddMedicalDetailActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
+                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+                            @Override
+                            public void onImageReceived(Uri imageUri) {
+//                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
+                                try {
+                                    Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                                    presenter.postImage(avatar, true, getBaseContext());
+                                    bottomSheetChoosePicture.dismiss();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+            }
 
+            @Override
+            public void onChoosePictureFromGallery() {
+                new PickerBuilder(AddMedicalDetailActivity.this,PickerBuilder.SELECT_FROM_GALLERY)
+                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+                            @Override
+                            public void onImageReceived(Uri imageUri) {
+                                try {
+                                    Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                                    presenter.postImage(avatar,true,getBaseContext());
+                                    bottomSheetChoosePicture.dismiss();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
 
-    private void init() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_top);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        rvHealthReconder = (RecyclerView) findViewById(R.id.rv_health_records);
-        etName = (EditText) findViewById(R.id.et_directory_name);
-        etBeginTime = (EditText) findViewById(R.id.et_start_time);
-        etEndTime = (EditText) findViewById(R.id.et_end_time);
-        btnSavaDirectory = (Button) findViewById(R.id.btn_save_director);
-        etNote = (EditText) findViewById(R.id.et_note);
-        btnAddHelthReconder = (ImageView) findViewById(R.id.btn_add_healty_recoder);
-
-        resourceList = new ArrayList<>();
-        healtRecoderAdapter = new HealtRecoderAdapter(mContext, resourceList);
-
-        pickerBeginTime = new DatePickerFragment(etBeginTime);
-        pickerEndTime = new DatePickerFragment(etEndTime);
-        presenter = new AddMedicalPresenter(this);
-        medicalDetailPresenter = new MedicalDetailPresenter(this);
-        dialogImageViewer = new DialogImageViewer(mContext);
-        mForm = Form.create();
-
+                            }
+                        }).start();
+            }
+        });
+//        btnGetImageFormCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new PickerBuilder(AddMedicalDetailActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
+//                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+//                            @Override
+//                            public void onImageReceived(Uri imageUri) {
+////                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
+//                                try {
+//                                    Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+//                                    presenter.postImage(avatar, true, getBaseContext());
+//
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }).start();
+//            }
+//        });
+//        btnGetImageFormGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new PickerBuilder(AddMedicalDetailActivity.this,PickerBuilder.SELECT_FROM_GALLERY)
+//                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+//                            @Override
+//                            public void onImageReceived(Uri imageUri) {
+//                                try {
+//                                    Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+//                                    presenter.postImage(avatar,true,getBaseContext());
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                            }
+//                        });
+//            }
+//        });
     }
 
     private void AddHeathRecoder() {
-        new PickerBuilder(AddMedicalDetailActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
-                .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
-                    @Override
-                    public void onImageReceived(Uri imageUri) {
-//                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
-                        try {
-                            Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                            presenter.postImage(avatar, true, getBaseContext());
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+//        new PickerBuilder(AddMedicalDetailActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
+//                .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+//                    @Override
+//                    public void onImageReceived(Uri imageUri) {
+////                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
+//                        try {
+//                            Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+//                            presenter.postImage(avatar, true, getBaseContext());
+//
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }).start();
     }
 
     private void updateMedicalDirectory() {
@@ -255,10 +339,10 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(AddMedicalDetailActivity.this,HomeActivity.class);
+                Intent intent = new Intent(AddMedicalDetailActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
-        },500);
+        }, 500);
     }
 
     @Override
@@ -304,7 +388,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
     @Override
     public void onRemoveMedicalSuccess() {
-        Intent i = new Intent(AddMedicalDetailActivity.this,HomeActivity.class);
+        Intent i = new Intent(AddMedicalDetailActivity.this, HomeActivity.class);
         startActivity(i);
     }
 

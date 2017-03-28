@@ -76,6 +76,7 @@ public class AddMedicalPresenter extends BasePresenter {
         addMedicalDirectorry(ADDMEDICAL,name,beginTime,endTime,type,note,resources);
     }
     public void postImage(Bitmap bitmap,boolean isBigImage, Context context){
+
         view.showProgressDialog(view.getActivity().getResources().getString(R.string.upload_image));
         if (!checkConnnecttion(view))
             return;

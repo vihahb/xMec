@@ -1,5 +1,7 @@
 package com.xtelsolution.xmec.presenter;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -9,6 +11,9 @@ import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.common.Task;
+import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.model.UserModel;
@@ -83,5 +88,24 @@ public class ProfilePresenter extends BasePresenter {
                 updateProfile(param);
                 break;
         }
+    }
+    public void postImage(Bitmap bitmap, boolean isBigImage, Context context){
+
+        view.showProgressDialog(view.getActivity().getResources().getString(R.string.upload_image));
+        if (!checkConnnecttion(view))
+            return;
+        new Task.ConvertImage(context, isBigImage, new UploadFileListener() {
+            @Override
+            public void onSuccess(String url) {
+                xLog.e("onSuccess" + "onSuccess: "+url);
+                view.onUploadImageSussces(url);
+                view.dismissProgressDialog();
+            }
+            @Override
+            public void onError(String e) {
+
+            }
+        }).execute(bitmap);
+
     }
 }

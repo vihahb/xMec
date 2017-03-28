@@ -114,6 +114,7 @@ public abstract  class PickerManager {
 
     }
 
+    @SuppressWarnings("ResourceAsColor")
     public void startCropActivity()
     {
         if(uCrop == null)

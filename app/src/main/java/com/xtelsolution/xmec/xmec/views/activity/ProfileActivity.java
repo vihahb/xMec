@@ -28,10 +28,12 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.Task;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.listener.ChoosePictureListener;
 import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.ProfilePresenter;
 import com.xtelsolution.xmec.listener.IProfileView;
+import com.xtelsolution.xmec.xmec.views.smallviews.BottomSheetChoosePicture;
 import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
 
@@ -42,7 +44,7 @@ import de.psdev.formvalidations.Field;
 import de.psdev.formvalidations.Form;
 import de.psdev.formvalidations.validations.NotEmpty;
 
-public class ProfileActivity extends BasicActivity implements View.OnClickListener, IProfileView, UploadFileListener {
+public class ProfileActivity extends BasicActivity implements View.OnClickListener, IProfileView {
     private ImageView btnSelectImage;
     private AvatarView avatarView;
     private Context mContext;
@@ -60,6 +62,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     private Form mForm;
     private MaterialSpinner spSex;
     private int gender;
+    private BottomSheetChoosePicture bottomSheetChoosePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +101,8 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         spSex = (MaterialSpinner) findViewById(R.id.spcategorize);
         spSex.setItems("Giới tính", "Nam", "Nữ");
 
-        animation();
+        bottomSheetChoosePicture = new BottomSheetChoosePicture();
+//        animation();
         initControl();
         initValidate();
     }
@@ -112,13 +116,12 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                     showDatePicker();
             }
         });
-        btnSelectImage.setOnTouchListener(new View.OnTouchListener() {
+        btnSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onClick(View view) {
                 if (!NetWorkInfo.isOnline(mContext))
-                    return false;
+                    return;
                 uploadAvatar();
-                return false;
             }
         });
         spSex.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
@@ -132,19 +135,57 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                     gender = 1;
             }
         });
-        layout_avatar.setOnClickListener(new View.OnClickListener() {
+//        layout_avatar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (!NetWorkInfo.isOnline(mContext))
+//                    return;
+//                uploadAvatar();
+//            }
+//        });
+//        layout_avatar.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                uploadAvatar();
+//                return false;
+//            }
+//        });
+        bottomSheetChoosePicture.setChoosePictureListener(new ChoosePictureListener() {
             @Override
-            public void onClick(View view) {
-                if (!NetWorkInfo.isOnline(mContext))
-                    return;
-                uploadAvatar();
+            public void onTakeNewPicture() {
+                new PickerBuilder(ProfileActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
+                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+                            @Override
+                            public void onImageReceived(Uri imageUri) {
+                                showToast("Got image - " + imageUri);
+                                try {
+                                    Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                                    avatarView.setImageBitmap(avatar);
+                                    presenter.postImage(avatar,false,getBaseContext());
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
             }
-        });
-        layout_avatar.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                uploadAvatar();
-                return false;
+            public void onChoosePictureFromGallery() {
+                new PickerBuilder(ProfileActivity.this, PickerBuilder.SELECT_FROM_GALLERY)
+                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+                            @Override
+                            public void onImageReceived(Uri imageUri) {
+                                showToast("Got image - " + imageUri);
+                                try {
+                                    Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                                    avatarView.setImageBitmap(avatar);
+                                    presenter.postImage(avatar,false,getBaseContext());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
             }
         });
     }
@@ -220,6 +261,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         etWeight.setText(String.valueOf(weight));
         Toast.makeText(mContext, "  "+sex, Toast.LENGTH_SHORT).show();
         setImage(avatarView, url);
+        urlAvatar =url;
 //        gender=sex;
         urlAvatar = url;
         if (sex==1)
@@ -244,7 +286,6 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
 
     }
 
-
     private void updateProfile() {
         String name = etName.getText().toString();
         double height = Double.valueOf(etHeight.getText().toString());
@@ -258,28 +299,11 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     }
 
     private void uploadAvatar() {
-        new PickerBuilder(ProfileActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
-                .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
-                    @Override
-                    public void onImageReceived(Uri imageUri) {
-                        showToast("Got image - " + imageUri);
-                        try {
-                            Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                            new Task.ConvertImage(mContext, false, ProfileActivity.this).execute(avatar);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+        bottomSheetChoosePicture.show(getSupportFragmentManager(),"AVATAR");
     }
 
     @Override
-    public void onSuccess(String url) {
-        urlAvatar = url;
-    }
-
-    @Override
-    public void onError(String e) {
-        xLog.e(e.toString());
+    public void onUploadImageSussces(String url) {
+        urlAvatar =url;
     }
 }

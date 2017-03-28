@@ -28,7 +28,6 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         NipApplication.context = this;
         init();
-        PermissionHelper.checkListPermission(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},this,99);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

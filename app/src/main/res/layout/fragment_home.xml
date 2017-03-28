@@ -161,14 +161,6 @@
                 <!--android:tag="Benh">-->
 
                 <!--</Spinner>-->
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/spcategorize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    app:ms_arrow_tint="@color/colorPrimary"
-                    app:ms_background_color="@color/default_background"
-                    app:ms_text_color="@color/colorPrimary" />
             </android.support.design.widget.CoordinatorLayout>
 
             <android.support.v7.widget.RecyclerView

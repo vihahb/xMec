@@ -80,8 +80,8 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rvDisease.setLayoutManager(manager);
         rvDisease.setNestedScrollingEnabled(false);
-        MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spcategorize);
-        spinner.setItems("Bệnh", "Thuốc");
+//        MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spcategorize);
+//        spinner.setItems("Bệnh", "Thuốc");
         NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
         scrollView.setOnScrollChangeListener(new EndlessParentScrollListener(manager) {
             @Override
