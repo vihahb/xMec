@@ -170,7 +170,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
                 .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                     @Override
                     public void onImageReceived(Uri imageUri) {
-                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
                         try {
                             Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                             presenter.postImage(avatar, true, getBaseContext());

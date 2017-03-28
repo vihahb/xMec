@@ -120,23 +120,5 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
         return this;
     }
 
-    @Override
-    public void showToast(String msg) {
 
-    }
-
-    @Override
-    public void showLog(String msg) {
-
-    }
-
-    @Override
-    public void showProgressDialog(String title) {
-
-    }
-
-    @Override
-    public void dismissProgressDialog() {
-
-    }
 }

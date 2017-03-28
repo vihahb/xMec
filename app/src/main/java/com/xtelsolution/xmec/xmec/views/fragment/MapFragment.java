@@ -40,10 +40,12 @@ import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.listener.OnLoadMapSuccessListener;
 import com.xtelsolution.xmec.model.RESP_List_Map_Healthy_Care;
 import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
 import com.xtelsolution.xmec.presenter.MapPresenter;
 import com.xtelsolution.xmec.xmec.views.activity.DetailHospitalActivity;
+import com.xtelsolution.xmec.xmec.views.activity.HomeActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IMapView;
 
@@ -53,12 +55,13 @@ import java.util.List;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveCanceledListener ,GoogleMap.OnCameraIdleListener{
+public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveCanceledListener, GoogleMap.OnCameraIdleListener {
     private View view;
     private GoogleMap mMap;
     private Marker mMarker;
     private FloatingActionButton btnCurrentLocation;
     private boolean isCheckPermission;
+    private OnLoadMapSuccessListener onLoadMapSuccessListener;
     private MapPresenter presenter;
     private boolean isMapCreated = false;
 
@@ -68,6 +71,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_health_center, container, false);
+            onLoadMapSuccessListener = ((HomeActivity) getActivity()).get();
             initview();
             initControl();
             presenter = new MapPresenter(this);
@@ -111,7 +115,6 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
             isMapCreated = true;
             mMap.setOnCameraIdleListener(this);
             mMap.setOnCameraMoveCanceledListener(this);
-
         }
     }
 
@@ -153,6 +156,8 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public void onGetListHealtyCareSuccess(List<RESP_Map_Healthy_Care> data) {
+        if (data.size() == 0)
+            return;
         for (int i = 0; i < data.size(); i++) {
             Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLatitude(), data.get(i).getLongitude())).title(data.get(i).getName()));
             if (data.get(i).getType() == 1) {
@@ -161,6 +166,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_drug_store)));
             marker.setTag(data.get(i).getId());
         }
+        onLoadMapSuccessListener.onLoadMapSuccess(data);
     }
 
     @Override
@@ -192,7 +198,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
     }
 
-//    @Override
+    //    @Override
 //    public void onCameraMove() {
 //        xLog.e(mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
 //        presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);

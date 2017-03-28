@@ -30,6 +30,9 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.callbacks.RSSGetter;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.listener.OnLoadMapSuccessListener;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
+import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
 import com.xtelsolution.xmec.presenter.MapPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.fragment.HomeFragment;
@@ -43,7 +46,7 @@ import java.util.List;
 
 import eu.long1.spacetablayout.SpaceTabLayout;
 
-public class HomeActivity extends BasicActivity {
+public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListener,ItemClickListener {
 
     private SpaceTabLayout tabLayout;
     private ViewPager viewPager;
@@ -53,6 +56,7 @@ public class HomeActivity extends BasicActivity {
     private HospitalCenterAdapter adapter;
     private ImageView imgHanderSliding;
     private String TAG = "HomeActivity";
+    private List<RESP_Map_Healthy_Care> mapHealthyCareList;
     private BroadcastReceiver receiver;
     private FragmentManager fragmentManager;
     private CallbackManager callbackManager;
@@ -61,6 +65,7 @@ public class HomeActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mapHealthyCareList = new ArrayList<>();
         init();
         initReceiver();
         tabLayout.initialize(viewPager, fragmentManager, fragmentList, savedInstanceState);
@@ -89,8 +94,11 @@ public class HomeActivity extends BasicActivity {
         fragmentList.add(new NewsFeedFragment());
         fragmentList.add(new MapFragment());
         slidingDrawer = (SlidingDrawer) findViewById(R.id.drawer);
+
         rvHosiptalCenter = (RecyclerView) slidingDrawer.findViewById(R.id.rv_hospital_center);
-        adapter = new HospitalCenterAdapter(getApplicationContext(), HomeActivity.this);
+        adapter = new HospitalCenterAdapter(getApplicationContext(),mapHealthyCareList);
+        adapter.setItemClickListener(this);
+
         imgHanderSliding = (ImageView) slidingDrawer.findViewById(R.id.handleImageView);
 //        viewPager.setOffscreenPageLimit(5);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -208,5 +216,20 @@ public class HomeActivity extends BasicActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+    }
+
+    @Override
+    public void onLoadMapSuccess(List<RESP_Map_Healthy_Care> data) {
+        adapter.addAll(data);
+    }
+
+    @Override
+    public void onItemClickListener(Object item, int position) {
+        Intent i = new Intent(HomeActivity.this,DetailHospitalActivity.class);
+        i.putExtra(Constant.HEALTHY_CENTER_ID, ((RESP_Map_Healthy_Care)item).getId());
+        startActivity(i);
+    }
+    public OnLoadMapSuccessListener get(){
+        return this;
     }
 }

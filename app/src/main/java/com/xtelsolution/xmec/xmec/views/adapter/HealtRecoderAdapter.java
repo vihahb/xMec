@@ -44,15 +44,19 @@ public class HealtRecoderAdapter  extends RecyclerView.Adapter<HealtRecoderAdapt
 
     @Override
     public void onBindViewHolder(final HealthRecoderViewHoder holder, final int position) {
-        Ion.with(context)
+//        Ion.with(context)
+//                .load(urlList.get(position).getServer_path())
+//                .intoImageView(holder.imageView)
+//                .setCallback(new FutureCallback<ImageView>() {
+//                    @Override
+//                    public void onCompleted(Exception e, ImageView result) {
+//
+//                    }
+//                });
+        Picasso.with(context)
                 .load(urlList.get(position).getServer_path())
-                .intoImageView(holder.imageView)
-                .setCallback(new FutureCallback<ImageView>() {
-                    @Override
-                    public void onCompleted(Exception e, ImageView result) {
-
-                    }
-                });
+                .placeholder(R.drawable.image_director)
+                .into(holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

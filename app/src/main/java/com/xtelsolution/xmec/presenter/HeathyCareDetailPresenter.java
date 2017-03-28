@@ -4,6 +4,7 @@ import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.HealthyCareModel;
@@ -28,6 +29,7 @@ public class HeathyCareDetailPresenter extends BasePresenter  {
             @Override
             public void onSuccess(RESP_Healthy_Care_Detail obj) {
                 view.onGetHeathyCareSuccess(obj);
+                view.dismissProgressDialog();
             }
 
             @Override
@@ -40,6 +42,7 @@ public class HeathyCareDetailPresenter extends BasePresenter  {
     public void checkGetHealthCare(int id){
         if (!checkConnnecttion(view))
             return;
+        view.showProgressDialog("Đang tải");
         getHeathyCareDetail(GETHEALTHCAREDETAIl,id);
     }
 
