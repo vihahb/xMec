@@ -64,6 +64,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     private OnLoadMapSuccessListener onLoadMapSuccessListener;
     private MapPresenter presenter;
     private boolean isMapCreated = false;
+    int count =0;
 
 
     @Nullable
@@ -156,8 +157,12 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public void onGetListHealtyCareSuccess(List<RESP_Map_Healthy_Care> data) {
+
+
         if (data.size() == 0)
             return;
+        count ++;
+        xLog.e(count +"PHILOG");
         for (int i = 0; i < data.size(); i++) {
             Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLatitude(), data.get(i).getLongitude())).title(data.get(i).getName()));
             if (data.get(i).getType() == 1) {

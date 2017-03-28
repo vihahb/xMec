@@ -134,7 +134,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
                         data.add(mapHealthyCare);
                     }
                 }
-                view.onGetListHealtyCareSuccess(result);
+                view.onGetListHealtyCareSuccess(data);
                 view.dismissProgressDialog();
             }
 
