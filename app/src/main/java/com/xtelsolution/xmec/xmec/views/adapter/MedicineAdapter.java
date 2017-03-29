@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final int VIEW_TYPE_LOADING = 1;
     private static ItemClickListener mItemClickListener;
 
+    private boolean isLoadMore = false;
+
     public MedicineAdapter(Context mContext, List<Medicine> data) {
         this.data = data;
         this.mContext = mContext;
@@ -38,11 +41,11 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (viewType == VIEW_TYPE_ITEM) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_mediacine, parent,false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_mediacine, parent, false);
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new MedicineAdapterViewHolder(view);
         } else if (viewType == VIEW_TYPE_LOADING) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_more_progress,  parent,false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.progressbar, parent, false);
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             return new LoadingViewHolder(view);
         }
@@ -66,7 +69,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return data.size() + 1;
+        return isLoadMore ? data.size() + 1 : data.size();
     }
 
     class MedicineAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -79,16 +82,20 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
         public LoadingViewHolder(View itemView) {
             super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar);
+        }
+        public void hideProressBar(){
+            progressBar.setVisibility(View.GONE);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
         return data.size() <= position ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
-}
-
+    }
 
     @Override
     public long getItemId(int position) {
@@ -125,4 +132,8 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.mItemClickListener = itemViewHolderClickListener;
     }
 
+    public void setLoadMore(boolean isLoadMore) {
+        this.isLoadMore = isLoadMore;
+        notifyDataSetChanged();
+    }
 }

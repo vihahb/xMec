@@ -95,8 +95,8 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
                 final int DRAWABLE_RIGHT = 2;
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     if(event.getRawX() >= (etFindMedicine.getRight() - etFindMedicine.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        xLog.e("setOnTouchListener");
                         medicineAdapter.clear();
+                        medicineAdapter.setLoadMore(true);
                         presenter.checkSearchMedicine(etFindMedicine.getText().toString());
                         return true;
                     }
@@ -117,9 +117,13 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
 //        return list;
 //    }
 
-
     @Override
     public void onFindMedicienFinish(List<Medicine> data) {
+        if (data.size()==0){
+            medicineAdapter.setLoadMore(false);
+            showToast("Không tìm được kết quả");
+        }
         medicineAdapter.addAll(data);
+        medicineAdapter.setLoadMore(false);
     }
 }

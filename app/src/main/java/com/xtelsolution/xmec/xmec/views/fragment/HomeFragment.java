@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,16 +47,17 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
     private TextView tvBirthday;
     private TextView tvHeight;
     private TextView tvWeight;
-    private HomePresenter homePresenter;
+    private HomePresenter presenter;
     private Context mContext;
     private ArrayList<RESP_Medical> mlistMedica;
     private ImageView imgGender;
+    private CoordinatorLayout progcess;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
-        homePresenter = new HomePresenter(this);
+        presenter = new HomePresenter(this);
 
     }
 
@@ -68,7 +70,8 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         mlistMedica = new ArrayList<>();
         adapter = new MedicalDirectoryAdapter(mlistMedica,getContext());
         adapter.setItemClickListener(this);
-        homePresenter.checkGetUser();
+        presenter.checkGetUser();
+        presenter.checkGetMedical();
         return view;
     }
 
@@ -115,6 +118,8 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         tvName = (TextView) view.findViewById(R.id.tv_profile_name);
         imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
         imgGender = (ImageView) view.findViewById(R.id.img_gender);
+        progcess = (CoordinatorLayout) view.findViewById(R.id.progress_bar);
+
     }
     private void initControl(){
         btnProfile.setOnClickListener(new View.OnClickListener() {
@@ -140,12 +145,13 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         if (user.getGender()==2)
             imgGender.setImageResource(R.drawable.ic_action_name);
         SharedPreferencesUtils.getInstance().saveUser(user);
+        progcess.setVisibility(View.GONE);
+
     }
 
     @Override
     public void onGetMediacalListSusscess(RESP_List_Medical list_medical) {
         adapter.addAll(list_medical.getList());
-
     }
 
     @Override

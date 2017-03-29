@@ -43,71 +43,86 @@
                         android:layout_gravity="center"
                         android:layout_marginRight="16dp"
                         android:src="@drawable/avatar" />
-
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_profile_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginRight="@dimen/dimen_8"
-                            android:textColor="@color/primaryText"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_birthday"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/dimen_8"
-                            android:textColor="@color/textHint"
-                            android:textSize="11sp"
-                            />
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp">
-
-                            <ImageView
-                                android:layout_width="@dimen/dimen_22"
-                                android:layout_height="@dimen/dimen_22"
-                                android:layout_marginLeft="@dimen/dimen_5"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_height" />
+                            android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tv_profile_height"
+                                android:id="@+id/tv_profile_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginRight="@dimen/dimen_8" />
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/dimen_25"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_weight" />
-
-                            <TextView
-                                android:id="@+id/tv_profile_weight"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_marginBottom="4dp"
                                 android:layout_marginRight="@dimen/dimen_8"
-                           />
-                        </LinearLayout>
+                                android:textColor="@color/primaryText"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_birthday"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/dimen_8"
+                                android:textColor="@color/textHint"
+                                android:textSize="11sp"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_22"
+                                    android:layout_height="@dimen/dimen_22"
+                                    android:layout_marginLeft="@dimen/dimen_5"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/ic_height" />
+
+                                <TextView
+                                    android:id="@+id/tv_profile_height"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="@dimen/dimen_8" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/dimen_25"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/ic_weight" />
+
+                                <TextView
+                                    android:id="@+id/tv_profile_weight"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="@dimen/dimen_8"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <android.support.design.widget.CoordinatorLayout
+                            android:id="@+id/progress_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/icons"
+                            android:orientation="vertical">
+                            <ProgressBar
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:layout_width="@dimen/dimen_32"
+                                android:layout_height="@dimen/dimen_32" />
+                        </android.support.design.widget.CoordinatorLayout>
+                    </FrameLayout>
 
                 </LinearLayout>
 

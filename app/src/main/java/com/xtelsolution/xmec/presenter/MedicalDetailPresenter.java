@@ -39,14 +39,12 @@ public class MedicalDetailPresenter extends BasePresenter {
 
     private void getDetailMedical(final Object...param) {
         final int id = (int) param[1];
-        view.showProgressDialog("Đang tải");
         Log.e("sdasdadasd", "getDetailMedical: " + id);
         String url = Constant.SERVER_XMEC + Constant.MEDICAL_REPORT_BOOK + "/" + id;
         MedicalDirectoryModel.getinstance().getMedicalDirectoryDetail(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Medical_Detail>(RESP_Medical_Detail.class) {
             @Override
             public void onSuccess(RESP_Medical_Detail obj) {
                 view.onLoadMedicalFinish(obj);
-                getListIllness(GETLISTILLNESS,id);
             }
 
             @Override
@@ -65,7 +63,6 @@ public class MedicalDetailPresenter extends BasePresenter {
             public void onSuccess(RESP_List_Disease_With_Link obj) {
                 List<RESP_Disease> resp_diseases = obj.getData();
                 view.onLoadListIllnessFinish(resp_diseases);
-                view.dismissProgressDialog();
             }
 
             @Override
@@ -140,11 +137,12 @@ public class MedicalDetailPresenter extends BasePresenter {
         removeMedical(REMOVEMEDiCAL, id);
 
     }
-//    public void checkGetListIllness(int id){
-//        if (!checkConnnecttion(view))
-//            return;
-//        getListIllness(GETLISTILLNESS,id);
-//    }
+
+    public void checkGetListIllness(int id){
+        if (!checkConnnecttion(view))
+            return;
+        getListIllness(GETLISTILLNESS,id);
+    }
 
     public void checkGetDetailMedical(int id){
         if (!checkConnnecttion(view))

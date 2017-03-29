@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,14 +42,15 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     private ViewPager viewPager;
     private Dialog dialog;
     private IllnessAdapterWithEditButton illnessAdapter;
-    private LoaderTextView tvNote;
-    private LoaderTextView tvName;
-    private LoaderTextView tvTime;
+    private TextView tvNote;
+    private TextView tvName;
+    private TextView tvTime;
     private TextView btnUpdateMedical;
     private MedicalDetailPresenter presenter;
     private int id;
     private List<Resource> listUrl;
     private ArrayList<RESP_Disease> diseases;
+    private CoordinatorLayout progcess;
 
 
     @Override
@@ -97,7 +99,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         id = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
 
         presenter.checkGetDetailMedical(id);
-//        presenter.getListIllness(id);
+        presenter.checkGetListIllness(id);
 
     }
 
@@ -117,9 +119,9 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolBarTille = (TextView) findViewById(R.id.toolbar_title);
         toolBarTille.setText(getResources().getText(R.string.title_toobar_detail_medical));
-        tvName = (LoaderTextView) findViewById(R.id.tv_name);
-        tvNote = (LoaderTextView) findViewById(R.id.tv_note);
-        tvTime = (LoaderTextView) findViewById(R.id.tv_time);
+        tvName = (TextView) findViewById(R.id.tv_name);
+        tvNote = (TextView) findViewById(R.id.tv_note);
+        tvTime = (TextView) findViewById(R.id.tv_time);
         rcDesease = (RecyclerView) findViewById(R.id.rcDisease);
         finishActivity(R.id.btn_update_medical);
         rcHealthReconder = (RecyclerView) findViewById(R.id.rc_healthy_recoder);
@@ -127,6 +129,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         dialog.setContentView(R.layout.image_viewer_dialog);
         viewPager = (ViewPager) dialog.findViewById(R.id.viewpager);
         btnUpdateMedical = (TextView) findViewById(R.id.btn_update_medical);
+        progcess = (CoordinatorLayout) findViewById(R.id.progress_bar);
     }
 
 
@@ -138,6 +141,8 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         tvTime.setText(timePaser(obj.getBegin_time(), obj.getEnd_time()));
         tvNote.setText(obj.getNote());
         tvName.setText(obj.getName());
+        progcess.setVisibility(View.GONE);
+
     }
 
     @Override

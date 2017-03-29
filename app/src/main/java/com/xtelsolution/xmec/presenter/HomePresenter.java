@@ -33,7 +33,6 @@ public class HomePresenter extends BasePresenter {
     }
 
     private void getUser(final Object...param){
-        view.showProgressDialog(view.getActivity().getResources().getString(R.string.loadding));
         String url = Constant.SERVER_XMEC+Constant.GET_USER;
         xLog.e("URL  "+url);
         UserModel.getintance().getUser(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_User>(RESP_User.class) {
@@ -41,7 +40,6 @@ public class HomePresenter extends BasePresenter {
             public void onSuccess(RESP_User obj) {
                 SharedPreferencesUtils.getInstance().saveUser(obj);
                 view.onGetUerSusscess(obj);
-                getMedicalReportBooks(GETMEDICAL);
             }
 
             @Override
@@ -59,7 +57,6 @@ public class HomePresenter extends BasePresenter {
             public void onSuccess(RESP_List_Medical obj) {
                 xLog.e("PHIMH"+obj.toString());
                 view.onGetMediacalListSusscess(obj);
-                view.dismissProgressDialog();
             }
             @Override
             public void onError(Error error) {
@@ -73,6 +70,11 @@ public class HomePresenter extends BasePresenter {
         if (!checkConnnecttion(view))
             return;
         getUser(GETUSER);
+    }
+    public void checkGetMedical() {
+        if (!checkConnnecttion(view))
+            return;
+        getMedicalReportBooks(GETMEDICAL);
     }
 
     @Override
