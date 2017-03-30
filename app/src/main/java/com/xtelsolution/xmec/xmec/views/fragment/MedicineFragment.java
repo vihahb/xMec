@@ -75,10 +75,12 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView(view);
-        initControl();
-        handler = new Handler();
-        presenter = new FindMedicinePresenter(this);
+        if (list.size()==0) {
+            initView(view);
+            initControl();
+            handler = new Handler();
+            presenter = new FindMedicinePresenter(this);
+        }
 
     }
 
