@@ -11,4 +11,6 @@ import java.util.List;
 
 public interface ISearchMedicineView extends BaseView {
     void onFindMedicienFinish(List<Medicine> data);
+
+    void onError();
 }

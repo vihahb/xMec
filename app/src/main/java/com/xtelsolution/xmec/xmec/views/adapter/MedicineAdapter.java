@@ -28,7 +28,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context mContext;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
-    private static ItemClickListener mItemClickListener;
+    private ItemClickListener mItemClickListener;
 
     private boolean isLoadMore = false;
 

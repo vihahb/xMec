@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +26,7 @@ import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.RESP_Medicine;
 import com.xtelsolution.xmec.presenter.FindMedicinePresenter;
+import com.xtelsolution.xmec.xmec.views.activity.MedicineDetailActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicineAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.ISearchMedicineView;
 
@@ -32,6 +35,7 @@ import java.util.List;
 
 /**
  * Created by HUNGNT on 1/18/2017.
+ * edit by chungdt 30/03/2017.
  */
 
 
@@ -48,6 +52,16 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     private View view;
     private EditText etFindMedicine;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mContext = getContext();
+        list = new ArrayList<>();
+
+        medicineAdapter = new MedicineAdapter(mContext, list);
+    }
 
     @Nullable
     @Override
@@ -69,18 +83,12 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     }
 
     private void initView(View view) {
-        if (list == null) {
-            mContext = getContext();
-            list = new ArrayList<>();
-            medicineAdapter = new MedicineAdapter(mContext, list);
-            rvResultFindMediacine = (RecyclerView) view.findViewById(R.id.rvResultFindMediacine);
-            rvResultFindMediacine.setAdapter(medicineAdapter);
-            LinearLayoutManager manager = new LinearLayoutManager(mContext);
-            rvResultFindMediacine.setLayoutManager(manager);
-            rvResultFindMediacine.setNestedScrollingEnabled(false);
-//        NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.nesstedScrollView);
-            etFindMedicine = (EditText) view.findViewById(R.id.etSearch);
-        }
+        rvResultFindMediacine = (RecyclerView) view.findViewById(R.id.rvResultFindMediacine);
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        rvResultFindMediacine.setLayoutManager(manager);
+        rvResultFindMediacine.setNestedScrollingEnabled(false);
+        rvResultFindMediacine.setAdapter(medicineAdapter);
+        etFindMedicine = (EditText) view.findViewById(R.id.etSearch);
 
     }
 
@@ -88,7 +96,7 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
         medicineAdapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClickListener(Object item, int position) {
-                Toast.makeText(mContext, "" + position, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mContext, MedicineDetailActivity.class).putExtra(Constant.INTENT_ID_MEDICINE, ((Medicine) item).getId()));
             }
         });
         etFindMedicine.setOnTouchListener(new View.OnTouchListener() {
@@ -104,6 +112,26 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
                     }
                 }
                 return false;
+            }
+        });
+        etFindMedicine.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                medicineAdapter.clear();
+                medicineAdapter.setLoadMore(true);
+                presenter.checkSearchMedicine(charSequence.toString());
+                xLog.d(TAG, "initControl: " + charSequence.toString());
+                if (charSequence.length() < 1) medicineAdapter.setLoadMore(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
@@ -126,6 +154,10 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
             showToast("Không tìm được kết quả");
         }
         medicineAdapter.addAll(data);
+    }
+
+    @Override
+    public void onError() {
         medicineAdapter.setLoadMore(false);
     }
 }

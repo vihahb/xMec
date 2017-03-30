@@ -7,11 +7,13 @@ import android.widget.Button;
  */
 
 public interface ItemClickListener {
-    public void onItemClickListener(Object item, int position);
-    interface ItemIconClickListener{
-        void onItemIconClickListener(Object item,int positon);
+    void onItemClickListener(Object item, int position);
+
+    interface ItemIconClickListener {
+        void onItemIconClickListener(Object item, int positon);
     }
-    interface ButtonAdapterClickListener{
+
+    interface ButtonAdapterClickListener {
         void onButtonAdapterClickListener(Button button);
     }
 }
