@@ -104,7 +104,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         adapter.setItemClickListener(this);
 
         imgHanderSliding = (ImageView) slidingDrawer.findViewById(R.id.handleImageView);
-//        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
