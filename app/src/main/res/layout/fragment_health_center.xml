@@ -31,13 +31,36 @@
         android:background="@drawable/radius"
         android:padding="3dp">
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/action_button_size"
-            tools:context=".xmec.views.activity.HomeActivity" />
+            android:layout_marginBottom="@dimen/action_button_size">
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".xmec.views.activity.HomeActivity" />
+
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/location_permission"
+                android:background="@color/textHint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btn_init_permission"
+                    style="@style/ButtonRadius"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dimen_8"
+                    android:paddingRight="@dimen/dimen_8"
+                    android:layout_gravity="center"
+                    android:text="@string/location_permission" />
+            </android.support.design.widget.CoordinatorLayout>
+        </FrameLayout>
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn__current_location"

@@ -18,5 +18,7 @@ public interface IMapView extends BaseView {
     void onGetCurrentLocationFinish(LatLng latLng);
     void onGetListHealtyCareSuccess(List<RESP_Map_Healthy_Care> data);
     void onLocationChange(LatLng latLng);
+    void onPermissionDenied();
+    void onPermissionGranted();
     Fragment getFragmentView();
 }

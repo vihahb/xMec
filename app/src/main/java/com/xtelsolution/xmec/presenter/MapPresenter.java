@@ -44,7 +44,6 @@ import java.util.List;
  */
 
 public class MapPresenter extends BasePresenter implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
-    private static final String TAG = "MapPresenter";
     private IMapView view;
     private Activity mActivity;
     private LocationManager mLocationManager;
@@ -56,28 +55,6 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     private HashMap<Integer, Boolean> listPos;
     private final int GETLOCATION = 1;
     private boolean isMapInit = false;
-
-//    private final LocationListener mLocationListener = new LocationListener() {
-//        @Override
-//        public void onLocationChanged(Location location) {
-//
-//        }
-//
-//        @Override
-//        public void onStatusChanged(String s, int i, Bundle bundle) {
-//            Log.d("MapPresenter", "onStatusChanged: ");
-//        }
-//
-//        @Override
-//        public void onProviderEnabled(String s) {
-//            Log.d("MapPresenter", "onProviderEnabled: ");
-//        }
-//
-//        @Override
-//        public void onProviderDisabled(String s) {
-//            Log.d("MapPresenter", "onProviderDisabled: ");
-//        }
-//    };
 
     public MapPresenter(IMapView view) {
         this.view = view;
@@ -101,10 +78,11 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
 
     }
 
-    public void initPermission() {
+    public void checkPermission() {
         mLocationManager = (LocationManager) view.getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            view.getFragmentView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
+//            view.getFragmentView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
+            view.onPermissionDenied();
             return;
         } else {
             if (googleApiClient == null) {
@@ -122,8 +100,8 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         double latitude = (double) param[1];
         double longitude = (double) param[2];
         String location = "latitude=" + latitude + "&longitude=" + longitude;
-        String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius + "&type=1";
-        xLog.e(TAG, "getHospitals: " + url);
+        String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius+"&type=1";
+        xLog.e("getHospitals",url);
         HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
             public void onSuccess(RESP_List_Map_Healthy_Care obj) {
@@ -146,10 +124,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         });
     }
 
-    public void checkGetHospital(double lat, double lng) {
+    public void checkGetHospital(double lat,double lng) {
         if (!checkConnnecttion(view))
             return;
-        getHospitals(GETLOCATION, lat, lng);
+        getHospitals(GETLOCATION,lat,lng);
     }
 
     private boolean isLocationEnable() {
@@ -163,8 +141,15 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         if (requestCode == 99)
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.e("MY", "onRequestPermissionsResult: ");
-                initPermission();
+                checkPermission();
+            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED){
+                Log.e("MY", "onRequestPermissionsResult: denine");
+                view.onPermissionDenied();
             }
+    }
+
+    public void initPermission(){
+        view.getFragmentView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
     }
 
     private void createLocationRequest() {
@@ -192,10 +177,11 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
             Location location = LocationServices.FusedLocationApi.getLastLocation(
                     googleApiClient);
             if (location != null) {
+                view.onPermissionGranted();
                 lat = location.getLatitude();
                 log = location.getLongitude();
-                view.onGetCurrentLocationFinish(new LatLng(lat, log));
-                checkGetHospital(lat, log);
+//                view.onGetCurrentLocationFinish(new LatLng(lat, log));
+//                checkGetHospital(lat,log);
                 view.onMapCreateSuccess();
             }
         }
@@ -204,10 +190,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
 
     private void startLocationUpdates() {
         if (googleApiClient == null) {
-            xLog.e(TAG,"startLocationUpdates: client is null");
+            xLog.e("startLocationUpdates","client is null");
         }
         if (locationRequest == null) {
-            xLog.e(TAG,"startLocationUpdates: location request is null");
+            xLog.e("startLocationUpdates","Request is null");
         }
         if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED && mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {

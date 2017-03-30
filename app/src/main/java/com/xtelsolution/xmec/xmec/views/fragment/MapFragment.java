@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
@@ -64,6 +66,8 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     private boolean isCheckPermission;
     private OnLoadMapSuccessListener onLoadMapSuccessListener;
     private MapPresenter presenter;
+    private CoordinatorLayout locationPermission;
+    private Button btnInitPermission;
     private boolean isMapCreated = false;
     int count = 0;
 
@@ -88,16 +92,24 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
                 presenter.getCurrentLocation();
             }
         });
+        btnInitPermission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.initPermission();
+            }
+        });
     }
 
     private void initview() {
         btnCurrentLocation = (FloatingActionButton) view.findViewById(R.id.btn__current_location);
+        locationPermission = (CoordinatorLayout) view.findViewById(R.id.location_permission);
+        btnInitPermission = (Button) view.findViewById(R.id.btn_init_permission);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.initPermission();
+        presenter.checkPermission();
     }
 
 
@@ -109,7 +121,6 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setOnMarkerClickListener(this);
         if (isCheckPermission) {
             presenter.getCurrentLocation();
             mMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(0f, 0f)));
@@ -117,6 +128,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
             isMapCreated = true;
             mMap.setOnCameraIdleListener(this);
             mMap.setOnCameraMoveCanceledListener(this);
+            mMap.setOnMarkerClickListener(this);
         }
     }
 
@@ -146,6 +158,16 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     }
 
     @Override
+    public void onPermissionDenied() {
+        locationPermission.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPermissionGranted() {
+        locationPermission.setVisibility(View.GONE);
+    }
+
+    @Override
     public Fragment getFragmentView() {
         return MapFragment.this;
     }
@@ -158,8 +180,6 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public void onGetListHealtyCareSuccess(List<RESP_Map_Healthy_Care> data) {
-
-
         if (data.size() == 0)
             return;
         count++;
