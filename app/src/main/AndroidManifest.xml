@@ -9,12 +9,14 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
+
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--android:name="android.support.multidex.MultiDexApplication"-->
 
+    <!-- android:name="android.support.multidex.MultiDexApplication" -->
     <application
         android:name=".xmec.views.MyApplication"
         android:allowBackup="true"
@@ -40,7 +42,7 @@
         <activity
             android:name=".xmec.views.activity.RegisterActivity"
             android:parentActivityName=".xmec.views.activity.LoginActivity"
-            android:theme="@style/NoACtionBar"/>
+            android:theme="@style/NoACtionBar" />
         <activity
             android:name=".xmec.views.activity.ConfirmOPTActivity"
             android:parentActivityName=".xmec.views.activity.RegisterActivity"
@@ -93,11 +95,14 @@
         <meta-data
             android:name="xtel_service_code"
             android:value="@string/service_code_key" />
-        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+        <meta-data
+            android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/FACEBOOK_APP_ID" />
-        <meta-data android:name="com.facebook.accountkit.ClientToken"
+        <meta-data
+            android:name="com.facebook.accountkit.ClientToken"
             android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
 
         <activity
@@ -107,9 +112,12 @@
         <activity
             android:name=".xmec.views.activity.MedicalDetailActivity"
             android:theme="@style/HomeActivityTheme" />
-            tools:replace="android:theme" />
-        <activity android:name=".xmec.views.activity.NewsDetailActivity"></activity>
-        <activity android:name=".xmec.views.activity.IllnessDetailActivity"/>
+        tools:replace="android:theme" />
+        <activity android:name=".xmec.views.activity.NewsDetailActivity" />
+        <activity android:name=".xmec.views.activity.IllnessDetailActivity" />
+        <activity
+            android:name=".xmec.views.activity.MedicineDetailActivity"
+            android:theme="@style/HomeActivityTheme" />
     </application>
 
 </manifest>

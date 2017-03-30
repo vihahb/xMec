@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.SlidingDrawer;
 
@@ -60,12 +62,14 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     private BroadcastReceiver receiver;
     private FragmentManager fragmentManager;
     private CallbackManager callbackManager;
+    private Activity thisActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mapHealthyCareList = new ArrayList<>();
+        thisActivity = this;
         init();
         initReceiver();
         tabLayout.initialize(viewPager, fragmentManager, fragmentList, savedInstanceState);
@@ -108,6 +112,11 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
                     slidingDrawer.setVisibility(View.VISIBLE);
                 } else {
                     slidingDrawer.setVisibility(View.GONE);
+                }
+                View view = thisActivity.getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
 
                 tabLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();

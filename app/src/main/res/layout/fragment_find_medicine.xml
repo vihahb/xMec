@@ -20,7 +20,7 @@
             android:background="@drawable/bg_edittext_search"
             android:drawableEnd="@drawable/ic_action_search"
             android:drawableRight="@drawable/ic_action_search"
-            android:hint="@string/search_placeholder_text"
+            android:hint="@string/search_medicine_text"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:lines="1"
