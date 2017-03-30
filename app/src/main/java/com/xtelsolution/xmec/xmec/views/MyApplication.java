@@ -39,7 +39,7 @@ public class MyApplication extends MultiDexApplication {
         context = this;
         PACKAGE_NAME = context.getPackageName();
 //        getKeyHash(PACKAGE_NAME);
-        Log.v("Pkg name", PACKAGE_NAME);
+        Log.v(TAG, "Pkg name " + PACKAGE_NAME);
         new NewsHtmlLoader(new LoadNewsDetailListener() {
             @Override
             public void onPrepare() {

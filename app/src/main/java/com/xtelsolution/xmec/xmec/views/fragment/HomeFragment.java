@@ -153,9 +153,10 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
     }
 
     @Override
-    public void onGetMediacalListSusscess(RESP_List_Medical list_medical) {
+    public void onGetMediacalListSusscess(boolean useCache, RESP_List_Medical list_medical) {
         Log.e(TAG, "onGetMediacalListSusscess: " + list_medical.getList().size());
-        adapter.addCleanAll(list_medical.getList());
+        if (!useCache)
+            adapter.addAll(list_medical.getList());
     }
 
     @Override

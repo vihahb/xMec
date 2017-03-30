@@ -162,7 +162,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                                     Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                                     avatarView.setImageBitmap(avatar);
                                     bottomSheetChoosePicture.dismiss();
-                                    presenter.postImage(avatar,false,getBaseContext());
+                                    presenter.postImage(avatar, false, getBaseContext());
 
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -177,11 +177,11 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                         .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                             @Override
                             public void onImageReceived(Uri imageUri) {
-                                showToast("Got image - " + imageUri);
+//                                showToast("Got image - " + imageUri);
                                 try {
                                     Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                                     avatarView.setImageBitmap(avatar);
-                                    presenter.postImage(avatar,false,getBaseContext());
+                                    presenter.postImage(avatar, false, getBaseContext());
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -252,22 +252,19 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     }
 
 
-
-
     @Override
     public void onLoadProfileSuccess(String name, long birthday, double height, double weight, String url, int sex) {
         etName.setText(name);
         datePicker.setTimeinMilisecond(birthday);
         etHeight.setText(String.valueOf(height));
         etWeight.setText(String.valueOf(weight));
-        Toast.makeText(mContext, "  "+sex, Toast.LENGTH_SHORT).show();
         setImage(avatarView, url);
-        urlAvatar =url;
+        urlAvatar = url;
 //        gender=sex;
         urlAvatar = url;
-        if (sex==1)
+        if (sex == 1)
             spSex.setSelectedIndex(2);
-        else if (sex==2)
+        else if (sex == 2)
             spSex.setSelectedIndex(1);
         else
             spSex.setSelectedIndex(0);
@@ -300,11 +297,11 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     }
 
     private void uploadAvatar() {
-        bottomSheetChoosePicture.show(getSupportFragmentManager(),"AVATAR");
+        bottomSheetChoosePicture.show(getSupportFragmentManager(), "AVATAR");
     }
 
     @Override
     public void onUploadImageSussces(String url) {
-        urlAvatar =url;
+        urlAvatar = url;
     }
 }

@@ -109,7 +109,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return (list == null) ? 0 : list.size();
+        return (list == null) ? 1 : list.size() + 1;
     }
 
     public void addAll(ArrayList<RESP_Medical> data) {

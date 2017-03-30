@@ -58,13 +58,13 @@ public class HomePresenter extends BasePresenter {
         MedicalDirectoryModel.getinstance().getMedicalReportBooks(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Medical>(RESP_List_Medical.class) {
             @Override
             public void onSuccess(RESP_List_Medical obj) {
-                xLog.e(TAG,"getMedicalReportBooks: PHIMH" + obj.toString());
-                view.onGetMediacalListSusscess(obj);
+                xLog.e(TAG, "getMedicalReportBooks: PHIMH" + obj.toString());
+                view.onGetMediacalListSusscess(false, obj);
             }
 
             @Override
             public void onError(Error error) {
-                xLog.e(TAG,"getMedicalReportBooks: onError" + error.toString());
+                xLog.e(TAG, "getMedicalReportBooks: onError" + error.toString());
                 handlerError(view, error, GETMEDICAL);
             }
         });
@@ -84,7 +84,7 @@ public class HomePresenter extends BasePresenter {
         if (mlistMedica.size() == 0) {
             getMedicalReportBooks(GETMEDICAL);
         } else
-            view.onGetMediacalListSusscess(new RESP_List_Medical(mlistMedica));
+            view.onGetMediacalListSusscess(true, new RESP_List_Medical(mlistMedica));
     }
 
     @Override

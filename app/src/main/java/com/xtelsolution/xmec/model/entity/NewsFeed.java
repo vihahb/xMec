@@ -90,7 +90,7 @@ public class NewsFeed {
                 }
             }
             NewsFeed feed = new NewsFeed(title, link, description, pubDate);
-            xLog.d(TAG, "Tìm đc: " + title + "/" + link + "/" + description + "/" + pubDate);
+            xLog.d(TAG, title + "/" + link + "/" + description + "/" + pubDate);
             return feed;
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
