@@ -65,7 +65,8 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
 
     public void getCurrentLocation() {
         if (!isLocationEnable()) {
-            view.onProviderDisabled();
+            view.onGPSDisabled();
+            xLog.e("getCurrentLocation","getCurrentLocation");
             return;
         }
         view.onGetCurrentLocationFinish(new LatLng(lat, log));
@@ -73,7 +74,6 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
 
     public void initMap() {
         isMapInit = true;
-        view.onLocationChange(new LatLng(lat, log));
 
 
     }
@@ -85,6 +85,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
             view.onPermissionDenied();
             return;
         } else {
+            view.onPermissionGranted();
             if (googleApiClient == null) {
                 googleApiClient = new GoogleApiClient.Builder(mActivity)
                         .addConnectionCallbacks(this)
@@ -92,6 +93,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
                         .addApi(LocationServices.API)
                         .build();
             }
+            view.onMapCreateSuccess();
             googleApiClient.connect();
         }
     }
@@ -137,17 +139,6 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         return false;
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 99)
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.e("MY", "onRequestPermissionsResult: ");
-                checkPermission();
-            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED){
-                Log.e("MY", "onRequestPermissionsResult: denine");
-                view.onPermissionDenied();
-            }
-    }
-
     public void initPermission(){
         view.getFragmentView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
     }
@@ -170,6 +161,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        registerLocation();
+    }
+
+    public void registerLocation(){
         if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED && mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
             createLocationRequest();
@@ -177,15 +172,13 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
             Location location = LocationServices.FusedLocationApi.getLastLocation(
                     googleApiClient);
             if (location != null) {
-                view.onPermissionGranted();
                 lat = location.getLatitude();
                 log = location.getLongitude();
-//                view.onGetCurrentLocationFinish(new LatLng(lat, log));
+                getCurrentLocation();
+                view.onLocationChange(new LatLng(lat,log));
 //                checkGetHospital(lat,log);
-                view.onMapCreateSuccess();
             }
         }
-
     }
 
     private void startLocationUpdates() {
@@ -220,4 +213,16 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         if (isMapInit)
             view.onLocationChange(new LatLng(lat, log));
     }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 99)
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.e("MY", "onRequestPermissionsResult: ");
+                checkPermission();
+            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED){
+                Log.e("MY", "onRequestPermissionsResult: denine");
+                view.onPermissionDenied();
+            }
+    }
+
 }

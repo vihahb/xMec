@@ -69,16 +69,18 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     }
 
     private void initView(View view) {
-        mContext = getContext();
-        list = new ArrayList<>();
-        medicineAdapter = new MedicineAdapter(mContext, list);
-        rvResultFindMediacine = (RecyclerView) view.findViewById(R.id.rvResultFindMediacine);
-        rvResultFindMediacine.setAdapter(medicineAdapter);
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        rvResultFindMediacine.setLayoutManager(manager);
-        rvResultFindMediacine.setNestedScrollingEnabled(false);
+        if (list == null) {
+            mContext = getContext();
+            list = new ArrayList<>();
+            medicineAdapter = new MedicineAdapter(mContext, list);
+            rvResultFindMediacine = (RecyclerView) view.findViewById(R.id.rvResultFindMediacine);
+            rvResultFindMediacine.setAdapter(medicineAdapter);
+            LinearLayoutManager manager = new LinearLayoutManager(mContext);
+            rvResultFindMediacine.setLayoutManager(manager);
+            rvResultFindMediacine.setNestedScrollingEnabled(false);
 //        NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.nesstedScrollView);
-        etFindMedicine = (EditText) view.findViewById(R.id.etSearch);
+            etFindMedicine = (EditText) view.findViewById(R.id.etSearch);
+        }
 
     }
 
@@ -93,8 +95,8 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 final int DRAWABLE_RIGHT = 2;
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(event.getRawX() >= (etFindMedicine.getRight() - etFindMedicine.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (etFindMedicine.getRight() - etFindMedicine.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         medicineAdapter.clear();
                         medicineAdapter.setLoadMore(true);
                         presenter.checkSearchMedicine(etFindMedicine.getText().toString());
@@ -119,7 +121,7 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
 
     @Override
     public void onFindMedicienFinish(List<Medicine> data) {
-        if (data.size()==0){
+        if (data.size() == 0) {
             medicineAdapter.setLoadMore(false);
             showToast("Không tìm được kết quả");
         }

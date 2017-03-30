@@ -2,6 +2,7 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,12 +14,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -109,7 +112,9 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.checkPermission();
+        if (mMap==null) {
+            presenter.checkPermission();
+        }
     }
 
 
@@ -120,16 +125,13 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        if (isCheckPermission) {
-            presenter.getCurrentLocation();
-            mMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(0f, 0f)));
-            presenter.initMap();
-            isMapCreated = true;
-            mMap.setOnCameraIdleListener(this);
-            mMap.setOnCameraMoveCanceledListener(this);
-            mMap.setOnMarkerClickListener(this);
-        }
+                mMap = googleMap;
+                mMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(0f, 0f)));
+                presenter.initMap();
+                isMapCreated = true;
+                mMap.setOnCameraIdleListener(this);
+                mMap.setOnCameraMoveCanceledListener(this);
+                mMap.setOnMarkerClickListener(this);
     }
 
     @Override
@@ -146,15 +148,14 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public void onGetCurrentLocationFinish(LatLng latLng) {
-        if (mMap != null) {
-            Log.e("MY", "onGetCurrentLocationFinish: " + latLng.longitude + "   " + latLng.latitude);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f));
-        }
+        Log.e("MY", "onGetCurrentLocationFinish: " + latLng.longitude + "   " + latLng.latitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f));
     }
 
     @Override
     public void onLocationChange(LatLng latLng) {
         mMarker.setPosition(latLng);
+        xLog.e("onLocationChange", latLng.toString());
     }
 
     @Override
@@ -165,6 +166,26 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     @Override
     public void onPermissionGranted() {
         locationPermission.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onGPSDisabled() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Sử dụng chức năng này cần Bật GPS");
+        alertDialog.setPositiveButton("Cài đặt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 97);
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     @Override
@@ -235,5 +256,14 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     public void onCameraIdle() {
         xLog.e(TAG, "onCameraIdle:" + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
         presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 97) {
+            xLog.e("onActivityResult ", resultCode + " ");
+            presenter.registerLocation();
+        }
     }
 }

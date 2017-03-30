@@ -20,5 +20,6 @@ public interface IMapView extends BaseView {
     void onLocationChange(LatLng latLng);
     void onPermissionDenied();
     void onPermissionGranted();
+    void onGPSDisabled();
     Fragment getFragmentView();
 }

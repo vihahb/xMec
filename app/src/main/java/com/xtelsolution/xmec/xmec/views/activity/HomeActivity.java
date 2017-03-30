@@ -224,6 +224,14 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     public void onItemClickListener(Object item, int position) {
         Intent i = new Intent(HomeActivity.this, DetailHospitalActivity.class);
         i.putExtra(Constant.HEALTHY_CENTER_ID, ((RESP_Map_Healthy_Care) item).getId());
