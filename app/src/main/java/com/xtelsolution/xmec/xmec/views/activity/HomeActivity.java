@@ -46,7 +46,7 @@ import java.util.List;
 
 import eu.long1.spacetablayout.SpaceTabLayout;
 
-public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListener,ItemClickListener {
+public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListener, ItemClickListener {
 
     private SpaceTabLayout tabLayout;
     private ViewPager viewPager;
@@ -96,7 +96,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         slidingDrawer = (SlidingDrawer) findViewById(R.id.drawer);
 
         rvHosiptalCenter = (RecyclerView) slidingDrawer.findViewById(R.id.rv_hospital_center);
-        adapter = new HospitalCenterAdapter(getApplicationContext(),mapHealthyCareList);
+        adapter = new HospitalCenterAdapter(getApplicationContext(), mapHealthyCareList);
         adapter.setItemClickListener(this);
 
         imgHanderSliding = (ImageView) slidingDrawer.findViewById(R.id.handleImageView);
@@ -132,11 +132,11 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
                 if (intent.getAction().equals(Constant.ACTION_HIDE_BOTTOM_BAR)) {
                     tabLayout.animate().translationY(tabLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
 //                    tabLayout.setVisibility(View.GONE);
-                    xLog.i(TAG+ ": Action hide");
+                    xLog.i(TAG, "initReceiver:" + ": Action hide");
                 } else if (intent.getAction().equals(Constant.ACTION_SHOW_BOTTOM_BAR)) {
                     tabLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
 //                    tabLayout.setVisibility(View.VISIBLE);
-                    xLog.i(TAG+ ": Action show");
+                    xLog.i(TAG, "initReceiver" + ": Action show");
                 }
             }
         };
@@ -156,10 +156,10 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        if (callbackManager.getCurrentSession()==null){
+        if (callbackManager.getCurrentSession() == null) {
             menu.getItem(0).setIcon(R.drawable.ic_action_login);
             menu.getItem(0).setTitle(R.string.login);
-        }else {
+        } else {
             menu.getItem(0).setIcon(R.drawable.ic_action_logout);
             menu.getItem(0).setTitle(R.string.logout);
         }
@@ -168,11 +168,11 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.action_login_logout){
-            if (callbackManager.getCurrentSession()==null){
-                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+        if (item.getItemId() == R.id.action_login_logout) {
+            if (callbackManager.getCurrentSession() == null) {
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 finish();
-            }else {
+            } else {
                 LoginManager.logOut();
                 showToast("Đã đăng xuất");
                 item.setIcon(R.drawable.ic_action_login);
@@ -225,11 +225,12 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     @Override
     public void onItemClickListener(Object item, int position) {
-        Intent i = new Intent(HomeActivity.this,DetailHospitalActivity.class);
-        i.putExtra(Constant.HEALTHY_CENTER_ID, ((RESP_Map_Healthy_Care)item).getId());
+        Intent i = new Intent(HomeActivity.this, DetailHospitalActivity.class);
+        i.putExtra(Constant.HEALTHY_CENTER_ID, ((RESP_Map_Healthy_Care) item).getId());
         startActivity(i);
     }
-    public OnLoadMapSuccessListener get(){
+
+    public OnLoadMapSuccessListener get() {
         return this;
     }
 }

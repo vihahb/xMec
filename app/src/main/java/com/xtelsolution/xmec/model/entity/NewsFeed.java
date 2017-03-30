@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  */
 
 public class NewsFeed {
+    private static final String TAG = "NewsFeed";
     private String title;
     private String link;
     private String description;
@@ -89,7 +90,7 @@ public class NewsFeed {
                 }
             }
             NewsFeed feed = new NewsFeed(title, link, description, pubDate);
-            xLog.d("Tìm đc: "+title+"/"+link+"/"+description+"/"+pubDate);
+            xLog.d(TAG, "Tìm đc: " + title + "/" + link + "/" + description + "/" + pubDate);
             return feed;
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
@@ -119,10 +120,10 @@ public class NewsFeed {
         parser.require(XmlPullParser.END_TAG, null, "description");
         Pattern p = Pattern.compile("http://media(.*?).jpg");
         Matcher m = p.matcher(description);
-        if(m.find()) {
+        if (m.find()) {
             return m.group(0);
-        }else
-        return description;
+        } else
+            return description;
     }
 
     private static String readPubDate(XmlPullParser parser) throws IOException, XmlPullParserException {

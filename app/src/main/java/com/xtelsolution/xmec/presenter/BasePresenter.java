@@ -21,7 +21,7 @@ import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
 public abstract class BasePresenter {
     private int count = 0;
-
+    private static final String TAG = BasePresenter.class.getSimpleName();
     public boolean checkConnnecttion(BaseView view) {
         if (NetWorkInfo.isOnline(view.getActivity()))
             return true;
@@ -34,7 +34,7 @@ public abstract class BasePresenter {
     }
 
     protected void handlerError(final BaseView view, Error error, final Object... param) {
-        xLog.e("handlerError" + error.toString());
+        xLog.e(TAG,"handlerError" + error.toString());
         switch (error.getCode()) {
             case 2:
                 count++;
@@ -44,23 +44,23 @@ public abstract class BasePresenter {
 //                        Constant.iGetNewSession = false;
 //                    } else {
                         String service_code = LoginModel.getInstance().getServiceCode(view.getActivity());
-                        xLog.e(Constant.LOGPHI + "service_code" + service_code);
+                        xLog.e(TAG,Constant.LOGPHI + "service_code" + service_code);
                         LoginModel.getInstance().getNewSession(service_code, new ResponseHandle<RESP_Login>(RESP_Login.class) {
                             @Override
                             public void onSuccess(RESP_Login obj) {
                                 view.dismissProgressDialog();
-                                xLog.e("So lan het han "+count);
+                                xLog.e(TAG,"So lan het han "+count);
                                 SharedUtils.getInstance().putStringValue(Cts.USER_SESSION, obj.getSession());
                                 onGetNewSessionSuccess(param);
                                 Constant.iGetNewSession = true;
-                                xLog.e("SESSION " + obj.toString());
+                                xLog.e(TAG,"SESSION " + obj.toString());
 
                             }
 
                             @Override
                             public void onError(Error error) {
                                 view.showToast("Session hết hạn");
-                                xLog.e("SESSION " + error.toString());
+                                xLog.e(TAG,"SESSION " + error.toString());
                                 Constant.iGetNewSession = false;
                                 Intent i = new Intent(view.getActivity(), LoginActivity.class);
                                 view.getActivity().startActivity(i);
@@ -72,7 +72,7 @@ public abstract class BasePresenter {
                 break;
             case -1:
                 view.dismissProgressDialog();
-                xLog.e("Loi he thong" + error.getMessage());
+                xLog.e(TAG,"Loi he thong" + error.getMessage());
                 view.showToast("Lỗi hệ thống");
         }
     }
@@ -88,7 +88,7 @@ public abstract class BasePresenter {
 //
 //            @Override
 //            public void onError(Error error) {
-//                xLog.e(Constant.LOGPHI + " getNewSession " + error.toString());
+//                xLog.e(TAG,Constant.LOGPHI + " getNewSession " + error.toString());
 //            }
 //        });
 //    }

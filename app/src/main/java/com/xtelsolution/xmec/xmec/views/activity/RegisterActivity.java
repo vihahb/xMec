@@ -23,6 +23,7 @@ import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
 
 public class RegisterActivity extends BasicActivity {
+    private String TAG = "RegisterActivity";
     private CallbackManager callbackManager;
     private EditText etPhone, etPassword, etRePassword;
 
@@ -105,12 +106,12 @@ public class RegisterActivity extends BasicActivity {
         if (requestCode == 99) {
             AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
             if (loginResult.getError() != null) {
-                showLog(loginResult.getError().toString());
+                showLog(TAG, "onActivityResult: " + loginResult.getError().toString());
             } else if (loginResult.wasCancelled()) {
-                showLog("AccountKit was Cancelled");
+                showLog(TAG, "onActivityResult: " + "AccountKit was Cancelled");
             } else {
                 if (loginResult.getAccessToken() != null) {
-                    showLog("Access Token: " + loginResult.getAccessToken());
+                    showLog(TAG, "onActivityResult: " + "Access Token: " + loginResult.getAccessToken());
                 } else {
                     sendAuthenzationCode(loginResult.getAuthorizationCode());
                 }
@@ -122,7 +123,7 @@ public class RegisterActivity extends BasicActivity {
         callbackManager.reactiveNipAccount(etPhone.getText().toString(), true, new CallbackListenerReactive() {
             @Override
             public void onSuccess(RESP_Reactive reactive) {
-                Log.d("MY_TAG", JsonHelper.toJson(reactive));
+                Log.d(TAG, "sendAuthenzationCode: " + JsonHelper.toJson(reactive));
                 callbackManager.activeNipAccount(code, "PHONE-NUMBER", new CallbackListenerActive() {
                     @Override
                     public void onSuccess() {
@@ -133,14 +134,14 @@ public class RegisterActivity extends BasicActivity {
 
                     @Override
                     public void onError(Error error) {
-                        showLog(JsonHelper.toJson(error));
+                        showLog(TAG, "sendAuthenzationCode: " + JsonHelper.toJson(error));
                     }
                 });
             }
 
             @Override
             public void onError(Error error) {
-                showLog(JsonHelper.toJson(error));
+                showLog(TAG, "onActivityResult: " + JsonHelper.toJson(error));
             }
         });
     }

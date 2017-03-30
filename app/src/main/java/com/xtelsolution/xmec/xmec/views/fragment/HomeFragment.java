@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elyeproj.loaderviewlibrary.LoaderTextView;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
@@ -29,8 +27,8 @@ import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.HomePresenter;
 import com.xtelsolution.xmec.xmec.views.activity.MedicalDetailActivity;
 import com.xtelsolution.xmec.xmec.views.activity.ProfileActivity;
-import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicalDirectoryAdapter;
+import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 
 import java.util.ArrayList;
 
@@ -38,7 +36,10 @@ import java.util.ArrayList;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class HomeFragment extends BasicFragment implements IHomeView,ItemClickListener {
+public class HomeFragment extends BasicFragment implements IHomeView, ItemClickListener {
+    private static final String TAG = "HomeFragment";
+
+    private RESP_User userModel;
     private MedicalDirectoryAdapter adapter;
     private RecyclerView rvDisease;
     private ImageView imgAvatar;
@@ -58,7 +59,9 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         super.onCreate(savedInstanceState);
         mContext = getContext();
         presenter = new HomePresenter(this);
-
+        mlistMedica = new ArrayList<>();
+        adapter = new MedicalDirectoryAdapter(mlistMedica, getContext());
+        adapter.setItemClickListener(this);
     }
 
     @Nullable
@@ -67,11 +70,9 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initUI(view);
         initControl();
-        mlistMedica = new ArrayList<>();
-        adapter = new MedicalDirectoryAdapter(mlistMedica,getContext());
-        adapter.setItemClickListener(this);
-        presenter.checkGetUser();
-        presenter.checkGetMedical();
+        presenter.checkGetUser(userModel);
+        presenter.checkGetMedical(adapter.getList());
+
         return view;
     }
 
@@ -79,12 +80,13 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvDisease = (RecyclerView) view.findViewById(R.id.rvDisease);
-        rvDisease.setAdapter(adapter);
+
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rvDisease.setLayoutManager(manager);
         rvDisease.setNestedScrollingEnabled(false);
 //        MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spcategorize);
 //        spinner.setItems("Bệnh", "Thuốc");
+        rvDisease.setAdapter(adapter);
         NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
         scrollView.setOnScrollChangeListener(new EndlessParentScrollListener(manager) {
             @Override
@@ -121,7 +123,8 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         progcess = (CoordinatorLayout) view.findViewById(R.id.progress_bar);
 
     }
-    private void initControl(){
+
+    private void initControl() {
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,8 +144,8 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
         tvBirthday.setText(user.getBirthDayasString());
         tvHeight.setText(String.valueOf(user.getHeight()));
         tvWeight.setText(String.valueOf(user.getWeight()));
-        setImage(imgAvatar,user.getAvatar());
-        if (user.getGender()==2)
+        setImage(imgAvatar, user.getAvatar());
+        if (user.getGender() == 2)
             imgGender.setImageResource(R.drawable.ic_action_name);
         SharedPreferencesUtils.getInstance().saveUser(user);
         progcess.setVisibility(View.GONE);
@@ -151,13 +154,14 @@ public class HomeFragment extends BasicFragment implements IHomeView,ItemClickLi
 
     @Override
     public void onGetMediacalListSusscess(RESP_List_Medical list_medical) {
-        adapter.addAll(list_medical.getList());
+        Log.e(TAG, "onGetMediacalListSusscess: " + list_medical.getList().size());
+        adapter.addCleanAll(list_medical.getList());
     }
 
     @Override
     public void onItemClickListener(Object item, int position) {
         Intent intent = new Intent(getActivity(), MedicalDetailActivity.class);
-        intent.putExtra(Constant.MEDICAL_ID,((RESP_Medical)item).getId());
+        intent.putExtra(Constant.MEDICAL_ID, ((RESP_Medical) item).getId());
         startActivity(intent);
     }
 

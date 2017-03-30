@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private static final String TAG = "MedicineAdapterWithEditButton";
     public static final int BUTTON = 2;
     public static final int NORMAL = 1;
     private Context mContext;
@@ -58,7 +58,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
             ((MedicineViewHolder) holder).btnRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    xLog.e(position+"VITRI");
+                    xLog.e(TAG, "onBindViewHolder: " + position + "VITRI");
                     iconClickListener.onItemIconClickListener(mList.get(position), position);
                 }
             });
@@ -132,7 +132,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
     public void removeItem(int index) {
         mList.remove(index);
         notifyItemRemoved(index);
-        notifyItemRangeChanged(index,getItemCount()-1);
+        notifyItemRangeChanged(index, getItemCount() - 1);
         getItem(100);
     }
 
@@ -146,7 +146,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
 
     public void getItem(int index) {
         for (REQ_Medicine medicine : mList) {
-            xLog.e("ITEM" + medicine.toString());
+            xLog.e(TAG, "getItem: " + "ITEM " + medicine.toString());
 
         }
     }

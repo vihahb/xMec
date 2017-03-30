@@ -27,6 +27,7 @@ import java.util.List;
  */
 
 public class MedicalDetailPresenter extends BasePresenter {
+    private static final String TAG = "MedicalDetailPresenter";
     private IMedicalDetailView view;
     private final int GETLISTILLNESS = 2;
     private final int GETDETAIlMEDICAL = 1;
@@ -37,7 +38,7 @@ public class MedicalDetailPresenter extends BasePresenter {
         this.view = view;
     }
 
-    private void getDetailMedical(final Object...param) {
+    private void getDetailMedical(final Object... param) {
         final int id = (int) param[1];
         Log.e("sdasdadasd", "getDetailMedical: " + id);
         String url = Constant.SERVER_XMEC + Constant.MEDICAL_REPORT_BOOK + "/" + id;
@@ -49,15 +50,15 @@ public class MedicalDetailPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view,error,param);
+                handlerError(view, error, param);
             }
         });
     }
 
-    private void getListIllness(final Object...param) {
+    private void getListIllness(final Object... param) {
         int id = (int) param[1];
         String url = Constant.SERVER_XMEC + Constant.ILLNESS + "/" + id;
-        xLog.e(Constant.LOGPHI + "url" + url);
+        xLog.e(TAG, "getListIllness: " + Constant.LOGPHI + "url" + url);
         DiseaseModel.getInstance().getListIllness(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Disease_With_Link>(RESP_List_Disease_With_Link.class) {
             @Override
             public void onSuccess(RESP_List_Disease_With_Link obj) {
@@ -67,7 +68,7 @@ public class MedicalDetailPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view,error,param);
+                handlerError(view, error, param);
             }
         });
     }
@@ -97,7 +98,7 @@ public class MedicalDetailPresenter extends BasePresenter {
             listRS[i] = resources.get(i).getServer_path();
         }
         REQ_medicalDetail.setResources(listRS);
-        xLog.d("STRING" + "addMedicalDirectorry: " + JsonHelper.toJson(REQ_medicalDetail));
+        xLog.d(TAG, "getListIllness: " + "STRING" + "addMedicalDirectorry: " + JsonHelper.toJson(REQ_medicalDetail));
         MedicalDirectoryModel.getinstance().updateMedicalDirectory(url, JsonHelper.toJson(REQ_medicalDetail), LoginManager.getCurrentSession(), new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
             @Override
             public void onSuccess(RESP_Basic obj) {
@@ -107,7 +108,7 @@ public class MedicalDetailPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view,error,param);
+                handlerError(view, error, param);
             }
         });
     }
@@ -138,16 +139,16 @@ public class MedicalDetailPresenter extends BasePresenter {
 
     }
 
-    public void checkGetListIllness(int id){
+    public void checkGetListIllness(int id) {
         if (!checkConnnecttion(view))
             return;
-        getListIllness(GETLISTILLNESS,id);
+        getListIllness(GETLISTILLNESS, id);
     }
 
-    public void checkGetDetailMedical(int id){
+    public void checkGetDetailMedical(int id) {
         if (!checkConnnecttion(view))
             return;
-        getDetailMedical(GETDETAIlMEDICAL,id);
+        getDetailMedical(GETDETAIlMEDICAL, id);
     }
 
     public void checkUpdateMedical(int id, String name, long beginTime, long endTime, int type, String note, List<Resource> resources) {
@@ -158,7 +159,7 @@ public class MedicalDetailPresenter extends BasePresenter {
 
     @Override
     public void onGetNewSessionSuccess(Object... param) {
-        switch ((int)param[0]){
+        switch ((int) param[0]) {
             case GETDETAIlMEDICAL:
                 getDetailMedical(param);
                 break;
@@ -168,7 +169,7 @@ public class MedicalDetailPresenter extends BasePresenter {
             case REMOVEMEDiCAL:
                 removeMedical(param);
                 break;
-            case  UPDATEMEDICAL:
+            case UPDATEMEDICAL:
                 updateMedicalDirectory(param);
         }
     }

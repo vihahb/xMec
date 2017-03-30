@@ -31,6 +31,7 @@ import java.util.List;
  */
 
 public class AddDiseasePresenter extends BasePresenter {
+    private static final String TAG = "AddDiseasePresenter";
     private IAddIllnessView view;
     private final int ADD_DISEASE = 1;
 //    private final int =1;
@@ -38,8 +39,9 @@ public class AddDiseasePresenter extends BasePresenter {
     public AddDiseasePresenter(IAddIllnessView view) {
         this.view = view;
     }
-//    int idMedical, String name, int idDisease, String note, final List<REQ_Medicine> medicines
-    public void addDeisease(final Object...param) {
+
+    //    int idMedical, String name, int idDisease, String note, final List<REQ_Medicine> medicines
+    public void addDeisease(final Object... param) {
         view.showProgressDialog("Đang thêm bệnh");
         String url = Constant.SERVER_XMEC + Constant.DISEASE;
         int idMedical = (int) param[1];
@@ -47,8 +49,8 @@ public class AddDiseasePresenter extends BasePresenter {
         int idDisease = (int) param[3];
         String note = (String) param[4];
         final List<REQ_Medicine> medicines = (List<REQ_Medicine>) param[5];
-        REQ_Add_Disease disease = new REQ_Add_Disease(idMedical,name,idDisease,note,medicines);
-        xLog.e(Constant.LOGPHI + JsonHelper.toJson(disease));
+        REQ_Add_Disease disease = new REQ_Add_Disease(idMedical, name, idDisease, note, medicines);
+        xLog.e(TAG, "addDeisease: " + Constant.LOGPHI + JsonHelper.toJson(disease));
         DiseaseModel.getInstance().addDisease(url, JsonHelper.toJson(disease), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(final RESP_ID obj) {
@@ -66,21 +68,22 @@ public class AddDiseasePresenter extends BasePresenter {
 //                        }, 50);
 //                    }
 //                } else {
-                    view.onAddDiseaseSuccess(obj.getId());
+                view.onAddDiseaseSuccess(obj.getId());
 //                }
             }
+
             @Override
             public void onError(Error error) {
-                handlerError(view, error,ADD_DISEASE,param);
+                handlerError(view, error, ADD_DISEASE, param);
             }
         });
     }
 
-    public void  checkAddDisease(int idMedical,String name,int idDisease,String note,List<REQ_Medicine> medicines) {
+    public void checkAddDisease(int idMedical, String name, int idDisease, String note, List<REQ_Medicine> medicines) {
         if (!checkConnnecttion(view)) {
             return;
         }
-        addDeisease(ADD_DISEASE,idMedical,name,idDisease,note,medicines);
+        addDeisease(ADD_DISEASE, idMedical, name, idDisease, note, medicines);
     }
 
     public void addDisease(int idMedical, String name, int idDisease, String note, List<REQ_Medicine> medicines) {
@@ -89,7 +92,7 @@ public class AddDiseasePresenter extends BasePresenter {
         view.showProgressDialog("Đang Thêm bệnh");
         String url = Constant.SERVER_XMEC + Constant.DISEASE;
         REQ_Add_Disease disease = new REQ_Add_Disease(idMedical, name, idDisease, note, medicines);
-        xLog.e(Constant.LOGPHI + JsonHelper.toJson(disease));
+        xLog.e(TAG, "addDisease: " + Constant.LOGPHI + JsonHelper.toJson(disease));
         DiseaseModel.getInstance().addDisease(url, JsonHelper.toJson(disease), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
@@ -131,10 +134,10 @@ public class AddDiseasePresenter extends BasePresenter {
 //    }
 
     private void addMedicineReal(int uidDisease, String name, int idmedicine, final boolean islast) {
-        xLog.e(Constant.LOGPHI + "idDisease  " + uidDisease + "----name " + name + "----- id_medical" + idmedicine);
+        xLog.e(TAG, "addMedicineReal: " + Constant.LOGPHI + "idDisease  " + uidDisease + "----name " + name + "----- id_medical" + idmedicine);
         String urlMedicine = Constant.SERVER_XMEC + Constant.MEDICINE;
-        xLog.e(Constant.LOGPHI + "url search medicine " + urlMedicine);
-        REQ_Medicine medicine = new REQ_Medicine( name, idmedicine);
+        xLog.e(TAG, "addMedicineReal: " + Constant.LOGPHI + "url search medicine " + urlMedicine);
+        REQ_Medicine medicine = new REQ_Medicine(name, idmedicine);
         MedicineModel.getInstance().addMedicine(urlMedicine, JsonHelper.toJson(medicine), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
@@ -154,7 +157,7 @@ public class AddDiseasePresenter extends BasePresenter {
 
     @Override
     public void onGetNewSessionSuccess(Object... param) {
-        switch ((int)param[0]){
+        switch ((int) param[0]) {
             case ADD_DISEASE:
                 addDeisease(param);
         }

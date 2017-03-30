@@ -60,6 +60,7 @@ public class Constant {
     public static  Boolean iGetNewSession = false ;
     public static final String ILLNESS_URL = "illness_url";
 
+//    public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";
     public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";
 //    public static final String SERVICE_CODE = "http://192.168.22.112:8010/v0.1/";
     public static final String LOCAL_SECCION="V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR";

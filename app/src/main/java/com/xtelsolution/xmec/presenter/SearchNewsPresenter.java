@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 
 public class SearchNewsPresenter {
+    private final String TAG = "SearchNewsPresenter";
     private ISearchNewsView view;
     private ArrayList<NewsFeed> data;
 
@@ -28,9 +29,9 @@ public class SearchNewsPresenter {
             return null;
         ArrayList<NewsFeed> listResult = new ArrayList<>();
         if (data != null && data.size() > 0) {
-            xLog.e("sssss"+data.size());
+            xLog.e(TAG,"searchNews:"+data.size());
             for (NewsFeed newsFeed : data) {
-                xLog.e("ssss"+newsFeed.getTitle());
+                xLog.e(TAG,"searchNews"+newsFeed.getTitle());
                 if (newsFeed.getTitle() != null && newsFeed.getTitle().contains(querry)) {
                     listResult.add(newsFeed);
                 }

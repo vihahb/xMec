@@ -53,6 +53,7 @@ import de.psdev.formvalidations.Form;
 import de.psdev.formvalidations.validations.NotEmpty;
 
 public class AddMedicalDetailActivity extends BasicActivity implements IAddMedicalView, ItemClickListener, IMedicalDetailView {
+    private static final String TAG = "AddMedicalDetailActivity";
     private Toolbar mToolbar;
     private HealtRecoderAdapter healtRecoderAdapter;
     private RecyclerView rvHealthReconder;
@@ -125,7 +126,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         mForm = Form.create();
 
         bottomSheetChoosePicture = new BottomSheetChoosePicture();
-        if (bottomSheetChoosePicture!=null) {
+        if (bottomSheetChoosePicture != null) {
 //            btnGetImageFormGallery = (ImageView) bottomSheetChoosePicture.getDialog().findViewById(R.id.btn_choose_picure);
 //            btnGetImageFormCamera = (ImageView) bottomSheetChoosePicture.getDialog().findViewById(R.id.btn_take_picture);
         }
@@ -162,7 +163,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         btnAddHelthReconder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bottomSheetChoosePicture.show(getSupportFragmentManager(),"CHONANH");
+                bottomSheetChoosePicture.show(getSupportFragmentManager(), "CHONANH");
             }
         });
         healtRecoderAdapter.setOnItemClickListener(this);
@@ -194,13 +195,13 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
             @Override
             public void onChoosePictureFromGallery() {
-                new PickerBuilder(AddMedicalDetailActivity.this,PickerBuilder.SELECT_FROM_GALLERY)
+                new PickerBuilder(AddMedicalDetailActivity.this, PickerBuilder.SELECT_FROM_GALLERY)
                         .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                             @Override
                             public void onImageReceived(Uri imageUri) {
                                 try {
                                     Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                                    presenter.postImage(avatar,true,getBaseContext());
+                                    presenter.postImage(avatar, true, getBaseContext());
                                     bottomSheetChoosePicture.dismiss();
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -327,10 +328,10 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
     @Override
     public void onUploadImageSussces(String url) {
-        xLog.e("SIZE ADAPTER " + healtRecoderAdapter.getItemCount());
+        xLog.e(TAG, "onUploadImageSussces: SIZE ADAPTER " + healtRecoderAdapter.getItemCount());
         healtRecoderAdapter.add(new Resource(url));
         imageViewAdapter.notifyDataSetChanged();
-        Log.d("URL", "onUploadImageSussces: " + url);
+        xLog.d(TAG, "onUploadImageSussces:  " + url);
     }
 
 

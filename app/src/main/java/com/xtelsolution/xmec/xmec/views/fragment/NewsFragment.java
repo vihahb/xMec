@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +31,11 @@ import java.util.List;
  */
 
 public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.OnRefreshListener, /*OnMoreListener,*/ INewsFeedView {
-
+    private static final String TAG = "NewsFragment";
     private Context mContext;
     private NewsFeedAdapter adapter;
     private SuperRecyclerView recyclerView;
     private List<Article> articleList;
-    private Handler mHandler;
     private LinearLayoutManager manager;
     private NewsFeedPresenter presenter;
     private String rss_url, typeName;
@@ -53,11 +53,11 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
 
         mContext = getContext();
 
-        mHandler = new Handler();
-
         articleList = new ArrayList<>();
 
         adapter = new NewsFeedAdapter(mContext, articleList);
+
+        Log.e(TAG, "onCreate: ");
     }
 
     @Nullable
@@ -65,17 +65,22 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View mainView = inflater.inflate(R.layout.fragment_inside_news_feed, container, false);
-
-        initUI(mainView);
+        Log.e(TAG, "onCreateView: ");
 
         return mainView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initUI(view);
     }
 
     private void initUI(View view) {
 
         recyclerView = (SuperRecyclerView) view.findViewById(R.id.rvNewsFeed);
 
-        recyclerView.setAdapter(adapter);
 
         manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
@@ -85,14 +90,14 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
         recyclerView.setRefreshing(true);
 
         recyclerView.setRefreshListener(this);
-
+        recyclerView.setAdapter(adapter);
 //        recyclerView.setLoadingMore(false);
 
 //        recyclerView.setupMoreListener(this, 10);
 
         setDataToView();
         initControll();
-        presenter.loadNewsFeed(rss_url);
+//        presenter.loadNewsFeed(rss_url);
     }
 
     private void initControll() {
@@ -116,7 +121,10 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
     }
 
     private void setDataToView() {
-        recyclerView.setAdapter(adapter);
+        Log.e(TAG, "setDataToView: " + adapter.getItemCount());
+        if (adapter.getItemCount() == 0) {
+            onRefresh();
+        }
     }
 
 
@@ -125,16 +133,6 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
         presenter.loadNewsFeed(rss_url);
         recyclerView.setRefreshing(true);
     }
-
-//    @Override
-//    public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-//
-//        mHandler.postDelayed(new Runnable() {
-//            public void run() {
-//                adapter.addAll(createTempleatData());
-//            }
-//        }, 1000);
-//    }
 
     @Override
     public void loadNewsFeed(ArrayList<Article> data) {

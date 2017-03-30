@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Base64;
 import android.util.Log;
 
@@ -22,7 +24,8 @@ import java.security.NoSuchAlgorithmException;
  * Created by HUNGNT on 1/17/2017.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
+    private static final String TAG = "MyApplication";
     public static Context context;
     public static String PACKAGE_NAME;
 
@@ -32,6 +35,7 @@ public class MyApplication extends Application {
 //        Fabric.with(this, new Crashlytics());
 //        FacebookSdk.sdkInitialize(getApplicationContext());
 //        AccountKit.initialize(getApplicationContext());
+        MultiDex.install(this);
         context = this;
         PACKAGE_NAME = context.getPackageName();
 //        getKeyHash(PACKAGE_NAME);
@@ -45,7 +49,7 @@ public class MyApplication extends Application {
             @Override
             public void onSucess(Document result) {
                 IllnessTemple temple = IllnessTemple.fromDocument(result);
-                xLog.d(temple.getName()+" : "+temple.getDetail());
+                xLog.d(TAG, "onCreate: onSucess: " + temple.getName() + " : " + temple.getDetail());
             }
 
             @Override

@@ -10,8 +10,18 @@ import java.util.ArrayList;
  */
 
 public class RESP_List_Medical extends RESP_Basic {
+
+
     @Expose
     private ArrayList<RESP_Medical> data;
+
+
+    public RESP_List_Medical() {
+    }
+
+    public RESP_List_Medical(ArrayList<RESP_Medical> data) {
+        this.data = data;
+    }
 
     public ArrayList<RESP_Medical> getList() {
         return data;

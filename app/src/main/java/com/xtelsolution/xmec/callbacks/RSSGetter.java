@@ -19,7 +19,7 @@ import okhttp3.Response;
  */
 
 public class RSSGetter extends AsyncTask<String, Integer, ArrayList<NewsFeed>> {
-
+    private static final String TAG = "RSSGetter";
     private OnNewsFeedLoadedListener callback;
 
     public RSSGetter(OnNewsFeedLoadedListener callback) {
@@ -59,7 +59,8 @@ public class RSSGetter extends AsyncTask<String, Integer, ArrayList<NewsFeed>> {
     protected void onPostExecute(ArrayList<NewsFeed> list) {
         callback.onSucess(list);
     }
-    private ArrayList<NewsFeed> loadUrl(String url){
+
+    private ArrayList<NewsFeed> loadUrl(String url) {
         try {
             OkHttpClient client = new OkHttpClient();
             Request.Builder builder = new Request.Builder();
@@ -70,7 +71,7 @@ public class RSSGetter extends AsyncTask<String, Integer, ArrayList<NewsFeed>> {
             return list;
         } catch (IOException e) {
             e.printStackTrace();
-            xLog.e("RSSGetter-IOException:" + e.getMessage());
+            xLog.e(TAG, "RSSGetter-IOException:" + e.getMessage());
             return null;
         }
     }

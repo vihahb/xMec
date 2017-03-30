@@ -23,6 +23,12 @@ public class NewsFeedFragment extends Fragment {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,10 +42,9 @@ public class NewsFeedFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (mViewPager == null) {
-            mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
-            mViewPager = (ViewPager) getActivity().findViewById(R.id.vpNewsFeed);
+            mViewPager = (ViewPager) view.findViewById(R.id.vpNewsFeed);
             mViewPager.setAdapter(mSectionsPagerAdapter);
-            TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabsNewsFeed);
+            TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabsNewsFeed);
             tabLayout.setupWithViewPager(mViewPager);
         }
     }
@@ -56,26 +61,26 @@ public class NewsFeedFragment extends Fragment {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new NewsFragment("http://songkhoe.vn/widget.rss","Nổi bật");
+                    return new NewsFragment("http://songkhoe.vn/widget.rss", "Nổi bật");
                 case 1:
-                    return new NewsFragment("http://songkhoe.vn/tam-su.rss","Tâm sự");
+                    return new NewsFragment("http://songkhoe.vn/tam-su.rss", "Tâm sự");
                 case 2:
-                    return new NewsFragment("http://songkhoe.vn/gioi-tinh.rss","Giới tính");
+                    return new NewsFragment("http://songkhoe.vn/gioi-tinh.rss", "Giới tính");
                 case 3:
-                    return new NewsFragment("http://songkhoe.vn/dinh-duong.rss","Dinh dưỡng");
+                    return new NewsFragment("http://songkhoe.vn/dinh-duong.rss", "Dinh dưỡng");
                 case 4:
-                    return new NewsFragment("http://songkhoe.vn/thoi-su.rss","Thời sự");
+                    return new NewsFragment("http://songkhoe.vn/thoi-su.rss", "Thời sự");
                 case 5:
-                    return new NewsFragment("http://songkhoe.vn/lam-dep.rss","Làm đẹp");
+                    return new NewsFragment("http://songkhoe.vn/lam-dep.rss", "Làm đẹp");
                 case 6:
-                    return new NewsFragment("http://songkhoe.vn/lam-me.rss","Làm mẹ");
+                    return new NewsFragment("http://songkhoe.vn/lam-me.rss", "Làm mẹ");
                 case 7:
-                    return new NewsFragment("http://songkhoe.vn/vui-khoe.rss","Vui khỏe");
+                    return new NewsFragment("http://songkhoe.vn/vui-khoe.rss", "Vui khỏe");
                 case 8:
-                    return new NewsFragment("http://songkhoe.vn/can-biet.rss","Cần biết");
+                    return new NewsFragment("http://songkhoe.vn/can-biet.rss", "Cần biết");
             }
 
-            return new NewsFragment("","");
+            return new NewsFragment("", "");
         }
 
         @Override

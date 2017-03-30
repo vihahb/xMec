@@ -44,6 +44,7 @@ import java.util.List;
  */
 
 public class MapPresenter extends BasePresenter implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+    private static final String TAG = "MapPresenter";
     private IMapView view;
     private Activity mActivity;
     private LocationManager mLocationManager;
@@ -121,8 +122,8 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         double latitude = (double) param[1];
         double longitude = (double) param[2];
         String location = "latitude=" + latitude + "&longitude=" + longitude;
-        String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius+"&type=1";
-        xLog.e(url);
+        String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius + "&type=1";
+        xLog.e(TAG, "getHospitals: " + url);
         HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
             public void onSuccess(RESP_List_Map_Healthy_Care obj) {
@@ -145,10 +146,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         });
     }
 
-    public void checkGetHospital(double lat,double lng) {
+    public void checkGetHospital(double lat, double lng) {
         if (!checkConnnecttion(view))
             return;
-        getHospitals(GETLOCATION,lat,lng);
+        getHospitals(GETLOCATION, lat, lng);
     }
 
     private boolean isLocationEnable() {
@@ -194,7 +195,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
                 lat = location.getLatitude();
                 log = location.getLongitude();
                 view.onGetCurrentLocationFinish(new LatLng(lat, log));
-                checkGetHospital(lat,log);
+                checkGetHospital(lat, log);
                 view.onMapCreateSuccess();
             }
         }
@@ -203,10 +204,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
 
     private void startLocationUpdates() {
         if (googleApiClient == null) {
-            xLog.e("client is null");
+            xLog.e(TAG,"startLocationUpdates: client is null");
         }
         if (locationRequest == null) {
-            xLog.e("location request is null");
+            xLog.e(TAG,"startLocationUpdates: location request is null");
         }
         if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED && mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {

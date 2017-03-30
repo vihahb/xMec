@@ -34,8 +34,10 @@ import okhttp3.Response;
  */
 
 public class MedicineAutoCompleteAdapter extends BaseAdapter implements Filterable {
-    private static final String url = Constant.SERVER_XMEC+Constant.MEDICINE_SEARCH+"?name=";
+    private static final String TAG = "MedicineAutoCompleteAdapter";
+    private static final String url = Constant.SERVER_XMEC + Constant.MEDICINE_SEARCH + "?name=";
     private List<RESP_Medicine> resultList = new ArrayList<>();
+
     @Override
     public int getCount() {
         return resultList.size();
@@ -60,7 +62,7 @@ public class MedicineAutoCompleteAdapter extends BaseAdapter implements Filterab
         }
         TextView tvName = (TextView) view.findViewById(android.R.id.text1);
         tvName.setText(resultList.get(i).getName());
-        xLog.e(Constant.LOGPHI+"name"+resultList.get(i).getName()+"   "+i);
+        xLog.e(TAG, "getView: " + Constant.LOGPHI + "name" + resultList.get(i).getName() + "   " + i);
         return view;
     }
 
@@ -70,16 +72,16 @@ public class MedicineAutoCompleteAdapter extends BaseAdapter implements Filterab
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
-                xLog.e(constraint.toString());
+                xLog.e(TAG, "getFilter: " + constraint.toString());
                 List<RESP_Medicine> diseases = new ArrayList<>();
-                if (constraint != null&&constraint.length()>1) {
+                if (constraint != null && constraint.length() > 1) {
                     try {
-                        xLog.e(Constant.LOGPHI+url+constraint.toString()+"&size=10");
-                        diseases = new MedicineAutoCompleteAdapter.GetToServer().execute(url+constraint.toString()+"&size=10", LoginManager.getCurrentSession()).get();
+                        xLog.e(TAG, "getFilter: " + Constant.LOGPHI + url + constraint.toString() + "&size=10");
+                        diseases = new MedicineAutoCompleteAdapter.GetToServer().execute(url + constraint.toString() + "&size=10", LoginManager.getCurrentSession()).get();
                     } catch (InterruptedException e) {
-                        xLog.e(e.getMessage());
+                        xLog.e(TAG, "getFilter: " + e.getMessage());
                     } catch (ExecutionException e) {
-                        xLog.e(e.getMessage());
+                        xLog.e(TAG, "getFilter: " + e.getMessage());
                     }
                     filterResults.values = diseases;
                     filterResults.count = diseases.size();
@@ -91,9 +93,9 @@ public class MedicineAutoCompleteAdapter extends BaseAdapter implements Filterab
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 resultList.clear();
                 if (results != null && results.count > 0) {
-                    xLog.e(Constant.LOGPHI+resultList.toString());
+                    xLog.e(TAG, "getFilter: " + Constant.LOGPHI + resultList.toString());
                     resultList.addAll((List<RESP_Medicine>) results.values);
-                    xLog.e(Constant.LOGPHI+resultList.toString());
+                    xLog.e(TAG, "getFilter: " + Constant.LOGPHI + resultList.toString());
                     notifyDataSetChanged();
                 } else {
                     notifyDataSetInvalidated();
@@ -124,14 +126,14 @@ public class MedicineAutoCompleteAdapter extends BaseAdapter implements Filterab
                 RESP_List_Medicine t = null;
                 try {
                     t = JsonHelper.getObjectNoException(jsonObjet, RESP_List_Medicine.class);
-                    xLog.e(Constant.LOGPHI+"   "+t.getData().toString());
+                    xLog.e(TAG, "GetToServer: doInBackground: " + Constant.LOGPHI + "   " + t.getData().toString());
                     return t.getData();
                 } catch (Exception e) {
-                    xLog.e(e.getMessage());
+                    xLog.e(TAG, "GetToServer: doInBackground: " + e.getMessage());
                 }
                 return null;
             } catch (IOException e) {
-                xLog.e(e.getMessage());
+                xLog.e(TAG, "GetToServer: doInBackground: " + e.getMessage());
                 return null;
             }
         }

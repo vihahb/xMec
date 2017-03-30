@@ -49,6 +49,7 @@ import java.util.Collections;
  */
 
 public class LoginActivity extends BasicActivity {
+    private static final String TAG = "LoginActivity";
     private ImageView imgLogo;
     private TextView tvSignUp;
     private EditText etPhone, etPassword;
@@ -125,11 +126,11 @@ public class LoginActivity extends BasicActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        showLog(loginResult.getAccessToken().getToken());
+                        showLog(TAG, "initFacebookSdk: onSuccess: " + loginResult.getAccessToken().getToken());
                         callbackManager.LoginFaceook(loginResult.getAccessToken().getToken(), new CallbacListener() {
                             @Override
                             public void onSuccess(RESP_Login success) {
-                                showLog(JsonHelper.toJson(success));
+                                showLog(TAG, "initFacebookSdk: onSuccess: " + JsonHelper.toJson(success));
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                 finish();
                             }
@@ -143,12 +144,12 @@ public class LoginActivity extends BasicActivity {
 
                     @Override
                     public void onCancel() {
-                        showLog("Login Cancel");
+                        showLog(TAG, "initFacebookSdk: onCancel: " + "Login Cancel");
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        showLog(exception.getMessage());
+                        showLog(TAG, "initFacebookSdk: onError: " + exception.getMessage());
                     }
                 });
     }
@@ -187,24 +188,23 @@ public class LoginActivity extends BasicActivity {
     }
 
     private void onPhoneLogin() {
-        if (etPhone.getText().toString().trim().length()<=9) {
+        if (etPhone.getText().toString().trim().length() <= 9) {
             etPhone.setError("Số điện thoại không hợp lệ");
-        }
-        else if(etPassword.getText().toString().length()==0){
+        } else if (etPassword.getText().toString().length() == 0) {
             etPassword.setError("Mật khẩu trống");
         } else {
             callbackManager.LoginNipAcc(etPhone.getText().toString(), etPassword.getText().toString(), true, new CallbacListener() {
                 @Override
                 public void onSuccess(RESP_Login success) {
-                    Log.e("Session", "onSuccess: "+JsonHelper.toJson(success));
-                    xLog.e(Constant.LOGPHI+success.getSession());
+                    Log.e("Session", "onSuccess: " + JsonHelper.toJson(success));
+                    xLog.e(TAG, "onPhoneLogin: onSuccess: " + Constant.LOGPHI + success.getSession());
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
                 }
 
                 @Override
                 public void onError(Error error) {
-                    showLog(JsonHelper.toJson(error));
+                    showLog(TAG, "onPhoneLogin: onError: " + JsonHelper.toJson(error));
                     int errorCode = error.getCode();
                     switch (errorCode) {
                         case 111:
@@ -234,12 +234,12 @@ public class LoginActivity extends BasicActivity {
         if (requestCode == 99) {
             AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
             if (loginResult.getError() != null) {
-                showLog(loginResult.getError().toString());
+                showLog(TAG, "onActivityResult: " + loginResult.getError().toString());
             } else if (loginResult.wasCancelled()) {
-                showLog("AccountKit was Cancelled");
+                showLog(TAG, "onActivityResult: " + "AccountKit was Cancelled");
             } else {
                 if (loginResult.getAccessToken() != null) {
-                    showLog("Access Token: " + loginResult.getAccessToken());
+                    showLog(TAG, "onActivityResult: " + "Access Token: " + loginResult.getAccessToken());
                 } else {
                     sendAuthenzationCode(loginResult.getAuthorizationCode());
                 }
@@ -275,14 +275,14 @@ public class LoginActivity extends BasicActivity {
 
                     @Override
                     public void onError(Error error) {
-                        showLog(JsonHelper.toJson(error));
+                        showLog(TAG, "sendAuthenzationCode: onError: " + JsonHelper.toJson(error));
                     }
                 });
             }
 
             @Override
             public void onError(Error error) {
-                showLog(JsonHelper.toJson(error));
+                showLog(TAG, "sendAuthenzationCode: onError: " + JsonHelper.toJson(error));
             }
         });
     }

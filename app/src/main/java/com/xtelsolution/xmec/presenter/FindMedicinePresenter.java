@@ -15,6 +15,7 @@ import com.xtelsolution.xmec.xmec.views.inf.ISearchMedicineView;
  */
 
 public class FindMedicinePresenter extends BasePresenter {
+    private static final String TAG = "FindMedicinePresenter";
     private ISearchMedicineView view;
     private final int SEARCHMEDICINE=1;
     public FindMedicinePresenter(ISearchMedicineView view) {
@@ -24,12 +25,12 @@ public class FindMedicinePresenter extends BasePresenter {
     public void searchMedicine(final Object...param) {
         String key = (String) param[1];
         String url = Constant.SERVER_XMEC + Constant.MEDICINE_SEARCH + "?name=" + key + "&size=15";
-        xLog.e(url);
+        xLog.e(TAG,"searchMedicine:" +url);
         MedicineModel.getInstance().findMedicine(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Medicine_Compact>(RESP_List_Medicine_Compact.class) {
             @Override
             public void onSuccess(RESP_List_Medicine_Compact obj) {
                 view.onFindMedicienFinish(obj.getData());
-                xLog.e("SUCCESS"+obj.toString());
+                xLog.e(TAG,"searchMedicine: SUCCESS"+obj.toString());
             }
 
             @Override

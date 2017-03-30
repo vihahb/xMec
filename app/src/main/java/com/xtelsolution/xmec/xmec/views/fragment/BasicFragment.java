@@ -16,7 +16,7 @@ import com.xtelsolution.xmec.xmec.views.inf.BaseView;
  * Created by phimau on 2/15/2017.
  */
 
-public class BasicFragment extends Fragment implements BaseView{
+public class BasicFragment extends Fragment implements BaseView {
 
     private ProgressDialog progressDialog;
 
@@ -46,8 +46,8 @@ public class BasicFragment extends Fragment implements BaseView{
     }
 
     @Override
-    public void showLog(String msg) {
-        xLog.d(msg);
+    public void showLog(String TAG, String msg) {
+        xLog.d(TAG, msg);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class BasicFragment extends Fragment implements BaseView{
 
     @Override
     public void dismissProgressDialog() {
-        if (progressDialog.isShowing()){
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }

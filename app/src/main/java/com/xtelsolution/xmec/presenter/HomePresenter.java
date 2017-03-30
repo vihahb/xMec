@@ -11,11 +11,13 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
 import com.xtelsolution.xmec.model.RESP_List_Medical;
+import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.model.UserModel;
 import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 /**
@@ -23,6 +25,7 @@ import java.util.concurrent.Callable;
  */
 
 public class HomePresenter extends BasePresenter {
+    private static final String TAG = "HomePresenter";
     private IHomeView view;
     private final int GETUSER = 1;
     private final int GETMEDICAL = 2;
@@ -32,9 +35,9 @@ public class HomePresenter extends BasePresenter {
         this.view = view;
     }
 
-    private void getUser(final Object...param){
-        String url = Constant.SERVER_XMEC+Constant.GET_USER;
-        xLog.e("URL  "+url);
+    private void getUser(final Object... param) {
+        String url = Constant.SERVER_XMEC + Constant.GET_USER;
+        xLog.e(TAG, "getUser: URL  " + url);
         UserModel.getintance().getUser(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_User>(RESP_User.class) {
             @Override
             public void onSuccess(RESP_User obj) {
@@ -44,7 +47,7 @@ public class HomePresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view,error,GETUSER);
+                handlerError(view, error, GETUSER);
             }
         });
     }
@@ -55,26 +58,33 @@ public class HomePresenter extends BasePresenter {
         MedicalDirectoryModel.getinstance().getMedicalReportBooks(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Medical>(RESP_List_Medical.class) {
             @Override
             public void onSuccess(RESP_List_Medical obj) {
-                xLog.e("PHIMH"+obj.toString());
+                xLog.e(TAG,"getMedicalReportBooks: PHIMH" + obj.toString());
                 view.onGetMediacalListSusscess(obj);
             }
+
             @Override
             public void onError(Error error) {
-                xLog.e("onError"+error.toString());
+                xLog.e(TAG,"getMedicalReportBooks: onError" + error.toString());
                 handlerError(view, error, GETMEDICAL);
             }
         });
     }
 
-    public void checkGetUser() {
+    public void checkGetUser(RESP_User userModel) {
         if (!checkConnnecttion(view))
             return;
-        getUser(GETUSER);
+        if (userModel == null) {
+            getUser(GETUSER);
+        } else view.onGetUerSusscess(userModel);
     }
-    public void checkGetMedical() {
+
+    public void checkGetMedical(ArrayList<RESP_Medical> mlistMedica) {
         if (!checkConnnecttion(view))
             return;
-        getMedicalReportBooks(GETMEDICAL);
+        if (mlistMedica.size() == 0) {
+            getMedicalReportBooks(GETMEDICAL);
+        } else
+            view.onGetMediacalListSusscess(new RESP_List_Medical(mlistMedica));
     }
 
     @Override

@@ -26,8 +26,10 @@ import com.xtelsolution.xmec.model.RESP_Healthy_Care_Detail;
 import com.xtelsolution.xmec.presenter.HeathyCareDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.inf.IHeathyCareDetailView;
 
-public class DetailHospitalActivity extends BasicActivity implements OnMapReadyCallback,IHeathyCareDetailView {
+public class DetailHospitalActivity extends BasicActivity implements OnMapReadyCallback, IHeathyCareDetailView {
+    private static final String TAG = "DetailHospitalActivity";
     private Toolbar mToolbar;
+
     private TextView tvName;
     private TextView tvNumPhone;
     private TextView tvFax;
@@ -39,6 +41,7 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
     private int id;
     private GoogleMap mMap;
     private HeathyCareDetailPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,7 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
-        id = getIntent().getIntExtra(Constant.HEALTHY_CENTER_ID,-1);
+        id = getIntent().getIntExtra(Constant.HEALTHY_CENTER_ID, -1);
         presenter = new HeathyCareDetailPresenter(this);
 
 
@@ -72,12 +75,10 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
         tvFax = (TextView) findViewById(R.id.tv_fax);
         tvIntroduce = (TextView) findViewById(R.id.tv_introduce);
         tvWorkTime = (TextView) findViewById(R.id.tv_work_time);
-        tvVoteRate =(TextView) findViewById(R.id.tv_vote);
+        tvVoteRate = (TextView) findViewById(R.id.tv_vote);
         imgAvatar = (ImageView) findViewById(R.id.img_avt);
 
     }
-
-
 
 
     @Override
@@ -96,21 +97,21 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
 
     @Override
     public void onGetHeathyCareSuccess(RESP_Healthy_Care_Detail healthyCare) {
-        tvAddress.setText(getResources().getString(R.string.address)+healthyCare.getAddress());
-        tvFax.setText(getResources().getString(R.string.fax)+healthyCare.getFax());
-        tvNumPhone.setText(getResources().getString(R.string.tel)+healthyCare.getNum_phone());
+        tvAddress.setText(getResources().getString(R.string.address) + healthyCare.getAddress());
+        tvFax.setText(getResources().getString(R.string.fax) + healthyCare.getFax());
+        tvNumPhone.setText(getResources().getString(R.string.tel) + healthyCare.getNum_phone());
         tvName.setText(healthyCare.getName());
         tvIntroduce.setText(healthyCare.getIntroduce());
-        tvVoteRate.setText(healthyCare.getVote_rate()+  " ");
-        xLog.e(healthyCare.getVote_rate()+"33");
-        tvWorkTime.setText(healthyCare.getOpenTime()+"");
-        xLog.e(healthyCare.getOpenTime()+"33");
-        if (healthyCare.getUrl_avatar()!=null)
-            setImage(imgAvatar,healthyCare.getUrl_avatar());
+        tvVoteRate.setText(healthyCare.getVote_rate() + " ");
+        xLog.e(TAG, "onGetHeathyCareSuccess: " + healthyCare.getVote_rate() + "33");
+        tvWorkTime.setText(healthyCare.getOpenTime() + "");
+        xLog.e(TAG, "onGetHeathyCareSuccess: " + healthyCare.getOpenTime() + "33");
+        if (healthyCare.getUrl_avatar() != null)
+            setImage(imgAvatar, healthyCare.getUrl_avatar());
         else
             imgAvatar.setImageResource(R.drawable.ic_avatar_hospital);
-        LatLng latLng = new LatLng(healthyCare.getLatitude(),healthyCare.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
+        LatLng latLng = new LatLng(healthyCare.getLatitude(), healthyCare.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
         mMap.addMarker(new MarkerOptions().position(latLng));
     }
 

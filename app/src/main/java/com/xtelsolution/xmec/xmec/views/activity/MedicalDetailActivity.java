@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicalDetailActivity extends BasicActivity implements IMedicalDetailView, ItemClickListener,ItemClickListener.ButtonAdapterClickListener ,ItemClickListener.ItemIconClickListener {
+    private String TAG = "MedicalDetailActivity";
     private Toolbar mToolbar;
     private TextView toolBarTille;
     private Context mContext;
@@ -78,7 +79,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
             @Override
             public void onItemClickListener(Object item, int position) {
                 String link =((RESP_Disease) item).getLink();
-                xLog.e("LINK  "+link);
+                xLog.e(TAG,"onCreate: LINK  "+link);
                 if ( link!= null&&link.length()!=0) {
                     Intent i = new Intent(MedicalDetailActivity.this, IllnessDetailActivity.class);
                     i.putExtra(Constant.ILLNESS_URL, link);

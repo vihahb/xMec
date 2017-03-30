@@ -40,6 +40,7 @@ import java.util.List;
  */
 
 public class AddIllnessActivity extends BasicActivity implements IAddIllnessView,ItemClickListener.ButtonAdapterClickListener,ItemClickListener.ItemIconClickListener {
+    private final static String TAG = "AddIllnessActivity";
     private RecyclerView recyclerView;
     private Toolbar mToolbar;
     private DelayAutoCompleteTextView etFindDisease;
@@ -231,5 +232,10 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
             }
         });
         alertDialog.show();
+    }
+
+    @Override
+    public void showLog(String TAG, String msg) {
+
     }
 }

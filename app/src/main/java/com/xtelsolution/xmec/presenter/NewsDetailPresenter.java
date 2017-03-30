@@ -17,6 +17,7 @@ import java.io.InputStream;
  */
 
 public class NewsDetailPresenter {
+    private static final String TAG = "NewsDetailPresenter";
     private INewsDetailView view;
 
     public NewsDetailPresenter(INewsDetailView view) {
@@ -34,7 +35,7 @@ public class NewsDetailPresenter {
             public void onSucess(Document result) {
                 view.loadWebView(getNewsBoxFromPage(result));
                 view.showProgressView(false);
-                xLog.d(getNewsBoxFromPage(result));
+                xLog.d(TAG, "loadNews: onSucess: "+ getNewsBoxFromPage(result));
             }
 
             @Override

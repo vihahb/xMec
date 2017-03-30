@@ -26,6 +26,7 @@ import java.util.List;
  */
 
 public class AddMedicalPresenter extends BasePresenter {
+    private static final String TAG= "AddMedicalPresenter";
     private IAddMedicalView view;
     private final int ADDMEDICAL=1;
     public AddMedicalPresenter(IAddMedicalView view){
@@ -53,7 +54,7 @@ public class AddMedicalPresenter extends BasePresenter {
             listRS[i]=resources.get(i).getServer_path();
         }
         REQ_medicalDetail.setResources(listRS);
-        xLog.d("STRING" + "addMedicalDirectorry: "+JsonHelper.toJson(REQ_medicalDetail));
+        xLog.d(TAG,"addMedicalDirectorry: "+"STRING" + "addMedicalDirectorry: "+JsonHelper.toJson(REQ_medicalDetail));
         MedicalDirectoryModel.getinstance().addMedicalDirectory(url,JsonHelper.toJson(REQ_medicalDetail), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
@@ -83,7 +84,7 @@ public class AddMedicalPresenter extends BasePresenter {
         new Task.ConvertImage(context, isBigImage, new UploadFileListener() {
             @Override
             public void onSuccess(String url) {
-                xLog.e("onSuccess" + "onSuccess: "+url);
+                xLog.e(TAG,"postImage: onSuccess: " + "onSuccess: "+url);
                 view.onUploadImageSussces(url);
                 view.dismissProgressDialog();
             }

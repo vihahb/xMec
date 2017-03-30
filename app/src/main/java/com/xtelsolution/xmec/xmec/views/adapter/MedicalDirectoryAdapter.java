@@ -27,9 +27,10 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final int VIEW_TYPE_ADD_BUTTON = 1;
     private Context mContext;
     private ItemClickListener itemClickListener;
+
     public MedicalDirectoryAdapter(ArrayList<RESP_Medical> data, Context context) {
         this.list = data;
-        this.mContext =context;
+        this.mContext = context;
     }
 
     @Override
@@ -37,12 +38,12 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
         View itemview = null;
         if (viewType == VIEW_TYPE_ITEM) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            itemview = inflater.inflate(R.layout.item_illness_2, parent,false);
+            itemview = inflater.inflate(R.layout.item_illness_2, parent, false);
             return new MedicalDirectoryViewHolder(itemview);
 
         } else {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            itemview = inflater.inflate(R.layout.item_button_add, parent,false);
+            itemview = inflater.inflate(R.layout.item_button_add, parent, false);
             return new MedicalDirectoryButtonViewHolder(itemview);
         }
 
@@ -55,16 +56,16 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
             final RESP_Medical directory = list.get(position);
             MedicalDirectoryViewHolder viewhodlder = (MedicalDirectoryViewHolder) holder;
             viewhodlder.tvMedicalDirectoryName.setText(directory.getName());
-            viewhodlder.tvStt.setText(position+ 1+"");
+            viewhodlder.tvStt.setText(position + 1 + "");
             viewhodlder.tvTimeStamp.setText(Constant.getDate(directory.getBegin_time()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemClickListener.onItemClickListener((RESP_Medical)(list.get(position)),position);
+                    itemClickListener.onItemClickListener((RESP_Medical) (list.get(position)), position);
                 }
             });
         }
-        if (holder instanceof MedicalDirectoryButtonViewHolder){
+        if (holder instanceof MedicalDirectoryButtonViewHolder) {
             final MedicalDirectoryButtonViewHolder viewhodlder = (MedicalDirectoryButtonViewHolder) holder;
             viewhodlder.btnAdd.setText("Thêm Y Bạ");
         }
@@ -83,6 +84,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         }
     }
+
     class MedicalDirectoryButtonViewHolder extends RecyclerView.ViewHolder {
         public Button btnAdd;
 
@@ -92,7 +94,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(mContext,AddMedicalDetailActivity.class);
+                    Intent i = new Intent(mContext, AddMedicalDetailActivity.class);
                     mContext.startActivity(i);
                 }
             });
@@ -105,15 +107,25 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
         return list.size() <= position ? VIEW_TYPE_ADD_BUTTON : VIEW_TYPE_ITEM;
     }
 
-    public void addAll(ArrayList<RESP_Medical> data){
-        int startIndex = list.size();
-        list.addAll(startIndex,data);
-        notifyItemRangeInserted(startIndex,data.size());
-    }
-
     @Override
     public int getItemCount() {
-        return list.size()+1;
+        return (list == null) ? 0 : list.size();
+    }
+
+    public void addAll(ArrayList<RESP_Medical> data) {
+        int startIndex = list.size();
+        list.addAll(startIndex, data);
+        notifyItemRangeInserted(startIndex, data.size());
+    }
+
+    public void addCleanAll(ArrayList<RESP_Medical> data) {
+        list.clear();
+        list.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<RESP_Medical> getList() {
+        return list;
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {

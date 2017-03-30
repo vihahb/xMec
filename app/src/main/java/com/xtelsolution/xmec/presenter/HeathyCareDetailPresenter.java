@@ -16,6 +16,7 @@ import com.xtelsolution.xmec.xmec.views.inf.IHeathyCareDetailView;
  */
 
 public class HeathyCareDetailPresenter extends BasePresenter  {
+    private static final String TAG = "HeathyCareDetailPresenter";
     private IHeathyCareDetailView view;
     private final int GETHEALTHCAREDETAIl =1;
     public HeathyCareDetailPresenter(IHeathyCareDetailView view) {
@@ -24,7 +25,7 @@ public class HeathyCareDetailPresenter extends BasePresenter  {
     private void getHeathyCareDetail(final Object...param){
         int id = (int) param[1];
         String url = Constant.SERVER_XMEC+Constant.HEALTHY_CENTER+"/"+id;
-        xLog.e( url);
+        xLog.e(TAG,"getHeathyCareDetail: "+ url);
         HealthyCareModel.getInstance().getDetailHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Healthy_Care_Detail>(RESP_Healthy_Care_Detail.class) {
             @Override
             public void onSuccess(RESP_Healthy_Care_Detail obj) {

@@ -19,7 +19,7 @@ import com.xtelsolution.xmec.xmec.views.inf.BaseView;
  * Created by HUNGNT on 1/17/2017.
  */
 
-public class BasicActivity extends AppCompatActivity implements BaseView{
+public class BasicActivity extends AppCompatActivity implements BaseView {
 
 
     private ProgressDialog progressDialog;
@@ -47,13 +47,13 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
     }
 
     @Override
-    public void showLog(String msg) {
-        xLog.d(msg);
+    public void showLog(String TAG, String msg) {
+        xLog.d(TAG, msg);
     }
 
     @Override
     public void showProgressDialog(String title) {
-        if (progressDialog==null)
+        if (progressDialog == null)
             initProgressDialog();
         progressDialog.setMessage(title);
         progressDialog.show();
@@ -61,13 +61,13 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
 
     @Override
     public void dismissProgressDialog() {
-        if (progressDialog.isShowing()){
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
 
     protected void setImage(ImageView img, String url) {
-        if (url == null || url.trim().length()==0) {
+        if (url == null || url.trim().length() == 0) {
             img.setImageResource(R.drawable.avatar);
         } else {
             Picasso.with(this)
@@ -77,7 +77,8 @@ public class BasicActivity extends AppCompatActivity implements BaseView{
                     .into(img);
         }
     }
-    public void showAleartDialog(){
+
+    public void showAleartDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("");
         builder.setMessage("");

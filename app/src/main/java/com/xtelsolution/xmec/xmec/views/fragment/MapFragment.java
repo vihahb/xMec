@@ -56,6 +56,7 @@ import java.util.List;
  */
 
 public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveCanceledListener, GoogleMap.OnCameraIdleListener {
+    private static final String TAG = "MapFragment";
     private View view;
     private GoogleMap mMap;
     private Marker mMarker;
@@ -64,7 +65,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     private OnLoadMapSuccessListener onLoadMapSuccessListener;
     private MapPresenter presenter;
     private boolean isMapCreated = false;
-    int count =0;
+    int count = 0;
 
 
     @Nullable
@@ -161,8 +162,8 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
         if (data.size() == 0)
             return;
-        count ++;
-        xLog.e(count +"PHILOG");
+        count++;
+        xLog.e(TAG, "onGetListHealtyCareSuccess: " + count + "PHILOG");
         for (int i = 0; i < data.size(); i++) {
             Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLatitude(), data.get(i).getLongitude())).title(data.get(i).getName()));
             if (data.get(i).getType() == 1) {
@@ -176,7 +177,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if (marker.getTag()==null)
+        if (marker.getTag() == null)
             return false;
         Intent i = new Intent(getActivity(), DetailHospitalActivity.class);
         i.putExtra(Constant.HEALTHY_CENTER_ID, (int) marker.getTag());
@@ -201,7 +202,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public void onCameraMoveCanceled() {
-        xLog.e(mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
+        xLog.e(TAG, "onCameraMoveCanceled: " + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
         presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
     }
 
@@ -212,7 +213,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 //    }
     @Override
     public void onCameraIdle() {
-        xLog.e(mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
+        xLog.e(TAG, "onCameraIdle:" + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
         presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
     }
 }

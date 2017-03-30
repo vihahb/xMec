@@ -18,9 +18,9 @@ import com.xtelsolution.xmec.xmec.views.inf.IIllnessDetailview;
  * Created by HUNGNT on 3/14/2017.
  */
 
-public class IllnessDetailActivity extends BasicActivity implements IIllnessDetailview{
+public class IllnessDetailActivity extends BasicActivity implements IIllnessDetailview {
 
-
+    private static final String TAG = "IllnessDetailActivity";
     private WebView webViewNews;
     private LinearLayout loLoading;
     IllnessDetailPresenter presenter;
@@ -32,12 +32,12 @@ public class IllnessDetailActivity extends BasicActivity implements IIllnessDeta
         init();
         initWebView();
         String mainUrl = getIntent().getExtras().getString(Constant.ILLNESS_URL);
-        xLog.e(Constant.LOGPHI+mainUrl);
-        if (mainUrl!=null){
-            mainUrl.replace("http://diendan.songkhoe.vn/dien-dan","http://diendan.songkhoe.vn/chi-tiet-tong-quan-ve");
-            xLog.e(Constant.LOGPHI+"url "+mainUrl);
+        xLog.e(TAG,"onCreate: "+Constant.LOGPHI + mainUrl);
+        if (mainUrl != null) {
+            mainUrl.replace("http://diendan.songkhoe.vn/dien-dan", "http://diendan.songkhoe.vn/chi-tiet-tong-quan-ve");
+            xLog.e(TAG,"onCreate: "+Constant.LOGPHI + "url " + mainUrl);
             presenter.loadIllnessDetail(mainUrl);
-        }else {
+        } else {
             showToast("Có lỗi xảy ra");
             finish();
         }
@@ -50,10 +50,11 @@ public class IllnessDetailActivity extends BasicActivity implements IIllnessDeta
         presenter = new IllnessDetailPresenter(this);
         loLoading = (LinearLayout) findViewById(R.id.loLoading);
     }
+
     private void initWebView() {
         webViewNews = (WebView) findViewById(R.id.webviewNews);
         webViewNews.setWebChromeClient(new WebChromeClient());
-        webViewNews.setWebViewClient(new WebViewClient(){
+        webViewNews.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 showToast("Các link trong bài viết đã bị vô hiệu hóa");
                 return true;
@@ -64,20 +65,21 @@ public class IllnessDetailActivity extends BasicActivity implements IIllnessDeta
 
     @Override
     public void loadWebView(String html) {
-        webViewNews.loadData(html,"text/html; charset=UTF-8", null);
+        webViewNews.loadData(html, "text/html; charset=UTF-8", null);
     }
 
     @Override
     public void showProgressView(boolean isLoading) {
-        if (isLoading){
+        if (isLoading) {
             loLoading.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             loLoading.setVisibility(View.GONE);
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
             finish();
         return true;
     }
