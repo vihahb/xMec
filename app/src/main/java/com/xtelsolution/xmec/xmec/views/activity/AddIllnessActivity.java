@@ -234,8 +234,4 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
         alertDialog.show();
     }
 
-    @Override
-    public void showLog(String TAG, String msg) {
-
-    }
 }

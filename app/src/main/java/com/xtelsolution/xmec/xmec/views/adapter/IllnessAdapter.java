@@ -22,6 +22,7 @@ public class IllnessAdapter extends RecyclerView.Adapter {
     private List<Disease> data;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
+    private boolean isLoadMore=false;
     private static ItemClickListener mItemClickListener;
 
     public IllnessAdapter(Context mContext, List<Disease> data) {
@@ -60,7 +61,7 @@ public class IllnessAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return data.size() + 1;
+        return isLoadMore ? data.size() + 1:data.size();
     }
 
     private class IllnessViewHolder extends RecyclerView.ViewHolder {
@@ -83,6 +84,10 @@ public class IllnessAdapter extends RecyclerView.Adapter {
         return data.size() <= position ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
+    public void setLoadMore(boolean loadMore) {
+        isLoadMore = loadMore;
+        notifyDataSetChanged();
+    }
 
     @Override
     public long getItemId(int position) {

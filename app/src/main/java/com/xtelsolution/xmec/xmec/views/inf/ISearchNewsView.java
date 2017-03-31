@@ -1,8 +1,11 @@
 package com.xtelsolution.xmec.xmec.views.inf;
 
+import com.xtelsolution.xmec.model.RESP_List_Disease;
+import com.xtelsolution.xmec.model.entity.Disease;
 import com.xtelsolution.xmec.model.entity.NewsFeed;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HUNGNT on 3/21/2017.
@@ -10,4 +13,5 @@ import java.util.ArrayList;
 
 public interface ISearchNewsView extends BaseView {
     void updateResult(ArrayList<NewsFeed> listNewsFeeds);
+    void onFindDiseaseFinish(List<Disease> data);
 }

@@ -151,8 +151,8 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
 
     @Override
     public void onFindMedicienFinish(List<Medicine> data) {
+        medicineAdapter.setLoadMore(false);
         if (data.size() == 0) {
-            medicineAdapter.setLoadMore(false);
             showToast("Không tìm được kết quả");
         }
         medicineAdapter.addAll(data);
