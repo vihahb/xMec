@@ -12,6 +12,9 @@ public class Disease {
     private String name;
     @Expose
     private int id;
+    @Expose
+    private String link;
+
     public Disease(String name) {
         this.name = name;
     }
@@ -19,6 +22,14 @@ public class Disease {
     public Disease(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public String getUrl() {
+        return link;
+    }
+
+    public void setUrl(String url) {
+        this.link = url;
     }
 
     public int getId() {

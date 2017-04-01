@@ -182,6 +182,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                                     Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                                     avatarView.setImageBitmap(avatar);
                                     presenter.postImage(avatar, false, getBaseContext());
+                                    bottomSheetChoosePicture.dismiss();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

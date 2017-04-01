@@ -28,6 +28,7 @@ import com.xtelsolution.xmec.model.entity.NewsFeed;
 import com.xtelsolution.xmec.presenter.SearchNewsPresenter;
 import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 import com.xtelsolution.xmec.xmec.views.activity.DiseaseDiagnosiActivity;
+import com.xtelsolution.xmec.xmec.views.activity.IllnessDetailActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.ISearchNewsView;
@@ -181,13 +182,13 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView,Ite
 
     }
 
-    private List<Disease> createTempData(int size) {
-        List<Disease> sticks = new ArrayList<>();
-        for (int i = size; i < size + 10; i++) {
-            sticks.add(new Disease(i, "Tên Bệnh " + i));
-        }
-        return sticks;
-    }
+//    private List<Disease> createTempData(int size) {
+//        List<Disease> sticks = new ArrayList<>();
+//        for (int i = size; i < size + 10; i++) {
+//            sticks.add(new Disease(i, "Tên Bệnh " + i));
+//        }
+//        return sticks;
+//    }
 
     @Override
     public void updateResult(ArrayList<NewsFeed> listNewsFeeds) {
@@ -209,6 +210,9 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView,Ite
 
     @Override
     public void onItemClickListener(Object item, int position) {
-        showToast(position+" Chờ apiiiii");
+        Disease disease = (Disease) item;
+        Intent intent = new Intent(getActivity(), DetailDiseaseActivity.class);
+        intent.putExtra(Constant.ILLNESS_URL,disease.getUrl());
+        startActivity(intent);
     }
 }

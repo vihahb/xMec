@@ -56,6 +56,7 @@ public class Constant {
     public static final String HEALTHY_CENTER = "user/medical-center";
     public static final String Disease = "user/disease";
     public static final String DISEASE = "user/medical-report-book/disease";
+    public static final String DISEASE_ID = "disease_id";
     public static final String MEDICINE = "user/medical-report-book/disease/medicine";
     public static final String MEDICINE_SEARCH = "user/medicine";
     public static final String LOGPHI = "LOGPHI  ";
