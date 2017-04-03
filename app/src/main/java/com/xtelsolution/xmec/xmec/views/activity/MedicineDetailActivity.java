@@ -9,9 +9,14 @@ import android.widget.TextView;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.model.Medicine;
+import com.xtelsolution.xmec.model.RESP_Medicine_Detail;
+import com.xtelsolution.xmec.presenter.MedicineDetailPresenter;
+import com.xtelsolution.xmec.xmec.views.inf.IMedicineDetailView;
 
-public class MedicineDetailActivity extends BasicActivity {
+public class MedicineDetailActivity extends BasicActivity implements IMedicineDetailView {
+
     private static final String TAG = "MedicineDetailActivity";
+    private String medicineID;
     private Context mContext;
     private TextView tv_ten_thuoc,
             tv_dang_bao_che,
@@ -25,12 +30,18 @@ public class MedicineDetailActivity extends BasicActivity {
             tv_lieu_luong,
             tv_bao_quan;
     private Toolbar toolbar;
+    private MedicineDetailPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_detail);
         mContext = this;
+        medicineID = getIntent().getIntExtra(Constant.INTENT_ID_MEDICINE, -1) + "";
+        presenter = new MedicineDetailPresenter(this);
+        if (medicineID!=null){
+            presenter.getMedicineDetail(medicineID);
+        }
         initUI();
         showToast(getIntent().getIntExtra(Constant.INTENT_ID_MEDICINE, -1) + "");
     }
@@ -54,7 +65,7 @@ public class MedicineDetailActivity extends BasicActivity {
         tv_bao_quan = (TextView) findViewById(R.id.tv_bao_quan);
     }
 
-    private void setDataToView(Medicine medicine) {
+    private void setDataToView(RESP_Medicine_Detail medicine) {
         tv_ten_thuoc.setText(getString(R.string.namet_medicen_text, medicine.getName()));
         tv_dang_bao_che.setText(getString(R.string.dang_bao_che, medicine.getType()));
         tv_nhom_duoc_ly.setText(getString(R.string.nhom_duoc_ly, medicine.getGroup()));
@@ -72,5 +83,15 @@ public class MedicineDetailActivity extends BasicActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDetailLoadedSuccess(RESP_Medicine_Detail medicine) {
+        setDataToView(medicine);
+    }
+
+    @Override
+    public void onDetailLoadedError() {
+        showToast("Có lỗi xảy ra!");
     }
 }
