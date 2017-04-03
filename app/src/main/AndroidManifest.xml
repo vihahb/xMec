@@ -58,7 +58,6 @@
 
         <activity
             android:name=".xmec.views.activity.DetailHospitalActivity"
-            android:parentActivityName=".xmec.views.activity.HomeActivity"
             android:theme="@style/HomeActivityTheme" />
         <activity
             android:name=".xmec.views.activity.AddMedicalDetailActivity"

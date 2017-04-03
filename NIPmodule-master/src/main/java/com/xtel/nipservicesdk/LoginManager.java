@@ -25,4 +25,5 @@ public class LoginManager {
     public static String getCurrentAuthenticationId() {
         return LoginModel.getInstance().getCurrentAuthenticationId();
     }
+
 }

@@ -59,31 +59,31 @@
 
                     <TextView
                         android:id="@+id/tv_tel"
-                        android:textStyle="italic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tel : 01698514563"
                         android:textColor="@color/fistText"
-                        android:textSize="@dimen/dimen13sp" />
+                        android:textSize="@dimen/dimen13sp"
+                        android:textStyle="italic" />
 
                     <TextView
                         android:id="@+id/tv_fax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="italic"
                         android:layout_marginBottom="8dp"
                         android:text="Fax : 01698514563"
                         android:textColor="@color/fistText"
-                        android:textSize="@dimen/dimen13sp" />
+                        android:textSize="@dimen/dimen13sp"
+                        android:textStyle="italic" />
 
                     <TextView
                         android:id="@+id/tv_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="italic"
                         android:text="Địa chỉ : Ngõ 63 Lê Đức Thọ "
                         android:textColor="@color/fistText"
-                        android:textSize="@dimen/dimen13sp" />
+                        android:textSize="@dimen/dimen13sp"
+                        android:textStyle="italic" />
                 </LinearLayout>
             </LinearLayout>
 

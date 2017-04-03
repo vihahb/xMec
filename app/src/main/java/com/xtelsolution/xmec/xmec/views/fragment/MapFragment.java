@@ -54,7 +54,9 @@ import com.xtelsolution.xmec.xmec.views.activity.HomeActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IMapView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by HUNGNT on 1/18/2017.
@@ -112,7 +114,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mMap==null) {
+        if (mMap == null) {
             presenter.checkPermission();
         }
     }
@@ -125,13 +127,16 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-                mMap = googleMap;
-                mMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(0f, 0f)));
-                presenter.initMap();
-                isMapCreated = true;
-                mMap.setOnCameraIdleListener(this);
-                mMap.setOnCameraMoveCanceledListener(this);
-                mMap.setOnMarkerClickListener(this);
+        mMap = googleMap;
+        mMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(0f, 0f)));
+        mMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.my_location));
+        mMarker.setFlat(true);
+        mMarker.setAnchor(0.5f, 0.5f);
+        presenter.initMap();
+        isMapCreated = true;
+        mMap.setOnCameraIdleListener(this);
+        mMap.setOnCameraMoveCanceledListener(this);
+        mMap.setOnMarkerClickListener(this);
     }
 
     @Override
@@ -208,12 +213,13 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         for (int i = 0; i < data.size(); i++) {
             Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLatitude(), data.get(i).getLongitude())).title(data.get(i).getName()));
             if (data.get(i).getType() == 1) {
-                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_hospital)));
+                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.marker_hospiotal)));
             } else
-                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_drug_store)));
+                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_pharmacy)));
             marker.setTag(data.get(i).getId());
         }
         onLoadMapSuccessListener.onLoadMapSuccess(data);
+
     }
 
     @Override
@@ -256,6 +262,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     public void onCameraIdle() {
         xLog.e(TAG, "onCameraIdle:" + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
         presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
+        listTemp(mMap.getCameraPosition().target);
     }
 
     @Override
@@ -266,4 +273,53 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
             presenter.registerLocation();
         }
     }
+
+    List<Marker> list = new ArrayList<>();
+
+    private void listTemp(LatLng center) {
+        if (list.size() > 0) {
+            for (Marker marker : list
+                    ) {
+                marker.remove();
+            }
+        }
+        for (int i = 0; i < 20; i++) {
+            LatLng lng = toRadiusLatLng(center, 1000);
+//            RESP_Map_Healthy_Care care = new RESP_Map_Healthy_Care();
+//            care.setId(i);
+//            care.setAddress("Unknown");
+//            care.setName("Unknown");
+//            care.setType((i % 2 == 0) ? 0 : 1);
+//            care.setLatitude(lng.latitude);
+//            care.setLongitude(lng.longitude);
+//            list.add(care);
+            Marker marker = mMap.addMarker(new MarkerOptions().position(lng));
+            if (i % 2 == 0) {
+                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.marker_hospiotal)));
+            } else
+                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_pharmacy)));
+            marker.setTag(i);
+            list.add(marker);
+
+        }
+
+
+    }
+
+    private static LatLng toRadiusLatLng(LatLng center, double radius) {
+
+        Random random = new Random();
+        double radiusAngle = Math.toDegrees(radius / 6371009) /
+                Math.cos(Math.toRadians(center.latitude));
+        double maxLat = center.latitude + radiusAngle;
+        double minLat = center.latitude - radiusAngle;
+        double maxLon = center.longitude + radiusAngle;
+        double minLon = center.longitude - radiusAngle;
+
+        double foundLat = random.nextDouble() * (maxLat - minLat) + minLat;
+        double foundLon = random.nextDouble() * (maxLon - minLon) + minLon;
+
+        return new LatLng(foundLat, foundLon);
+    }
+
 }

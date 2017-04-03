@@ -34,22 +34,22 @@
 
     <SlidingDrawer
         android:id="@+id/drawer"
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:content="@+id/content"
         android:layout_marginLeft="48dp"
-        android:orientation="horizontal"
-        android:handle="@+id/handleImageView">
+        android:layout_marginTop="16dp"
+        android:content="@+id/content"
+        android:handle="@+id/handleImageView"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@id/handleImageView"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:paddingTop="50dp"
-            android:paddingBottom="50dp"
             android:elevation="12dp"
+            android:paddingBottom="50dp"
+            android:paddingTop="50dp"
             android:src="@drawable/ic_sliding" />
 
         <LinearLayout

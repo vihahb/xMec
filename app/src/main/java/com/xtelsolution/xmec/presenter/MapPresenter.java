@@ -129,6 +129,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         if (!checkConnnecttion(view))
             return;
         getHospitals(GETLOCATION,lat,lng);
+
     }
 
     private boolean isLocationEnable() {
