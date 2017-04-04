@@ -7,7 +7,7 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.MedicineModel;
 import com.xtelsolution.xmec.model.RESP_List_Medicine_Compact;
-import com.xtelsolution.xmec.model.RESP_Medicine;
+
 import com.xtelsolution.xmec.xmec.views.inf.ISearchMedicineView;
 
 /**

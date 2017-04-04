@@ -4,21 +4,32 @@ import com.google.gson.annotations.Expose;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 import com.xtelsolution.xmec.model.entity.Disease;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by phimau on 4/1/2017.
  */
 
-public class RESP_Disease_Detail extends RESP_Basic {
+public class RESP_Disease_Detail extends RESP_Basic implements Serializable{
     @Expose
     private int id;
     @Expose
-    private String name;
+    private String ten_benh;
+    private int id_disease;
     @Expose
     private String note;
     @Expose
-    private List<Medicine> medicines;
+    private List<RESP_User_Medicine> data;
+
+    public int getId_disease() {
+        return id_disease;
+    }
+
+    public void setId_disease(int id_disease) {
+        this.id_disease = id_disease;
+    }
+
 
     public int getId() {
         return id;
@@ -28,12 +39,20 @@ public class RESP_Disease_Detail extends RESP_Basic {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTen_benh() {
+        return ten_benh;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTen_benh(String ten_benh) {
+        this.ten_benh = ten_benh;
+    }
+
+    public List<RESP_User_Medicine> getData() {
+        return data;
+    }
+
+    public void setData(List<RESP_User_Medicine> data) {
+        this.data = data;
     }
 
     public String getNote() {
@@ -44,11 +63,4 @@ public class RESP_Disease_Detail extends RESP_Basic {
         this.note = note;
     }
 
-    public List<Medicine> getMedicines() {
-        return medicines;
-    }
-
-    public void setMedicines(List<Medicine> medicines) {
-        this.medicines = medicines;
-    }
 }

@@ -2,6 +2,10 @@ package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,16 +19,19 @@ import android.widget.TextView;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
 import com.xtelsolution.xmec.model.RESP_Disease_Detail;
+import com.xtelsolution.xmec.model.RESP_User_Medicine;
 import com.xtelsolution.xmec.presenter.DiseaseDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicineAdapter;
+import com.xtelsolution.xmec.xmec.views.adapter.MedicineAdapterOptionButton;
 import com.xtelsolution.xmec.xmec.views.inf.IDiseaseDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDiseaseDetailActivity extends BasicActivity implements IDiseaseDetailView {
+public class UserDiseaseDetailActivity extends BasicActivity implements IDiseaseDetailView, ItemClickListener {
     private Toolbar mToolbar;
     private Context mContext;
     private TextView tvName;
@@ -32,10 +39,13 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
     private TextView tvToolbarTitle;
     private TextView btnViewDisease;
     private RecyclerView rvMedicine;
-    private List<Medicine> medicines;
-    private MedicineAdapter adapter;
+    private List<RESP_User_Medicine> medicines;
+    private MedicineAdapterOptionButton adapter;
     private DiseaseDetailPresenter presenter;
-    private int idDisease;
+    private RESP_Disease_Detail diseaseDetail;
+    private int idDisease=-1;
+    private int idMedical=-1;
+    private CoordinatorLayout progressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +62,7 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
 
         tvToolbarTitle.setText(getResources().getString(R.string.disease_detail));
         idDisease = getIntent().getIntExtra(Constant.DISEASE_ID,-1);
-
+        idMedical = getIntent().getIntExtra(Constant.MEDICAL_ID,-1);
 
         presenter = new DiseaseDetailPresenter(this);
         presenter.checkGetDiseaseDetail(idDisease);
@@ -61,10 +71,15 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
 
     private void initRecyclerView() {
         medicines = new ArrayList<>();
-        adapter = new MedicineAdapter(mContext,medicines);
-        rvMedicine.setAdapter(adapter);
-        rvMedicine.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-        rvMedicine.setNestedScrollingEnabled(false);
+        adapter = new MedicineAdapterOptionButton(medicines,false,mContext);
+        adapter.setItemClickListener(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            rvMedicine.setAdapter(adapter);
+            rvMedicine.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+            rvMedicine.setNestedScrollingEnabled(false);
+        }
+
     }
 
     private void initControl() {
@@ -86,11 +101,12 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
         tvNote = (TextView) findViewById(R.id.tv_disease_note);
         rvMedicine = (RecyclerView) findViewById(R.id.rv_medicine);
         btnViewDisease = (TextView) findViewById(R.id.btn_view_disease);
+        progressbar = (CoordinatorLayout) findViewById(R.id.progress_bar);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = new MenuInflater(mContext);
+        MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_edit_disease, menu);
         return true;
     }
@@ -99,8 +115,11 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_remove_medical:
-                Intent i = new Intent(UserDiseaseDetailActivity.this,AddIllnessActivity.class);
-                i.putExtra(Constant.DISEASE_ID,idDisease);
+//                Sensor sensor = new Sensor("1", "s", "s", true, diseaseDetail, diseaseList);                ArrayList<RESP_Disease_Detail> diseaseList = new ArrayList<>();
+
+                Intent i = new Intent(UserDiseaseDetailActivity.this,EditDiseaseActivity.class);
+                i.putExtra(Constant.DISEASE_DETAIL,diseaseDetail);
+                i.putExtra(Constant.MEDICAL_ID,idMedical);
                 startActivity(i);
                 break;
         }
@@ -109,8 +128,19 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
 
     @Override
     public void onLoadDiseaseDetailSuccess(RESP_Disease_Detail diseaseDetail) {
-        tvName.setText(diseaseDetail.getName());
+        this.diseaseDetail =diseaseDetail;
+        idDisease= diseaseDetail.getId_disease();
+        tvName.setText(diseaseDetail.getTen_benh());
         tvNote.setText(diseaseDetail.getNote());
-        adapter.addAll(diseaseDetail.getMedicines());
+        progressbar.setVisibility(View.GONE);
+        adapter.addAll(diseaseDetail.getData());
+    }
+
+    @Override
+    public void onItemClickListener(Object item, int position) {
+        RESP_User_Medicine medicine = (RESP_User_Medicine) item;
+        Intent i = new Intent(UserDiseaseDetailActivity.this,MedicineDetailActivity.class);
+        i.putExtra(Constant.INTENT_ID_MEDICINE,medicine.getId_drug());
+        startActivity(i);
     }
 }

@@ -133,7 +133,7 @@ public class AddDiseasePresenter extends BasePresenter {
 //        }
 //    }
 
-    private void addMedicineReal(int uidDisease, String name, int idmedicine, final boolean islast) {
+    private void addMedicineReal(int uidDisease, String name, int idmedicine) {
         xLog.e(TAG, "addMedicineReal: " + Constant.LOGPHI + "idDisease  " + uidDisease + "----name " + name + "----- id_medical" + idmedicine);
         String urlMedicine = Constant.SERVER_XMEC + Constant.MEDICINE;
         xLog.e(TAG, "addMedicineReal: " + Constant.LOGPHI + "url search medicine " + urlMedicine);
@@ -141,15 +141,13 @@ public class AddDiseasePresenter extends BasePresenter {
         MedicineModel.getInstance().addMedicine(urlMedicine, JsonHelper.toJson(medicine), LoginManager.getCurrentSession(), new ResponseHandle<RESP_ID>(RESP_ID.class) {
             @Override
             public void onSuccess(RESP_ID obj) {
-                if (islast) {
-                    view.dismissProgressDialog();
                     view.onAddMedicineSuccess(obj.getId());
-                }
+
             }
 
             @Override
             public void onError(Error error) {
-//                handlerError(view, error);
+                handlerError(view, error);
             }
         });
     }

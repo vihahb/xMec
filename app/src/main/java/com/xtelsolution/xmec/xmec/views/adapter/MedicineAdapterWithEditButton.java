@@ -133,7 +133,7 @@ public class MedicineAdapterWithEditButton extends RecyclerView.Adapter<Recycler
         mList.remove(index);
         notifyItemRemoved(index);
         notifyItemRangeChanged(index, getItemCount() - 1);
-        getItem(100);
+//        getItem(100);
     }
 
     public void setIconClickListener(ItemClickListener.ItemIconClickListener iconClickListener) {

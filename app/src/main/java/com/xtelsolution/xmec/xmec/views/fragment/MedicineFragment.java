@@ -24,7 +24,6 @@ import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.Medicine;
-import com.xtelsolution.xmec.model.RESP_Medicine;
 import com.xtelsolution.xmec.presenter.FindMedicinePresenter;
 import com.xtelsolution.xmec.xmec.views.activity.MedicineDetailActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicineAdapter;

@@ -160,7 +160,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     @Override
     public void onLocationChange(LatLng latLng) {
         mMarker.setPosition(latLng);
-        xLog.e("onLocationChange", latLng.toString());
+//        xLog.e("onLocationChange", latLng.toString());
     }
 
     @Override

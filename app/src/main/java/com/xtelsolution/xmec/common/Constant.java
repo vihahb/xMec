@@ -56,10 +56,15 @@ public class Constant {
     public static final String HEALTHY_CENTER = "user/medical-center";
     public static final String Disease = "user/disease";
     public static final String DISEASE = "user/medical-report-book/disease";
+    public static final String DETAIL_DISEASE = "user/detail-user-disease?id=";
     public static final String DISEASE_ID = "disease_id";
     public static final String MEDICINE = "user/medical-report-book/disease/medicine";
     public static final String MEDICINE_SEARCH = "user/medicine";
     public static final String LOGPHI = "LOGPHI  ";
+    public static final String DISEASE_DETAIL = "disease_detail";
+    public static final String UPDATE_DISEASE = "user/update-disease";
+    public static final String REMOVE_MEDICINE = "user/remove-medicine/";
+    public static final String REMOVE_DISEASE = "user/remove-disease/";
     public static  Boolean iGetNewSession = false ;
     public static final String ILLNESS_URL = "illness_url";
 

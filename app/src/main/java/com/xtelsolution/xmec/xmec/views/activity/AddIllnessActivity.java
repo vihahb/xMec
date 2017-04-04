@@ -19,9 +19,9 @@ import android.widget.ProgressBar;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.REQ_Medicine;
+import com.xtelsolution.xmec.model.RESP_Disease_Detail;
 import com.xtelsolution.xmec.model.RESP_Medicine;
 import com.xtelsolution.xmec.model.entity.Disease;
 import com.xtelsolution.xmec.presenter.AddDiseasePresenter;
@@ -39,7 +39,7 @@ import java.util.List;
  * Created by HUNGNT on 2/14/2017.
  */
 
-public class AddIllnessActivity extends BasicActivity implements IAddIllnessView,ItemClickListener.ButtonAdapterClickListener,ItemClickListener.ItemIconClickListener {
+public class AddIllnessActivity extends BasicActivity implements IAddIllnessView, ItemClickListener.ButtonAdapterClickListener, ItemClickListener.ItemIconClickListener {
     private final static String TAG = "AddIllnessActivity";
     private RecyclerView recyclerView;
     private Toolbar mToolbar;
@@ -49,8 +49,7 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
     private Context mContext;
     private Button btnAddDisease;
     private int idDisease = -1;
-    private int uidDisease = -1;
-    private int idMecine=-1;
+    private int idMecine = -1;
     private Disease disease;
     private RESP_Medicine medicine;
     private AddDiseasePresenter presenter;
@@ -59,6 +58,7 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
     private EditText etNote;
     private Dialog mDialog;
     private int idMedical;
+    private RESP_Disease_Detail uDisease;
     private Button btnAddMedicine;
     private ProgressBar progressBarMedicine;
     private MedicineAdapterWithEditButton medicineAdapterWithEditButton;
@@ -78,6 +78,7 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
         initRecycleView();
 
         idMedical = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
+        uDisease = (RESP_Disease_Detail) getIntent().getSerializableExtra(Constant.DISEASE_DETAIL);
         presenter = new AddDiseasePresenter(this);
 
         diseaseAdapter = new DiseaseAutoCompleteAdapter();
@@ -85,6 +86,25 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
         etFindDisease.setLoadingIndicator(progressBarDisease);
         etFindDisease.setAdapter(diseaseAdapter);
 
+    }
+
+    private void initEditDisease() {
+//        btnAddDisease.setText(getResources().getString(R.string.edit_disease));
+//        dialogRemoveDisease = new AlertDialog.Builder(AddIllnessActivity.this);
+//        dialogRemoveDisease.setTitle("Bạn có muốn xóa Bệnh này?");
+//        dialogRemoveDisease.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+////                medicineAdapterWithEditButton.removeItem(positon);
+//                dialogInterface.dismiss();
+//            }
+//        });
+//        dialogRemoveDisease.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//            }
+//        });
     }
 
     private void initControl() {
@@ -129,8 +149,8 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
         btnAddMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                medicineAdapterWithEditButton.add(new REQ_Medicine(etFindMedicine.getText().toString(),idMecine));
-                idMecine=-1;
+                medicineAdapterWithEditButton.add(new REQ_Medicine(etFindMedicine.getText().toString(), idMecine));
+                idMecine = -1;
                 etFindMedicine.setText(null);
                 mDialog.dismiss();
 
@@ -140,7 +160,7 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
     }
 
     private void addDisease() {
-        presenter.checkAddDisease(idMedical, etFindDisease.getText().toString(), idDisease, etNote.getText().toString(),listMedicine);
+        presenter.checkAddDisease(idMedical, etFindDisease.getText().toString(), idDisease, etNote.getText().toString(), listMedicine);
     }
 
     private void initRecycleView() {
@@ -173,10 +193,10 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
 
         mDialog = new Dialog(AddIllnessActivity.this);
         mDialog.setContentView(R.layout.dialog_add_medical);
-        mDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        mDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         btnAddMedicine = (Button) mDialog.findViewById(R.id.btn_add_medicine);
-        progressBarMedicine = (ProgressBar)mDialog.findViewById(R.id.pb_loading_indicator1);
-        etFindMedicine= (DelayAutoCompleteTextView) mDialog.findViewById(R.id.et_find_medicine);
+        progressBarMedicine = (ProgressBar) mDialog.findViewById(R.id.pb_loading_indicator1);
+        etFindMedicine = (DelayAutoCompleteTextView) mDialog.findViewById(R.id.et_find_medicine);
         medicineAdapter = new MedicineAutoCompleteAdapter();
         etFindMedicine.setThreshold(3);
         etFindMedicine.setLoadingIndicator(progressBarMedicine);
@@ -189,11 +209,12 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(AddIllnessActivity.this,MedicalDetailActivity.class);
-                i.putExtra(Constant.MEDICAL_ID,idMedical);
+                Intent i = new Intent(AddIllnessActivity.this, MedicalDetailActivity.class);
+                i.putExtra(Constant.MEDICAL_ID, idMedical);
                 startActivity(i);
+                finish();
             }
-        },500);
+        }, 500);
     }
 
     @Override
@@ -202,17 +223,41 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(AddIllnessActivity.this,MedicalDetailActivity.class);
-                i.putExtra(Constant.MEDICAL_ID,idMedical);
+                Intent i = new Intent(AddIllnessActivity.this, MedicalDetailActivity.class);
+                i.putExtra(Constant.MEDICAL_ID, idMedical);
                 startActivity(i);
             }
-        },500);
+        }, 500);
+    }
+
+    @Override
+    public void onLoadDiseaseSuccess(RESP_Disease_Detail diseaseDetail) {
+
     }
 
     @Override
     public void onButtonAdapterClickListener(Button button) {
         mDialog.show();
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        if (uDisease != null) {
+//            MenuInflater menuInflater = getMenuInflater();
+//            menuInflater.inflate(R.menu.menu_remove_medical, menu);
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_remove_medical:
+//
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onItemIconClickListener(Object item, final int positon) {

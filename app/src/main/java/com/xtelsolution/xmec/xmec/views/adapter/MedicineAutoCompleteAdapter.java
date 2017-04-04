@@ -14,11 +14,9 @@ import com.xtel.nipservicesdk.commons.Cts;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
-import com.xtelsolution.xmec.model.RESP_ID;
-import com.xtelsolution.xmec.model.RESP_List_Disease;
+
 import com.xtelsolution.xmec.model.RESP_List_Medicine;
 import com.xtelsolution.xmec.model.RESP_Medicine;
-import com.xtelsolution.xmec.model.entity.Disease;
 
 import java.io.IOException;
 import java.util.ArrayList;

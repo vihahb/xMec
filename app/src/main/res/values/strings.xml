@@ -93,6 +93,7 @@
     <string name="upload_image">Đang upload ảnh</string>
     <string name="loadding">Đang tải</string>
     <string name="add_medical_success">Thêm y bạ thành công</string>
+    <string name="edit_disease">Sửa bệnh</string>
     <string name="title_toobar_detail_medical">Chi tiết y bạ </string>
     <string name="disease_detail">Chi tiết bệnh </string>
     <string name="remove_medical">Xóa Y bạ </string>

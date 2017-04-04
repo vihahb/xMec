@@ -77,10 +77,11 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         illnessAdapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClickListener(Object item, int position) {
-                int id = ((RESP_Disease) item).getId();
-                xLog.e(TAG, "onCreate: LINK  " + id);
+                int idDisease = ((RESP_Disease) item).getId();
+                xLog.e(TAG, "onCreate: LINK  " + idDisease);
                 Intent i = new Intent(MedicalDetailActivity.this, UserDiseaseDetailActivity.class);
-                i.putExtra(Constant.DISEASE_ID, id);
+                i.putExtra(Constant.DISEASE_ID, idDisease);
+                i.putExtra(Constant.MEDICAL_ID,id);
                 startActivity(i);
 
             }

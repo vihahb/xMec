@@ -1,6 +1,7 @@
 package com.xtelsolution.xmec.model;
 
 import com.xtel.nipservicesdk.callback.ResponseHandle;
+import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 
 /**
  * Created by phimau on 3/19/2017.
@@ -18,4 +19,9 @@ public class MedicineModel extends BasicModel {
         requestServer.getApi(url,session,responseHandle);
 
     }
+    public void removeMedicine(String url, String session, ResponseHandle<RESP_Basic> responseHandle){
+        requestServer.deleteApi(url,"",session,responseHandle);
+    }
+
+
 }
