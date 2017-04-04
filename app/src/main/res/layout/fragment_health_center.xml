@@ -33,8 +33,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/action_button_size">
+            android:layout_height="match_parent">
 
             <fragment
                 android:id="@+id/map"
