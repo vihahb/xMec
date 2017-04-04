@@ -27,7 +27,8 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="true">
+        android:clipToPadding="true"
+        android:paddingBottom="12dp">
 
         <LinearLayout
             android:id="@+id/loading_layout"
@@ -40,7 +41,7 @@
             android:background="@drawable/bg_shape_small_radius_white"
             android:elevation="@dimen/dimen_6"
             android:orientation="vertical"
-            android:padding="@dimen/dimen_8">
+            android:padding="@dimen/dimen_12">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,8 +52,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-
-                    android:text="@string/namet_medicen_text"
                     android:textColor="@color/fistText" />
             </LinearLayout>
 
@@ -66,7 +65,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/dang_bao_che"
                     android:textColor="@color/fistText" />
             </LinearLayout>
 
@@ -80,7 +78,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/nhom_duoc_ly"
                     android:textColor="@color/fistText" />
             </LinearLayout>
 
@@ -94,7 +91,6 @@
                     android:id="@+id/tv_thanh_phan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/thanh_phan"
                     android:textColor="@color/fistText" />
 
 
@@ -110,7 +106,6 @@
                     android:id="@+id/tv_chi_dinh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/chi_dinh"
                     android:textColor="@color/fistText" />
 
 
@@ -126,7 +121,6 @@
                     android:id="@+id/tv_chong_chi_dinh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/chong_chi_dinh"
                     android:textColor="@color/fistText" />
 
 
@@ -142,7 +136,6 @@
                     android:id="@+id/tv_tuong_tac_thuoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tuong_tac_thuoc"
                     android:textColor="@color/fistText" />
 
 
@@ -158,7 +151,6 @@
                     android:id="@+id/tv_tac_dung_phu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tac_dung_phu"
                     android:textColor="@color/fistText" />
 
 
@@ -174,7 +166,6 @@
                     android:id="@+id/chu_y_de_phong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/chu_y_de_phong"
                     android:textColor="@color/fistText" />
 
 
@@ -190,7 +181,6 @@
                     android:id="@+id/tv_lieu_luong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/lieu_luong"
                     android:textColor="@color/fistText" />
 
 
@@ -199,6 +189,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
                 android:layout_marginTop="32dp">
 
 
@@ -206,7 +197,6 @@
                     android:id="@+id/tv_bao_quan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/bao_quan"
                     android:textColor="@color/fistText" />
 
 
