@@ -179,7 +179,6 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView,Ite
         btnDiseaseDiagnos = (Button) getActivity().findViewById(R.id.btn_Disease_Dianosi);
         etFindAll = (EditText) view.findViewById(R.id.etSearch1);
         rvResultFindIllness.setNestedScrollingEnabled(false);
-
     }
 
 //    private List<Disease> createTempData(int size) {

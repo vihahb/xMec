@@ -50,6 +50,7 @@
         <activity
             android:name=".xmec.views.activity.HomeActivity"
             android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@style/HomeActivityTheme" />
 
         <meta-data

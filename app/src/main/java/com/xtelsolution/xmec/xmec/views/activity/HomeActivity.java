@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -25,6 +27,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.SlidingDrawer;
 
+import com.lv.listenkeyboardevent.KeyboardVisibilityEvent;
+import com.lv.listenkeyboardevent.KeyboardVisibilityEventListener;
 import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.utils.JsonHelper;
@@ -130,6 +134,16 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
             @Override
             public void onPageScrollStateChanged(int state) {
+            }
+        });
+        KeyboardVisibilityEvent.registerEventListener(this, new KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                if (isOpen){
+                    sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
+                }else {
+                    sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
+                }
             }
         });
     }
@@ -250,4 +264,6 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     public OnLoadMapSuccessListener get() {
         return this;
     }
+
+
 }
