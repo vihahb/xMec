@@ -63,17 +63,17 @@
     <string name="treatment_method">Một nghiên cứu kéo dài 8 năm từ 2000 đến 2007 nhằm đánh giá tuổi thọ kỳ vọng của những người có HIV đang điều trị ARV. Nghiên cứu này tiến hành trên gần 23.000 bệnh nhân ở Mỹ và Canada, thông qua đánh giá các thông số sinh học, từ đó phân tích tỷ lệ tử vong và tuổi thọ kỳ vọng của nhóm này. Đồng thời, các nhà khoa học cũng so sánh tuổi thọ của bệnh nhân với mặt bằng dân số chung tại thời điểm bắt đầu nghiên cứu và 8 năm sau đó.</string>
 
 
-    <string name="namet_medicen_text"><b>Tên Thuốc:</b> %s</string>
-    <string name="dang_bao_che"><b>Dạng bào chết:</b> %s</string>
-    <string name="nhom_duoc_ly"><b>Nhóm dược lý:</b> %s</string>
-    <string name="thanh_phan"><b>Thành phần</b> %s</string>
-    <string name="chi_dinh"><b>Chỉ định:</b> %s</string>
-    <string name="chong_chi_dinh"><b>Chống chỉ định:</b> %s</string>
-    <string name="tuong_tac_thuoc"><b>Tương tác thuốc:</b> %s</string>
-    <string name="tac_dung_phu"><b>Tác dụng phụ:</b> %s</string>
-    <string name="chu_y_de_phong"><b>Chú ý đề phòng:</b> %s</string>
-    <string name="lieu_luong"><b>Liều lượng:</b> %s</string>
-    <string name="bao_quan"><b>Bảo quản:</b> %s</string>
+    <string name="namet_medicen_text">Tên Thuốc: </string>
+    <string name="dang_bao_che">Dạng bào chết: </string>
+    <string name="nhom_duoc_ly">Nhóm dược lý: </string>
+    <string name="thanh_phan">Thành phần: </string>
+    <string name="chi_dinh">Chỉ định: </string>
+    <string name="chong_chi_dinh">Chống chỉ định: </string>
+    <string name="tuong_tac_thuoc">Tương tác thuốc: </string>
+    <string name="tac_dung_phu">Tác dụng phụ: </string>
+    <string name="chu_y_de_phong">Chú ý đề phòng: </string>
+    <string name="lieu_luong">Liều lượng: </string>
+    <string name="bao_quan">Bảo quản: </string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

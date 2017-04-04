@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.xmec.views.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class MedicineDetailActivity extends BasicActivity implements IMedicineDe
         mContext = this;
         medicineID = getIntent().getIntExtra(Constant.INTENT_ID_MEDICINE, -1) + "";
         presenter = new MedicineDetailPresenter(this);
-        if (medicineID!=null){
+        if (medicineID != null) {
             presenter.getMedicineDetail(medicineID);
         }
         initUI();
@@ -66,17 +67,18 @@ public class MedicineDetailActivity extends BasicActivity implements IMedicineDe
     }
 
     private void setDataToView(RESP_Medicine_Detail medicine) {
-        tv_ten_thuoc.setText(getString(R.string.namet_medicen_text, medicine.getName()));
-        tv_dang_bao_che.setText(getString(R.string.dang_bao_che, medicine.getType()));
-        tv_nhom_duoc_ly.setText(getString(R.string.nhom_duoc_ly, medicine.getGroup()));
-        tv_thanh_phan.setText(getString(R.string.thanh_phan, medicine.getComponent()));
-        tv_chi_dinh.setText(getString(R.string.chi_dinh, medicine.getIndication()));
-        tv_chong_chi_dinh.setText(getString(R.string.chong_chi_dinh, medicine.getContraindication()));
-        tv_tuong_tac_thuoc.setText(getString(R.string.tuong_tac_thuoc, medicine.getDrugInteraction()));
-        tv_tac_dung_phu.setText(getString(R.string.tac_dung_phu, medicine.getSidEeffect()));
-        chu_y_de_phong.setText(getString(R.string.chu_y_de_phong, medicine.getWarning()));
-        tv_lieu_luong.setText(getString(R.string.lieu_luong, medicine.getDosage()));
-        tv_bao_quan.setText(getString(R.string.bao_quan, medicine.getPreservation()));
+//        tv_ten_thuoc.setText(Html.fromHtml(getString(R.string.namet_medicen_text, medicine.getName())));
+        tv_ten_thuoc.setText(Html.fromHtml("<b>" + getString(R.string.namet_medicen_text) + "</b> " + medicine.getName()));
+        tv_dang_bao_che.setText(Html.fromHtml("<b>" + getString(R.string.dang_bao_che) + "</b> " + medicine.getType()));
+        tv_nhom_duoc_ly.setText(Html.fromHtml("<b>" + getString(R.string.nhom_duoc_ly) + "</b> " + medicine.getGroup()));
+        tv_thanh_phan.setText(Html.fromHtml("<b>" + getString(R.string.thanh_phan) + "</b> " + medicine.getComponent()));
+        tv_chi_dinh.setText(Html.fromHtml("<b>" + getString(R.string.chi_dinh) + "</b> " + medicine.getIndication()));
+        tv_chong_chi_dinh.setText(Html.fromHtml("<b>" + getString(R.string.chong_chi_dinh) + "</b> " + medicine.getContraindication()));
+        tv_tuong_tac_thuoc.setText(Html.fromHtml("<b>" + getString(R.string.tuong_tac_thuoc) + "</b> " + medicine.getDrugInteraction()));
+        tv_tac_dung_phu.setText(Html.fromHtml("<b>" + getString(R.string.tac_dung_phu) + "</b> " + medicine.getSidEeffect()));
+        chu_y_de_phong.setText(Html.fromHtml("<b>" + getString(R.string.chu_y_de_phong) + "</b> " + medicine.getWarning()));
+        tv_lieu_luong.setText(Html.fromHtml("<b>" + getString(R.string.lieu_luong) + "</b> " + medicine.getDosage()));
+        tv_bao_quan.setText(Html.fromHtml("<b>" + getString(R.string.bao_quan) + "</b> " + medicine.getPreservation()));
     }
 
     @Override
