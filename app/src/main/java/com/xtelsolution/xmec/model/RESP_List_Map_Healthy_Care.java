@@ -10,8 +10,18 @@ import java.util.List;
  */
 
 public class RESP_List_Map_Healthy_Care extends RESP_Basic {
+    // fix data co so y te
+//    @Expose
+//    List<RESP_Map_Healthy_Care> data;
     @Expose
     List<RESP_Map_Healthy_Care> data;
+//    public List<RESP_Map_Healthy_Care> getData() {
+//        return data;
+//    }
+//
+//    public void setData(List<RESP_Map_Healthy_Care> data) {
+//        this.data = data;
+//    }
 
     public List<RESP_Map_Healthy_Care> getData() {
         return data;

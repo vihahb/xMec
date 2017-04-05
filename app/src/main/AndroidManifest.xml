@@ -121,6 +121,9 @@
         <activity
             android:name=".xmec.views.activity.UserDiseaseDetailActivity"
             android:theme="@style/HomeActivityTheme"></activity>
+        <activity
+            android:name=".xmec.views.activity.EditDiseaseActivity"
+            android:theme="@style/HomeActivityTheme"></activity>
     </application>
 
 </manifest>

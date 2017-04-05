@@ -54,6 +54,7 @@ import com.xtelsolution.xmec.xmec.views.activity.HomeActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IMapView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -211,12 +212,22 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         count++;
         xLog.e(TAG, "onGetListHealtyCareSuccess: " + count + "PHILOG");
         for (int i = 0; i < data.size(); i++) {
-            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLatitude(), data.get(i).getLongitude())).title(data.get(i).getName()));
-            if (data.get(i).getType() == 1) {
-                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.marker_hospiotal)));
-            } else
-                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_pharmacy)));
-            marker.setTag(data.get(i).getId());
+            String name = data.get(i).getName();
+            try {
+               name=new String(name.getBytes("ISO-8859-1"));
+                xLog.e("NAME",name);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLat(), data.get(i).getLng())).title(name));
+            marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.marker_hospiotal)));
+//
+//             fix data C o so y te
+//            if (data.get(i).getType() == 1) {
+//                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.marker_hospiotal)));
+//            } else
+//                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_pharmacy)));
+//            marker.setTag(data.get(i).getId());
         }
         onLoadMapSuccessListener.onLoadMapSuccess(data);
 
@@ -260,9 +271,9 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 //    }
     @Override
     public void onCameraIdle() {
-        xLog.e(TAG, "onCameraIdle:" + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
-        presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
-        listTemp(mMap.getCameraPosition().target);
+            xLog.e(TAG, "onCameraIdle:" + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
+            presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
+//        listTemp(mMap.getCameraPosition().target);
     }
 
     @Override

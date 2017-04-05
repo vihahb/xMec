@@ -43,8 +43,8 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
     private MedicineAdapterOptionButton adapter;
     private DiseaseDetailPresenter presenter;
     private RESP_Disease_Detail diseaseDetail;
-    private int idDisease=-1;
-    private int idMedical=-1;
+    private int idDisease = -1;
+    private int idMedical = -1;
     private CoordinatorLayout progressbar;
 
     @Override
@@ -61,8 +61,8 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         tvToolbarTitle.setText(getResources().getString(R.string.disease_detail));
-        idDisease = getIntent().getIntExtra(Constant.DISEASE_ID,-1);
-        idMedical = getIntent().getIntExtra(Constant.MEDICAL_ID,-1);
+        idDisease = getIntent().getIntExtra(Constant.DISEASE_ID, -1);
+        idMedical = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
 
         presenter = new DiseaseDetailPresenter(this);
         presenter.checkGetDiseaseDetail(idDisease);
@@ -71,7 +71,7 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
 
     private void initRecyclerView() {
         medicines = new ArrayList<>();
-        adapter = new MedicineAdapterOptionButton(medicines,false,mContext);
+        adapter = new MedicineAdapterOptionButton(medicines, false, mContext);
         adapter.setItemClickListener(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
@@ -86,7 +86,7 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
         btnViewDisease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Đã click");
+//                showToast(diseaseDetail.getId_disease());
             }
         });
 
@@ -117,19 +117,19 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
             case R.id.action_remove_medical:
 //                Sensor sensor = new Sensor("1", "s", "s", true, diseaseDetail, diseaseList);                ArrayList<RESP_Disease_Detail> diseaseList = new ArrayList<>();
 
-                Intent i = new Intent(UserDiseaseDetailActivity.this,EditDiseaseActivity.class);
-                i.putExtra(Constant.DISEASE_DETAIL,diseaseDetail);
-                i.putExtra(Constant.MEDICAL_ID,idMedical);
+                Intent i = new Intent(UserDiseaseDetailActivity.this, EditDiseaseActivity.class);
+                i.putExtra(Constant.DISEASE_DETAIL, diseaseDetail);
+                i.putExtra(Constant.MEDICAL_ID, idMedical);
                 startActivity(i);
                 break;
         }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
     public void onLoadDiseaseDetailSuccess(RESP_Disease_Detail diseaseDetail) {
-        this.diseaseDetail =diseaseDetail;
-        idDisease= diseaseDetail.getId_disease();
+        this.diseaseDetail = diseaseDetail;
+        idDisease = diseaseDetail.getId_disease();
         tvName.setText(diseaseDetail.getTen_benh());
         tvNote.setText(diseaseDetail.getNote());
         progressbar.setVisibility(View.GONE);
@@ -139,8 +139,10 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
     @Override
     public void onItemClickListener(Object item, int position) {
         RESP_User_Medicine medicine = (RESP_User_Medicine) item;
-        Intent i = new Intent(UserDiseaseDetailActivity.this,MedicineDetailActivity.class);
-        i.putExtra(Constant.INTENT_ID_MEDICINE,medicine.getId_drug());
-        startActivity(i);
+        if (medicine.getId_drug() != -1) {
+            Intent i = new Intent(UserDiseaseDetailActivity.this, MedicineDetailActivity.class);
+            i.putExtra(Constant.INTENT_ID_MEDICINE, medicine.getId_drug());
+            startActivity(i);
+        }
     }
 }

@@ -15,9 +15,9 @@ public class RESP_Map_Healthy_Care extends RESP_Basic {
     @Expose
     private String address;
     @Expose
-    private double latitude;
+    private double lat;
     @Expose
-    private double longitude;
+    private double lng;
     @Expose
     private int type;
 
@@ -37,20 +37,20 @@ public class RESP_Map_Healthy_Care extends RESP_Basic {
         this.id = id;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public double getLat() {
+        return lat;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public double getLng() {
+        return lng;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public String getName() {

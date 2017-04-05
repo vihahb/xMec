@@ -59,7 +59,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     public MapPresenter(IMapView view) {
         this.view = view;
         mActivity = view.getActivity();
-        radius = 2;
+        radius = 1;
         listPos = new HashMap<>();
     }
 
@@ -101,8 +101,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     public void getHospitals(final Object... param) {
         double latitude = (double) param[1];
         double longitude = (double) param[2];
+        if (latitude==0&&longitude==0)
+            return;
         String location = "latitude=" + latitude + "&longitude=" + longitude;
-        String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "?" + location + "&radius=" + radius+"&type=1";
+        String url = "http://124.158.5.112:8092/xmec/v0.1/user/hospitals-around?latitude="+latitude+"&longitude="+longitude+"&radius=1.0";
         xLog.e("getHospitals",url);
         HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
@@ -116,7 +118,6 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
                     }
                 }
                 view.onGetListHealtyCareSuccess(data);
-                view.dismissProgressDialog();
             }
 
             @Override

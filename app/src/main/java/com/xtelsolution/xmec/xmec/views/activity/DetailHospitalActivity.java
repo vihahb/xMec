@@ -111,7 +111,7 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
             setImage(imgAvatar, healthyCare.getUrl_avatar());
         else
             imgAvatar.setImageResource(R.drawable.ic_avatar_hospital);
-        LatLng latLng = new LatLng(healthyCare.getLatitude(), healthyCare.getLongitude());
+        LatLng latLng = new LatLng(healthyCare.getLat(), healthyCare.getLng());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
         mMap.addMarker(new MarkerOptions().position(latLng));
     }

@@ -72,8 +72,8 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
     private List<RESP_User_Medicine> userMedicine;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_illness);
         mContext = getBaseContext();
         initUI();
