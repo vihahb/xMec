@@ -6,6 +6,7 @@
     style="@style/HomeActivityTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.xtelsolution.xmec.xmec.views.activity.ProfileActivity">
 

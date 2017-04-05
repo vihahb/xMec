@@ -82,9 +82,9 @@ public class Task {
                 double width = bitmap.getWidth(), height = bitmap.getHeight();
                 Log.e("tb_bitmap_old", width + "        " + height);
 
-                if (width > 128 || height > 178) {
+                if (width > 200 || height > 240) {
                     int new_width, new_height;
-                    while (width > 128 || height > 178) {
+                    while (width > 200 || height > 240) {
                         width = width * 0.8;
                         height = height * 0.8;
                         Log.e("tb_bitmap_run", width + "       " + height);

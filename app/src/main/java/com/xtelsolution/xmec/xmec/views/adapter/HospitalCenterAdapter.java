@@ -43,8 +43,8 @@ public class HospitalCenterAdapter extends RecyclerView.Adapter{
         HospitalHolder hospitalHolder = (HospitalHolder) holder;
         RESP_Map_Healthy_Care hospital = mListHeathCare.get(position);
         setIcon(hospitalHolder.imgAvatar,hospital.getType());
-        hospitalHolder.tvAddress.setText(hospital.getName());
-        hospitalHolder.tvName.setText(hospital.getAddress());
+        hospitalHolder.tvAddress.setText(hospital.getAddress());
+        hospitalHolder.tvName.setText(hospital.getName());
         hospitalHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,10 +79,10 @@ public class HospitalCenterAdapter extends RecyclerView.Adapter{
         }
     }
     public void setIcon(ImageView avt,int type){
-        if (type==1)
+//        if (type==1)
+//            avt.setImageResource(R.drawable.ic_hospital);
+//        else
             avt.setImageResource(R.drawable.ic_hospital);
-        else
-            avt.setImageResource(R.drawable.ic_drug_store);
     }
 }
 

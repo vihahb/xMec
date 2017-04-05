@@ -255,12 +255,13 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
 
     @Override
     public void onLoadProfileSuccess(String name, long birthday, double height, double weight, String url, int sex) {
-        etName.setText(name);
+        xLog.e("onLoadProfileSuccess ","  name "+name+"  birthday "+birthday+" height "+height+"   Weight "+weight);
+        if (!name.equals(""))
+            etName.setText(name);
         datePicker.setTimeinMilisecond(birthday);
         etHeight.setText(String.valueOf(height));
         etWeight.setText(String.valueOf(weight));
         setImage(avatarView, url);
-        urlAvatar = url;
 //        gender=sex;
         urlAvatar = url;
         if (sex == 1)

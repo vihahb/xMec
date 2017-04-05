@@ -212,14 +212,8 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         count++;
         xLog.e(TAG, "onGetListHealtyCareSuccess: " + count + "PHILOG");
         for (int i = 0; i < data.size(); i++) {
-            String name = data.get(i).getName();
-            try {
-               name=new String(name.getBytes("ISO-8859-1"));
-                xLog.e("NAME",name);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLat(), data.get(i).getLng())).title(name));
+
+            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLat(), data.get(i).getLng())).title(data.get(i).getName()));
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.marker_hospiotal)));
 //
 //             fix data C o so y te
