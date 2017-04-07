@@ -67,7 +67,7 @@
         <item name="android:paddingBottom">@dimen/dimen_16</item>
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textColorHint">@color/textHint</item>
-        <item name="android:textSize">@dimen/dimen14sp</item>
+        <item name="android:textSize">@dimen/dimen16sp</item>
         <item name="android:lines">1</item>
         <item name="android:textStyle">bold</item>
     </style>

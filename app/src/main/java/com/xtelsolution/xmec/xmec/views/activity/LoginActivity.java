@@ -64,7 +64,7 @@ public class LoginActivity extends BasicActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        setUi(findViewById(R.id.lg_content));
         init();
         animation();
         if (checkApiVersion())

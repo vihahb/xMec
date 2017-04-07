@@ -7,6 +7,12 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -90,5 +96,25 @@ public class BasicActivity extends AppCompatActivity implements BaseView {
 
             }
         });
+    }
+    protected void hideKeyBoard(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+    }
+    protected void setUi(View view){
+        if (!(view instanceof EditText)){
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    hideKeyBoard();
+                    return false;
+                }
+            });
+        }
+        if (view instanceof ViewGroup){
+            for (int i=0;i<((ViewGroup) view).getChildCount();i++){
+                setUi(((ViewGroup)view).getChildAt(i));
+            }
+        }
     }
 }

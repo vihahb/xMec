@@ -55,10 +55,8 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mContext = getContext();
         list = new ArrayList<>();
-
         medicineAdapter = new MedicineAdapter(mContext, list);
     }
 
@@ -76,6 +74,7 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
         super.onViewCreated(view, savedInstanceState);
         if (list.size()==0) {
             initView(view);
+            setUi(view);
             initControl();
             handler = new Handler();
             presenter = new FindMedicinePresenter(this);

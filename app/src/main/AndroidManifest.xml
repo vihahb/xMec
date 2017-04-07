@@ -119,7 +119,7 @@
             android:name=".xmec.views.activity.MedicineDetailActivity"
             android:theme="@style/HomeActivityTheme" />
         <activity
-            android:name=".xmec.views.activity.UserDiseaseDetailActivity"
+            android:name=".xmec.views.activity.UserDiseaseDetailActivity" android:parentActivityName=".xmec.views.activity.MedicalDetailActivity"
             android:theme="@style/HomeActivityTheme"></activity>
         <activity
             android:name=".xmec.views.activity.EditDiseaseActivity"

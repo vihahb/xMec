@@ -79,6 +79,7 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView,Ite
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (listdisease.size()==0) {
+            setUi(view.findViewById(R.id.NscrollView));
             initView(view);
             initRecyclerView();
             initControl();

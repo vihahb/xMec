@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/lg_content"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:focusableInTouchMode="true"
     tools:context=".xmec.views.activity.LoginActivity">
 
     <ImageView
@@ -140,9 +141,12 @@
     <TextView
         android:id="@+id/tv_forgot_pw"
         style="@style/TextViewUnderLine"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|left"
+        android:text="@string/forgot_pw"
+        android:layout_alignBaseline="@+id/tv_sign_up"
+        android:layout_alignBottom="@+id/tv_sign_up"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_gravity="bottom|left"
-        android:text="@string/forgot_pw" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp" />
 </com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout>

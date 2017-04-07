@@ -81,6 +81,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_directory);
+        setUi(findViewById(R.id.activity_medical_directory));
         mContext = AddMedicalDetailActivity.this;
         init();
         idMedical = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);

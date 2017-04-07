@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.PhoneNumber;
@@ -26,14 +27,16 @@ public class RegisterActivity extends BasicActivity {
     private String TAG = "RegisterActivity";
     private CallbackManager callbackManager;
     private EditText etPhone, etPassword, etRePassword;
+    private TextView btnHasNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        setUi(findViewById(R.id.activity_register));
         callbackManager = CallbackManager.create(this);
         initUI();
-
+        initControl();
     }
 
     private void initUI() {
@@ -44,6 +47,16 @@ public class RegisterActivity extends BasicActivity {
             @Override
             public void onClick(View v) {
                 registerAccount();
+            }
+        });
+        btnHasNumber = (TextView) findViewById(R.id.btn_has_number);
+    }
+
+    private void initControl() {
+        btnHasNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

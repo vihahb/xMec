@@ -68,6 +68,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        setUi(findViewById(R.id.activity_profile));
         mContext = this;
         initUI();
         presenter = new ProfilePresenter(this);
@@ -244,8 +245,6 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
             }
         });
         layout_avatar.startAnimation(animTranslate);
-
-
     }
 
     private void showDatePicker() {

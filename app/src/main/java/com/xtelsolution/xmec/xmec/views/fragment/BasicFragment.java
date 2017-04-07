@@ -1,9 +1,15 @@
 package com.xtelsolution.xmec.xmec.views.fragment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -60,6 +66,26 @@ public class BasicFragment extends Fragment implements BaseView {
     public void dismissProgressDialog() {
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
+        }
+    }
+    protected void hideKeyBoard(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+    }
+    protected void setUi(View view){
+        if (!(view instanceof EditText)){
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    hideKeyBoard();
+                    return false;
+                }
+            });
+        }
+        if (view instanceof ViewGroup){
+            for (int i=0;i<((ViewGroup) view).getChildCount();i++){
+                setUi(((ViewGroup)view).getChildAt(i));
+            }
         }
     }
 }
