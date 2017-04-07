@@ -44,7 +44,7 @@
                         android:layout_marginLeft="@dimen/dimen_20"
                         android:layout_marginRight="16dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/avatar" />
+                        android:src="@mipmap/avatar" />
 
                     <FrameLayout
                         android:layout_width="match_parent"

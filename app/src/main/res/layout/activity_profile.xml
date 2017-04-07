@@ -48,7 +48,7 @@
                     android:layout_width="@dimen/dimen_100"
                     android:layout_height="@dimen/dimen_100"
                     android:layout_gravity="center"
-                    android:src="@drawable/avatar"
+                    android:src="@mipmap/avatar"
                     app:av_border_color="@android:color/white"
                     app:av_border_width="4dp" />
 

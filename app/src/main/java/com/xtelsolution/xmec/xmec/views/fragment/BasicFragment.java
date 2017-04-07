@@ -41,8 +41,8 @@ public class BasicFragment extends Fragment implements BaseView {
     protected void setImage(ImageView img, String url) {
         Picasso.with(getContext())
                 .load(url)
-                .placeholder(R.drawable.avatar)
-                .error(R.drawable.avatar)
+                .placeholder(R.mipmap.avatar)
+                .error(R.mipmap.avatar)
                 .into(img);
     }
 

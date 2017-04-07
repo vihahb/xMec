@@ -76,12 +76,12 @@ public class BasicActivity extends AppCompatActivity implements BaseView {
 
     protected void setImage(ImageView img, String url) {
         if (url == null || url.trim().length() == 0) {
-            img.setImageResource(R.drawable.avatar);
+            img.setImageResource(R.mipmap.avatar);
         } else {
             Picasso.with(this)
                     .load(url)
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
+                    .placeholder(R.mipmap.avatar)
+                    .error(R.mipmap.avatar)
                     .into(img);
         }
     }
