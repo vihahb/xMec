@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:layout_margin="32dp"
-        android:src="@drawable/avatar" />
+        android:src="@mipmap/avatar" />
 
     <ScrollView
         android:id="@+id/LoginBox"

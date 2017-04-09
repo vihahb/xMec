@@ -40,7 +40,7 @@
                 android:id="@+id/img_avatar"
                 android:layout_width="@dimen/avatar_size"
                 android:layout_height="@dimen/avatar_size"
-                android:src="@drawable/avatar"
+                android:src="@mipmap/avatar"
                 app:av_border_width="3dp" />
 
             <agency.tango.android.avatarview.views.AvatarView
