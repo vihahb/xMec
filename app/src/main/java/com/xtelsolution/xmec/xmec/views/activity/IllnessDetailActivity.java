@@ -31,7 +31,7 @@ public class IllnessDetailActivity extends BasicActivity implements IIllnessDeta
         setContentView(R.layout.activity_news_detail);
         init();
         initWebView();
-        String mainUrl = getIntent().getExtras().getString(Constant.ILLNESS_URL);
+        String mainUrl = getIntent().getStringExtra(Constant.ILLNESS_URL);
         xLog.e(TAG, "onCreate: " + Constant.LOGPHI + mainUrl);
         if (mainUrl != null) {
             mainUrl.replace("http://diendan.songkhoe.vn/dien-dan", "http://diendan.songkhoe.vn/chi-tiet-tong-quan-ve");
@@ -39,7 +39,7 @@ public class IllnessDetailActivity extends BasicActivity implements IIllnessDeta
             presenter.loadIllnessDetail(mainUrl);
         } else {
             showToast("Có lỗi xảy ra");
-            finish();
+
         }
     }
 

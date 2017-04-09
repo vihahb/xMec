@@ -41,6 +41,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterItem;
+import com.google.maps.android.clustering.ClusterManager;
 import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
@@ -48,11 +50,14 @@ import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.OnLoadMapSuccessListener;
 import com.xtelsolution.xmec.model.RESP_List_Map_Healthy_Care;
 import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
+import com.xtelsolution.xmec.model.entity.HospitalClusterItem;
 import com.xtelsolution.xmec.presenter.MapPresenter;
 import com.xtelsolution.xmec.xmec.views.activity.DetailHospitalActivity;
 import com.xtelsolution.xmec.xmec.views.activity.HomeActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IMapView;
+import com.xtelsolution.xmec.xmec.views.widget.CustomClusterManager;
+import com.xtelsolution.xmec.xmec.views.widget.CustomClusterRender;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -63,7 +68,7 @@ import java.util.Random;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveCanceledListener, GoogleMap.OnCameraIdleListener {
+public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView, GoogleMap.OnCameraMoveCanceledListener, GoogleMap.OnCameraIdleListener,CustomClusterManager.CameraIdle, ClusterManager.OnClusterItemClickListener {
     private static final String TAG = "MapFragment";
     private View view;
     private GoogleMap mMap;
@@ -75,6 +80,8 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
     private CoordinatorLayout locationPermission;
     private Button btnInitPermission;
     private boolean isMapCreated = false;
+    private CustomClusterManager clusterManager;
+
     int count = 0;
 
 
@@ -135,9 +142,15 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         mMarker.setAnchor(0.5f, 0.5f);
         presenter.initMap();
         isMapCreated = true;
-        mMap.setOnCameraIdleListener(this);
+
+        clusterManager = new CustomClusterManager(getContext(),mMap);
+        mMap.setOnCameraIdleListener(clusterManager);
+        clusterManager.setOnClusterItemClickListener(this);
+        mMap.setOnMarkerClickListener(clusterManager);
+        clusterManager.setCameraIdle(this);
+        clusterManager.setRenderer(new CustomClusterRender(getContext(),mMap,clusterManager));
         mMap.setOnCameraMoveCanceledListener(this);
-        mMap.setOnMarkerClickListener(this);
+
     }
 
     @Override
@@ -213,29 +226,22 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         xLog.e(TAG, "onGetListHealtyCareSuccess: " + count + "PHILOG");
         for (int i = 0; i < data.size(); i++) {
 
-            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLat(), data.get(i).getLng())).title(data.get(i).getName()));
-            marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.marker_hospiotal)));
-//
-//             fix data C o so y te
-//            if (data.get(i).getType() == 1) {
+//            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(data.get(i).getLat(), data.get(i).getLng())).title(data.get(i).getName()));
+////
+////             fix data C o so y te
+//            if (data.get(i).getType() == 0) {
 //                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.marker_hospiotal)));
 //            } else
 //                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_pharmacy)));
 //            marker.setTag(data.get(i).getId());
+            LatLng latLng = new LatLng(data.get(i).getLat(),data.get(i).getLng());
+            HospitalClusterItem hospital = new HospitalClusterItem(latLng,data.get(i).getName(),data.get(i).getId(),data.get(i).getType());
+            clusterManager.addItem(hospital);
         }
         onLoadMapSuccessListener.onLoadMapSuccess(data);
 
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        if (marker.getTag() == null)
-            return false;
-        Intent i = new Intent(getActivity(), DetailHospitalActivity.class);
-        i.putExtra(Constant.HEALTHY_CENTER_ID, (int) marker.getTag());
-        startActivity(i);
-        return false;
-    }
 
     private Bitmap scaleBimap(int id) {
         Bitmap b = BitmapFactory.decodeResource(getResources(), id);
@@ -327,4 +333,12 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         return new LatLng(foundLat, foundLon);
     }
 
+    @Override
+    public boolean onClusterItemClick(ClusterItem clusterItem) {
+        HospitalClusterItem item = (HospitalClusterItem) clusterItem;
+        Intent i = new Intent(getActivity(), DetailHospitalActivity.class);
+        i.putExtra(Constant.HEALTHY_CENTER_ID, item.getIdHospital());
+        startActivity(i);
+        return false;
+    }
 }

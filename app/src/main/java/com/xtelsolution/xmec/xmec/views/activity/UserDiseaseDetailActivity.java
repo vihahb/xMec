@@ -73,7 +73,6 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
         medicines = new ArrayList<>();
         adapter = new MedicineAdapterOptionButton(medicines, false, mContext);
         adapter.setItemClickListener(this);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             rvMedicine.setAdapter(adapter);
             rvMedicine.setLayoutManager(new LinearLayoutManager(getBaseContext()));
@@ -87,6 +86,9 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
             @Override
             public void onClick(View view) {
 //                showToast(diseaseDetail.getId_disease());
+                Intent i = new Intent(UserDiseaseDetailActivity.this,IllnessDetailActivity.class);
+                i.putExtra(Constant.DISEASE_ID,diseaseDetail.getId_disease());
+                startActivity(i);
             }
         });
 
@@ -114,6 +116,9 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.action_remove_medical:
 //                Sensor sensor = new Sensor("1", "s", "s", true, diseaseDetail, diseaseList);                ArrayList<RESP_Disease_Detail> diseaseList = new ArrayList<>();
 

@@ -110,7 +110,7 @@
             android:theme="@style/AppLoginTheme"
             tools:replace="android:theme" />
         <activity
-            android:name=".xmec.views.activity.MedicalDetailActivity"
+            android:name=".xmec.views.activity.MedicalDetailActivity" android:parentActivityName=".xmec.views.activity.HomeActivity"
             android:theme="@style/HomeActivityTheme" />
         tools:replace="android:theme" />
         <activity android:name=".xmec.views.activity.NewsDetailActivity" />
@@ -119,11 +119,11 @@
             android:name=".xmec.views.activity.MedicineDetailActivity"
             android:theme="@style/HomeActivityTheme" />
         <activity
-            android:name=".xmec.views.activity.UserDiseaseDetailActivity" android:parentActivityName=".xmec.views.activity.MedicalDetailActivity"
-            android:theme="@style/HomeActivityTheme"></activity>
+            android:name=".xmec.views.activity.UserDiseaseDetailActivity"
+            android:theme="@style/HomeActivityTheme"/>
         <activity
             android:name=".xmec.views.activity.EditDiseaseActivity"
-            android:theme="@style/HomeActivityTheme"></activity>
+            android:theme="@style/HomeActivityTheme"/>
     </application>
 
 </manifest>

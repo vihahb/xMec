@@ -79,10 +79,10 @@ public class HospitalCenterAdapter extends RecyclerView.Adapter{
         }
     }
     public void setIcon(ImageView avt,int type){
-//        if (type==1)
-//            avt.setImageResource(R.drawable.ic_hospital);
-//        else
+        if (type==0)
             avt.setImageResource(R.drawable.ic_hospital);
+        else
+            avt.setImageResource(R.drawable.ic_drug_store);
     }
 }
 

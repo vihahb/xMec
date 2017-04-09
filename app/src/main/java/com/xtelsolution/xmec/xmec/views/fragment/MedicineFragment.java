@@ -73,7 +73,7 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (list.size()==0) {
-            initView(view);
+            initView(view.findViewById(R.id.nesstedScrollView));
             setUi(view);
             initControl();
             handler = new Handler();

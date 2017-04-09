@@ -66,10 +66,21 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     public void getCurrentLocation() {
         if (!isLocationEnable()) {
             view.onGPSDisabled();
-            xLog.e("getCurrentLocation","getCurrentLocation");
+            xLog.e("getCurrentLocation", "getCurrentLocation");
             return;
         }
-        view.onGetCurrentLocationFinish(new LatLng(lat, log));
+        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location location = LocationServices.FusedLocationApi.getLastLocation(
+                googleApiClient);
+        if (location != null) {
+            lat = location.getLatitude();
+            log = location.getLongitude();
+            view.onGetCurrentLocationFinish(new LatLng(lat, log));
+        }
+
+
     }
 
     public void initMap() {
@@ -101,11 +112,11 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
     public void getHospitals(final Object... param) {
         double latitude = (double) param[1];
         double longitude = (double) param[2];
-        if (latitude==0&&longitude==0)
+        if (latitude == 0 && longitude == 0)
             return;
         String location = "latitude=" + latitude + "&longitude=" + longitude;
-        String url = "http://124.158.5.112:8092/xmec/v0.1/user/hospitals-around?latitude="+latitude+"&longitude="+longitude+"&radius=1.0";
-        xLog.e("getHospitals",url);
+        String url = "http://124.158.5.112:8092/xmec/v0.1/user/hospitals-around?latitude=" + latitude + "&longitude=" + longitude + "&radius="+radius+"&type=-1";
+        xLog.e("getHospitals", url);
         HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
             public void onSuccess(RESP_List_Map_Healthy_Care obj) {
@@ -127,10 +138,10 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         });
     }
 
-    public void checkGetHospital(double lat,double lng) {
+    public void checkGetHospital(double lat, double lng) {
         if (!checkConnnecttion(view))
             return;
-        getHospitals(GETLOCATION,lat,lng);
+        getHospitals(GETLOCATION, lat, lng);
 
     }
 
@@ -141,7 +152,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         return false;
     }
 
-    public void initPermission(){
+    public void initPermission() {
         view.getFragmentView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
     }
 
@@ -166,33 +177,35 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         registerLocation();
     }
 
-    public void registerLocation(){
+    public void registerLocation() {
         if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED && mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-            createLocationRequest();
-            startLocationUpdates();
-            Location location = LocationServices.FusedLocationApi.getLastLocation(
-                    googleApiClient);
-            if (location != null) {
-                lat = location.getLatitude();
-                log = location.getLongitude();
-                getCurrentLocation();
-                view.onLocationChange(new LatLng(lat,log));
+                PackageManager.PERMISSION_GRANTED ) {
+            if (mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+                createLocationRequest();
+                startLocationUpdates();
+                Location location = LocationServices.FusedLocationApi.getLastLocation(
+                        googleApiClient);
+                if (location != null) {
+                    lat = location.getLatitude();
+                    log = location.getLongitude();
+                    getCurrentLocation();
+                    view.onLocationChange(new LatLng(lat, log));
 //                checkGetHospital(lat,log);
+                }
             }
         }
     }
 
     private void startLocationUpdates() {
         if (googleApiClient == null) {
-            xLog.e("startLocationUpdates","client is null");
+            xLog.e("startLocationUpdates", "client is null");
         }
         if (locationRequest == null) {
-            xLog.e("startLocationUpdates","Request is null");
+            xLog.e("startLocationUpdates", "Request is null");
         }
         if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED && mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient,locationRequest,this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         }
 
     }
@@ -220,7 +233,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.e("MY", "onRequestPermissionsResult: ");
                 checkPermission();
-            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED){
+            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 Log.e("MY", "onRequestPermissionsResult: denine");
                 view.onPermissionDenied();
             }
