@@ -146,6 +146,8 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         clusterManager = new CustomClusterManager(getContext(),mMap);
         mMap.setOnCameraIdleListener(clusterManager);
         clusterManager.setOnClusterItemClickListener(this);
+        clusterManager.setAnimation(true);
+//        clusterManager.setAlgorithm();
         mMap.setOnMarkerClickListener(clusterManager);
         clusterManager.setCameraIdle(this);
         clusterManager.setRenderer(new CustomClusterRender(getContext(),mMap,clusterManager));
@@ -238,6 +240,7 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
             HospitalClusterItem hospital = new HospitalClusterItem(latLng,data.get(i).getName(),data.get(i).getId(),data.get(i).getType());
             clusterManager.addItem(hospital);
         }
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom+0.001f));
         onLoadMapSuccessListener.onLoadMapSuccess(data);
 
     }

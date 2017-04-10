@@ -51,7 +51,7 @@ public class CustomClusterRender<T extends ClusterItem> extends DefaultClusterRe
         } else if (screenSize == Configuration.SCREENLAYOUT_SIZE_SMALL) {
             size = 32;
         } else {
-            size = 64;
+            size = 48;
         }
         Bitmap bhalfsize = Bitmap.createScaledBitmap(b, size, size, false);
         return bhalfsize;
