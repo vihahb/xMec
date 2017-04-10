@@ -14,6 +14,9 @@ public class Article {
     private int total_view;
     private int total_comment;
 
+
+    public static final int TYPE_VIDEO = 1;
+    public static final int TYPE_OTHER = 2;
     public Article() {
     }
 

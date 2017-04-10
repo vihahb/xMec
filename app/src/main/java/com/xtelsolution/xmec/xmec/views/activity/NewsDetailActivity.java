@@ -25,7 +25,6 @@ public class NewsDetailActivity extends BasicActivity implements HtmlDetailView 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
-//        startActivity(new Intent(this,IllnessDetailActivity.class));
         handler = new Handler();
         String url = getIntent().getExtras().getString(TAG_NEWS_URL);
         init();

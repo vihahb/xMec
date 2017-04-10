@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.presenter;
 import com.xtelsolution.xmec.callbacks.HtmlLoader;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
+import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.xmec.views.inf.HtmlDetailView;
 
 import org.jsoup.Jsoup;
@@ -19,12 +20,18 @@ import java.io.InputStream;
 public class NewsDetailPresenter {
     private static final String TAG = "NewsDetailPresenter";
     private HtmlDetailView view;
+    int type;
 
     public NewsDetailPresenter(HtmlDetailView view) {
         this.view = view;
     }
 
     public void loadNews(String url) {
+
+        if (url.contains("http://songkhoe.vn/video"))
+            type = 1;
+        else type =2;
+        xLog.d("NewsDetailPresenter",url);
         new HtmlLoader(new LoadHtmlDetailListener() {
             @Override
             public void onPrepare() {
@@ -33,9 +40,12 @@ public class NewsDetailPresenter {
 
             @Override
             public void onSucess(Document result) {
-                view.loadWebView(getNewsBoxFromPage(result));
+                if (type== Article.TYPE_VIDEO)
+                    view.loadWebView(getVideoBoxFromPage(result));
+                else
+                    view.loadWebView(getNewsBoxFromPage(result));
                 view.showProgressView(false);
-                xLog.d(TAG, "loadNews: onSucess: " + getNewsBoxFromPage(result));
+                xLog.d(TAG, "loadNews: onSucess: " + getVideoBoxFromPage(result));
             }
 
             @Override
@@ -52,7 +62,7 @@ public class NewsDetailPresenter {
 
             InputStream inputStream = view.getActivity().getAssets().open("news-detail.html");
             Document mainHtml = Jsoup.parse(inputStream, "UTF-8", "news-detail.html");
-            if (document.select("p.wtc-p-user").size() > 0) {
+            if (document.select("p.wtc-p-user").size() > 1) {
                 Element titleNewsElement = document.select("p.wtc-p-user").get(1);
                 Element newsElement = document.select("div.wtc-div-title").first();
 
@@ -66,5 +76,22 @@ public class NewsDetailPresenter {
 
         }
         return null;
+    }
+
+    private String getVideoBoxFromPage(Document document){
+        try {
+            InputStream inputStream = view.getActivity().getAssets().open("news-detail.html");
+            Document mainHtml = Jsoup.parse(inputStream, "UTF-8", "news-detail.html");
+            if (document.select("div.flash-playing").size() > 0) {
+                Element videoBox = document.select("div.flash-playing").first();
+                mainHtml.select("div#wrapper").first().append(videoBox.outerHtml()).outerHtml();
+                return mainHtml.outerHtml();
+            } else {
+                return mainHtml.select("div#wrapper").first().append("<h3>Xin lỗi! Chúng tôi không tìm thấy trang bạn yêu cầu !</h3>").outerHtml();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "<h3>Xin lỗi, chúng tôi không tìm thấy trang bạn yêu cầu !</h3>";
+        }
     }
 }
