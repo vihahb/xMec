@@ -39,16 +39,27 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
     private LinearLayoutManager manager;
     private NewsFeedPresenter presenter;
     private String rss_url, typeName;
+    private static final String TYPE_NAME = "typeName";
+    private static final String RSS_URL = "rss_url";
 
-    public NewsFragment(String rss_url, String typeName) {
-        this.rss_url = rss_url;
-        this.typeName = typeName;
+    public static NewsFragment newInstance(String rss_url, String typeName) {
+        NewsFragment myFragment = new NewsFragment();
+
+        Bundle args = new Bundle();
+        args.putString(RSS_URL, rss_url);
+        args.putString(TYPE_NAME, typeName);
+        myFragment.setArguments(args);
+
+        return myFragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle bundle = this.getArguments();
+        rss_url = bundle.getString(RSS_URL);
+        typeName = bundle.getString(TYPE_NAME);
         presenter = new NewsFeedPresenter(this);
 
         mContext = getContext();

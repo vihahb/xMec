@@ -59,28 +59,30 @@ public class NewsFeedFragment extends Fragment {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+
+
             switch (position) {
                 case 0:
-                    return new NewsFragment("http://songkhoe.vn/widget.rss", "Nổi bật");
+                    return NewsFragment.newInstance("http://songkhoe.vn/widget.rss", "Nổi bật");
                 case 1:
-                    return new NewsFragment("http://songkhoe.vn/tam-su.rss", "Tâm sự");
+                    return NewsFragment.newInstance("http://songkhoe.vn/tam-su.rss", "Tâm sự");
                 case 2:
-                    return new NewsFragment("http://songkhoe.vn/gioi-tinh.rss", "Giới tính");
+                    return NewsFragment.newInstance("http://songkhoe.vn/gioi-tinh.rss", "Giới tính");
                 case 3:
-                    return new NewsFragment("http://songkhoe.vn/dinh-duong.rss", "Dinh dưỡng");
+                    return NewsFragment.newInstance("http://songkhoe.vn/dinh-duong.rss", "Dinh dưỡng");
                 case 4:
-                    return new NewsFragment("http://songkhoe.vn/thoi-su.rss", "Thời sự");
+                    return NewsFragment.newInstance("http://songkhoe.vn/thoi-su.rss", "Thời sự");
                 case 5:
-                    return new NewsFragment("http://songkhoe.vn/lam-dep.rss", "Làm đẹp");
+                    return NewsFragment.newInstance("http://songkhoe.vn/lam-dep.rss", "Làm đẹp");
                 case 6:
-                    return new NewsFragment("http://songkhoe.vn/lam-me.rss", "Làm mẹ");
+                    return NewsFragment.newInstance("http://songkhoe.vn/lam-me.rss", "Làm mẹ");
                 case 7:
-                    return new NewsFragment("http://songkhoe.vn/vui-khoe.rss", "Vui khỏe");
+                    return NewsFragment.newInstance("http://songkhoe.vn/vui-khoe.rss", "Vui khỏe");
                 case 8:
-                    return new NewsFragment("http://songkhoe.vn/can-biet.rss", "Cần biết");
+                    return NewsFragment.newInstance("http://songkhoe.vn/can-biet.rss", "Cần biết");
             }
 
-            return new NewsFragment("", "");
+            return NewsFragment.newInstance("", "");
         }
 
         @Override

@@ -68,12 +68,16 @@ public class BasicFragment extends Fragment implements BaseView {
             progressDialog.dismiss();
         }
     }
-    protected void hideKeyBoard(){
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+
+    protected void hideKeyBoard() {
+        if (getActivity().getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        }
     }
-    protected void setUi(View view){
-        if (!(view instanceof EditText)){
+
+    protected void setUi(View view) {
+        if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -82,9 +86,9 @@ public class BasicFragment extends Fragment implements BaseView {
                 }
             });
         }
-        if (view instanceof ViewGroup){
-            for (int i=0;i<((ViewGroup) view).getChildCount();i++){
-                setUi(((ViewGroup)view).getChildAt(i));
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                setUi(((ViewGroup) view).getChildAt(i));
             }
         }
     }
