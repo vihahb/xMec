@@ -13,7 +13,8 @@
         android:background="@drawable/bg_shape_radius_white"
         android:elevation="6dp"
         android:fillViewport="true"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,11 +99,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/treatment"
-                        android:textColor="@color/fistText" />
 
                     <TextView
                         android:id="@+id/tv_treatment"
@@ -120,44 +116,44 @@
 
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:orientation="horizontal">-->
 
-        <LinearLayout style="@style/LinearLayoutButtonImage"
-            android:layout_marginLeft="@dimen/dimen_3">
+    <!--<LinearLayout style="@style/LinearLayoutButtonImage"-->
+    <!--android:layout_marginLeft="@dimen/dimen_3">-->
 
-            <ImageView
-                android:id="@+id/btn_medicine"
-                style="@style/ButtonImage"
-                android:src="@drawable/ic_nha_thuoc" />
-        </LinearLayout>
+    <!--<ImageView-->
+    <!--android:id="@+id/btn_medicine"-->
+    <!--style="@style/ButtonImage"-->
+    <!--android:src="@drawable/ic_nha_thuoc" />-->
+    <!--</LinearLayout>-->
 
-        <LinearLayout style="@style/LinearLayoutButtonImage">
+    <!--<LinearLayout style="@style/LinearLayoutButtonImage">-->
 
-            <ImageView
-                android:id="@+id/btn_2"
-                style="@style/ButtonImage"
-                android:src="@drawable/ic_hospitalnew" />
-        </LinearLayout>
+    <!--<ImageView-->
+    <!--android:id="@+id/btn_2"-->
+    <!--style="@style/ButtonImage"-->
+    <!--android:src="@drawable/ic_hospitalnew" />-->
+    <!--</LinearLayout>-->
 
-        <LinearLayout style="@style/LinearLayoutButtonImage">
+    <!--<LinearLayout style="@style/LinearLayoutButtonImage">-->
 
-            <ImageView
-                android:id="@+id/btn_3"
-                style="@style/ButtonImage"
-                android:src="@drawable/ic_nha_nha" />
-        </LinearLayout>
+    <!--<ImageView-->
+    <!--android:id="@+id/btn_3"-->
+    <!--style="@style/ButtonImage"-->
+    <!--android:src="@drawable/ic_nha_nha" />-->
+    <!--</LinearLayout>-->
 
-        <LinearLayout style="@style/LinearLayoutButtonImage">
+    <!--<LinearLayout style="@style/LinearLayoutButtonImage">-->
 
-            <ImageView
-                android:id="@+id/btn_4"
-                style="@style/ButtonImage"
-                android:src="@drawable/ic_gop_y" />
-        </LinearLayout>
-    </LinearLayout>
+    <!--<ImageView-->
+    <!--android:id="@+id/btn_4"-->
+    <!--style="@style/ButtonImage"-->
+    <!--android:src="@drawable/ic_gop_y" />-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
 </LinearLayout>
 

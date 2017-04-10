@@ -1,7 +1,7 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -11,13 +11,14 @@ import android.widget.LinearLayout;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.presenter.NewsDetailPresenter;
-import com.xtelsolution.xmec.xmec.views.inf.INewsDetailView;
+import com.xtelsolution.xmec.xmec.views.inf.HtmlDetailView;
 
-public class NewsDetailActivity extends BasicActivity implements INewsDetailView{
+public class NewsDetailActivity extends BasicActivity implements HtmlDetailView {
 
     public static final String TAG_NEWS_URL = "news_url";
     private WebView webViewNews;
     private LinearLayout loLoading;
+    private Handler handler;
     private NewsDetailPresenter presenter;
 
     @Override
@@ -25,6 +26,7 @@ public class NewsDetailActivity extends BasicActivity implements INewsDetailView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
 //        startActivity(new Intent(this,IllnessDetailActivity.class));
+        handler = new Handler();
         String url = getIntent().getExtras().getString(TAG_NEWS_URL);
         init();
         initWebView();
@@ -42,9 +44,9 @@ public class NewsDetailActivity extends BasicActivity implements INewsDetailView
     private void initWebView() {
         webViewNews = (WebView) findViewById(R.id.webviewNews);
         webViewNews.setWebChromeClient(new WebChromeClient());
-        webViewNews.setWebViewClient(new WebViewClient(){
+        webViewNews.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                showToast("Các link trong bài viết đã bị vô hiệu hóa");
+                showToast("Bài viết không tồn tại.");
                 return true;
             }
         });
@@ -53,22 +55,28 @@ public class NewsDetailActivity extends BasicActivity implements INewsDetailView
 
     @Override
     public void loadWebView(String html) {
-        webViewNews.loadData(html,"text/html; charset=UTF-8", null);
+        webViewNews.loadData(html, "text/html; charset=UTF-8", null);
     }
 
     @Override
     public void showProgressView(boolean isLoading) {
-        if (isLoading){
+        if (isLoading) {
+
             loLoading.setVisibility(View.VISIBLE);
-        }else {
-            loLoading.setVisibility(View.GONE);
+        } else {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loLoading.setVisibility(View.GONE);
+                }
+            }, 500);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
             finish();
-       return true;
+        return true;
     }
 }

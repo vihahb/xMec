@@ -1,6 +1,5 @@
 package com.xtelsolution.xmec.xmec.views;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,9 +9,9 @@ import android.support.multidex.MultiDexApplication;
 import android.util.Base64;
 import android.util.Log;
 
-import com.xtelsolution.xmec.callbacks.NewsHtmlLoader;
+import com.xtelsolution.xmec.callbacks.HtmlLoader;
 import com.xtelsolution.xmec.common.xLog;
-import com.xtelsolution.xmec.listener.LoadNewsDetailListener;
+import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
 import com.xtelsolution.xmec.model.entity.IllnessTemple;
 
 import org.jsoup.nodes.Document;
@@ -40,7 +39,7 @@ public class MyApplication extends MultiDexApplication {
         PACKAGE_NAME = context.getPackageName();
 //        getKeyHash(PACKAGE_NAME);
         Log.v(TAG, "Pkg name " + PACKAGE_NAME);
-        new NewsHtmlLoader(new LoadNewsDetailListener() {
+        new HtmlLoader(new LoadHtmlDetailListener() {
             @Override
             public void onPrepare() {
 

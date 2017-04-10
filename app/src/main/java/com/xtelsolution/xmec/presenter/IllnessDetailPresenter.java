@@ -1,7 +1,7 @@
 package com.xtelsolution.xmec.presenter;
 
-import com.xtelsolution.xmec.callbacks.NewsHtmlLoader;
-import com.xtelsolution.xmec.listener.LoadNewsDetailListener;
+import com.xtelsolution.xmec.callbacks.HtmlLoader;
+import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
 import com.xtelsolution.xmec.xmec.views.inf.IIllnessDetailview;
 
 import org.jsoup.Jsoup;
@@ -25,7 +25,7 @@ public class IllnessDetailPresenter extends BasePresenter{
     public void loadIllnessDetail(String url) {
         if (!checkConnnecttion(view))
             return;
-        new NewsHtmlLoader(new LoadNewsDetailListener() {
+        new HtmlLoader(new LoadHtmlDetailListener() {
             @Override
             public void onPrepare() {
                 view.showProgressView(true);
@@ -59,7 +59,7 @@ public class IllnessDetailPresenter extends BasePresenter{
     }
     private void getLinkDetail(Document document){
         String url = document.select("a.top-total-lnk").first().attr("abs:href");
-        new NewsHtmlLoader(new LoadNewsDetailListener() {
+        new HtmlLoader(new LoadHtmlDetailListener() {
             @Override
             public void onPrepare() {
 

@@ -43,7 +43,7 @@ import java.util.List;
  */
 
 
-public class SearchFragment extends BasicFragment implements ISearchNewsView,ItemClickListener {
+public class SearchFragment extends BasicFragment implements ISearchNewsView, ItemClickListener {
     private final String TAG = SearchFragment.class.getName();
     private RecyclerView rvResultFindNews, rvResultFindIllness;
     private Button btnDiseaseDiagnos;
@@ -78,7 +78,7 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView,Ite
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (listdisease.size()==0) {
+        if (listdisease.size() == 0) {
             setUi(view.findViewById(R.id.NscrollView));
             initView(view);
             initRecyclerView();
@@ -212,7 +212,8 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView,Ite
     public void onItemClickListener(Object item, int position) {
         Disease disease = (Disease) item;
         Intent intent = new Intent(getActivity(), DetailDiseaseActivity.class);
-        intent.putExtra(Constant.ILLNESS_URL,disease.getUrl());
+        intent.putExtra(Constant.ILLNESS_URL, disease.getUrl());
+        intent.putExtra(Constant.MEDICAL_NAME, disease.getName());
         startActivity(intent);
     }
 }

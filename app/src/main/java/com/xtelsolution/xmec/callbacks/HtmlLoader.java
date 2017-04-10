@@ -2,7 +2,7 @@ package com.xtelsolution.xmec.callbacks;
 
 import android.os.AsyncTask;
 
-import com.xtelsolution.xmec.listener.LoadNewsDetailListener;
+import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -14,11 +14,11 @@ import java.io.IOException;
  * Created by HUNGNT on 3/6/2017.
  */
 
-public class NewsHtmlLoader extends AsyncTask<String, Integer, Document> {
+public class HtmlLoader extends AsyncTask<String, Integer, Document> {
 
-    private LoadNewsDetailListener handle;
+    private LoadHtmlDetailListener handle;
 
-    public NewsHtmlLoader(LoadNewsDetailListener handle) {
+    public HtmlLoader(LoadHtmlDetailListener handle) {
         this.handle = handle;
     }
 

@@ -8,19 +8,20 @@ import com.xtelsolution.xmec.xmec.views.inf.HtmlDetailView;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by HUNGNT on 3/6/2017.
+ * Created by Admin on 4/10/2017.
  */
 
-public class NewsDetailPresenter {
-    private static final String TAG = "NewsDetailPresenter";
+public class DiseaseByHTMLDetailPresenter {
+    private static final String TAG = "DiseaseByHTMLDetailPresenter";
     private HtmlDetailView view;
 
-    public NewsDetailPresenter(HtmlDetailView view) {
+    public DiseaseByHTMLDetailPresenter(HtmlDetailView view) {
         this.view = view;
     }
 
@@ -33,9 +34,10 @@ public class NewsDetailPresenter {
 
             @Override
             public void onSucess(Document result) {
-                view.loadWebView(getNewsBoxFromPage(result));
+                String load = getDiseaseBoxFromPage(result);
+                view.loadWebView(load);
                 view.showProgressView(false);
-                xLog.d(TAG, "loadNews: onSucess: " + getNewsBoxFromPage(result));
+                xLog.d(TAG, "loadNews: onSucess: " + load);
             }
 
             @Override
@@ -46,25 +48,26 @@ public class NewsDetailPresenter {
         }).execute(url);
     }
 
-    private String getNewsBoxFromPage(Document document) {
+    private String getDiseaseBoxFromPage(Document document) {
 
         try {
 
+            Elements select = document.select("#disease-detail div.position div.content .body");
+
             InputStream inputStream = view.getActivity().getAssets().open("news-detail.html");
             Document mainHtml = Jsoup.parse(inputStream, "UTF-8", "news-detail.html");
-            if (document.select("p.wtc-p-user").size() > 0) {
-                Element titleNewsElement = document.select("p.wtc-p-user").get(1);
-                Element newsElement = document.select("div.wtc-div-title").first();
-
-                mainHtml.select("div#wrapper").first().append(titleNewsElement.outerHtml() + newsElement.outerHtml()).outerHtml();
+            if (select.size() > 0) {
+                Element element = select.get(1);
+                mainHtml.select("div#wrapper").first().append(element.outerHtml()).outerHtml();
                 return mainHtml.outerHtml();
             } else {
                 return mainHtml.select("div#wrapper").first().append("<h3>Xin lỗi, chúng tôi không tìm thấy trang bạn yêu cầu !</h3>").outerHtml();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
+
     }
 }
