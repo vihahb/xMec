@@ -80,6 +80,8 @@ public class NewsFeedFragment extends Fragment {
                     return NewsFragment.newInstance("http://songkhoe.vn/vui-khoe.rss", "Vui khỏe");
                 case 8:
                     return NewsFragment.newInstance("http://songkhoe.vn/can-biet.rss", "Cần biết");
+                case 9:
+                    return NewsFragment.newInstance("http://songkhoe.vn/video.rss", "Video");
             }
 
             return NewsFragment.newInstance("", "");
@@ -88,7 +90,7 @@ public class NewsFeedFragment extends Fragment {
         @Override
         public int getCount() {
             // Show 9 total pages.
-            return 9;
+            return 10;
         }
 
         @Override
@@ -112,6 +114,8 @@ public class NewsFeedFragment extends Fragment {
                     return "Vui khỏe";
                 case 8:
                     return "Cần biết";
+                case 9:
+                    return "Video";
             }
             return null;
         }

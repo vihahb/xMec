@@ -20,7 +20,7 @@ public class NewsFeedPresenter {
         this.view = view;
     }
 
-    public void loadNewsFeed(String url){
+    public void loadNewsFeed(String url) {
         new RSSGetter(new OnNewsFeedLoadedListener() {
             @Override
             public void onPrepare() {
@@ -31,11 +31,16 @@ public class NewsFeedPresenter {
             public void onSucess(ArrayList<NewsFeed> list) {
 //                view.loadNewsFeed(list);
 //                TOI NAY BAT DAU TU DAY
-                NewsAuthor author = new NewsAuthor("songkhoe.vn","file:///android_asset/yte_suckhoe.png","http://songkhoe.vn");
+                NewsAuthor author = new NewsAuthor("songkhoe.vn", "file:///android_asset/yte_suckhoe.png", "http://songkhoe.vn");
                 ArrayList<Article> articleArrayList = new ArrayList<Article>();
-                if (list!=null){
+                if (list != null) {
                     for (int i = 0; i < list.size(); i++) {
-                        Article article = new Article(i,author,list.get(i),i,view.getTitleString(),0,0,0);
+                        int type;
+                        if (list.get(i).getLink().contains("http://songkhoe.vn/video"))
+                            type = Article.TYPE_VIDEO;
+                        else type = Article.TYPE_OTHER;
+
+                        Article article = new Article(i, author, list.get(i), type, view.getTitleString(), 0, 0, 0);
                         articleArrayList.add(article);
                     }
                 }
