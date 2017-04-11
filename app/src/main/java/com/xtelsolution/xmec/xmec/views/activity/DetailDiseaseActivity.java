@@ -113,9 +113,9 @@ public class DetailDiseaseActivity extends BasicActivity implements HtmlDetailVi
                 @Override
                 public void run() {
                     loLoading.setVisibility(View.GONE);
-                    webViewNews.setVisibility(View.VISIBLE);
+//                    webViewNews.setVisibility(View.VISIBLE);
                 }
-            }, 500);
+            }, 200);
         }
     }
 }

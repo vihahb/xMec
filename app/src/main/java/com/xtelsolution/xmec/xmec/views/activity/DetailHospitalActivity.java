@@ -10,19 +10,15 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.elyeproj.loaderviewlibrary.LoaderImageView;
-import com.elyeproj.loaderviewlibrary.LoaderTextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
-import com.xtelsolution.xmec.model.HealthyCareModel;
 import com.xtelsolution.xmec.model.RESP_Healthy_Care_Detail;
 import com.xtelsolution.xmec.presenter.HeathyCareDetailPresenter;
 import com.xtelsolution.xmec.xmec.views.inf.IHeathyCareDetailView;
@@ -93,7 +89,7 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setAllGesturesEnabled(false);
-        presenter.checkGetHealthCare(id);
+        presenter.getDetail("https://vicare.vn/benh-vien-k-co-so-1-14415/gay-me-hoi-suc");
     }
 
     @Override
@@ -114,6 +110,15 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
         LatLng latLng = new LatLng(healthyCare.getLat(), healthyCare.getLng());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
         mMap.addMarker(new MarkerOptions().position(latLng));
+    }
+
+    @Override
+    public void onGetHealCareSuccess(String opentime, String description, String phone) {
+        tvNumPhone.setText(getResources().getString(R.string.tel) + phone);
+        tvIntroduce.setText(description);
+        tvWorkTime.setText(opentime);
+
+
     }
 
 
