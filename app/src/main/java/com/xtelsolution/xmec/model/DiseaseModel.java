@@ -31,7 +31,7 @@ public class DiseaseModel extends BasicModel {
         requestServer.putApi(url, obj, session, responseHandle);
     }
     public void removeDisease(String url,String session,ResponseHandle<RESP_Basic> responseHandle){
-        requestServer.putApi(url,"",session,responseHandle);
+        requestServer.deleteApi(url,"",session,responseHandle);
     }
 
     //    public void addMedicine(String url,String obj,String session,ResponseHandle<RESP_ID> responseHandle){

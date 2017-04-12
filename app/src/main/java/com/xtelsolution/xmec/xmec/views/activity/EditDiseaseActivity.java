@@ -60,7 +60,7 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
     private Context mContext;
     private RESP_Medicine medicine;
     private int idMecine = -1;
-    private int idDisease;
+    private int idDisease=-1;
     private int idUdisease;
     private Button btnAddMedicine;
     private ProgressBar progressBarMedicine;
@@ -286,6 +286,9 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
             case R.id.action_remove_medical:
                 dialogRemoveDisease.show();
                 break;
+//            case android.R.id.home:
+//                finish();
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }

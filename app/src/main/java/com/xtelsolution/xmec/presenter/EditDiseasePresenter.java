@@ -33,7 +33,8 @@ public class EditDiseasePresenter extends BasePresenter {
 
     private void editDisease(final Object... param) {
         REQ_Edit_Disease disease = (REQ_Edit_Disease) param[1];
-        String url = Constant.SERVER_XMEC + Constant.UPDATE_DISEASE;
+        String url = Constant.SERVER_XMEC + Constant.DISEASE;
+        xLog.e("REEE",JsonHelper.toJson(disease));
         DiseaseModel.getInstance().updateDisease(url, JsonHelper.toJson(disease), LoginManager.getCurrentSession(), new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
             @Override
             public void onSuccess(RESP_Basic obj) {
@@ -84,7 +85,7 @@ public class EditDiseasePresenter extends BasePresenter {
 
     private void removeDisease(final Object... param) {
         int id = (int) param[1];
-        String url =Constant.SERVER_XMEC +Constant.REMOVE_DISEASE;
+        String url =Constant.SERVER_XMEC +Constant.DISEASE+"/"+id;
         xLog.e(TAG, "addMedicineReal: " + Constant.LOGPHI + "url search medicine " + url);
         DiseaseModel.getInstance().removeDisease(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
             @Override

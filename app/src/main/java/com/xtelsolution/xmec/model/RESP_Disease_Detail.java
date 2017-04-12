@@ -11,16 +11,27 @@ import java.util.List;
  * Created by phimau on 4/1/2017.
  */
 
-public class RESP_Disease_Detail extends RESP_Basic implements Serializable{
+public class RESP_Disease_Detail extends RESP_Basic implements Serializable {
     @Expose
     private int id;
     @Expose
     private String ten_benh;
-    private int id_disease;
     @Expose
     private String note;
     @Expose
+    private int id_disease;
+    @Expose
+    private String link;
+    @Expose
     private List<RESP_User_Medicine> data;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 
     public int getId_disease() {
         return id_disease;

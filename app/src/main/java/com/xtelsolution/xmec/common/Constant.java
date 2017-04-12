@@ -64,7 +64,7 @@ public class Constant {
     public static final String LOGPHI = "LOGPHI  ";
     public static final String DISEASE_DETAIL = "disease_detail";
     public static final String UPDATE_DISEASE = "user/update-disease";
-    public static final String REMOVE_MEDICINE = "user/remove-medicine/";
+    public static final String REMOVE_MEDICINE = "user/medical-report-book/disease/drug/";
     public static final String REMOVE_DISEASE = "user/remove-disease/";
     public static Boolean iGetNewSession = false;
     public static final String ILLNESS_URL = "illness_url";

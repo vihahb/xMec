@@ -61,7 +61,7 @@ public class DetailDiseaseActivity extends BasicActivity implements HtmlDetailVi
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter tabAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        tabAdapter.addFragment(getResources().getString(R.string.overview_text), OverviewDiseaseFragment.newInstance(url_disease));
+        tabAdapter.addFragment( getResources().getString(R.string.overview_text), OverviewDiseaseFragment.newInstance(url_disease));
 //        tabAdapter.addFragment(getResources().getString(R.string.detail_text), new DetailDiseaseFragment());
         viewPager.setAdapter(tabAdapter);
 

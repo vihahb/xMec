@@ -26,11 +26,11 @@ public class DiseaseDetailPresenter extends BasePresenter {
     private void getDiseaseDetail(final Object... param) {
         int id = (int) param[1];
         String url = Constant.SERVER_XMEC + Constant.DETAIL_DISEASE + id;
-
+        xLog.e("URL", url);
         DiseaseModel.getInstance().getDisease(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Disease_Detail>(RESP_Disease_Detail.class) {
             @Override
             public void onSuccess(RESP_Disease_Detail obj) {
-                xLog.e("DiseaseDetailPresenter",obj.toString());
+                xLog.e("DiseaseDetailPresenter", obj.toString());
                 view.onLoadDiseaseDetailSuccess(obj);
             }
 
@@ -39,6 +39,7 @@ public class DiseaseDetailPresenter extends BasePresenter {
                 handlerError(view, error, param);
             }
         });
+
     }
 
     public void checkGetDiseaseDetail(int id) {

@@ -55,7 +55,7 @@ public abstract class BasePresenter {
                                 Constant.iGetNewSession = true;
                                 xLog.e(TAG,"SESSION " + obj.toString());
 
-                            }
+                            }   
 
                             @Override
                             public void onError(Error error) {

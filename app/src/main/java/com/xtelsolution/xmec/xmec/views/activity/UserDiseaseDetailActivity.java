@@ -86,8 +86,8 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
             @Override
             public void onClick(View view) {
 //                showToast(diseaseDetail.getId_disease());
-                Intent i = new Intent(UserDiseaseDetailActivity.this,IllnessDetailActivity.class);
-                i.putExtra(Constant.DISEASE_ID,diseaseDetail.getId_disease());
+                Intent i = new Intent(UserDiseaseDetailActivity.this,DetailDiseaseActivity.class);
+                i.putExtra(Constant.ILLNESS_URL,diseaseDetail.getLink());
                 startActivity(i);
             }
         });
@@ -134,6 +134,7 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
     @Override
     public void onLoadDiseaseDetailSuccess(RESP_Disease_Detail diseaseDetail) {
         this.diseaseDetail = diseaseDetail;
+        diseaseDetail.setId(idDisease);
         idDisease = diseaseDetail.getId_disease();
         tvName.setText(diseaseDetail.getTen_benh());
         tvNote.setText(diseaseDetail.getNote());

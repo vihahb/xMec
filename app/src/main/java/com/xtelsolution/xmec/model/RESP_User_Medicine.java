@@ -16,7 +16,6 @@ public class RESP_User_Medicine extends RESP_Basic implements Serializable {
     private String name;
     @Expose
     private int id_drug;
-
     public RESP_User_Medicine(int id, String name, int id_drug) {
         this.id = id;
         this.name = name;
