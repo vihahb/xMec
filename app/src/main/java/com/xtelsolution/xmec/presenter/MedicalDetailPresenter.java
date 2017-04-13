@@ -16,11 +16,14 @@ import com.xtelsolution.xmec.model.RESP_Disease;
 import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.REQ_Medical_Detail;
 import com.xtelsolution.xmec.model.RESP_List_Disease_With_Link;
+import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.xmec.views.inf.IMedicalDetailView;
 
 import java.util.List;
+
+import static android.R.attr.id;
 
 /**
  * Created by phimau on 3/6/2017.
@@ -75,7 +78,8 @@ public class MedicalDetailPresenter extends BasePresenter {
 
     //    int id,String name,long beginTime,long endTime,int type,String note,List<Resource> resources
     private void updateMedicalDirectory(final Object... param) {
-        int id = (int) param[1];
+        RESP_Medical medical = (RESP_Medical) param[1];
+        int id = medical.getId();
         String name = (String) param[2];
         long beginTime = (long) param[3];
         long endTime = (long) param[4];

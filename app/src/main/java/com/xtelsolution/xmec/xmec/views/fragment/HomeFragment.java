@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.HomePresenter;
+import com.xtelsolution.xmec.xmec.views.activity.AddMedicalDetailActivity;
 import com.xtelsolution.xmec.xmec.views.activity.MedicalDetailActivity;
 import com.xtelsolution.xmec.xmec.views.activity.ProfileActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicalDirectoryAdapter;
@@ -36,7 +39,7 @@ import java.util.ArrayList;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class HomeFragment extends BasicFragment implements IHomeView, ItemClickListener {
+public class HomeFragment extends BasicFragment implements IHomeView, ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
     private static final String TAG = "HomeFragment";
 
     private RESP_User userModel;
@@ -62,6 +65,7 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         mlistMedica = new ArrayList<>();
         adapter = new MedicalDirectoryAdapter(mlistMedica, getContext());
         adapter.setItemClickListener(this);
+        adapter.setButtonAdapterClickListener(this);
     }
 
     @Nullable
@@ -161,9 +165,35 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
 
     @Override
     public void onItemClickListener(Object item, int position) {
+
         Intent intent = new Intent(getActivity(), MedicalDetailActivity.class);
         intent.putExtra(Constant.MEDICAL_ID, ((RESP_Medical) item).getId());
-        startActivity(intent);
+        intent.putExtra(Constant.MEDICAL_INDEX, (position));
+        startActivityForResult(intent,94);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.ADDMEDICAL_CODE) {
+            RESP_Medical medical = (RESP_Medical) data.getSerializableExtra(Constant.MEDICAL_ADD_SUSSCESS);
+            adapter.addItem(medical);
+        } else if (requestCode==94){
+            if (resultCode== Activity.RESULT_OK) {
+                int index = data.getIntExtra(Constant.MEDICAL_INDEX,-1);
+                adapter.removeItem(index);
+            }
+        }
+    }
+
+    @Override
+    public void onButtonAdapterClickListener() {
+        Intent i = new Intent(getActivity(), AddMedicalDetailActivity.class);
+        startActivityForResult(i,Constant.ADDMEDICAL_CODE);
+    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
 }

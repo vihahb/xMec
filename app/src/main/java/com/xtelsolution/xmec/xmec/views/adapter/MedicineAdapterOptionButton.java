@@ -80,7 +80,7 @@ public class MedicineAdapterOptionButton extends RecyclerView.Adapter<RecyclerVi
             addMedicineViewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    buttonAdapterClickListener.onButtonAdapterClickListener((Button) v);
+                    buttonAdapterClickListener.onButtonAdapterClickListener( );
                 }
             });
         }

@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Disease;
+import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.presenter.MedicalDetailPresenter;
@@ -48,6 +50,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     private TextView btnUpdateMedical;
     private MedicalDetailPresenter presenter;
     private int id;
+    private int index=-1;
     private List<Resource> listUrl;
     private ArrayList<RESP_Disease> diseases;
     private CoordinatorLayout progcess;
@@ -97,7 +100,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         rcDesease.setAdapter(illnessAdapter);
         rcDesease.setLayoutManager(new LinearLayoutManager(mContext));
         id = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
-
+        index = getIntent().getIntExtra(Constant.MEDICAL_INDEX,-1);
         presenter.checkGetDetailMedical(id);
         presenter.checkGetListIllness(id);
 
@@ -160,9 +163,23 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
 
     }
 
+
     private String timePaser(long beginTime, long endTime) {
         return Constant.getDate(beginTime) + " - " + Constant.getDate(endTime);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==95){
+            if (resultCode==Activity.RESULT_OK) {
+                Intent i = new Intent();
+                i.putExtra(Constant.MEDICAL_INDEX,index);
+                setResult(Activity.RESULT_OK,i);
+                finish();
+            }
+        }
     }
 
     @Override
@@ -171,7 +188,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     }
 
     @Override
-    public void onButtonAdapterClickListener(Button button) {
+    public void onButtonAdapterClickListener() {
         Intent i = new Intent(MedicalDetailActivity.this, AddIllnessActivity.class);
         i.putExtra(Constant.MEDICAL_ID, id);
         startActivity(i);

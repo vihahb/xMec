@@ -16,6 +16,7 @@ import com.xtelsolution.xmec.listener.UploadFileListener;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
 import com.xtelsolution.xmec.model.RESP_ID;
 import com.xtelsolution.xmec.model.REQ_Medical_Detail;
+import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.xmec.views.inf.IAddMedicalView;
 
@@ -34,10 +35,10 @@ public class AddMedicalPresenter extends BasePresenter {
     }
 //    String name,long beginTime,long endTime,int type,String note,List<Resource> resources
     public void addMedicalDirectorry(final Object...param){
-        String name = (String) param[1];
-        long beginTime = (long) param[2];
-        long endTime = (long) param[3];
-        int type = (int) param[4];
+        final String name = (String) param[1];
+        final long beginTime = (long) param[2];
+        final long endTime = (long) param[3];
+        final int type = (int) param[4];
         String note = (String) param[5];
         List<Resource> resources = (List<Resource>) param[6];
         String url = Constant.SERVER_XMEC+Constant.MEDICAL_REPORT_BOOK;
@@ -60,8 +61,9 @@ public class AddMedicalPresenter extends BasePresenter {
             public void onSuccess(RESP_ID obj) {
                 view.showProgressDialog(view.getActivity().getResources().getString(R.string.add_medical_success));
                 view.showToast(view.getActivity().getResources().getString(R.string.add_medical_success));
-                view.onAddMedicalSuccess();
-                view.dismissProgressDialog();
+                int id = obj.getId();
+                RESP_Medical medical = new RESP_Medical(id,name,beginTime,endTime,type);
+                view.onAddMedicalSuccess(medical);
             }
 
             @Override

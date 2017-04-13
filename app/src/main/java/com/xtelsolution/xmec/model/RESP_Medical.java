@@ -3,11 +3,13 @@ package com.xtelsolution.xmec.model;
 import com.google.gson.annotations.Expose;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 
+import java.io.Serializable;
+
 /**
  * Created by phimau on 2/15/2017.
  */
 
-public  class RESP_Medical extends RESP_Basic {
+public  class RESP_Medical extends RESP_Basic implements Serializable {
     @Expose
     private int id;
     @Expose
@@ -19,12 +21,13 @@ public  class RESP_Medical extends RESP_Basic {
     @Expose
     private int type;
 
-//    public RESP_Medical(int id, String name, long begin_time, long end_time, int type) {
-//        this.name = name;
-//        this.begin_time = begin_time;
-//        this.end_time = end_time;
-//        this.type = type;
-//    }
+    public RESP_Medical(int id, String name, long begin_time, long end_time, int type) {
+        this.id=id;
+        this.name = name;
+        this.begin_time = begin_time;
+        this.end_time = end_time;
+        this.type = type;
+    }
 
     public long getBegin_time() {
         return begin_time;

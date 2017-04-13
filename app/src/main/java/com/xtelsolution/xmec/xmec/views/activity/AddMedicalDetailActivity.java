@@ -31,6 +31,7 @@ import com.xtelsolution.xmec.listener.ChoosePictureListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Disease;
 import com.xtelsolution.xmec.model.RESP_List_Disease;
+import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
 import com.xtelsolution.xmec.presenter.AddMedicalPresenter;
@@ -337,14 +338,16 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
 
     @Override
-    public void onAddMedicalSuccess() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(AddMedicalDetailActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        }, 500);
+    public void onAddMedicalSuccess(RESP_Medical medical) {
+        Intent i = new Intent();
+        i.putExtra(Constant.MEDICAL_ADD_SUSSCESS,medical);
+        setResult(Activity.RESULT_CANCELED,i);
+        finish();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        }, 500);
     }
 
     @Override
@@ -375,6 +378,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         pickerEndTime.setTimeinMilisecond(obj.getEnd_time());
         healtRecoderAdapter.addAll(obj.getResources());
         imageViewAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -390,8 +394,9 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
     @Override
     public void onRemoveMedicalSuccess() {
-        Intent i = new Intent(AddMedicalDetailActivity.this, HomeActivity.class);
-        startActivity(i);
+        setResult(Activity.RESULT_OK);
+        finish();
+
     }
 
     private void initValidate() {

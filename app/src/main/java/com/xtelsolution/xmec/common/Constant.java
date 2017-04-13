@@ -37,6 +37,8 @@ public class Constant {
     public static final String PREFERENCE_NAME = "preference_xmec";
 
     public static final String MEDICAL_ID = "medical_id";
+    public static final String MEDICAL_INDEX = "medical_index";
+    public static final String MEDICAL_ADD_SUSSCESS = "medical";
     public static final String HEALTHY_CENTER_ID = "healthy_center_id";
 
 
@@ -67,6 +69,7 @@ public class Constant {
     public static final String REMOVE_MEDICINE = "user/medical-report-book/disease/drug/";
     public static final String REMOVE_DISEASE = "user/remove-disease/";
     public static Boolean iGetNewSession = false;
+    public static int ADDMEDICAL_CODE = 96;
     public static final String ILLNESS_URL = "illness_url";
     public static final String DISEASE_URL = "disease_url";
 

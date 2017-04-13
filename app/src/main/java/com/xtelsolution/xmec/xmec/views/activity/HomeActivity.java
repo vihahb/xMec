@@ -252,6 +252,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         for (Fragment fragment : fragmentManager.getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
     @Override

@@ -14,6 +14,6 @@ public interface ItemClickListener {
     }
 
     interface ButtonAdapterClickListener {
-        void onButtonAdapterClickListener(Button button);
+        void onButtonAdapterClickListener();
     }
 }

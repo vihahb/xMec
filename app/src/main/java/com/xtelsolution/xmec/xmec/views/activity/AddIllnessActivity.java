@@ -237,7 +237,7 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
     }
 
     @Override
-    public void onButtonAdapterClickListener(Button button) {
+    public void onButtonAdapterClickListener() {
         mDialog.show();
     }
 

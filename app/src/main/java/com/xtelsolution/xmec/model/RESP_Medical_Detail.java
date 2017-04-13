@@ -14,6 +14,10 @@ public class RESP_Medical_Detail extends RESP_Medical {
     @Expose
     private List<Resource> resources;
 
+    public RESP_Medical_Detail(int id, String name, long begin_time, long end_time, int type) {
+        super(id, name, begin_time, end_time, type);
+    }
+
     public String getNote() {
         return note;
     }

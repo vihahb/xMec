@@ -219,7 +219,7 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
     }
 
     @Override
-    public void onButtonAdapterClickListener(Button button) {
+    public void onButtonAdapterClickListener() {
         mDialog.show();
     }
 
@@ -287,7 +287,7 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
                 dialogRemoveDisease.show();
                 break;
 //            case android.R.id.home:
-//                finish();
+//                finish();1
 //                break;
         }
         return super.onOptionsItemSelected(item);
