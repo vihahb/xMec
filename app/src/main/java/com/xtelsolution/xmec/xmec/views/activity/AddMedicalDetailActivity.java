@@ -324,12 +324,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
                 break;
             case android.R.id.home:
                 if (isUpdated) {
-                    Intent i = new Intent();
-                    i.putExtra(Constant.MEDICAL_NAME, etName.getText().toString());
-                    i.putExtra(Constant.MEDICAL_BEGIN_TIME, pickerBeginTime.getTimeinMilisecond());
-                    i.putExtra(Constant.MEDICAL_END_TIME, pickerEndTime.getTimeinMilisecond());
-                    i.putExtra(Constant.MEDICAL_NOTE, etNote.getText().toString());
-                    setResult(Activity.RESULT_FIRST_USER,i);
+                    putDataForActivityReuslt();
                 }
                 finish();
                 break;
@@ -414,6 +409,15 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
     }
 
+    private void putDataForActivityReuslt(){
+        Intent i = new Intent();
+        i.putExtra(Constant.MEDICAL_NAME, etName.getText().toString());
+        i.putExtra(Constant.MEDICAL_BEGIN_TIME, pickerBeginTime.getTimeinMilisecond());
+        i.putExtra(Constant.MEDICAL_END_TIME, pickerEndTime.getTimeinMilisecond());
+        i.putExtra(Constant.MEDICAL_NOTE, etNote.getText().toString());
+        setResult(Activity.RESULT_FIRST_USER,i);
+    }
+
     private void initValidate() {
         mForm = Form.create();
         mForm.addField(Field.using(etName).validate(NotEmpty.build()));
@@ -422,4 +426,10 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         mForm.addField(Field.using(etEndTime).validate(NotEmpty.build()));
     }
 
+    @Override
+    public void onBackPressed() {
+        if (isUpdated)
+            putDataForActivityReuslt();
+        finish();
+    }
 }
