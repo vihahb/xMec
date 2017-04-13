@@ -180,7 +180,7 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
             adapter.addItem(medical);
         } else if (requestCode==94){
             if (resultCode== Activity.RESULT_OK) {
-                int index = data.getIntExtra(Constant.MEDICAL_INDEX,-1);
+                 int index = data.getIntExtra(Constant.MEDICAL_INDEX,-1);
                 adapter.removeItem(index);
             }
         }

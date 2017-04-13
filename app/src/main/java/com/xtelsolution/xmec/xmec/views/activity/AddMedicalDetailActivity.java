@@ -70,11 +70,13 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     private AddMedicalPresenter presenter;
     private ImageView btnAddHelthReconder;
     private ImageViewAdapter imageViewAdapter;
+    private boolean isUpdated=false;
     private int idMedical;
     private Form mForm;
     private MedicalDetailPresenter medicalDetailPresenter;
     private DialogImageViewer dialogImageViewer;
     private BottomSheetChoosePicture bottomSheetChoosePicture;
+    private RESP_Medical_Detail medicalDetail;
     private ImageView btnGetImageFormGallery;
     private ImageView btnGetImageFormCamera;
 
@@ -319,6 +321,18 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
                             }
                         });
                 alertDialog.show();
+                break;
+            case android.R.id.home:
+                if (isUpdated) {
+                    Intent i = new Intent();
+                    i.putExtra(Constant.MEDICAL_NAME, etName.getText().toString());
+                    i.putExtra(Constant.MEDICAL_BEGIN_TIME, pickerBeginTime.getTimeinMilisecond());
+                    i.putExtra(Constant.MEDICAL_END_TIME, pickerEndTime.getTimeinMilisecond());
+                    i.putExtra(Constant.MEDICAL_NOTE, etNote.getText().toString());
+                    setResult(Activity.RESULT_FIRST_USER,i);
+                }
+                finish();
+                break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -340,8 +354,8 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     @Override
     public void onAddMedicalSuccess(RESP_Medical medical) {
         Intent i = new Intent();
-        i.putExtra(Constant.MEDICAL_ADD_SUSSCESS,medical);
-        setResult(Activity.RESULT_CANCELED,i);
+        i.putExtra(Constant.MEDICAL_ADD_SUSSCESS, medical);
+        setResult(Activity.RESULT_CANCELED, i);
         finish();
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
@@ -390,6 +404,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     @Override
     public void onUpdateMedicalFinish() {
         showToast("Cập nhật thành công");
+        isUpdated=true;
     }
 
     @Override

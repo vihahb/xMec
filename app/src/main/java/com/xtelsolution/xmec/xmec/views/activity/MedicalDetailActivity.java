@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -178,6 +179,10 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
                 i.putExtra(Constant.MEDICAL_INDEX,index);
                 setResult(Activity.RESULT_OK,i);
                 finish();
+            } else if (resultCode==Activity.RESULT_FIRST_USER){
+                tvName.setText(data.getStringExtra(Constant.MEDICAL_NAME));
+                tvNote.setText(data.getStringExtra(Constant.MEDICAL_NOTE));
+                tvTime.setText(timePaser( data.getLongExtra(Constant.MEDICAL_END_TIME,-1l),data.getLongExtra(Constant.MEDICAL_BEGIN_TIME,-1l)));
             }
         }
     }
@@ -200,5 +205,16 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         Intent i = new Intent(MedicalDetailActivity.this, AddIllnessActivity.class);
         i.putExtra(Constant.MEDICAL_ID, id);
         startActivity(i);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+
+        }
+        return false;
     }
 }

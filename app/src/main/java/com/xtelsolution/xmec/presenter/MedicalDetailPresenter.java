@@ -78,9 +78,9 @@ public class MedicalDetailPresenter extends BasePresenter {
 
     //    int id,String name,long beginTime,long endTime,int type,String note,List<Resource> resources
     private void updateMedicalDirectory(final Object... param) {
-        RESP_Medical medical = (RESP_Medical) param[1];
-        int id = medical.getId();
-        String name = (String) param[2];
+//        RESP_Medical medical = (RESP_Medical) param[1];
+        int id = (int) param[1];
+        final String name = (String) param[2];
         long beginTime = (long) param[3];
         long endTime = (long) param[4];
         int type = (int) param[5];

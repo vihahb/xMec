@@ -62,7 +62,6 @@
             android:theme="@style/HomeActivityTheme" />
         <activity
             android:name=".xmec.views.activity.AddMedicalDetailActivity"
-            android:parentActivityName=".xmec.views.activity.HomeActivity"
             android:theme="@style/HomeActivityTheme" />
         <activity
             android:name=".xmec.views.activity.DetailDiseaseActivity"
@@ -111,7 +110,6 @@
             tools:replace="android:theme" />
         <activity
             android:name=".xmec.views.activity.MedicalDetailActivity"
-            android:parentActivityName=".xmec.views.activity.HomeActivity"
             android:theme="@style/HomeActivityTheme" />
         tools:replace="android:theme" />
         <activity android:name=".xmec.views.activity.NewsDetailActivity" />
