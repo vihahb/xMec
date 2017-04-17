@@ -132,7 +132,8 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, ProfileActivity.class));
+//                startActivity(new Intent(mContext, ProfileActivity.class));
+                startActivityForResult(new Intent(mContext,ProfileActivity.class),Constant.UPDATE_PROFILE);
             }
         });
     }
@@ -151,6 +152,11 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         setImage(imgAvatar, user.getAvatar());
         if (user.getGender() == 2)
             imgGender.setImageResource(R.drawable.ic_action_name);
+        else if (user.getGender()==1){
+            imgGender.setImageResource(R.drawable.ic_man);
+        } else{
+            imgGender.setVisibility(View.GONE);
+        }
         SharedPreferencesUtils.getInstance().saveUser(user);
         progcess.setVisibility(View.GONE);
 
@@ -184,6 +190,23 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
             if (resultCode== Activity.RESULT_OK) {
                  int index = data.getIntExtra(Constant.MEDICAL_INDEX,-1);
                 adapter.removeItem(index);
+            }
+        } else if (requestCode==Constant.UPDATE_PROFILE){
+            if (resultCode==Activity.RESULT_OK){
+                RESP_User user = SharedPreferencesUtils.getInstance().getUser();
+                tvName.setText(user.getFullname());
+                tvBirthday.setText(user.getBirthDayasString());
+                tvHeight.setText(String.valueOf(user.getHeight()));
+                tvWeight.setText(String.valueOf(user.getWeight()));
+                setImage(imgAvatar, user.getAvatar());
+                if (user.getGender() == 2)
+                    imgGender.setImageResource(R.drawable.ic_action_name);
+                else if (user.getGender()==1){
+                    imgGender.setImageResource(R.drawable.ic_man);
+                } else{
+                    imgGender.setVisibility(View.GONE);
+                }
+
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -58,7 +59,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     private Button btnUpdateInfo;
     private DatePickerFragment datePicker;
     private ProfilePresenter presenter;
-    private String urlAvatar;
+    private String urlAvatar = "";
     private Form mForm;
     private MaterialSpinner spSex;
     private int gender;
@@ -268,7 +269,10 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
             etWeight.setText(String.valueOf(weight));
         setImage(avatarView, url);
 //        gender=sex;
-        urlAvatar = url;
+        if (!url.equals(""))
+            urlAvatar = url;
+        else
+            urlAvatar="none";
         if (sex == 1)
             spSex.setSelectedIndex(2);
         else if (sex == 2)
@@ -285,7 +289,9 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(i);
+
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         }, 300);
 

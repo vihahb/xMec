@@ -43,6 +43,8 @@ public class Constant {
 
 
     public static final String MEDICAL_NAME = "name";
+    public static final String USER_NAME = "name";
+
     public static final String MEDICAL_BEGIN_TIME = "begin_time";
     public static final String MEDICAL_END_TIME = "end_time";
     public static final String MEDICAL_TYPE = "type";
@@ -70,6 +72,7 @@ public class Constant {
     public static final String REMOVE_DISEASE = "user/remove-disease/";
     public static Boolean iGetNewSession = false;
     public static int ADDMEDICAL_CODE = 96;
+    public static int UPDATE_PROFILE = 91;
     public static final String ILLNESS_URL = "illness_url";
     public static final String DISEASE_URL = "disease_url";
 
