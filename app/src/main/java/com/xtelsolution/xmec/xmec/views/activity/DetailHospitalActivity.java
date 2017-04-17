@@ -89,35 +89,42 @@ public class DetailHospitalActivity extends BasicActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setAllGesturesEnabled(false);
-        presenter.getDetail("https://vicare.vn/benh-vien-k-co-so-1-14415/gay-me-hoi-suc");
+        presenter.checkGetHealthCare(id);
+//        presenter.getDetail("https://vicare.vn/benh-vien-k-co-so-1-14415/gay-me-hoi-suc");
     }
 
     @Override
     public void onGetHeathyCareSuccess(RESP_Healthy_Care_Detail healthyCare) {
         tvAddress.setText(getResources().getString(R.string.address) + healthyCare.getAddress());
-        tvFax.setText(getResources().getString(R.string.fax) + healthyCare.getFax());
-        tvNumPhone.setText(getResources().getString(R.string.tel) + healthyCare.getNum_phone());
+//        tvFax.setText(getResources().getString(R.string.fax) + healthyCare.getFax());
         tvName.setText(healthyCare.getName());
-        tvIntroduce.setText(healthyCare.getIntroduce());
-        tvVoteRate.setText(healthyCare.getVote_rate() + " ");
-        xLog.e(TAG, "onGetHeathyCareSuccess: " + healthyCare.getVote_rate() + "33");
-        tvWorkTime.setText(healthyCare.getOpenTime() + "");
-        xLog.e(TAG, "onGetHeathyCareSuccess: " + healthyCare.getOpenTime() + "33");
-        if (healthyCare.getUrl_avatar() != null)
-            setImage(imgAvatar, healthyCare.getUrl_avatar());
-        else
-            imgAvatar.setImageResource(R.drawable.ic_avatar_hospital);
+//        tvIntroduce.setText(healthyCare.getIntroduce());
+        tvVoteRate.setText(((double) healthyCare.getVote_rate()) / 10 + " ");
+//        xLog.e(TAG, "onGetHeathyCareSuccess: " + healthyCare.getVote_rate() + "33");
+//        tvWorkTime.setText(healthyCare.getOpenTime() + "");
+//        xLog.e(TAG, "onGetHeathyCareSuccess: " + healthyCare.getOpenTime() + "33");
+//        if (healthyCare.getUrl_avatar() != null)
+//            setImage(imgAvatar, healthyCare.getUrl_avatar());
+//        else
+//            imgAvatar.setImageResource(R.drawable.ic_avatar_hospital);
         LatLng latLng = new LatLng(healthyCare.getLat(), healthyCare.getLng());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
         mMap.addMarker(new MarkerOptions().position(latLng));
     }
 
     @Override
-    public void onGetHealCareSuccess(String opentime, String description, String phone) {
-        tvNumPhone.setText(getResources().getString(R.string.tel) + phone);
+    public void onGetHealCareSuccess(String opentime, String description, String phone, String url) {
+        if (phone != null)
+            tvNumPhone.setText(getResources().getString(R.string.tel) + phone);
+        else
+            tvNumPhone.setText(getResources().getString(R.string.tel) + "");
         tvIntroduce.setText(description);
-        tvWorkTime.setText(opentime);
-
+        if (opentime != null)
+            tvWorkTime.setText(opentime);
+        else
+            tvWorkTime.setText("");
+        if (url != null)
+            setImage(imgAvatar, url);
 
     }
 

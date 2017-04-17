@@ -39,7 +39,7 @@ public class HeathyCareDetailPresenter extends BasePresenter {
             @Override
             public void onSuccess(RESP_Healthy_Care_Detail obj) {
                 view.onGetHeathyCareSuccess(obj);
-                view.dismissProgressDialog();
+                getDetail(obj.getUrl());
             }
 
             @Override
@@ -48,6 +48,7 @@ public class HeathyCareDetailPresenter extends BasePresenter {
             }
         });
     }
+
 
     public void getDetail(String url) {
         new HtmlLoader(new LoadHtmlDetailListener() {
@@ -61,14 +62,16 @@ public class HeathyCareDetailPresenter extends BasePresenter {
                 String openTime = "";
                 String description = "";
                 String phone="";
+                String urlAvavtar="";
                 /// lay opentime
                 try {
                     Element s = result.select("ul.opening-hours").first();
                     Elements elements = s.children();
                     for (int i = 0; i < elements.size(); i++) {
                         openTime = openTime + elements.get(i).ownText();
-                        if (i != elements.size())
+                        if (i != elements.size()-1)
                             openTime += "\n";
+                        xLog.e("hiahiaahiahaaiahai","kekek");
 
                     }
                     xLog.e("openTime",openTime);
@@ -99,6 +102,18 @@ public class HeathyCareDetailPresenter extends BasePresenter {
                 } catch (NullPointerException e){
                     phone =null;
                 }
+                try {
+                    Element avavtar = result.select("div#hero-image").first();
+                    Element item = avavtar.child(0);
+                    Element itemitem = item.child(0);
+                    xLog.e("style",avavtar.outerHtml());
+                    String url = itemitem.attr("style");
+                    urlAvavtar=url.substring(url.indexOf("http"),url.indexOf(");"));
+                } catch (NullPointerException e){
+                    urlAvavtar = null;
+                }
+                view.onGetHealCareSuccess(openTime,description,phone,urlAvavtar);
+                view.dismissProgressDialog();
             }
 
             @Override

@@ -70,7 +70,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     private AddMedicalPresenter presenter;
     private ImageView btnAddHelthReconder;
     private ImageViewAdapter imageViewAdapter;
-    private boolean isUpdated=false;
+    private boolean isUpdated = false;
     private int idMedical;
     private Form mForm;
     private MedicalDetailPresenter medicalDetailPresenter;
@@ -385,7 +385,8 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         pickerBeginTime.setTimeinMilisecond(obj.getBegin_time());
         etEndTime.setText(Constant.getDate(obj.getEnd_time()));
         pickerEndTime.setTimeinMilisecond(obj.getEnd_time());
-        healtRecoderAdapter.addAll(obj.getResources());
+        if (obj.getResources() != null)
+            healtRecoderAdapter.addAll(obj.getResources());
         imageViewAdapter.notifyDataSetChanged();
 
     }
@@ -399,7 +400,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     @Override
     public void onUpdateMedicalFinish() {
         showToast("Cập nhật thành công");
-        isUpdated=true;
+        isUpdated = true;
     }
 
     @Override
@@ -409,13 +410,13 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 
     }
 
-    private void putDataForActivityReuslt(){
+    private void putDataForActivityReuslt() {
         Intent i = new Intent();
         i.putExtra(Constant.MEDICAL_NAME, etName.getText().toString());
         i.putExtra(Constant.MEDICAL_BEGIN_TIME, pickerBeginTime.getTimeinMilisecond());
         i.putExtra(Constant.MEDICAL_END_TIME, pickerEndTime.getTimeinMilisecond());
         i.putExtra(Constant.MEDICAL_NOTE, etNote.getText().toString());
-        setResult(Activity.RESULT_FIRST_USER,i);
+        setResult(Activity.RESULT_FIRST_USER, i);
     }
 
     private void initValidate() {

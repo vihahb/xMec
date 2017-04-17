@@ -21,7 +21,7 @@ public abstract class ResponseHandle<T extends RESP_Basic> {
     }
 
     public void onSuccess(String result) {
-        Log.d("SSS", "onSuccess: "+result);
+        Log.d("SSS", "onSuccess: " + result);
         try {
             boolean isJson;
             isJson = !(result == null || result.isEmpty());
@@ -37,7 +37,7 @@ public abstract class ResponseHandle<T extends RESP_Basic> {
                 }
             }
         } catch (Exception e) {
-                onError(new Error(-1, "ERROR_PARSER_RESPONSE", e.getMessage()));
+            onError(new Error(-1, "ERROR_PARSER_RESPONSE", e.getMessage()));
         }
     }
 

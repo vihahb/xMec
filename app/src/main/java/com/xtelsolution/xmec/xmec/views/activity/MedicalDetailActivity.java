@@ -51,7 +51,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     private TextView btnUpdateMedical;
     private MedicalDetailPresenter presenter;
     private int id;
-    private int index=-1;
+    private int index = -1;
     private List<Resource> listUrl;
     private ArrayList<RESP_Disease> diseases;
     private CoordinatorLayout progcess;
@@ -85,7 +85,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
                 xLog.e(TAG, "onCreate: LINK  " + idDisease);
                 Intent i = new Intent(MedicalDetailActivity.this, UserDiseaseDetailActivity.class);
                 i.putExtra(Constant.DISEASE_ID, idDisease);
-                i.putExtra(Constant.MEDICAL_ID,id);
+                i.putExtra(Constant.MEDICAL_ID, id);
                 startActivity(i);
 
             }
@@ -101,7 +101,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
         rcDesease.setAdapter(illnessAdapter);
         rcDesease.setLayoutManager(new LinearLayoutManager(mContext));
         id = getIntent().getIntExtra(Constant.MEDICAL_ID, -1);
-        index = getIntent().getIntExtra(Constant.MEDICAL_INDEX,-1);
+        index = getIntent().getIntExtra(Constant.MEDICAL_INDEX, -1);
         presenter.checkGetDetailMedical(id);
         presenter.checkGetListIllness(id);
 
@@ -140,7 +140,8 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     @Override
     public void onLoadMedicalFinish(RESP_Medical_Detail obj) {
         Log.e("MY", "onLoadMedicalFinish: " + obj.getResources().size());
-        healtRecoderAdapter.addAll(obj.getResources());
+        if (obj.getResources() != null)
+            healtRecoderAdapter.addAll(obj.getResources());
         imageViewAdapter.notifyDataSetChanged();
         tvTime.setText(timePaser(obj.getBegin_time(), obj.getEnd_time()));
         tvNote.setText(obj.getNote());
@@ -173,16 +174,16 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==95){
-            if (resultCode==Activity.RESULT_OK) {
+        if (requestCode == 95) {
+            if (resultCode == Activity.RESULT_OK) {
                 Intent i = new Intent();
-                i.putExtra(Constant.MEDICAL_INDEX,index);
-                setResult(Activity.RESULT_OK,i);
+                i.putExtra(Constant.MEDICAL_INDEX, index);
+                setResult(Activity.RESULT_OK, i);
                 finish();
-            } else if (resultCode==Activity.RESULT_FIRST_USER){
+            } else if (resultCode == Activity.RESULT_FIRST_USER) {
                 tvName.setText(data.getStringExtra(Constant.MEDICAL_NAME));
                 tvNote.setText(data.getStringExtra(Constant.MEDICAL_NOTE));
-                tvTime.setText(timePaser( data.getLongExtra(Constant.MEDICAL_END_TIME,-1l),data.getLongExtra(Constant.MEDICAL_BEGIN_TIME,-1l)));
+                tvTime.setText(timePaser(data.getLongExtra(Constant.MEDICAL_END_TIME, -1l), data.getLongExtra(Constant.MEDICAL_BEGIN_TIME, -1l)));
             }
         }
     }
@@ -209,7 +210,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;

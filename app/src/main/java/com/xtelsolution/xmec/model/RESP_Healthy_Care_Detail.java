@@ -8,65 +8,53 @@ import com.google.gson.annotations.Expose;
 
 public class RESP_Healthy_Care_Detail extends RESP_Map_Healthy_Care {
     @Expose
-    private String open_time;
+    private int rating;
     @Expose
-    private int vote_rate;
+    private int total_doctor;
     @Expose
-    private String num_phone;
+    private String tag;
     @Expose
-    private String fax;
-    @Expose
-    private String introduce;
-    @Expose
-    private String url_avatar;
-
-
-    public String getOpenTime() {
-        return open_time;
-    }
-
-    public void setOpenTime(String openTime) {
-        this.open_time = openTime;
-    }
+    private String url;
 
     public int getVote_rate() {
-        return vote_rate;
+        return rating;
     }
 
     public void setVote_rate(int vote_rate) {
-        this.vote_rate = vote_rate;
+        this.rating = vote_rate;
     }
 
-    public String getNum_phone() {
-        return num_phone;
+
+    public int getRating() {
+        return rating;
     }
 
-    public void setNum_phone(String num_phone) {
-        this.num_phone = num_phone;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
-    public String getFax() {
-        return fax;
+    public int getTotal_doctor() {
+        return total_doctor;
     }
 
-    public void setFax(String fax) {
-        this.fax = fax;
+    public void setTotal_doctor(int total_doctor) {
+        this.total_doctor = total_doctor;
     }
 
-    public String getIntroduce() {
-        return introduce;
+    public String getTag() {
+        return tag;
     }
 
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
-    public String getUrl_avatar() {
-        return url_avatar;
+    public String getUrl() {
+        return url;
     }
 
-    public void setUrl_avatar(String url_avatar) {
-        this.url_avatar = url_avatar;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
 

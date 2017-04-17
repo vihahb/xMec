@@ -176,8 +176,10 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.ADDMEDICAL_CODE) {
-            RESP_Medical medical = (RESP_Medical) data.getSerializableExtra(Constant.MEDICAL_ADD_SUSSCESS);
-            adapter.addItem(medical);
+            if (resultCode==Activity.RESULT_OK) {
+                RESP_Medical medical = (RESP_Medical) data.getSerializableExtra(Constant.MEDICAL_ADD_SUSSCESS);
+                adapter.addItem(medical);
+            }
         } else if (requestCode==94){
             if (resultCode== Activity.RESULT_OK) {
                  int index = data.getIntExtra(Constant.MEDICAL_INDEX,-1);
