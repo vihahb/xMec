@@ -181,9 +181,16 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
                 setResult(Activity.RESULT_OK, i);
                 finish();
             } else if (resultCode == Activity.RESULT_FIRST_USER) {
-                tvName.setText(data.getStringExtra(Constant.MEDICAL_NAME));
+                String name = data.getStringExtra(Constant.MEDICAL_NAME);
+                tvName.setText(name);
                 tvNote.setText(data.getStringExtra(Constant.MEDICAL_NOTE));
-                tvTime.setText(timePaser(data.getLongExtra(Constant.MEDICAL_END_TIME, -1l), data.getLongExtra(Constant.MEDICAL_BEGIN_TIME, -1l)));
+                long medicalBeginTime = data.getLongExtra(Constant.MEDICAL_BEGIN_TIME, -1);
+                tvTime.setText(timePaser(medicalBeginTime, data.getLongExtra(Constant.MEDICAL_END_TIME, -1)));
+                Intent i = new Intent();
+                i.putExtra(Constant.MEDICAL_NAME,name);
+                i.putExtra(Constant.MEDICAL_BEGIN_TIME,medicalBeginTime);
+                i.putExtra(Constant.MEDICAL_INDEX, index);
+                setResult(Constant.REMOVE_MEDICAL_CODE,i);
             }
         }
     }

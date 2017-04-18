@@ -72,6 +72,7 @@ public class Constant {
     public static final String REMOVE_DISEASE = "user/remove-disease/";
     public static Boolean iGetNewSession = false;
     public static int ADDMEDICAL_CODE = 96;
+    public static int REMOVE_MEDICAL_CODE = 88;
     public static int UPDATE_PROFILE = 91;
     public static final String ILLNESS_URL = "illness_url";
     public static final String DISEASE_URL = "disease_url";

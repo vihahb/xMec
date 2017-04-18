@@ -161,5 +161,10 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void setButtonAdapterClickListener(ItemClickListener.ButtonAdapterClickListener buttonAdapterClickListener) {
         this.buttonAdapterClickListener = buttonAdapterClickListener;
     }
+    public void updateItem(String name,long beginTime,int index){
+        list.get(index).setBegin_time(beginTime);
+        list.get(index).setName(name);
+        notifyItemChanged(index);
+    }
 
 }

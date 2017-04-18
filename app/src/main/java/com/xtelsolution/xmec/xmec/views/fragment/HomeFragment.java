@@ -133,7 +133,7 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
             @Override
             public void onClick(View view) {
 //                startActivity(new Intent(mContext, ProfileActivity.class));
-                startActivityForResult(new Intent(mContext,ProfileActivity.class),Constant.UPDATE_PROFILE);
+                startActivityForResult(new Intent(mContext, ProfileActivity.class), Constant.UPDATE_PROFILE);
             }
         });
     }
@@ -152,9 +152,9 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         setImage(imgAvatar, user.getAvatar());
         if (user.getGender() == 2)
             imgGender.setImageResource(R.drawable.ic_action_name);
-        else if (user.getGender()==1){
+        else if (user.getGender() == 1) {
             imgGender.setImageResource(R.drawable.ic_man);
-        } else{
+        } else {
             imgGender.setVisibility(View.GONE);
         }
         SharedPreferencesUtils.getInstance().saveUser(user);
@@ -175,24 +175,26 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         Intent intent = new Intent(getActivity(), MedicalDetailActivity.class);
         intent.putExtra(Constant.MEDICAL_ID, ((RESP_Medical) item).getId());
         intent.putExtra(Constant.MEDICAL_INDEX, (position));
-        startActivityForResult(intent,94);
+        startActivityForResult(intent, 94);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.ADDMEDICAL_CODE) {
-            if (resultCode==Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 RESP_Medical medical = (RESP_Medical) data.getSerializableExtra(Constant.MEDICAL_ADD_SUSSCESS);
                 adapter.addItem(medical);
             }
-        } else if (requestCode==94){
-            if (resultCode== Activity.RESULT_OK) {
-                 int index = data.getIntExtra(Constant.MEDICAL_INDEX,-1);
+        } else if (requestCode == 94) {
+            if (resultCode == Activity.RESULT_OK) {
+                int index = data.getIntExtra(Constant.MEDICAL_INDEX, -1);
                 adapter.removeItem(index);
+            } else if (resultCode==Constant.REMOVE_MEDICAL_CODE){
+                adapter.updateItem(data.getStringExtra(Constant.MEDICAL_NAME),data.getLongExtra(Constant.MEDICAL_BEGIN_TIME,-1),data.getIntExtra(Constant.MEDICAL_INDEX,-1));
             }
-        } else if (requestCode==Constant.UPDATE_PROFILE){
-            if (resultCode==Activity.RESULT_OK){
+        } else if (requestCode == Constant.UPDATE_PROFILE) {
+            if (resultCode == Activity.RESULT_OK) {
                 RESP_User user = SharedPreferencesUtils.getInstance().getUser();
                 tvName.setText(user.getFullname());
                 tvBirthday.setText(user.getBirthDayasString());
@@ -201,9 +203,9 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
                 setImage(imgAvatar, user.getAvatar());
                 if (user.getGender() == 2)
                     imgGender.setImageResource(R.drawable.ic_action_name);
-                else if (user.getGender()==1){
+                else if (user.getGender() == 1) {
                     imgGender.setImageResource(R.drawable.ic_man);
-                } else{
+                } else {
                     imgGender.setVisibility(View.GONE);
                 }
 
@@ -214,7 +216,7 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
     @Override
     public void onButtonAdapterClickListener() {
         Intent i = new Intent(getActivity(), AddMedicalDetailActivity.class);
-        startActivityForResult(i,Constant.ADDMEDICAL_CODE);
+        startActivityForResult(i, Constant.ADDMEDICAL_CODE);
     }
 
 //    @Override
