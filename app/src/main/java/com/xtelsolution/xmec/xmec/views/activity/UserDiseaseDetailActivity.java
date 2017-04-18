@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -86,9 +87,13 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
             @Override
             public void onClick(View view) {
 //                showToast(diseaseDetail.getId_disease());
-                Intent i = new Intent(UserDiseaseDetailActivity.this,DetailDiseaseActivity.class);
-                i.putExtra(Constant.ILLNESS_URL,diseaseDetail.getLink());
-                startActivity(i);
+
+                String link = diseaseDetail.getLink();
+                if (!link.equals("")) {
+                    Intent i = new Intent(UserDiseaseDetailActivity.this, DetailDiseaseActivity.class);
+                    i.putExtra(Constant.ILLNESS_URL, link);
+                    startActivity(i);
+                }
             }
         });
 
@@ -120,12 +125,10 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
                 finish();
                 break;
             case R.id.action_remove_medical:
-//                Sensor sensor = new Sensor("1", "s", "s", true, diseaseDetail, diseaseList);                ArrayList<RESP_Disease_Detail> diseaseList = new ArrayList<>();
-
                 Intent i = new Intent(UserDiseaseDetailActivity.this, EditDiseaseActivity.class);
                 i.putExtra(Constant.DISEASE_DETAIL, diseaseDetail);
                 i.putExtra(Constant.MEDICAL_ID, idMedical);
-                startActivity(i);
+                startActivityForResult(i, Constant.EDIT_USER_DISEASE);
                 break;
         }
         return false;
@@ -135,11 +138,24 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
     public void onLoadDiseaseDetailSuccess(RESP_Disease_Detail diseaseDetail) {
         this.diseaseDetail = diseaseDetail;
         diseaseDetail.setId(idDisease);
-        idDisease = diseaseDetail.getId_disease();
+//        idDisease = diseaseDetail.getId_disease();
         tvName.setText(diseaseDetail.getTen_benh());
         tvNote.setText(diseaseDetail.getNote());
         progressbar.setVisibility(View.GONE);
-        adapter.addAll(diseaseDetail.getData());
+        if (diseaseDetail.getData() != null)
+            adapter.addAll(diseaseDetail.getData());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.EDIT_USER_DISEASE) {
+            if (resultCode == Activity.RESULT_OK) {
+                adapter.clearAll();
+                presenter.checkGetDiseaseDetail(idDisease);
+                setResult(Activity.RESULT_OK);
+            }
+        }
     }
 
     @Override

@@ -53,7 +53,7 @@ public class SplashScreen extends AppCompatActivity {
             i = new Intent(SplashScreen.this, LoginActivity.class);
         } else {
             i = new Intent(SplashScreen.this, HomeActivity.class);
-//            SharedPreferencesUtils.getInstance().setLogined();
+            SharedPreferencesUtils.getInstance().setLogined();
             xLog.e(TAG, "init: " + Constant.LOGPHI + LoginManager.getCurrentSession());
         }
     }

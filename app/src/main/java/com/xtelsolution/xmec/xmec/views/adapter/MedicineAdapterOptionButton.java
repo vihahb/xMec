@@ -142,6 +142,10 @@ public class MedicineAdapterOptionButton extends RecyclerView.Adapter<RecyclerVi
         mList.add(medicine);
         notifyItemRangeInserted(mList.size() - 1, 1);
     }
+    public void clearAll(){
+        mList.clear();
+        notifyDataSetChanged();
+    }
 
     public void addAll(List<RESP_User_Medicine> data) {
         xLog.e("ADDALL", data.toString());

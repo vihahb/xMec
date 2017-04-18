@@ -113,7 +113,7 @@ public class IllnessAdapterWithEditButton extends RecyclerView.Adapter<RecyclerV
     public void clearData(){
         int size = mList.size();
         mList.clear();
-        notifyItemRangeRemoved(0,size);
+        notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(ItemClickListener itemClickListener) {

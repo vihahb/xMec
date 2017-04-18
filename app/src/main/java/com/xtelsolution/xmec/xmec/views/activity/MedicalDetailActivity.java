@@ -86,7 +86,7 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
                 Intent i = new Intent(MedicalDetailActivity.this, UserDiseaseDetailActivity.class);
                 i.putExtra(Constant.DISEASE_ID, idDisease);
                 i.putExtra(Constant.MEDICAL_ID, id);
-                startActivity(i);
+                startActivityForResult(i,Constant.DETAIL_USER_DISEASE_CODR);
 
             }
         });
@@ -191,6 +191,11 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
                 i.putExtra(Constant.MEDICAL_BEGIN_TIME,medicalBeginTime);
                 i.putExtra(Constant.MEDICAL_INDEX, index);
                 setResult(Constant.REMOVE_MEDICAL_CODE,i);
+            } else  if (requestCode==Constant.DETAIL_USER_DISEASE_CODR){
+                if (resultCode==Activity.RESULT_OK){
+                    illnessAdapter.clearData();
+                    presenter.checkGetListIllness(id);
+                }
             }
         }
     }
@@ -210,9 +215,9 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
 
     @Override
     public void onItemIconClickListener(Object item, int positon) {
-        Intent i = new Intent(MedicalDetailActivity.this, AddIllnessActivity.class);
-        i.putExtra(Constant.MEDICAL_ID, id);
-        startActivity(i);
+//        Intent i = new Intent(MedicalDetailActivity.this, AddIllnessActivity.class);
+//        i.putExtra(Constant.MEDICAL_ID, id);
+//        startActivity(i);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,13 +61,14 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
     private Context mContext;
     private RESP_Medicine medicine;
     private int idMecine = -1;
-    private int idDisease=-1;
+    private int idDisease = -1;
     private int idUdisease;
     private Button btnAddMedicine;
     private ProgressBar progressBarMedicine;
     private EditDiseasePresenter presenter;
     private RecyclerView rvMedicine;
     private int idMedical = -1;
+    private Intent intent;
     private MedicineAdapterOptionButton medicineAdapterOptionButton;
     private AlertDialog.Builder dialogRemoveDisease;
     private List<RESP_User_Medicine> userMedicine;
@@ -84,7 +86,7 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-
+        intent = new Intent();
         initDiseaseAutocompletext();
         initMedicineAutocompletext();
 
@@ -95,7 +97,8 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
             idUdisease = uDisease.getId();
             etFindDisease.setText(uDisease.getTen_benh());
             etNote.setText(uDisease.getNote());
-            medicineAdapterOptionButton.addAll(uDisease.getData());
+            if (uDisease.getData() != null)
+                medicineAdapterOptionButton.addAll(uDisease.getData());
         }
     }
 
@@ -246,16 +249,19 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
     @Override
     public void onEditDiseaseSuccess() {
         showToast("Cập nhật thành công");
+        setResult(Activity.RESULT_OK);
     }
 
     @Override
     public void onRemoveMedicineSuccess(int index) {
         medicineAdapterOptionButton.removeItem(index);
+        setResult(Activity.RESULT_OK);
     }
 
     @Override
     public void onAddMedicineSuccess(RESP_User_Medicine medicine) {
         medicineAdapterOptionButton.addItem(medicine);
+        setResult(Activity.RESULT_OK);
     }
 
     @Override
@@ -286,9 +292,9 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
             case R.id.action_remove_medical:
                 dialogRemoveDisease.show();
                 break;
-//            case android.R.id.home:
-//                finish();1
-//                break;
+            case android.R.id.home:
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -34,6 +34,9 @@ public class Constant {
     public static final String USER_AVATAR = "avatar";
     public static final String USER_WEIGHT = "weight";
     public static final String USER_HEIGHT = "height";
+    public static final String USER_DISEASE_NAME = "user_disease_name";
+    public static final String USER_DISEASE_NOTE = "user_disease_note";
+    public static final String USER_DISEASE_DRUGS = "user_disease_note";
     public static final String PREFERENCE_NAME = "preference_xmec";
     public static final String IS_LOGINED = "is_logined";
 
@@ -76,8 +79,10 @@ public class Constant {
     public static final String REMOVE_DISEASE = "user/remove-disease/";
     public static Boolean iGetNewSession = false;
 
+    public static int EDIT_USER_DISEASE = 92;
     public static int ADDMEDICAL_CODE = 96;
     public static int REMOVE_MEDICAL_CODE = 88;
+    public static int DETAIL_USER_DISEASE_CODR = 87;
     public static int UPDATE_PROFILE = 91;
 
 
