@@ -75,7 +75,7 @@ public class HeathyCareDetailPresenter extends BasePresenter {
 
                     }
                     xLog.e("openTime",openTime);
-                } catch (NullPointerException e){
+                } catch (Exception e){
                     openTime=null;
                 }
 
@@ -90,7 +90,7 @@ public class HeathyCareDetailPresenter extends BasePresenter {
                     }
                     xLog.e("descripton",description);
 
-                } catch (NullPointerException e){
+                } catch (Exception e){
                     description=null;
                 }
 
@@ -99,7 +99,7 @@ public class HeathyCareDetailPresenter extends BasePresenter {
                     Element phoneElement =result.select("a.phone").first();
                     phone = phoneElement.ownText();
                     xLog.e("phone",phone);
-                } catch (NullPointerException e){
+                } catch (Exception e){
                     phone =null;
                 }
                 try {
@@ -109,7 +109,7 @@ public class HeathyCareDetailPresenter extends BasePresenter {
                     xLog.e("style",avavtar.outerHtml());
                     String url = itemitem.attr("style");
                     urlAvavtar=url.substring(url.indexOf("http"),url.indexOf(");"));
-                } catch (NullPointerException e){
+                } catch (Exception e){
                     urlAvavtar = null;
                 }
                 view.onGetHealCareSuccess(openTime,description,phone,urlAvavtar);

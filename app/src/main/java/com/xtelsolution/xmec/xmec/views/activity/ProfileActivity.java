@@ -289,7 +289,6 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 setResult(Activity.RESULT_OK);
                 finish();
             }

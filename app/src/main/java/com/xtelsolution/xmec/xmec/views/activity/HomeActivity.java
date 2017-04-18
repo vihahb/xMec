@@ -39,6 +39,7 @@ import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.OnLoadMapSuccessListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
+import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.presenter.MapPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.fragment.HomeFragment;
@@ -197,7 +198,9 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
                 finish();
             } else {
                 LoginManager.logOut();
+                SharedPreferencesUtils.getInstance().setLogined();
                 showToast("Đã đăng xuất");
+                SharedPreferencesUtils.getInstance().setLogout();
                 item.setIcon(R.drawable.ic_action_login);
             }
         }

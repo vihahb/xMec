@@ -42,7 +42,7 @@ public class ProfilePresenter extends BasePresenter {
         final double hegiht = (double) param[3];
         final double weight = (double) param[4];
         final String urlAvatar = (String) param[5];
-        int gender = (int) param[6];
+        final int gender = (int) param[6];
         view.showProgressDialog(view.getActivity().getResources().getString(R.string.update_process));
         String url = Constant.SERVER_XMEC + Constant.GET_USER;
         Log.e("TEST", "updateProfile: " + url);
@@ -65,6 +65,7 @@ public class ProfilePresenter extends BasePresenter {
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_HEIGHT, (float) hegiht);
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_WEIGHT, (float) weight);
                 SharedPreferencesUtils.getInstance().putStringValue(Constant.USER_AVATAR, urlAvatar);
+                SharedPreferencesUtils.getInstance().putIntValue(Constant.USER_GENDER,gender);
                 view.dismissProgressDialog();
             }
 

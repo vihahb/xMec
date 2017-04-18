@@ -14,6 +14,7 @@ import com.xtel.nipservicesdk.NipApplication;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 
 public class SplashScreen extends AppCompatActivity {
     private static final String TAG = "SplashScreen";
@@ -52,6 +53,7 @@ public class SplashScreen extends AppCompatActivity {
             i = new Intent(SplashScreen.this, LoginActivity.class);
         } else {
             i = new Intent(SplashScreen.this, HomeActivity.class);
+//            SharedPreferencesUtils.getInstance().setLogined();
             xLog.e(TAG, "init: " + Constant.LOGPHI + LoginManager.getCurrentSession());
         }
     }

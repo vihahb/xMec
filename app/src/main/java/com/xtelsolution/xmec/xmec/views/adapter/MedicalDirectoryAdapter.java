@@ -40,7 +40,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
         View itemview = null;
         if (viewType == VIEW_TYPE_ITEM) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            itemview = inflater.inflate(R.layout.item_illness_2, parent, false);
+            itemview = inflater.inflate(R.layout.item_illness_2,parent,false);
             return new MedicalDirectoryViewHolder(itemview);
 
         } else {

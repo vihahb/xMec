@@ -2,9 +2,12 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.xmec.views.activity.LoginActivity;
 import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
 /**
@@ -91,5 +95,24 @@ public class BasicFragment extends Fragment implements BaseView {
                 setUi(((ViewGroup) view).getChildAt(i));
             }
         }
+    }
+
+    protected void showLoginDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Bạn cần đăng nhập để sử dụng chức năng này")
+                .setPositiveButton("Đăng nhập", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getActivity(),LoginActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.show();
     }
 }

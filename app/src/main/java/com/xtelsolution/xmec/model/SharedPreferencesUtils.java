@@ -100,7 +100,7 @@ public class SharedPreferencesUtils {
     }
 
     public void saveUser(RESP_User user) {
-        if (editor == null)
+        if (editor==null)
             prepair();
         editor.putString(Constant.USER_FULL_NAME, user.getFullname());
         editor.putInt(Constant.USER_GENDER, user.getGender());
@@ -111,6 +111,23 @@ public class SharedPreferencesUtils {
         editor.putFloat(Constant.USER_WEIGHT, (float) user.getWeight());
         editor.putFloat(Constant.USER_HEIGHT, (float) user.getHeight());
         editor.commit();
+    }
+
+    public void setLogined(){
+        if (editor==null)
+            prepair();
+        editor.putBoolean(Constant.IS_LOGINED,true);
+        editor.commit();
+    }
+    public void setLogout(){
+        if (editor==null)
+            prepair();
+        editor.clear();
+        editor.commit();
+    }
+
+    public boolean isLogined(){
+        return sharedPreferences.getBoolean(Constant.IS_LOGINED,false);
     }
 
     public RESP_User getUser() {

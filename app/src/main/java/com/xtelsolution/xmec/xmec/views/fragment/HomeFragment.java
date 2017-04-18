@@ -76,7 +76,6 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         initControl();
         presenter.checkGetUser(userModel);
         presenter.checkGetMedical(adapter.getList());
-
         return view;
     }
 
@@ -100,13 +99,11 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
 
             @Override
             public void onHide() {
-
                 mContext.sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
             }
 
             @Override
             public void onShow() {
-
                 mContext.sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
             }
         });
@@ -150,9 +147,11 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         tvHeight.setText(String.valueOf(user.getHeight()));
         tvWeight.setText(String.valueOf(user.getWeight()));
         setImage(imgAvatar, user.getAvatar());
-        if (user.getGender() == 2)
+        if (user.getGender() == 2) {
+            imgGender.setVisibility(View.VISIBLE);
             imgGender.setImageResource(R.drawable.ic_action_name);
-        else if (user.getGender() == 1) {
+        } else if (user.getGender() == 1) {
+            imgGender.setVisibility(View.VISIBLE);
             imgGender.setImageResource(R.drawable.ic_man);
         } else {
             imgGender.setVisibility(View.GONE);
@@ -190,8 +189,8 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
             if (resultCode == Activity.RESULT_OK) {
                 int index = data.getIntExtra(Constant.MEDICAL_INDEX, -1);
                 adapter.removeItem(index);
-            } else if (resultCode==Constant.REMOVE_MEDICAL_CODE){
-                adapter.updateItem(data.getStringExtra(Constant.MEDICAL_NAME),data.getLongExtra(Constant.MEDICAL_BEGIN_TIME,-1),data.getIntExtra(Constant.MEDICAL_INDEX,-1));
+            } else if (resultCode == Constant.REMOVE_MEDICAL_CODE) {
+                adapter.updateItem(data.getStringExtra(Constant.MEDICAL_NAME), data.getLongExtra(Constant.MEDICAL_BEGIN_TIME, -1), data.getIntExtra(Constant.MEDICAL_INDEX, -1));
             }
         } else if (requestCode == Constant.UPDATE_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
@@ -201,26 +200,37 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
                 tvHeight.setText(String.valueOf(user.getHeight()));
                 tvWeight.setText(String.valueOf(user.getWeight()));
                 setImage(imgAvatar, user.getAvatar());
-                if (user.getGender() == 2)
+                if (user.getGender() == 2) {
                     imgGender.setImageResource(R.drawable.ic_action_name);
-                else if (user.getGender() == 1) {
+                    imgGender.setVisibility(View.VISIBLE);
+                } else if (user.getGender() == 1) {
                     imgGender.setImageResource(R.drawable.ic_man);
+                    imgGender.setVisibility(View.VISIBLE);
                 } else {
                     imgGender.setVisibility(View.GONE);
                 }
-
             }
         }
     }
 
-    @Override
-    public void onButtonAdapterClickListener() {
-        Intent i = new Intent(getActivity(), AddMedicalDetailActivity.class);
-        startActivityForResult(i, Constant.ADDMEDICAL_CODE);
+    private void setNull() {
+        tvName.setText(null);
+        tvBirthday.setText(null);
+        tvHeight.setText(null);
+        tvWeight.setText(null);
+        imgGender.setVisibility(View.GONE);
+        progcess.setVisibility(View.GONE);
+
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
+    @Override
+    public void onButtonAdapterClickListener() {
+//        if (SharedPreferencesUtils.getInstance().isLogined()) {
+            Intent i = new Intent(getActivity(), AddMedicalDetailActivity.class);
+            startActivityForResult(i, Constant.ADDMEDICAL_CODE);
+//        } else {
+//            showLoginDialog();
+//        }
+    }
+
 }

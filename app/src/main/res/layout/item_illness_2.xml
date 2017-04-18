@@ -23,19 +23,23 @@
         android:layout_height="32dp"
         android:src="@drawable/ic_virus" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_vertical">-->
 
         <TextView
             android:id="@+id/tvIllnessName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:layout_toLeftOf="@+id/tv_time_stamp"
+            android:layout_toStartOf="@+id/tv_time_stamp"
             android:text="Tên bệnh số 1"
             android:textColor="@color/title_item"
             android:textSize="13sp"
@@ -49,6 +53,6 @@
             android:text="24/01/2017"
             android:textColor="@color/time"
             android:textSize="13sp" />
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
 </LinearLayout>
