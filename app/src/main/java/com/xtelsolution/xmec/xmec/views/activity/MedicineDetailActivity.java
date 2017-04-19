@@ -44,8 +44,7 @@ public class MedicineDetailActivity extends BasicActivity implements IMedicineDe
             presenter.getMedicineDetail(medicineID);
         }
         initUI();
-        showToast(getIntent().getIntExtra(Constant.INTENT_ID_MEDICINE, -1) + "");
-    }
+     }
 
     private void initUI() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);

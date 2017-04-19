@@ -270,9 +270,8 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(EditDiseaseActivity.this, MedicalDetailActivity.class);
-                i.putExtra(Constant.MEDICAL_ID, idMedical);
-                startActivity(i);
+                setResult(Constant.REMOVE_DISEASE_CODE);
+                finish();
             }
         }, 1000);
     }

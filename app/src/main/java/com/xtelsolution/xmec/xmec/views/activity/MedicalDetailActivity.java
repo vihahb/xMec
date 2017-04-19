@@ -191,11 +191,11 @@ public class MedicalDetailActivity extends BasicActivity implements IMedicalDeta
                 i.putExtra(Constant.MEDICAL_BEGIN_TIME,medicalBeginTime);
                 i.putExtra(Constant.MEDICAL_INDEX, index);
                 setResult(Constant.REMOVE_MEDICAL_CODE,i);
-            } else  if (requestCode==Constant.DETAIL_USER_DISEASE_CODR){
-                if (resultCode==Activity.RESULT_OK){
-                    illnessAdapter.clearData();
-                    presenter.checkGetListIllness(id);
-                }
+            }
+        } else if (requestCode==Constant.DETAIL_USER_DISEASE_CODR){
+            if (resultCode==Activity.RESULT_OK){
+                illnessAdapter.clearData();
+                presenter.checkGetListIllness(id);
             }
         }
     }

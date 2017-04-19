@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
@@ -76,9 +77,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     private MedicalDetailPresenter medicalDetailPresenter;
     private DialogImageViewer dialogImageViewer;
     private BottomSheetChoosePicture bottomSheetChoosePicture;
-    private RESP_Medical_Detail medicalDetail;
-    private ImageView btnGetImageFormGallery;
-    private ImageView btnGetImageFormCamera;
+    private LinearLayout viewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +117,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         btnSavaDirectory = (Button) findViewById(R.id.btn_save_director);
         etNote = (EditText) findViewById(R.id.et_note);
         btnAddHelthReconder = (ImageView) findViewById(R.id.btn_add_healty_recoder);
+        viewGroup = (LinearLayout) findViewById(R.id.activity_medical_directory);
 
         resourceList = new ArrayList<>();
         healtRecoderAdapter = new HealtRecoderAdapter(mContext, resourceList);
@@ -130,25 +130,25 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         mForm = Form.create();
 
         bottomSheetChoosePicture = new BottomSheetChoosePicture();
-        if (bottomSheetChoosePicture != null) {
-//            btnGetImageFormGallery = (ImageView) bottomSheetChoosePicture.getDialog().findViewById(R.id.btn_choose_picure);
-//            btnGetImageFormCamera = (ImageView) bottomSheetChoosePicture.getDialog().findViewById(R.id.btn_take_picture);
-        }
     }
 
     private void initControl() {
         etEndTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (b)
+                if (b){
                     showDatePicker(pickerEndTime);
+                }
+
             }
         });
         etBeginTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (b)
+                if (b){
                     showDatePicker(pickerBeginTime);
+
+                }
             }
         });
         btnSavaDirectory.setOnClickListener(new View.OnClickListener() {
@@ -215,61 +215,8 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
                         }).start();
             }
         });
-//        btnGetImageFormCamera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new PickerBuilder(AddMedicalDetailActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
-//                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
-//                            @Override
-//                            public void onImageReceived(Uri imageUri) {
-////                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
-//                                try {
-//                                    Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-//                                    presenter.postImage(avatar, true, getBaseContext());
-//
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }).start();
-//            }
-//        });
-//        btnGetImageFormGallery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new PickerBuilder(AddMedicalDetailActivity.this,PickerBuilder.SELECT_FROM_GALLERY)
-//                        .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
-//                            @Override
-//                            public void onImageReceived(Uri imageUri) {
-//                                try {
-//                                    Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-//                                    presenter.postImage(avatar,true,getBaseContext());
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//                            }
-//                        });
-//            }
-//        });
     }
-
-    private void AddHeathRecoder() {
-//        new PickerBuilder(AddMedicalDetailActivity.this, PickerBuilder.SELECT_FROM_CAMERA)
-//                .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
-//                    @Override
-//                    public void onImageReceived(Uri imageUri) {
-////                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
-//                        try {
-//                            Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-//                            presenter.postImage(avatar, true, getBaseContext());
-//
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }).start();
-    }
+    
 
     private void updateMedicalDirectory() {
         String name = etName.getText().toString();
@@ -350,7 +297,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     public void onAddMedicalSuccess(RESP_Medical medical) {
         Intent i = new Intent();
         i.putExtra(Constant.MEDICAL_ADD_SUSSCESS, medical);
-        setResult(Activity.RESULT_CANCELED, i);
+        setResult(Activity.RESULT_OK, i);
         finish();
 //        new Handler().postDelayed(new Runnable() {
 //            @Override

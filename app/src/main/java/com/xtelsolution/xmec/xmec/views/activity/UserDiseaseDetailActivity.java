@@ -86,8 +86,6 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
         btnViewDisease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                showToast(diseaseDetail.getId_disease());
-
                 String link = diseaseDetail.getLink();
                 if (!link.equals("")) {
                     Intent i = new Intent(UserDiseaseDetailActivity.this, DetailDiseaseActivity.class);
@@ -129,6 +127,7 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
                 i.putExtra(Constant.DISEASE_DETAIL, diseaseDetail);
                 i.putExtra(Constant.MEDICAL_ID, idMedical);
                 startActivityForResult(i, Constant.EDIT_USER_DISEASE);
+//                finishActivityFromChild(getC,33);
                 break;
         }
         return false;
@@ -138,7 +137,6 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
     public void onLoadDiseaseDetailSuccess(RESP_Disease_Detail diseaseDetail) {
         this.diseaseDetail = diseaseDetail;
         diseaseDetail.setId(idDisease);
-//        idDisease = diseaseDetail.getId_disease();
         tvName.setText(diseaseDetail.getTen_benh());
         tvNote.setText(diseaseDetail.getNote());
         progressbar.setVisibility(View.GONE);
@@ -154,6 +152,9 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
                 adapter.clearAll();
                 presenter.checkGetDiseaseDetail(idDisease);
                 setResult(Activity.RESULT_OK);
+            } else if (resultCode==Constant.REMOVE_DISEASE_CODE){
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         }
     }
