@@ -30,8 +30,8 @@ public class NewsDetailPresenter {
 
         if (url.contains("http://songkhoe.vn/video"))
             type = 1;
-        else type =2;
-        xLog.d("NewsDetailPresenter",url);
+        else type = 2;
+        xLog.d("NewsDetailPresenter", url);
         new HtmlLoader(new LoadHtmlDetailListener() {
             @Override
             public void onPrepare() {
@@ -40,7 +40,7 @@ public class NewsDetailPresenter {
 
             @Override
             public void onSucess(Document result) {
-                if (type== Article.TYPE_VIDEO)
+                if (type == Article.TYPE_VIDEO)
                     view.loadWebView(getVideoBoxFromPage(result));
                 else
                     view.loadWebView(getNewsBoxFromPage(result));
@@ -78,13 +78,14 @@ public class NewsDetailPresenter {
         return null;
     }
 
-    private String getVideoBoxFromPage(Document document){
+    private String getVideoBoxFromPage(Document document) {
         try {
             InputStream inputStream = view.getActivity().getAssets().open("news-detail.html");
             Document mainHtml = Jsoup.parse(inputStream, "UTF-8", "news-detail.html");
             if (document.select("div.flash-playing").size() > 0) {
                 Element videoBox = document.select("div.flash-playing").first();
                 mainHtml.select("div#wrapper").first().append(videoBox.outerHtml()).outerHtml();
+                mainHtml.select("div#wrapper").append("<h3>" + document.select(".player-title").text() + "</h3>");
                 return mainHtml.outerHtml();
             } else {
                 return mainHtml.select("div#wrapper").first().append("<h3>Xin lỗi! Chúng tôi không tìm thấy trang bạn yêu cầu !</h3>").outerHtml();
