@@ -33,6 +33,12 @@ public abstract class BasePresenter {
 
     }
 
+    /**
+     *
+     * @param view
+     * @param error
+     * @param param
+     */
     protected void handlerError(final BaseView view, Error error, final Object... param) {
         xLog.e(TAG,"handlerError" + error.toString());
         switch (error.getCode()) {

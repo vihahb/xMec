@@ -19,13 +19,13 @@
         android:id="@+id/btn_remove"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:src="@drawable/ic_action_editt"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
         android:clickable="true"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_alignParentRight="true" />
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:id="@+id/tv_medicine_name"
@@ -33,10 +33,14 @@
         android:layout_height="32dp"
         android:gravity="center_vertical"
         android:text="Tên thuốc"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/title_item"
         android:textSize="12sp"
         android:textStyle="bold"
         android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/btn_remove"
+        android:layout_toStartOf="@+id/btn_remove"
         android:layout_toRightOf="@+id/imgIllnessAva"
         android:layout_toEndOf="@+id/imgIllnessAva" />
 </RelativeLayout>

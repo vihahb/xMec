@@ -82,6 +82,7 @@ public class Constant {
     public static int EDIT_USER_DISEASE = 92;
     public static int ADDMEDICAL_CODE = 96;
     public static int REMOVE_MEDICAL_CODE = 88;
+    public static int REMOVE_DISEASE_CODE = 89;
     public static int DETAIL_USER_DISEASE_CODR = 87;
     public static int UPDATE_PROFILE = 91;
 

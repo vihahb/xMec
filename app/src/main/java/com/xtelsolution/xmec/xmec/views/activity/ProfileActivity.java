@@ -159,7 +159,6 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                         .setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                             @Override
                             public void onImageReceived(Uri imageUri) {
-                                showToast("Got image - " + imageUri);
                                 try {
                                     Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                                     avatarView.setImageBitmap(avatar);
