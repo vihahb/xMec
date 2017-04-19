@@ -86,6 +86,8 @@ public class NewsDetailPresenter {
                 Element videoBox = document.select("div.flash-playing").first();
                 mainHtml.select("div#wrapper").first().append(videoBox.outerHtml()).outerHtml();
                 mainHtml.select("div#wrapper").append("<h3>" + document.select(".player-title").text() + "</h3>");
+                mainHtml.select("div#wrapper").append("<p>" + document.select(".tag-div-wrap ").text() + "</p>");
+                mainHtml.select("div#wrapper").append(document.select(".source-other ").outerHtml());
                 return mainHtml.outerHtml();
             } else {
                 return mainHtml.select("div#wrapper").first().append("<h3>Xin lỗi! Chúng tôi không tìm thấy trang bạn yêu cầu !</h3>").outerHtml();
