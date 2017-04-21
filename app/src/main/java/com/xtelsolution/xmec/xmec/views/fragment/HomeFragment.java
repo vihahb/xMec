@@ -128,10 +128,11 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
             @Override
             public void onClick(View view) {
 //                startActivity(new Intent(mContext, ProfileActivity.class));
-                if (isLogin())
+                if (!isLogin())
                     showLoginDialog();
                 else
                     startActivityForResult(new Intent(mContext, ProfileActivity.class), Constant.UPDATE_PROFILE);
+//                getActivity().finish();
             }
         });
     }
