@@ -73,18 +73,27 @@ public class HomePresenter extends BasePresenter {
     public void checkGetUser(RESP_User userModel) {
         if (!checkConnnecttion(view))
             return;
-        if (userModel == null) {
-            getUser(GETUSER);
-        } else view.onGetUerSusscess(userModel);
+        if (SharedPreferencesUtils.getInstance().isLogined()) {
+            if (userModel == null) {
+                getUser(GETUSER);
+            } else view.onGetUerSusscess(userModel);
+        } else {
+            view.onGetUerSusscess(null);
+        }
+
     }
 
     public void checkGetMedical(ArrayList<RESP_Medical> mlistMedica) {
         if (!checkConnnecttion(view))
             return;
-        if (mlistMedica.size() == 0) {
-            getMedicalReportBooks(GETMEDICAL);
-        } else
-            view.onGetMediacalListSusscess(true, new RESP_List_Medical(mlistMedica));
+        if (SharedPreferencesUtils.getInstance().isLogined()) {
+            if (mlistMedica.size() == 0) {
+                getMedicalReportBooks(GETMEDICAL);
+            } else
+                view.onGetMediacalListSusscess(true, new RESP_List_Medical(mlistMedica));
+        } else {
+            view.onGetMediacalListSusscess(true,null);
+        }
     }
 
     @Override

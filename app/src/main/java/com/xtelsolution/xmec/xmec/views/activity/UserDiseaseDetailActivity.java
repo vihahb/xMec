@@ -91,6 +91,8 @@ public class UserDiseaseDetailActivity extends BasicActivity implements IDisease
                     Intent i = new Intent(UserDiseaseDetailActivity.this, DetailDiseaseActivity.class);
                     i.putExtra(Constant.ILLNESS_URL, link);
                     startActivity(i);
+                } else {
+                    showToast(getResources().getString(R.string.no_data_disease));
                 }
             }
         });

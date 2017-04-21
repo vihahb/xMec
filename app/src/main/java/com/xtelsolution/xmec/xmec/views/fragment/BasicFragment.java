@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.xmec.views.activity.LoginActivity;
 import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
@@ -114,5 +115,10 @@ public class BasicFragment extends Fragment implements BaseView {
                     }
                 });
         builder.show();
+    }
+    protected boolean isLogin(){
+        if (SharedPreferencesUtils.getInstance().isLogined())
+            return true;
+        return false;
     }
 }

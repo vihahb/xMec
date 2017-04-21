@@ -21,6 +21,9 @@ public class MedicineDetailModel extends BasicModel {
 
     public void getMedicineDetail(String id, ResponseHandle<RESP_Medicine_Detail> handle) {
         String url = Constant.SERVER_XMEC + "user/detail-drug?id=" + id;
-        requestServer.getApi(url, LoginManager.getCurrentSession(), handle);
+        if (SharedPreferencesUtils.getInstance().isLogined())
+            requestServer.getApi(url, LoginManager.getCurrentSession(), handle);
+        else
+            requestServer.getApi(url, Constant.LOCAL_SECCION, handle);
     }
 }

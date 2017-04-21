@@ -2,6 +2,7 @@ package com.xtelsolution.xmec.presenter;
 
 import android.content.Intent;
 
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.commons.Cts;
 import com.xtel.nipservicesdk.model.LoginModel;
@@ -11,6 +12,7 @@ import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.xLog;
+import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.xmec.views.activity.LoginActivity;
 import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
@@ -31,6 +33,14 @@ public abstract class BasePresenter {
         }
 
 
+    }
+
+    protected String getSession(){
+        if (!SharedPreferencesUtils.getInstance().isLogined()){
+            return Constant.LOCAL_SECCION;
+        } else {
+           return LoginManager.getCurrentSession();
+        }
     }
 
     /**

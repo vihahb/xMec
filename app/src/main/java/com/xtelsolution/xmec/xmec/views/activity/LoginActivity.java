@@ -66,9 +66,9 @@ public class LoginActivity extends BasicActivity {
         setContentView(R.layout.activity_login);
         setUi(findViewById(R.id.lg_content));
         init();
-        animation();
-        if (checkApiVersion())
-            imgLogo.setTransitionName("logo");
+//        animation();
+//        if (checkApiVersion())
+//            imgLogo.setTransitionName("logo");
 
 
         tvSignUp.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +132,7 @@ public class LoginActivity extends BasicActivity {
                             public void onSuccess(RESP_Login success) {
                                 showLog(TAG, "initFacebookSdk: onSuccess: " + JsonHelper.toJson(success));
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                SharedPreferencesUtils.getInstance().setLogined();
                                 finish();
                             }
 
@@ -199,6 +200,7 @@ public class LoginActivity extends BasicActivity {
                     Log.e("Session", "onSuccess: " + JsonHelper.toJson(success));
                     xLog.e(TAG, "onPhoneLogin: onSuccess: " + Constant.LOGPHI + success.getSession());
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    SharedPreferencesUtils.getInstance().setLogined();
                     finish();
                 }
 

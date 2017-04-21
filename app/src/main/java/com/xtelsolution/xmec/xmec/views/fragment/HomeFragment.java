@@ -87,8 +87,6 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rvDisease.setLayoutManager(manager);
         rvDisease.setNestedScrollingEnabled(false);
-//        MaterialSpinner spinner = (MaterialSpinner) view.findViewById(R.id.spcategorize);
-//        spinner.setItems("Bệnh", "Thuốc");
         rvDisease.setAdapter(adapter);
         NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
         scrollView.setOnScrollChangeListener(new EndlessParentScrollListener(manager) {
@@ -130,7 +128,10 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
             @Override
             public void onClick(View view) {
 //                startActivity(new Intent(mContext, ProfileActivity.class));
-                startActivityForResult(new Intent(mContext, ProfileActivity.class), Constant.UPDATE_PROFILE);
+                if (isLogin())
+                    showLoginDialog();
+                else
+                    startActivityForResult(new Intent(mContext, ProfileActivity.class), Constant.UPDATE_PROFILE);
             }
         });
     }
@@ -142,6 +143,10 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
 
     @Override
     public void onGetUerSusscess(RESP_User user) {
+        if (user == null) {
+            setNull();
+            return;
+        }
         tvName.setText(user.getFullname());
         tvBirthday.setText(user.getBirthDayasString());
         tvHeight.setText(String.valueOf(user.getHeight()));
@@ -163,6 +168,9 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
 
     @Override
     public void onGetMediacalListSusscess(boolean useCache, RESP_List_Medical list_medical) {
+        if (list_medical == null) {
+            return;
+        }
         Log.e(TAG, "onGetMediacalListSusscess: " + list_medical.getList().size());
         if (!useCache)
             adapter.addAll(list_medical.getList());
@@ -225,12 +233,12 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
 
     @Override
     public void onButtonAdapterClickListener() {
-//        if (SharedPreferencesUtils.getInstance().isLogined()) {
+        if (SharedPreferencesUtils.getInstance().isLogined()) {
             Intent i = new Intent(getActivity(), AddMedicalDetailActivity.class);
             startActivityForResult(i, Constant.ADDMEDICAL_CODE);
-//        } else {
-//            showLoginDialog();
-//        }
+        } else {
+            showLoginDialog();
+        }
     }
 
 }

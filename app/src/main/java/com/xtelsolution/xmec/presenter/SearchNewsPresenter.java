@@ -85,7 +85,7 @@ public class SearchNewsPresenter extends BasePresenter {
         String url = Constant.SERVER_XMEC + Constant.Disease + "?name=" + key + "&size=15";
         xLog.e(TAG, "Sear Disease:" + url);
         xLog.e(TAG, "searchMedicine: secsion: " + LoginManager.getCurrentSession());
-        DiseaseModel.getInstance().findDisease(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Disease>(RESP_List_Disease.class) {
+        DiseaseModel.getInstance().findDisease(url, getSession(), new ResponseHandle<RESP_List_Disease>(RESP_List_Disease.class) {
             @Override
             public void onSuccess(RESP_List_Disease obj) {
                     view.onFindDiseaseFinish(obj.getList());

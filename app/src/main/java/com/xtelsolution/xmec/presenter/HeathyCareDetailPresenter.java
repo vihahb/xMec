@@ -35,7 +35,7 @@ public class HeathyCareDetailPresenter extends BasePresenter {
         int id = (int) param[1];
         String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "/" + id;
         xLog.e(TAG, "getHeathyCareDetail: " + url);
-        HealthyCareModel.getInstance().getDetailHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Healthy_Care_Detail>(RESP_Healthy_Care_Detail.class) {
+        HealthyCareModel.getInstance().getDetailHospital(url, getSession(), new ResponseHandle<RESP_Healthy_Care_Detail>(RESP_Healthy_Care_Detail.class) {
             @Override
             public void onSuccess(RESP_Healthy_Care_Detail obj) {
                 view.onGetHeathyCareSuccess(obj);

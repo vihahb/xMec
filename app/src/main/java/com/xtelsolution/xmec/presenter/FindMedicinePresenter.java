@@ -28,7 +28,7 @@ public class FindMedicinePresenter extends BasePresenter {
         String url = Constant.SERVER_XMEC + Constant.MEDICINE_SEARCH + "?name=" + key + "&size=15";
         xLog.e(TAG, "searchMedicine:" + url);
         xLog.e(TAG, "searchMedicine: secsion: " + LoginManager.getCurrentSession());
-        MedicineModel.getInstance().findMedicine(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Medicine_Compact>(RESP_List_Medicine_Compact.class) {
+        MedicineModel.getInstance().findMedicine(url, getSession(), new ResponseHandle<RESP_List_Medicine_Compact>(RESP_List_Medicine_Compact.class) {
             @Override
             public void onSuccess(RESP_List_Medicine_Compact obj) {
                 view.onFindMedicienFinish(obj.getData());
