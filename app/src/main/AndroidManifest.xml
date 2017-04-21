@@ -42,7 +42,7 @@
         <activity
             android:name=".xmec.views.activity.RegisterActivity"
             android:parentActivityName=".xmec.views.activity.LoginActivity"
-            android:theme="@style/NoACtionBar" />
+            android:theme="@style/HomeActivityTheme" />
         <activity
             android:name=".xmec.views.activity.ConfirmOPTActivity"
             android:parentActivityName=".xmec.views.activity.RegisterActivity"

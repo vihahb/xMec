@@ -33,7 +33,7 @@ public class RegisterActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        setUi(findViewById(R.id.activity_register));
+//        setUi(findViewById(R.id.activity_register));
         callbackManager = CallbackManager.create(this);
         initUI();
         initControl();
