@@ -9,11 +9,13 @@ import android.support.multidex.MultiDexApplication;
 import android.util.Base64;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.xtelsolution.xmec.callbacks.HtmlLoader;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
 import com.xtelsolution.xmec.model.entity.IllnessTemple;
 
+import io.fabric.sdk.android.Fabric;
 import org.jsoup.nodes.Document;
 
 import java.security.MessageDigest;
@@ -31,6 +33,7 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 //        Fabric.with(this, new Crashlytics());
 //        FacebookSdk.sdkInitialize(getApplicationContext());
 //        AccountKit.initialize(getApplicationContext());

@@ -16,11 +16,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -39,6 +43,7 @@ import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import agency.tango.android.avatarview.views.AvatarView;
 import de.psdev.formvalidations.Field;
@@ -61,7 +66,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     private ProfilePresenter presenter;
     private String urlAvatar = "";
     private Form mForm;
-    private MaterialSpinner spSex;
+    private Spinner spSex;
     private int gender;
     private BottomSheetChoosePicture bottomSheetChoosePicture;
 
@@ -100,8 +105,13 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         etBirthday.setInputType(InputType.TYPE_NULL);
         btnUpdateInfo = (Button) findViewById(R.id.btn_update_info);
         btnSelectImage.setOnClickListener(this);
-        spSex = (MaterialSpinner) findViewById(R.id.spcategorize);
-        spSex.setItems("Giới tính", "Nam", "Nữ");
+        spSex = (Spinner) findViewById(R.id.spcategorize);
+        ArrayList<String> listSex =new ArrayList<>();
+        ArrayAdapter<String> adapterSpiner = new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_dropdown_item,listSex);
+        listSex.add("Giới tính");
+        listSex.add("Nam");
+        listSex.add("Nữ");
+        spSex.setAdapter(adapterSpiner);
 
         bottomSheetChoosePicture = new BottomSheetChoosePicture();
 //        animation();
@@ -126,9 +136,9 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                 uploadAvatar();
             }
         });
-        spSex.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+        spSex.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position == 0)
                     gender = 3;
                 else if (position == 1)
@@ -136,7 +146,14 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                 else if (position == 2)
                     gender = 1;
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
         });
+
+
 //        layout_avatar.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -273,11 +290,11 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         else
             urlAvatar="none";
         if (sex == 1)
-            spSex.setSelectedIndex(2);
+            spSex.setSelection(2,true);
         else if (sex == 2)
-            spSex.setSelectedIndex(1);
+            spSex.setSelection(1,true);
         else
-            spSex.setSelectedIndex(0);
+            spSex.setSelection(0,true);
     }
 
 

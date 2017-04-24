@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.xmec.views.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
@@ -116,5 +117,10 @@ public class BasicActivity extends AppCompatActivity implements BaseView {
                 setUi(((ViewGroup)view).getChildAt(i));
             }
         }
+    }
+    protected void startActivityAndFinish(Class clazz){
+        Intent i =new Intent(this,clazz);
+        startActivity(i);
+        finish();
     }
 }

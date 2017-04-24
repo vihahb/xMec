@@ -92,6 +92,11 @@
     <string name="location_permission">Cấp quyền truy cập vị trí</string>
     <string name="upload_image">Đang upload ảnh</string>
     <string name="loadding">Đang tải</string>
+    <string name="find_disease">Tìm kiếm Bệnh </string>
+    <string name="find_drug">Tìm kiếm Thuốc </string>
+    <string name="news">Tin tức</string>
+    <string name="health_care">Cơ sở y tế</string>
+    <string name="user_medical">Y bạ</string>
     <string name="no_data_disease">Không có dữ liệu về bệnh </string>
     <string name="add_medical_success">Thêm y bạ thành công</string>
     <string name="edit_disease">Sửa bệnh</string>

@@ -26,6 +26,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.SlidingDrawer;
+import android.widget.TextView;
 
 import com.lv.listenkeyboardevent.KeyboardVisibilityEvent;
 import com.lv.listenkeyboardevent.KeyboardVisibilityEventListener;
@@ -66,6 +67,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     private List<RESP_Map_Healthy_Care> mapHealthyCareList;
     private BroadcastReceiver receiver;
     private FragmentManager fragmentManager;
+    private TextView tvtoolbarTitle;
     private CallbackManager callbackManager;
     private Activity thisActivity;
 
@@ -89,7 +91,8 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
 
     private void init() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
+        tvtoolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         fragmentManager = getSupportFragmentManager();
@@ -113,6 +116,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
                 if (position == 4) {
                     slidingDrawer.setVisibility(View.VISIBLE);
                 } else {
@@ -130,7 +134,24 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
             @Override
             public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        tvtoolbarTitle.setText(getResources().getString(R.string.find_disease));
+                        break;
+                    case 1:
+                        tvtoolbarTitle.setText(getResources().getString(R.string.find_drug));
+                        break;
+                    case 2:
+                        tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
+                        break;
+                    case 3:
+                        tvtoolbarTitle.setText(getResources().getString(R.string.news));
+                        break;
+                    case 4:
+                        tvtoolbarTitle.setText(getResources().getString(R.string.health_care));
+                        break;
 
+                }
             }
 
             @Override
@@ -140,9 +161,9 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         KeyboardVisibilityEvent.registerEventListener(this, new KeyboardVisibilityEventListener() {
             @Override
             public void onVisibilityChanged(boolean isOpen) {
-                if (isOpen){
+                if (isOpen) {
                     sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
-                }else {
+                } else {
                     sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
                 }
             }
@@ -202,6 +223,14 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
                 showToast("Đã đăng xuất");
                 SharedPreferencesUtils.getInstance().setLogout();
                 item.setIcon(R.drawable.ic_action_login);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivityAndFinish(LoginActivity.class);
+                    }
+                },1000);
+
+
             }
         }
         return true;
