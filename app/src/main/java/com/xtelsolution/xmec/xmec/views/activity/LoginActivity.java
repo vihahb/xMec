@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.IntentCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -131,9 +132,9 @@ public class LoginActivity extends BasicActivity {
                             @Override
                             public void onSuccess(RESP_Login success) {
                                 showLog(TAG, "initFacebookSdk: onSuccess: " + JsonHelper.toJson(success));
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
                                 SharedPreferencesUtils.getInstance().setLogined();
-                                finish();
+                                startActivityFinishAll();
                             }
 
                             @Override
@@ -199,9 +200,8 @@ public class LoginActivity extends BasicActivity {
                 public void onSuccess(RESP_Login success) {
                     Log.e("Session", "onSuccess: " + JsonHelper.toJson(success));
                     xLog.e(TAG, "onPhoneLogin: onSuccess: " + Constant.LOGPHI + success.getSession());
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     SharedPreferencesUtils.getInstance().setLogined();
-                    finish();
+                    startActivityFinishAll();
                 }
 
                 @Override
@@ -223,6 +223,15 @@ public class LoginActivity extends BasicActivity {
                 }
             });
         }
+    }
+
+    private void startActivityFinishAll() {
+        Intent intents = new Intent(LoginActivity.this, HomeActivity.class);
+        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intents);
+        finish();
     }
 
     private void onFacebookLogin() {

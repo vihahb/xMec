@@ -216,7 +216,6 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         if (item.getItemId() == R.id.action_login_logout) {
             if (callbackManager.getCurrentSession() == null) {
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                finish();
             } else {
                 LoginManager.logOut();
                 SharedPreferencesUtils.getInstance().setLogined();
@@ -228,7 +227,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
                     public void run() {
                         startActivityAndFinish(LoginActivity.class);
                     }
-                },1000);
+                }, 1000);
 
 
             }
