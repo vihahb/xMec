@@ -33,6 +33,7 @@ import com.xtelsolution.xmec.xmec.views.activity.ProfileActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.MedicalDirectoryAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -51,6 +52,7 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
     private TextView tvBirthday;
     private TextView tvHeight;
     private TextView tvWeight;
+    private TextView tvIBM;
     private HomePresenter presenter;
     private Context mContext;
     private ArrayList<RESP_Medical> mlistMedica;
@@ -116,6 +118,7 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         tvBirthday = (TextView) view.findViewById(R.id.tv_birthday);
         tvHeight = (TextView) view.findViewById(R.id.tv_profile_height);
         tvWeight = (TextView) view.findViewById(R.id.tv_profile_weight);
+        tvIBM = (TextView) view.findViewById(R.id.tv_profile_ibm);
         tvName = (TextView) view.findViewById(R.id.tv_profile_name);
         imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
         imgGender = (ImageView) view.findViewById(R.id.img_gender);
@@ -152,6 +155,13 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         tvBirthday.setText(user.getBirthDayasString());
         tvHeight.setText(String.valueOf(user.getHeight()));
         tvWeight.setText(String.valueOf(user.getWeight()));
+        try {
+            DecimalFormat format = new DecimalFormat("##.##");
+            tvIBM.setText(format.format(user.getWeight() * 100 * 100 / (user.getHeight() * user.getHeight())));
+        } catch (Exception e) {
+            tvIBM.setText("0.0");
+        }
+
         setImage(imgAvatar, user.getAvatar());
         if (user.getGender() == 2) {
             imgGender.setVisibility(View.VISIBLE);
