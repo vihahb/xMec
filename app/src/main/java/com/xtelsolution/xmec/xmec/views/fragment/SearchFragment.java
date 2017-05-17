@@ -2,6 +2,8 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -37,14 +39,28 @@ import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginHorizontal;
 import java.util.ArrayList;
 import java.util.List;
 
+import yalantis.com.sidemenu.interfaces.ScreenShotable;
+
 /**
  * Created by HUNGNT on 1/18/2017.
  * edit by PhiMh on 31/3/2017.
  */
 
 
-public class SearchFragment extends BasicFragment implements ISearchNewsView, ItemClickListener {
+public class SearchFragment extends BasicFragment implements ISearchNewsView, ItemClickListener, ScreenShotable {
     private final String TAG = SearchFragment.class.getName();
+
+    public static SearchFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        SearchFragment fragment = new SearchFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private View containerView;
+    private Bitmap bitmap;
     private RecyclerView rvResultFindNews, rvResultFindIllness;
     private Button btnDiseaseDiagnos;
     private NestedScrollView NscrollView;
@@ -78,6 +94,7 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView, It
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.containerView = view.findViewById(R.id.container);
         if (listdisease.size() == 0) {
             setUi(view.findViewById(R.id.NscrollView));
             initView(view);
@@ -215,5 +232,27 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView, It
         intent.putExtra(Constant.ILLNESS_URL, disease.getUrl());
         intent.putExtra(Constant.MEDICAL_NAME, disease.getName());
         startActivity(intent);
+    }
+
+    @Override
+    public void takeScreenShot() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
+                        containerView.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                containerView.draw(canvas);
+                SearchFragment.this.bitmap = bitmap;
+            }
+        };
+
+        thread.start();
+
+    }
+
+    @Override
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 }

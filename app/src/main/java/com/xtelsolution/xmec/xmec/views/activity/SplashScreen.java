@@ -31,10 +31,10 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Pair<View, String> pair = new Pair<View, String>(imgLogo, "logo");
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashScreen.this, pair);
-                startActivity(i, optionsCompat.toBundle());
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//                Pair<View, String> pair = new Pair<View, String>(imgLogo, "logo");
+//                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashScreen.this, pair);
+                startActivity(i/*, optionsCompat.toBundle()*/);
+//                overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override

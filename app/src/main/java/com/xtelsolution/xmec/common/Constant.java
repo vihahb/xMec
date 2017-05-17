@@ -16,6 +16,14 @@ public class Constant {
     public static final String INTENT_ID_MEDICINE = "intent_id_medicine";
 
 
+    public static final String CLOSE = "Close";
+    public static final String HOME = "home";
+    public static final String BENH = "benh";
+    public static final String THUOC = "thuoc";
+    public static final String TINTUC = "tintuc";
+    public static final String COSOYTE = "cosoyte";
+
+
     public static final String ACTION_HIDE_BOTTOM_BAR = "hide_bottom_bar";
     public static final String ACTION_SHOW_BOTTOM_BAR = "show_bottom_bar";
 
@@ -39,8 +47,6 @@ public class Constant {
     public static final String USER_DISEASE_DRUGS = "user_disease_note";
     public static final String PREFERENCE_NAME = "preference_xmec";
     public static final String IS_LOGINED = "is_logined";
-
-
 
 
     public static final String MEDICAL_ID = "medical_id";

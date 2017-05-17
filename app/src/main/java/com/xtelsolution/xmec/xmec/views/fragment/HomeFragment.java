@@ -3,10 +3,14 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.view.menu.ShowableListMenu;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,12 +40,26 @@ import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import yalantis.com.sidemenu.interfaces.ScreenShotable;
+
 /**
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class HomeFragment extends BasicFragment implements IHomeView, ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
+public class HomeFragment extends BasicFragment implements ScreenShotable, IHomeView, ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
     private static final String TAG = "HomeFragment";
+    private View view;
+    private View containerView;
+    private Bitmap bitmap;
+
+    public static HomeFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        HomeFragment fragment = new HomeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     private RESP_User userModel;
     private MedicalDirectoryAdapter adapter;
@@ -58,6 +76,7 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
     private ArrayList<RESP_Medical> mlistMedica;
     private ImageView imgGender;
     private CoordinatorLayout progcess;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,7 +104,8 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvDisease = (RecyclerView) view.findViewById(R.id.rvDisease);
-
+        this.view = view;
+        containerView = view.findViewById(R.id.container);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rvDisease.setLayoutManager(manager);
         rvDisease.setNestedScrollingEnabled(false);
@@ -252,4 +272,31 @@ public class HomeFragment extends BasicFragment implements IHomeView, ItemClickL
         }
     }
 
+    @Override
+    public void takeScreenShot() {
+//        try {
+//            Thread thread = new Thread() {
+//                @Override
+//                public void run() {
+//                    if (containerView == null) {
+//                        containerView = view.findViewById(R.id.container);
+//                    }
+//                    Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
+//                            containerView.getHeight(), Bitmap.Config.ARGB_8888);
+//                    Canvas canvas = new Canvas(bitmap);
+//                    containerView.draw(canvas);
+//                    HomeFragment.this.bitmap = bitmap;
+//                }
+//            };
+//
+//            thread.start();
+//        } catch (Exception e) {
+//            Log.e(TAG, "takeScreenShot: ", new Throwable(e));
+//        }
+    }
+
+    @Override
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
 }
