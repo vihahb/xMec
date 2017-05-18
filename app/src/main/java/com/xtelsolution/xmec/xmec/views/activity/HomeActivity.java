@@ -72,19 +72,20 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     private ViewAnimator viewAnimator;
     private LinearLayout linearLayout;
     private Toolbar toolbar;
-
+    private LinearLayout layout;
+    Fragment fragment;
 
     private SpaceTabLayout tabLayout;
     private ViewPager viewPager;
     private List<Fragment> fragmentList;
-    private SlidingDrawer slidingDrawer;
+    //    private SlidingDrawer slidingDrawer;
     private RecyclerView rvHosiptalCenter;
     private HospitalCenterAdapter adapter;
     private ImageView imgHanderSliding;
     private String TAG = "HomeActivity";
     private List<RESP_Map_Healthy_Care> mapHealthyCareList;
     private BroadcastReceiver receiver;
-    private FragmentManager fragmentManager;
+    //    private FragmentManager fragmentManager;
     private TextView tvtoolbarTitle;
     private CallbackManager callbackManager;
     private Activity thisActivity;
@@ -194,15 +195,15 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(Constant.ACTION_HIDE_BOTTOM_BAR)) {
-                    tabLayout.animate().translationY(tabLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
-//                    tabLayout.setVisibility(View.GONE);
-                    xLog.i(TAG, "initReceiver:" + ": Action hide");
-                } else if (intent.getAction().equals(Constant.ACTION_SHOW_BOTTOM_BAR)) {
-                    tabLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-//                    tabLayout.setVisibility(View.VISIBLE);
-                    xLog.i(TAG, "initReceiver" + ": Action show");
-                }
+//                if (intent.getAction().equals(Constant.ACTION_HIDE_BOTTOM_BAR)) {
+//                    tabLayout.animate().translationY(tabLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
+////                    tabLayout.setVisibility(View.GONE);
+//                    xLog.i(TAG, "initReceiver:" + ": Action hide");
+//                } else if (intent.getAction().equals(Constant.ACTION_SHOW_BOTTOM_BAR)) {
+//                    tabLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+////                    tabLayout.setVisibility(View.VISIBLE);
+//                    xLog.i(TAG, "initReceiver" + ": Action show");
+//                }
             }
         };
         IntentFilter filter = new IntentFilter();
@@ -213,7 +214,8 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        tabLayout.saveState(outState);
+        if (tabLayout != null)
+            tabLayout.saveState(outState);
         super.onSaveInstanceState(outState);
     }
 
@@ -275,25 +277,25 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     @Override
     public void onBackPressed() {
-        if (slidingDrawer.isOpened())
-            slidingDrawer.close();
-        else {
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
-                return;
-            }
-
-            this.doubleBackToExitPressedOnce = true;
-            showToast("Nhấn BACK 2 lần để thoát");
-
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
+//        if (slidingDrawer.isOpened())
+//            slidingDrawer.close();
+//        else {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
         }
+
+        this.doubleBackToExitPressedOnce = true;
+        showToast("Nhấn BACK 2 lần để thoát");
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+//        }
     }
 
     @Override
@@ -310,9 +312,9 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        for (Fragment fragment : fragmentManager.getFragments()) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        }
+//        for (Fragment fragment : fragmentManager.getFragments()) {
+//            fragment.onActivityResult(requestCode, resultCode, data);
+//        }
 
     }
 
@@ -329,9 +331,13 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     //Version 1.2
     private void initView() {
+        layout = (LinearLayout) findViewById(R.id.content_frame);
+        fragment = HomeFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, HomeFragment.newInstance())
+                .replace(R.id.content_frame, fragment)
+
                 .commit();
+        tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        drawerLayout.setScrimColor(Color.TRANSPARENT);
         linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
@@ -349,7 +355,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     }
 
     private void createMenuList() {
-        SlideMenuItem menuItem0 = new SlideMenuItem(Constant.CLOSE, R.drawable.ic_close_light);
+        SlideMenuItem menuItem0 = new SlideMenuItem(Constant.CLOSE, R.drawable.ic_close_dark);
         list.add(menuItem0);
         SlideMenuItem menuItem = new SlideMenuItem(Constant.HOME, R.drawable.ic_menu_yba);
         list.add(menuItem);
@@ -409,8 +415,10 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
+    String TabCurrent = "";
 
-    private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition) {
+
+    private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition, String name) {
         View view = findViewById(R.id.content_frame);
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
         SupportAnimator animator = ViewAnimationUtils.createCircularReveal(view, 0, topPosition, 0, finalRadius);
@@ -419,28 +427,42 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
         findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
         animator.start();
-        switch (topPosition) {
-            case 0:
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment oldFragment = manager.findFragmentByTag(fragment.getClass().getName());
+        if (oldFragment != null) manager.beginTransaction().remove(oldFragment);
+
+        switch (name) {
+            case Constant.HOME:
+                tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
                 HomeFragment contentFragment = HomeFragment.newInstance();
+                fragment = HomeFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
                 return contentFragment;
-            case 1:
+            case Constant.THUOC:
+                tvtoolbarTitle.setText(getResources().getString(R.string.find_disease));
+                MedicineFragment medicineFragment = MedicineFragment.newInstance();
+                fragment = MedicineFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, medicineFragment).commit();
+                return medicineFragment;
+            case Constant.BENH:
+                tvtoolbarTitle.setText(getResources().getString(R.string.find_drug));
                 SearchFragment searchFragment = SearchFragment.newInstance();
+                fragment = SearchFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment).commit();
                 return searchFragment;
-//            case 2:
-//                HomeFragment contentFragment = HomeFragment.newInstance();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
-//                return contentFragment;
-//            case 3:
-//                HomeFragment contentFragment = HomeFragment.newInstance();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
-//                return contentFragment;
-//            case 4:
-//                HomeFragment contentFragment = HomeFragment.newInstance();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
-//                return contentFragment;
+            case Constant.TINTUC:
+                NewsFeedFragment newsFeedFragment = NewsFeedFragment.newInstance();
+                fragment = NewsFeedFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, newsFeedFragment).commit();
+                tvtoolbarTitle.setText(getResources().getString(R.string.news));
+                return newsFeedFragment;
 
+            case Constant.COSOYTE:
+                MapFragment mapFragment = MapFragment.newInstance();
+                fragment = MapFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mapFragment).commit();
+                tvtoolbarTitle.setText(getResources().getString(R.string.health_care));
+                return mapFragment;
         }
 
 
@@ -451,12 +473,17 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
-        Log.e(TAG, "onSwitch: " + position);
+        Log.e(TAG, "onSwitch: " + slideMenuItem.getName());
         switch (slideMenuItem.getName()) {
             case Constant.CLOSE:
                 return screenShotable;
             default:
-                return replaceFragment(screenShotable, position);
+                if (!TabCurrent.equals(slideMenuItem.getName())) {
+                    TabCurrent = slideMenuItem.getName();
+                    return replaceFragment(screenShotable, position, slideMenuItem.getName());
+                } else {
+                    return screenShotable;
+                }
         }
 
     }

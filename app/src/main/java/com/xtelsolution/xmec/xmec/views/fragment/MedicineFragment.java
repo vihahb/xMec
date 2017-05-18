@@ -2,6 +2,7 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -32,15 +33,26 @@ import com.xtelsolution.xmec.xmec.views.inf.ISearchMedicineView;
 import java.util.ArrayList;
 import java.util.List;
 
+import yalantis.com.sidemenu.interfaces.ScreenShotable;
+
 /**
  * Created by HUNGNT on 1/18/2017.
  * edit by chungdt 30/03/2017.
  */
 
 
-public class MedicineFragment extends BasicFragment implements ISearchMedicineView {
+public class MedicineFragment extends BasicFragment implements ISearchMedicineView, ScreenShotable {
 
     private static final String TAG = MedicineFragment.class.getName();
+
+    public static MedicineFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        MedicineFragment fragment = new MedicineFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     private RecyclerView rvResultFindMediacine;
     private FindMedicinePresenter presenter;
@@ -72,7 +84,7 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (list.size()==0) {
+        if (list.size() == 0) {
             initView(view.findViewById(R.id.nesstedScrollView));
             setUi(view);
             initControl();
@@ -159,5 +171,33 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     @Override
     public void onError() {
         medicineAdapter.setLoadMore(false);
+    }
+
+    @Override
+    public void takeScreenShot() {
+//        try {
+//            Thread thread = new Thread() {
+//                @Override
+//                public void run() {
+//                    if (containerView == null) {
+//                        containerView = view.findViewById(R.id.container);
+//                    }
+//                    Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
+//                            containerView.getHeight(), Bitmap.Config.ARGB_8888);
+//                    Canvas canvas = new Canvas(bitmap);
+//                    containerView.draw(canvas);
+//                    HomeFragment.this.bitmap = bitmap;
+//                }
+//            };
+//
+//            thread.start();
+//        } catch (Exception e) {
+//            Log.e(TAG, "takeScreenShot: ", new Throwable(e));
+//        }
+    }
+
+    @Override
+    public Bitmap getBitmap() {
+        return null;
     }
 }

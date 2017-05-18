@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,12 +14,24 @@ import android.view.ViewGroup;
 
 import com.xtelsolution.xmec.R;
 
+import yalantis.com.sidemenu.interfaces.ScreenShotable;
+
 /**
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class NewsFeedFragment extends Fragment {
-
+public class NewsFeedFragment extends Fragment implements ScreenShotable {
+    private View view;
+    private View containerView;
+    private Bitmap bitmap;
+    public static NewsFeedFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        NewsFeedFragment fragment = new NewsFeedFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     private View mainView;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -49,6 +62,33 @@ public class NewsFeedFragment extends Fragment {
         }
     }
 
+    @Override
+    public void takeScreenShot() {
+//        try {
+//            Thread thread = new Thread() {
+//                @Override
+//                public void run() {
+//                    if (containerView == null) {
+//                        containerView = view.findViewById(R.id.container);
+//                    }
+//                    Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
+//                            containerView.getHeight(), Bitmap.Config.ARGB_8888);
+//                    Canvas canvas = new Canvas(bitmap);
+//                    containerView.draw(canvas);
+//                    HomeFragment.this.bitmap = bitmap;
+//                }
+//            };
+//
+//            thread.start();
+//        } catch (Exception e) {
+//            Log.e(TAG, "takeScreenShot: ", new Throwable(e));
+//        }
+    }
+
+    @Override
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {

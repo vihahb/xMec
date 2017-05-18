@@ -116,12 +116,12 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
         recyclerView.setOnScrollListener(new RecyclerOnScrollListener(manager) {
             @Override
             public void onHide() {
-                mContext.sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
+//                mContext.sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
             }
 
             @Override
             public void onShow() {
-                mContext.sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
+//                mContext.sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
             }
 
             @Override

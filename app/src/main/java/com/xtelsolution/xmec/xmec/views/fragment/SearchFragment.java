@@ -178,13 +178,13 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView, It
             @Override
             public void onHide() {
 //                xLog.e(TAG, "hide");
-                mContext.sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
+//                mContext.sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
             }
 
             @Override
             public void onShow() {
 //                xLog.e(TAG, "show");
-                mContext.sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
+//                mContext.sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
             }
         });
     }

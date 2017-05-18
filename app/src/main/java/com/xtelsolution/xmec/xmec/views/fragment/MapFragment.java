@@ -64,12 +64,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import yalantis.com.sidemenu.interfaces.ScreenShotable;
+
 /**
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class MapFragment extends BasicFragment implements OnMapReadyCallback, IMapView, GoogleMap.OnCameraMoveCanceledListener, GoogleMap.OnCameraIdleListener,CustomClusterManager.CameraIdle, ClusterManager.OnClusterItemClickListener {
+public class MapFragment extends BasicFragment implements ScreenShotable, OnMapReadyCallback, IMapView, GoogleMap.OnCameraMoveCanceledListener, GoogleMap.OnCameraIdleListener, CustomClusterManager.CameraIdle, ClusterManager.OnClusterItemClickListener {
     private static final String TAG = "MapFragment";
+
+    public static MapFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        MapFragment fragment = new MapFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     private View view;
     private GoogleMap mMap;
     private Marker mMarker;
@@ -143,14 +155,14 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         presenter.initMap();
         isMapCreated = true;
 
-        clusterManager = new CustomClusterManager(getContext(),mMap);
+        clusterManager = new CustomClusterManager(getContext(), mMap);
         mMap.setOnCameraIdleListener(clusterManager);
         clusterManager.setOnClusterItemClickListener(this);
         clusterManager.setAnimation(true);
 //        clusterManager.setAlgorithm();
         mMap.setOnMarkerClickListener(clusterManager);
         clusterManager.setCameraIdle(this);
-        clusterManager.setRenderer(new CustomClusterRender(getContext(),mMap,clusterManager));
+        clusterManager.setRenderer(new CustomClusterRender(getContext(), mMap, clusterManager));
         mMap.setOnCameraMoveCanceledListener(this);
 
     }
@@ -236,11 +248,11 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 //            } else
 //                marker.setIcon(BitmapDescriptorFactory.fromBitmap(scaleBimap(R.drawable.ic_pharmacy)));
 //            marker.setTag(data.get(i).getId());
-            LatLng latLng = new LatLng(data.get(i).getLat(),data.get(i).getLng());
-            HospitalClusterItem hospital = new HospitalClusterItem(latLng,data.get(i).getName(),data.get(i).getId(),data.get(i).getType());
+            LatLng latLng = new LatLng(data.get(i).getLat(), data.get(i).getLng());
+            HospitalClusterItem hospital = new HospitalClusterItem(latLng, data.get(i).getName(), data.get(i).getId(), data.get(i).getType());
             clusterManager.addItem(hospital);
         }
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom+0.001f));
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom + 0.001f));
         onLoadMapSuccessListener.onLoadMapSuccess(data);
 
     }
@@ -274,8 +286,8 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
 //    }
     @Override
     public void onCameraIdle() {
-            xLog.e(TAG, "onCameraIdle:" + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
-            presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
+        xLog.e(TAG, "onCameraIdle:" + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
+        presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
 //        listTemp(mMap.getCameraPosition().target);
     }
 
@@ -343,5 +355,15 @@ public class MapFragment extends BasicFragment implements OnMapReadyCallback, IM
         i.putExtra(Constant.HEALTHY_CENTER_ID, item.getIdHospital());
         startActivity(i);
         return false;
+    }
+
+    @Override
+    public void takeScreenShot() {
+
+    }
+
+    @Override
+    public Bitmap getBitmap() {
+        return null;
     }
 }
