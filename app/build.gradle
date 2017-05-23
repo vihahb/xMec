@@ -74,6 +74,8 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.yalantis:Side-Menu.Android:1.0.1'
+    compile 'com.yarolegovich:mp:1.0.5'
+    compile 'com.polyak:icon-switch:1.0.0'
     compile('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
         transitive = true;
     }

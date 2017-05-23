@@ -5,10 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/dimen_8"
-    android:paddingLeft="@dimen/dimen_8"
-    android:paddingRight="@dimen/dimen_8">
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/etSearch"
@@ -22,52 +19,48 @@
         android:textColor="@color/textTitle"
         android:textColorHint="@color/textHint"
         android:textSize="@dimen/dimen12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
-    <android.support.design.widget.CoordinatorLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dimen_18"
-        android:background="@drawable/radius"
-        android:padding="3dp">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:context=".xmec.views.activity.HomeActivity" />
 
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".xmec.views.activity.HomeActivity" />
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/location_permission"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/textHint">
 
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/location_permission"
-                android:background="@color/textHint"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/btn_init_permission"
-                    style="@style/ButtonRadius"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dimen_8"
-                    android:paddingRight="@dimen/dimen_8"
-                    android:layout_gravity="center"
-                    android:text="@string/location_permission" />
-            </android.support.design.widget.CoordinatorLayout>
-        </FrameLayout>
+            <Button
+                android:id="@+id/btn_init_permission"
+                style="@style/ButtonRadius"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:text="@string/location_permission" />
+        </android.support.design.widget.CoordinatorLayout>
+    </FrameLayout>
 
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn__current_location"
-            android:layout_width="@dimen/action_button_size"
-            android:layout_height="@dimen/action_button_size"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/dimen_72"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/ic_my_location_white_36dp" />
-    </android.support.design.widget.CoordinatorLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn__current_location"
+        android:layout_width="@dimen/action_button_size"
+        android:layout_height="@dimen/action_button_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dimen_16"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_my_location_white_36dp" />
 </RelativeLayout>

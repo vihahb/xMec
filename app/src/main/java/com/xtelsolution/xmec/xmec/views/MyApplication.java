@@ -16,6 +16,7 @@ import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
 import com.xtelsolution.xmec.model.entity.IllnessTemple;
 
 import io.fabric.sdk.android.Fabric;
+
 import org.jsoup.nodes.Document;
 
 import java.security.MessageDigest;

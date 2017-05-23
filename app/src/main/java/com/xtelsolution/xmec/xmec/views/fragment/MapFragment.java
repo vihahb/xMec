@@ -1,65 +1,46 @@
 package com.xtelsolution.xmec.xmec.views.fragment;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LevelListDrawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SlidingDrawer;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
-import com.xtel.nipservicesdk.utils.PermissionHelper;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.OnLoadMapSuccessListener;
-import com.xtelsolution.xmec.model.RESP_List_Map_Healthy_Care;
 import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
 import com.xtelsolution.xmec.model.entity.HospitalClusterItem;
 import com.xtelsolution.xmec.presenter.MapPresenter;
 import com.xtelsolution.xmec.xmec.views.activity.DetailHospitalActivity;
 import com.xtelsolution.xmec.xmec.views.activity.HomeActivity;
-import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IMapView;
 import com.xtelsolution.xmec.xmec.views.widget.CustomClusterManager;
 import com.xtelsolution.xmec.xmec.views.widget.CustomClusterRender;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -70,7 +51,10 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class MapFragment extends BasicFragment implements ScreenShotable, OnMapReadyCallback, IMapView, GoogleMap.OnCameraMoveCanceledListener, GoogleMap.OnCameraIdleListener, CustomClusterManager.CameraIdle, ClusterManager.OnClusterItemClickListener {
+public class MapFragment extends BasicFragment implements ScreenShotable,
+        OnMapReadyCallback, IMapView, GoogleMap.OnCameraMoveCanceledListener,
+        GoogleMap.OnCameraIdleListener, CustomClusterManager.CameraIdle,
+        ClusterManager.OnClusterItemClickListener {
     private static final String TAG = "MapFragment";
 
     public static MapFragment newInstance() {
@@ -260,7 +244,7 @@ public class MapFragment extends BasicFragment implements ScreenShotable, OnMapR
 
     private Bitmap scaleBimap(int id) {
         Bitmap b = BitmapFactory.decodeResource(getResources(), id);
-        Bitmap bhalfsize = Bitmap.createScaledBitmap(b, 64, 64, false);
+        Bitmap bhalfsize = Bitmap.createScaledBitmap(b, 34, 64, false);
         return bhalfsize;
     }
 

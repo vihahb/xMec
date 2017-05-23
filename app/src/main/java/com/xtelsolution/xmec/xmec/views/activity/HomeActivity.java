@@ -1,23 +1,25 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.inputmethodservice.KeyboardView;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,28 +27,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.view.inputmethod.InputMethodManager;
+import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
-import com.lv.listenkeyboardevent.KeyboardVisibilityEvent;
-import com.lv.listenkeyboardevent.KeyboardVisibilityEventListener;
+import com.polyak.iconswitch.IconSwitch;
 import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
-import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
-import com.xtelsolution.xmec.callbacks.RSSGetter;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.OnLoadMapSuccessListener;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
-import com.xtelsolution.xmec.presenter.MapPresenter;
 import com.xtelsolution.xmec.xmec.views.adapter.HospitalCenterAdapter;
 import com.xtelsolution.xmec.xmec.views.fragment.HomeFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.MapFragment;
@@ -65,15 +65,14 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
-public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListener, ItemClickListener, ViewAnimator.ViewAnimatorListener {
+public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListener, IconSwitch.CheckedChangeListener, ValueAnimator.AnimatorUpdateListener, ItemClickListener, ViewAnimator.ViewAnimatorListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
     private ViewAnimator viewAnimator;
     private LinearLayout linearLayout;
     private Toolbar toolbar;
-    private LinearLayout layout;
-    Fragment fragment;
+    private FrameLayout layout;
 
     private SpaceTabLayout tabLayout;
     private ViewPager viewPager;
@@ -90,6 +89,23 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     private CallbackManager callbackManager;
     private Activity thisActivity;
 
+
+    private static final int DURATION_COLOR_CHANGE_MS = 400;
+
+
+    private int[] toolbarColors;
+    private int[] statusBarColors;
+    private ValueAnimator statusBarAnimator;
+    private Interpolator contentInInterpolator;
+    private Interpolator contentOutInterpolator;
+    private Point revealCenter;
+
+    private Window window;
+    private View toolbarSearch;
+    private View content;
+    private IconSwitch iconSwitch;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +114,18 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         thisActivity = this;
         init();
         initReceiver();
+        window = getWindow();
+
+        initColors();
+        initAnimationRelatedFields();
+        content = findViewById(R.id.content);
+        content.setVisibility(View.GONE);
+        toolbarSearch = findViewById(R.id.toolbar_search);
+        EditText title = (EditText) findViewById(R.id.ed_search);
+
+        iconSwitch = (IconSwitch) findViewById(R.id.icon_switch);
+        iconSwitch.setCheckedChangeListener(this);
+        updateColors(false);
 //        tabLayout.initialize(viewPager, fragmentManager, fragmentList, savedInstanceState);
 //        rvHosiptalCenter.setAdapter(adapter);
 //        rvHosiptalCenter.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -331,11 +359,9 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     //Version 1.2
     private void initView() {
-        layout = (LinearLayout) findViewById(R.id.content_frame);
-        fragment = HomeFragment.newInstance();
+        layout = (FrameLayout) findViewById(R.id.content_frame);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, fragment)
-
+                .replace(R.id.content_frame, HomeFragment.newInstance(), Constant.HOME)
                 .commit();
         tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -427,42 +453,36 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
         findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
         animator.start();
-        FragmentManager manager = getSupportFragmentManager();
-        Fragment oldFragment = manager.findFragmentByTag(fragment.getClass().getName());
-        if (oldFragment != null) manager.beginTransaction().remove(oldFragment);
 
         switch (name) {
             case Constant.HOME:
                 tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
                 HomeFragment contentFragment = HomeFragment.newInstance();
-                fragment = HomeFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment, name).commit();
                 return contentFragment;
             case Constant.THUOC:
                 tvtoolbarTitle.setText(getResources().getString(R.string.find_disease));
                 MedicineFragment medicineFragment = MedicineFragment.newInstance();
-                fragment = MedicineFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, medicineFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, medicineFragment, name).commit();
                 return medicineFragment;
             case Constant.BENH:
                 tvtoolbarTitle.setText(getResources().getString(R.string.find_drug));
                 SearchFragment searchFragment = SearchFragment.newInstance();
-                fragment = SearchFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment, name).commit();
                 return searchFragment;
             case Constant.TINTUC:
                 NewsFeedFragment newsFeedFragment = NewsFeedFragment.newInstance();
-                fragment = NewsFeedFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, newsFeedFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, newsFeedFragment, name).commit();
                 tvtoolbarTitle.setText(getResources().getString(R.string.news));
                 return newsFeedFragment;
 
             case Constant.COSOYTE:
                 MapFragment mapFragment = MapFragment.newInstance();
-                fragment = MapFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mapFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mapFragment, name).commit();
                 tvtoolbarTitle.setText(getResources().getString(R.string.health_care));
                 return mapFragment;
+
+
         }
 
 
@@ -474,6 +494,20 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     @Override
     public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
         Log.e(TAG, "onSwitch: " + slideMenuItem.getName());
+
+        if (slideMenuItem.getName().equals(Constant.COSOYTE)) {
+            toolbarSearch.setVisibility(View.VISIBLE);
+            tvtoolbarTitle.setVisibility(View.GONE);
+            content.setVisibility(View.VISIBLE);
+            iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
+        } else {
+            iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
+            toolbarSearch.setVisibility(View.GONE);
+            content.setVisibility(View.GONE);
+            tvtoolbarTitle.setVisibility(View.VISIBLE);
+
+        }
+        changeContentVisibility();
         switch (slideMenuItem.getName()) {
             case Constant.CLOSE:
                 return screenShotable;
@@ -504,5 +538,114 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     @Override
     public void addViewToContainer(View view) {
         linearLayout.addView(view);
+    }
+
+
+    private void updateColors(boolean animated) {
+        int colorIndex = iconSwitch.getChecked().ordinal();
+        toolbar.setBackgroundColor(toolbarColors[colorIndex]);
+        if (animated) {
+            switch (iconSwitch.getChecked()) {
+                case LEFT:
+                    statusBarAnimator.reverse();
+                    break;
+                case RIGHT:
+                    statusBarAnimator.start();
+                    break;
+            }
+            revealToolbar();
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(statusBarColors[colorIndex]);
+            }
+        }
+    }
+
+    private void revealToolbar() {
+        iconSwitch.getThumbCenter(revealCenter);
+        moveFromSwitchToToolbarSpace(revealCenter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            android.view.ViewAnimationUtils.createCircularReveal(toolbar,
+                    revealCenter.x, revealCenter.y,
+                    iconSwitch.getHeight(), toolbar.getWidth())
+                    .setDuration(DURATION_COLOR_CHANGE_MS)
+                    .start();
+        }
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animator) {
+        if (animator == statusBarAnimator) {
+            int color = (Integer) animator.getAnimatedValue();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(color);
+            }
+        }
+    }
+
+    private void changeContentVisibility() {
+        int targetTranslation = 0;
+        Interpolator interpolator = null;
+        switch (iconSwitch.getChecked()) {
+            case LEFT:
+                targetTranslation = 0;
+                interpolator = contentInInterpolator;
+
+                break;
+            case RIGHT:
+                targetTranslation = content.getHeight();
+                interpolator = contentOutInterpolator;
+                break;
+        }
+        content.animate().cancel();
+        content.animate()
+                .translationY(targetTranslation)
+                .setInterpolator(interpolator)
+                .setDuration(DURATION_COLOR_CHANGE_MS)
+                .start();
+    }
+
+    @Override
+    public void onCheckChanged(IconSwitch.Checked current) {
+        updateColors(true);
+        changeContentVisibility();
+    }
+
+
+    private void initAnimationRelatedFields() {
+        revealCenter = new Point();
+        statusBarAnimator = createArgbAnimator(
+                statusBarColors[IconSwitch.Checked.LEFT.ordinal()],
+                statusBarColors[IconSwitch.Checked.RIGHT.ordinal()]);
+        contentInInterpolator = new OvershootInterpolator(0.5f);
+        contentOutInterpolator = new DecelerateInterpolator();
+    }
+
+    private void initColors() {
+        toolbarColors = new int[IconSwitch.Checked.values().length];
+        statusBarColors = new int[toolbarColors.length];
+        toolbarColors[IconSwitch.Checked.RIGHT.ordinal()] = color(R.color.colorPrimary);
+        statusBarColors[IconSwitch.Checked.RIGHT.ordinal()] = color(R.color.colorPrimary);
+        toolbarColors[IconSwitch.Checked.LEFT.ordinal()] = color(R.color.informationPrimary);
+        statusBarColors[IconSwitch.Checked.LEFT.ordinal()] = color(R.color.informationPrimaryDark);
+    }
+
+    private ValueAnimator createArgbAnimator(int leftColor, int rightColor) {
+        ValueAnimator animator = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            animator = ValueAnimator.ofArgb(leftColor, rightColor);
+        }
+        animator.setDuration(DURATION_COLOR_CHANGE_MS);
+        animator.addUpdateListener(this);
+        return animator;
+    }
+
+    private void moveFromSwitchToToolbarSpace(Point point) {
+        point.set(point.x + iconSwitch.getLeft(), point.y + iconSwitch.getTop());
+    }
+
+    @ColorInt
+    private int color(@ColorRes int res) {
+        return ContextCompat.getColor(this, res);
     }
 }

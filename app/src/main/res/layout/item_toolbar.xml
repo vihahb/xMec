@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar_top"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,4 +16,49 @@
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/toolbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.polyak.iconswitch.IconSwitch
+                android:id="@+id/icon_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginLeft="20dp"
+                app:isw_default_selection="right"
+                app:isw_icon_left="@drawable/ic_format_list_bulleted_white_18dp"
+                app:isw_icon_right="@drawable/ic_location_on_white_18dp"
+                app:isw_thumb_color_left="@color/colorPrimary"
+                app:isw_thumb_color_right="@color/informationPrimary" />
+
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/ed_search"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="80dp"
+            android:drawableEnd="@drawable/ic_action_search"
+            android:drawableRight="@drawable/ic_action_search"
+            android:hint="@string/search_health_center"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:textColor="@color/textTitle"
+            android:textColorHint="@color/textHint"
+            android:textSize="@dimen/dimen12sp"
+            android:textStyle="bold" />
+
+    </FrameLayout>
 </android.support.v7.widget.Toolbar>
+
