@@ -45,6 +45,7 @@
     <string name="save_director_disease">Lưu Y bạ</string>
     <string name="add_medicine">Thêm thuốc</string>
     <string name="add_disease">Thêm bệnh</string>
+    <string name="add_user">Thêm thành viên</string>
     <string name="title_activity_test_tab">TestTab</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
