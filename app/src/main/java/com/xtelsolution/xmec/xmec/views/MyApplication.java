@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.xtel.nipservicesdk.NipApplication;
 import com.xtelsolution.xmec.callbacks.HtmlLoader;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
@@ -39,27 +40,28 @@ public class MyApplication extends MultiDexApplication {
 //        FacebookSdk.sdkInitialize(getApplicationContext());
 //        AccountKit.initialize(getApplicationContext());
         MultiDex.install(this);
+        NipApplication.context = this;
         context = this;
         PACKAGE_NAME = context.getPackageName();
 //        getKeyHash(PACKAGE_NAME);
         Log.v(TAG, "Pkg name " + PACKAGE_NAME);
-        new HtmlLoader(new LoadHtmlDetailListener() {
-            @Override
-            public void onPrepare() {
-
-            }
-
-            @Override
-            public void onSucess(Document result) {
-                IllnessTemple temple = IllnessTemple.fromDocument(result);
-                xLog.d(TAG, "onCreate: onSucess: " + temple.getName() + " : " + temple.getDetail());
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        }).execute("http://diendan.songkhoe.vn/chi-tiet-trieu-chung-benh-khop-do-than-kinh-s2528-1265-470229.html");
+//        new HtmlLoader(new LoadHtmlDetailListener() {
+//            @Override
+//            public void onPrepare() {
+//
+//            }
+//
+//            @Override
+//            public void onSucess(Document result) {
+//                IllnessTemple temple = IllnessTemple.fromDocument(result);
+//                xLog.d(TAG, "onCreate: onSucess: " + temple.getName() + " : " + temple.getDetail());
+//            }
+//
+//            @Override
+//            public void onError() {
+//
+//            }
+//        }).execute("http://diendan.songkhoe.vn/chi-tiet-trieu-chung-benh-khop-do-than-kinh-s2528-1265-470229.html");
     }
 
     private void getKeyHash(String pkg_name) {
