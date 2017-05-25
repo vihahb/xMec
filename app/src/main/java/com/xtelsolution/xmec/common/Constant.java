@@ -22,10 +22,15 @@ public class Constant {
     public static final String THUOC = "thuoc";
     public static final String TINTUC = "tintuc";
     public static final String COSOYTE = "cosoyte";
+    public static final String LOGIN = "login";
 
 
     public static final String ACTION_HIDE_BOTTOM_BAR = "hide_bottom_bar";
     public static final String ACTION_SHOW_BOTTOM_BAR = "show_bottom_bar";
+    public static final String ACTION_LOCATION = "location_action";
+    public static final String ACTION_PERMISSION_LOCATION = "location_permission_action";
+    public static final String ACTION_GPS_ENABLE = "gps_enable_action";
+    public static final String ACTION_RELOA_DATA_MAP = "reload_data_map_action";
 
     /// body name and position
     public static float[][] POSITION_BODY_MAP = {{1.1223971f, 1.5163009f, 8.726857f, 9.303358f}, {1.7059582f, 2.0415053f, 8.880105f, 9.369035f}, {0.99839044f, 1.4725337f, 7.0046554f, 8.361984f}, {1.6986638f, 2.0415053f, 7.0046554f, 8.361984f}, {0.83845824f, 1.4633446f, 4.7480264f, 6.1739473f}, {1.7154919f, 2.3403783f, 4.7480264f, 6.1739473f}, {0.21357174f, 0.5753479f, 4.5396223f, 5.2964573f}, {2.6692653f, 3.1954856f, 4.550591f, 5.1758027f}, {0.48764458f, 0.71786577f, 3.5195403f, 4.2105637f}, {2.4390442f, 2.756969f, 3.6511638f, 4.342187f}, {0.6740143f, 0.9809761f, 2.389772f, 3.1356382f}, {2.1649716f, 2.471933f, 2.5104268f, 3.1575756f}, {1.112531f, 2.0553422f, 2.3678346f, 2.9491718f}, {1.0029018f, 2.1430454f, 3.6950383f, 4.057003f}, {1.2464038f, 1.8372594f, 0.15963212f, 1.2980369f}};

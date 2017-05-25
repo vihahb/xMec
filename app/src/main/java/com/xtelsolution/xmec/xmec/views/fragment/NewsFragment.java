@@ -102,6 +102,7 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
 
         recyclerView.setRefreshListener(this);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 //        recyclerView.setLoadingMore(false);
 
 //        recyclerView.setupMoreListener(this, 10);

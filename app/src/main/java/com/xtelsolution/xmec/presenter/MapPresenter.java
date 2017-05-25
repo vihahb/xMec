@@ -43,7 +43,10 @@ import java.util.List;
  * Created by phimau on 3/1/2017.
  */
 
-public class MapPresenter extends BasePresenter implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class MapPresenter extends BasePresenter implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        com.google.android.gms.location.LocationListener {
     private IMapView view;
     private Activity mActivity;
     private LocationManager mLocationManager;
@@ -115,7 +118,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
         if (latitude == 0 && longitude == 0)
             return;
         String location = "latitude=" + latitude + "&longitude=" + longitude;
-        String url = "http://124.158.5.112:8092/xmec/v0.1/user/hospitals-around?latitude=" + latitude + "&longitude=" + longitude + "&radius="+radius+"&type=-1";
+        String url = "http://124.158.5.112:8092/xmec/v0.1/user/hospitals-around?latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&type=-1";
         xLog.e("getHospitals", url);
         HealthyCareModel.getInstance().getHospital(url, getSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
@@ -179,7 +182,7 @@ public class MapPresenter extends BasePresenter implements GoogleApiClient.Conne
 
     public void registerLocation() {
         if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED ) {
+                PackageManager.PERMISSION_GRANTED) {
             if (mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
                 createLocationRequest();
                 startLocationUpdates();

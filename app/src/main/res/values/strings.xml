@@ -93,9 +93,13 @@
     <string name="register_account">Đăng kí tài khoản</string>
     <string name="update_process">Đang cập nhật</string>
     <string name="add_medical">Đang thêm y bạ</string>
-    <string name="location_permission">Cấp quyền truy cập vị trí</string>
+    <string name="location_permission">Bạn cần cấp quyền truy cập vị trí để sử dụng tính năng này.</string>
+    <string name="gps_permission">Bạn cần mở kết nối GPS để sử dụng chức năng này.</string>
+    <string name="btn_location_permission">Đồng ý</string>
+    <string name="btn_open_gps">Đồng ý</string>
     <string name="upload_image">Đang upload ảnh</string>
     <string name="loadding">Đang tải</string>
+    <string name="reload">Tải lại danh sách</string>
     <string name="find_disease">Tìm kiếm Bệnh </string>
     <string name="find_drug">Tìm kiếm Thuốc </string>
     <string name="news">Tin tức</string>

@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -12,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -20,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -32,12 +35,17 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.lv.listenkeyboardevent.KeyboardVisibilityEvent;
+import com.lv.listenkeyboardevent.KeyboardVisibilityEventListener;
 import com.polyak.iconswitch.IconSwitch;
 import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
@@ -53,6 +61,7 @@ import com.xtelsolution.xmec.xmec.views.fragment.MapFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.MedicineFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.NewsFeedFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.SearchFragment;
+import com.xtelsolution.xmec.xmec.views.inf.IMapView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +74,9 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
-public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListener, IconSwitch.CheckedChangeListener, ValueAnimator.AnimatorUpdateListener, ItemClickListener, ViewAnimator.ViewAnimatorListener {
+public class HomeActivity extends BasicActivity implements IMapView,
+        IconSwitch.CheckedChangeListener, ValueAnimator.AnimatorUpdateListener,
+        ItemClickListener, ViewAnimator.ViewAnimatorListener, View.OnClickListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private List<SlideMenuItem> list = new ArrayList<>();
@@ -74,20 +85,18 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     private Toolbar toolbar;
     private FrameLayout layout;
 
-    private SpaceTabLayout tabLayout;
-    private ViewPager viewPager;
-    private List<Fragment> fragmentList;
     //    private SlidingDrawer slidingDrawer;
     private RecyclerView rvHosiptalCenter;
     private HospitalCenterAdapter adapter;
-    private ImageView imgHanderSliding;
     private String TAG = "HomeActivity";
     private List<RESP_Map_Healthy_Care> mapHealthyCareList;
     private BroadcastReceiver receiver;
-    //    private FragmentManager fragmentManager;
-    private TextView tvtoolbarTitle;
+    private TextView tvtoolbarTitle, textError;
+    private Button btnAction;
+    private ProgressBar loadding;
     private CallbackManager callbackManager;
     private Activity thisActivity;
+    private EditText edsearch;
 
 
     private static final int DURATION_COLOR_CHANGE_MS = 400;
@@ -121,101 +130,29 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         content = findViewById(R.id.content);
         content.setVisibility(View.GONE);
         toolbarSearch = findViewById(R.id.toolbar_search);
-        EditText title = (EditText) findViewById(R.id.ed_search);
+        edsearch = (EditText) findViewById(R.id.ed_search);
 
         iconSwitch = (IconSwitch) findViewById(R.id.icon_switch);
         iconSwitch.setCheckedChangeListener(this);
         updateColors(false);
-//        tabLayout.initialize(viewPager, fragmentManager, fragmentList, savedInstanceState);
-//        rvHosiptalCenter.setAdapter(adapter);
-//        rvHosiptalCenter.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//        slidingDrawer.setVisibility(View.GONE);
-//        slidingDrawer.unlock();
-
-        ////Test function
-//        new RSSGetter().execute("http://songkhoe.vn/widget.rss");
+        rvHosiptalCenter.setAdapter(adapter);
+        rvHosiptalCenter.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
 
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar_top);
         tvtoolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        textError = (TextView) findViewById(R.id.textError);
+        btnAction = (Button) findViewById(R.id.btnAction);
+        loadding = (ProgressBar) findViewById(R.id.progress_bar);
         toolbar.setTitle("");
         initView();
-//        setSupportActionBar(toolbar);
-//        fragmentManager = getSupportFragmentManager();
         callbackManager = CallbackManager.create(this);
-//        tabLayout = (SpaceTabLayout) findViewById(R.id.spaceTabLayout);
-//        viewPager = (ViewPager) findViewById(R.id.viewPager);
-//        fragmentList = new ArrayList<>();
-//        fragmentList.add(new SearchFragment());
-//        fragmentList.add(new MedicineFragment());
-//        fragmentList.add(new HomeFragment());
-//        fragmentList.add(new NewsFeedFragment());
-//        fragmentList.add(new MapFragment());
-//        slidingDrawer = (SlidingDrawer) findViewById(R.id.drawer);
-//
-//        rvHosiptalCenter = (RecyclerView) slidingDrawer.findViewById(R.id.rv_hospital_center);
-//        adapter = new HospitalCenterAdapter(getApplicationContext(), mapHealthyCareList);
-//        adapter.setItemClickListener(this);
-//
-//        imgHanderSliding = (ImageView) slidingDrawer.findViewById(R.id.handleImageView);
-//        viewPager.setOffscreenPageLimit(1);
-//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//                if (position == 4) {
-//                    slidingDrawer.setVisibility(View.VISIBLE);
-//                } else {
-//                    slidingDrawer.setVisibility(View.GONE);
-//                }
-//                View view = thisActivity.getCurrentFocus();
-//                if (view != null) {
-//                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-//                }
-//
-//                tabLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                switch (position) {
-//                    case 0:
-//                        tvtoolbarTitle.setText(getResources().getString(R.string.find_disease));
-//                        break;
-//                    case 1:
-//                        tvtoolbarTitle.setText(getResources().getString(R.string.find_drug));
-//                        break;
-//                    case 2:
-//                        tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
-//                        break;
-//                    case 3:
-//                        tvtoolbarTitle.setText(getResources().getString(R.string.news));
-//                        break;
-//                    case 4:
-//                        tvtoolbarTitle.setText(getResources().getString(R.string.health_care));
-//                        break;
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//            }
-//        });
-//        KeyboardVisibilityEvent.registerEventListener(this, new KeyboardVisibilityEventListener() {
-//            @Override
-//            public void onVisibilityChanged(boolean isOpen) {
-//                if (isOpen) {
-//                    sendBroadcast(new Intent(Constant.ACTION_HIDE_BOTTOM_BAR));
-//                } else {
-//                    sendBroadcast(new Intent(Constant.ACTION_SHOW_BOTTOM_BAR));
-//                }
-//            }
-//        });
+        rvHosiptalCenter = (RecyclerView) findViewById(R.id.rList);
+        adapter = new HospitalCenterAdapter(getApplicationContext(), mapHealthyCareList);
+        adapter.setItemClickListener(this);
+        btnAction.setOnClickListener(this);
     }
 
 
@@ -223,15 +160,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-//                if (intent.getAction().equals(Constant.ACTION_HIDE_BOTTOM_BAR)) {
-//                    tabLayout.animate().translationY(tabLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2)).start();
-////                    tabLayout.setVisibility(View.GONE);
-//                    xLog.i(TAG, "initReceiver:" + ": Action hide");
-//                } else if (intent.getAction().equals(Constant.ACTION_SHOW_BOTTOM_BAR)) {
-//                    tabLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-////                    tabLayout.setVisibility(View.VISIBLE);
-//                    xLog.i(TAG, "initReceiver" + ": Action show");
-//                }
+
             }
         };
         IntentFilter filter = new IntentFilter();
@@ -242,24 +171,22 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (tabLayout != null)
-            tabLayout.saveState(outState);
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        if (callbackManager.getCurrentSession() == null) {
-            menu.getItem(0).setIcon(R.drawable.ic_action_login);
-            menu.getItem(0).setTitle(R.string.login);
-        } else {
-            menu.getItem(0).setIcon(R.drawable.ic_action_logout);
-            menu.getItem(0).setTitle(R.string.logout);
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_main, menu);
+//        if (callbackManager.getCurrentSession() == null) {
+//            menu.getItem(0).setIcon(R.drawable.ic_action_login);
+//            menu.getItem(0).setTitle(R.string.login);
+//        } else {
+//            menu.getItem(0).setIcon(R.drawable.ic_action_logout);
+//            menu.getItem(0).setTitle(R.string.logout);
+//        }
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -305,9 +232,10 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
     @Override
     public void onBackPressed() {
-//        if (slidingDrawer.isOpened())
-//            slidingDrawer.close();
-//        else {
+        if (iconSwitch.getChecked().equals(IconSwitch.Checked.LEFT)) {
+            iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
+            return;
+        }
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
@@ -327,15 +255,12 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }
 
-    @Override
-    public void onLoadMapSuccess(List<RESP_Map_Healthy_Care> data) {
-        adapter.addAll(data);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -343,6 +268,9 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 //        for (Fragment fragment : fragmentManager.getFragments()) {
 //            fragment.onActivityResult(requestCode, resultCode, data);
 //        }
+        if (requestCode == 97) {
+            sendBroadcast(new Intent(Constant.ACTION_LOCATION));
+        }
 
     }
 
@@ -353,7 +281,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         startActivity(i);
     }
 
-    public OnLoadMapSuccessListener get() {
+    public IMapView get() {
         return this;
     }
 
@@ -393,6 +321,8 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
         list.add(menuItem4);
         SlideMenuItem menuItem5 = new SlideMenuItem(Constant.COSOYTE, R.drawable.ic_menu_cosoyte);
         list.add(menuItem5);
+        SlideMenuItem menuItem6 = new SlideMenuItem(Constant.LOGIN, R.drawable.ic_action_login);
+        list.add(menuItem6);
     }
 
     private void setActionBar() {
@@ -453,7 +383,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
 
         findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
         animator.start();
-
+        iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
         switch (name) {
             case Constant.HOME:
                 tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
@@ -477,6 +407,7 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
                 return newsFeedFragment;
 
             case Constant.COSOYTE:
+                iconSwitch.setChecked(IconSwitch.Checked.LEFT);
                 MapFragment mapFragment = MapFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mapFragment, name).commit();
                 tvtoolbarTitle.setText(getResources().getString(R.string.health_care));
@@ -512,7 +443,25 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
             case Constant.CLOSE:
                 return screenShotable;
             default:
-                if (!TabCurrent.equals(slideMenuItem.getName())) {
+                if (Constant.LOGIN.equals(slideMenuItem.getName())) {
+                    if (callbackManager.getCurrentSession() == null) {
+                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                    } else {
+                        LoginManager.logOut();
+                        SharedPreferencesUtils.getInstance().setLogined();
+                        showToast("Đã đăng xuất");
+                        SharedPreferencesUtils.getInstance().setLogout();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivityAndFinish(LoginActivity.class);
+                            }
+                        }, 1000);
+
+
+                    }
+                    return screenShotable;
+                } else if (!TabCurrent.equals(slideMenuItem.getName())) {
                     TabCurrent = slideMenuItem.getName();
                     return replaceFragment(screenShotable, position, slideMenuItem.getName());
                 } else {
@@ -647,5 +596,87 @@ public class HomeActivity extends BasicActivity implements OnLoadMapSuccessListe
     @ColorInt
     private int color(@ColorRes int res) {
         return ContextCompat.getColor(this, res);
+    }
+
+    @Override
+    public void onMapCreateSuccess() {
+        sendBroadcast(new Intent(Constant.ACTION_LOCATION));
+    }
+
+    @Override
+    public void onProviderDisabled() {
+        loadding.setVisibility(View.GONE);
+        textError.setVisibility(View.VISIBLE);
+        textError.setText(R.string.gps_permission);
+        btnAction.setVisibility(View.VISIBLE);
+        btnAction.setText(R.string.btn_open_gps);
+    }
+
+    @Override
+    public void onGetCurrentLocationFinish(LatLng latLng) {
+
+    }
+
+    @Override
+    public void onGetListHealtyCareSuccess(List<RESP_Map_Healthy_Care> data) {
+        adapter.addAll(data);
+        if (adapter.getItemCount() > 0) {
+            rvHosiptalCenter.setVisibility(View.VISIBLE);
+            textError.setVisibility(View.GONE);
+            loadding.setVisibility(View.GONE);
+            btnAction.setVisibility(View.GONE);
+        } else {
+            loadding.setVisibility(View.GONE);
+            textError.setVisibility(View.VISIBLE);
+            textError.setText(R.string.emtry_list_new_feed);
+            btnAction.setVisibility(View.VISIBLE);
+            btnAction.setText(R.string.reload);
+        }
+    }
+
+    @Override
+    public void onLocationChange(LatLng latLng) {
+
+    }
+
+    @Override
+    public void onPermissionDenied() {
+        loadding.setVisibility(View.GONE);
+        textError.setVisibility(View.VISIBLE);
+        textError.setText(R.string.location_permission);
+        btnAction.setVisibility(View.VISIBLE);
+        btnAction.setText(R.string.btn_location_permission);
+    }
+
+    @Override
+    public void onPermissionGranted() {
+        loadding.setVisibility(View.VISIBLE);
+        textError.setVisibility(View.GONE);
+        btnAction.setVisibility(View.GONE);
+        sendBroadcast(new Intent(Constant.ACTION_RELOA_DATA_MAP));
+    }
+
+    @Override
+    public void onGPSDisabled() {
+        loadding.setVisibility(View.GONE);
+        textError.setVisibility(View.VISIBLE);
+        textError.setText(R.string.gps_permission);
+        btnAction.setVisibility(View.VISIBLE);
+        btnAction.setText(R.string.btn_open_gps);
+    }
+
+    @Override
+    public Fragment getFragmentView() {
+        return null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (btnAction.getText().equals(getString(R.string.btn_open_gps)))
+            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 97);
+        if (btnAction.getText().equals(getString(R.string.btn_location_permission)))
+            sendBroadcast(new Intent(Constant.ACTION_PERMISSION_LOCATION));
+        if (btnAction.getText().equals(getString(R.string.reload)))
+            sendBroadcast(new Intent(Constant.ACTION_RELOA_DATA_MAP));
     }
 }

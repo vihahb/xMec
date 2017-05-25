@@ -116,7 +116,7 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
 
                 return;
             }
-            imageLoader.loadImage(imgAvatar, "http:/example.com/user/someUserAvatar.png", user.getFullname());
+            imageLoader.loadImage(imgAvatar, user.getAvatar(), user.getFullname());
             tvName.setText(user.getFullname());
             tvBirthday.setText(user.getBirthDayasString());
             tvHeight.setText(String.valueOf(user.getHeight()));

@@ -1,7 +1,10 @@
 package com.xtelsolution.xmec.xmec.views.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -71,13 +74,13 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
     private Marker mMarker;
     private FloatingActionButton btnCurrentLocation;
     private boolean isCheckPermission;
-    private OnLoadMapSuccessListener onLoadMapSuccessListener;
+    private IMapView onLoadMapSuccessListener;
     private MapPresenter presenter;
     private CoordinatorLayout locationPermission;
     private Button btnInitPermission;
     private boolean isMapCreated = false;
     private CustomClusterManager clusterManager;
-
+    private BroadcastReceiver receiver;
     int count = 0;
 
 
@@ -91,6 +94,7 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
             initControl();
             presenter = new MapPresenter(this);
         }
+        initBroad();
         return view;
     }
 
@@ -108,6 +112,31 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
             }
         });
     }
+
+    private void initBroad() {
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Constant.ACTION_LOCATION)) {
+                    presenter.getCurrentLocation();
+                } else if (intent.getAction().equals(Constant.ACTION_PERMISSION_LOCATION)) {
+                    presenter.initPermission();
+                } else if (intent.getAction().equals(Constant.ACTION_GPS_ENABLE)) {
+
+                } else if (intent.getAction().equals(Constant.ACTION_RELOA_DATA_MAP)) {
+                    if (isMapCreated)
+                        presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.ACTION_LOCATION);
+        filter.addAction(Constant.ACTION_PERMISSION_LOCATION);
+        filter.addAction(Constant.ACTION_GPS_ENABLE);
+        filter.addAction(Constant.ACTION_RELOA_DATA_MAP);
+        getActivity().registerReceiver(receiver, filter);
+    }
+
 
     private void initview() {
         btnCurrentLocation = (FloatingActionButton) view.findViewById(R.id.btn__current_location);
@@ -155,11 +184,12 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
     public void onMapCreateSuccess() {
         isCheckPermission = true;
         initMap();
-
+        onLoadMapSuccessListener.onMapCreateSuccess();
     }
 
     @Override
     public void onProviderDisabled() {
+        onLoadMapSuccessListener.onProviderDisabled();
         showToast("Bạn chưa bật chia sẻ vị trí");
     }
 
@@ -167,26 +197,31 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
     public void onGetCurrentLocationFinish(LatLng latLng) {
         Log.e("MY", "onGetCurrentLocationFinish: " + latLng.longitude + "   " + latLng.latitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f));
+        onLoadMapSuccessListener.onGetCurrentLocationFinish(latLng);
     }
 
     @Override
     public void onLocationChange(LatLng latLng) {
         mMarker.setPosition(latLng);
 //        xLog.e("onLocationChange", latLng.toString());
+        onLoadMapSuccessListener.onLocationChange(latLng);
     }
 
     @Override
     public void onPermissionDenied() {
         locationPermission.setVisibility(View.VISIBLE);
+        onLoadMapSuccessListener.onPermissionDenied();
     }
 
     @Override
     public void onPermissionGranted() {
         locationPermission.setVisibility(View.GONE);
+        onLoadMapSuccessListener.onPermissionGranted();
     }
 
     @Override
     public void onGPSDisabled() {
+        onLoadMapSuccessListener.onGPSDisabled();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle("Sử dụng chức năng này cần Bật GPS");
         alertDialog.setPositiveButton("Cài đặt", new DialogInterface.OnClickListener() {
@@ -237,7 +272,7 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
             clusterManager.addItem(hospital);
         }
         mMap.moveCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom + 0.001f));
-        onLoadMapSuccessListener.onLoadMapSuccess(data);
+        onLoadMapSuccessListener.onGetListHealtyCareSuccess(data);
 
     }
 
@@ -349,5 +384,15 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
     @Override
     public Bitmap getBitmap() {
         return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {
+            getActivity().unregisterReceiver(receiver);
+        } catch (Exception e) {
+            Log.e(TAG, "onDestroy: ", new Throwable(e));
+        }
     }
 }

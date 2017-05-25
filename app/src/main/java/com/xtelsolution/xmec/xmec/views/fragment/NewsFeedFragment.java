@@ -25,9 +25,9 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
     private View containerView;
     private Bitmap bitmap;
     public static NewsFeedFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         NewsFeedFragment fragment = new NewsFeedFragment();
         fragment.setArguments(args);
         return fragment;
@@ -60,6 +60,7 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
             TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabsNewsFeed);
             tabLayout.setupWithViewPager(mViewPager);
         }
+        mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
     @Override
