@@ -40,16 +40,14 @@ import com.xtelsolution.xmec.xmec.views.adapter.PagerUserAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class HomeFragment extends BasicFragment implements ScreenShotable, IHomeView, ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
+public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ IHomeView, ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
     private static final String TAG = "HomeFragment";
     private View view;
     private View containerView;
@@ -304,9 +302,9 @@ public class HomeFragment extends BasicFragment implements ScreenShotable, IHome
             showLoginDialog();
         }
     }
-
-    @Override
-    public void takeScreenShot() {
+//
+//    @Override
+//    public void takeScreenShot() {
 //        try {
 //            Thread thread = new Thread() {
 //                @Override
@@ -326,10 +324,10 @@ public class HomeFragment extends BasicFragment implements ScreenShotable, IHome
 //        } catch (Exception e) {
 //            Log.e(TAG, "takeScreenShot: ", new Throwable(e));
 //        }
-    }
+//    }
 
-    @Override
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
+//    @Override
+//    public Bitmap getBitmap() {
+//        return bitmap;
+//    }
 }

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/NIPmodule-master" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lvlistenkeyboardevent" />
+            <option value="$PROJECT_DIR$/mymenu" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

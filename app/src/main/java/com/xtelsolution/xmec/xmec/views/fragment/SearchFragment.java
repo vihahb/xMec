@@ -3,11 +3,9 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +28,6 @@ import com.xtelsolution.xmec.model.entity.NewsFeed;
 import com.xtelsolution.xmec.presenter.SearchNewsPresenter;
 import com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity;
 import com.xtelsolution.xmec.xmec.views.activity.DiseaseDiagnosiActivity;
-import com.xtelsolution.xmec.xmec.views.activity.IllnessDetailActivity;
 import com.xtelsolution.xmec.xmec.views.adapter.IllnessAdapter;
 import com.xtelsolution.xmec.xmec.views.adapter.NewsAdapter;
 import com.xtelsolution.xmec.xmec.views.inf.ISearchNewsView;
@@ -39,7 +36,7 @@ import com.xtelsolution.xmec.xmec.views.smallviews.RecyclerViewMarginHorizontal;
 import java.util.ArrayList;
 import java.util.List;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
+//import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by HUNGNT on 1/18/2017.
@@ -47,7 +44,7 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
  */
 
 
-public class SearchFragment extends BasicFragment implements ISearchNewsView, ItemClickListener, ScreenShotable {
+public class SearchFragment extends BasicFragment implements ISearchNewsView, ItemClickListener/*, ScreenShotable*/ {
     private final String TAG = SearchFragment.class.getName();
 
     public static SearchFragment newInstance() {
@@ -59,8 +56,8 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView, It
         return fragment;
     }
 
-    private View containerView;
-    private Bitmap bitmap;
+//    private View containerView;
+//    private Bitmap bitmap;
     private RecyclerView rvResultFindNews, rvResultFindIllness;
     private Button btnDiseaseDiagnos;
     private NestedScrollView NscrollView;
@@ -94,7 +91,7 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView, It
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.containerView = view.findViewById(R.id.container);
+//        this.containerView = view.findViewById(R.id.container);
         if (listdisease.size() == 0) {
             setUi(view.findViewById(R.id.NscrollView));
             initView(view);
@@ -234,7 +231,7 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView, It
         startActivity(intent);
     }
 
-    @Override
+    /*@Override
     public void takeScreenShot() {
         Thread thread = new Thread() {
             @Override
@@ -254,5 +251,5 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView, It
     @Override
     public Bitmap getBitmap() {
         return bitmap;
-    }
+    }*/
 }

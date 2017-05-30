@@ -55,8 +55,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn__current_location"
-        android:layout_width="@dimen/action_button_size"
-        android:layout_height="@dimen/action_button_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

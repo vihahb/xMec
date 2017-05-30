@@ -33,7 +33,7 @@ import com.xtelsolution.xmec.xmec.views.inf.ISearchMedicineView;
 import java.util.ArrayList;
 import java.util.List;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
+//import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by HUNGNT on 1/18/2017.
@@ -41,7 +41,7 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
  */
 
 
-public class MedicineFragment extends BasicFragment implements ISearchMedicineView, ScreenShotable {
+public class MedicineFragment extends BasicFragment implements ISearchMedicineView /*,ScreenShotable */{
 
     private static final String TAG = MedicineFragment.class.getName();
 
@@ -172,7 +172,7 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     public void onError() {
         medicineAdapter.setLoadMore(false);
     }
-
+/*
     @Override
     public void takeScreenShot() {
 //        try {
@@ -199,5 +199,5 @@ public class MedicineFragment extends BasicFragment implements ISearchMedicineVi
     @Override
     public Bitmap getBitmap() {
         return null;
-    }
+    }*/
 }

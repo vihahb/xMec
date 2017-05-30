@@ -48,13 +48,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
+//import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class MapFragment extends BasicFragment implements ScreenShotable,
+public class MapFragment extends BasicFragment implements/* ScreenShotable,*/
         OnMapReadyCallback, IMapView, GoogleMap.OnCameraMoveCanceledListener,
         GoogleMap.OnCameraIdleListener, CustomClusterManager.CameraIdle,
         ClusterManager.OnClusterItemClickListener {
@@ -376,7 +376,7 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
         return false;
     }
 
-    @Override
+   /* @Override
     public void takeScreenShot() {
 
     }
@@ -394,5 +394,5 @@ public class MapFragment extends BasicFragment implements ScreenShotable,
         } catch (Exception e) {
             Log.e(TAG, "onDestroy: ", new Throwable(e));
         }
-    }
+    }*/
 }

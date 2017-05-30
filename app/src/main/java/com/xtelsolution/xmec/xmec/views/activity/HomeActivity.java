@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -18,6 +20,8 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -60,31 +64,28 @@ import com.xtelsolution.xmec.xmec.views.fragment.HomeFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.MapFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.MedicineFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.NewsFeedFragment;
+import com.xtelsolution.xmec.xmec.views.fragment.NewsFragment;
 import com.xtelsolution.xmec.xmec.views.fragment.SearchFragment;
 import com.xtelsolution.xmec.xmec.views.inf.IMapView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.long1.spacetablayout.SpaceTabLayout;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
-import yalantis.com.sidemenu.interfaces.Resourceble;
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
-import yalantis.com.sidemenu.model.SlideMenuItem;
-import yalantis.com.sidemenu.util.ViewAnimator;
+import vn.com.elcom.mymenu.ContextMenuDialogFragment;
+import vn.com.elcom.mymenu.MenuObject;
+import vn.com.elcom.mymenu.MenuParams;
+import vn.com.elcom.mymenu.interfaces.OnMenuItemClickListener;
+import vn.com.elcom.mymenu.interfaces.OnMenuItemLongClickListener;
 
 public class HomeActivity extends BasicActivity implements IMapView,
         IconSwitch.CheckedChangeListener, ValueAnimator.AnimatorUpdateListener,
-        ItemClickListener, ViewAnimator.ViewAnimatorListener, View.OnClickListener {
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
-    private List<SlideMenuItem> list = new ArrayList<>();
-    private ViewAnimator viewAnimator;
-    private LinearLayout linearLayout;
+        ItemClickListener, View.OnClickListener, OnMenuItemClickListener, OnMenuItemLongClickListener {
     private Toolbar toolbar;
     private FrameLayout layout;
-
+    private ContextMenuDialogFragment mMenuDialogFragment;
+    private FragmentManager fragmentManager;
     //    private SlidingDrawer slidingDrawer;
     private RecyclerView rvHosiptalCenter;
     private HospitalCenterAdapter adapter;
@@ -95,7 +96,6 @@ public class HomeActivity extends BasicActivity implements IMapView,
     private Button btnAction;
     private ProgressBar loadding;
     private CallbackManager callbackManager;
-    private Activity thisActivity;
     private EditText edsearch;
 
 
@@ -119,11 +119,12 @@ public class HomeActivity extends BasicActivity implements IMapView,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        fragmentManager = getSupportFragmentManager();
         mapHealthyCareList = new ArrayList<>();
-        thisActivity = this;
         init();
         initReceiver();
         window = getWindow();
+        initMenuFragment();
 
         initColors();
         initAnimationRelatedFields();
@@ -169,6 +170,20 @@ public class HomeActivity extends BasicActivity implements IMapView,
         registerReceiver(receiver, filter);
     }
 
+    protected void addFragment(Fragment fragment) {
+        invalidateOptionsMenu();
+        String backStackName = fragment.getClass().getName();
+        boolean fragmentPopped = fragmentManager.popBackStackImmediate(backStackName, 0);
+        if (!fragmentPopped) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.content_frame, fragment, backStackName)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//            if (addToBackStack)
+            transaction.addToBackStack(backStackName);
+            transaction.commit();
+        }
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -190,11 +205,12 @@ public class HomeActivity extends BasicActivity implements IMapView,
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
         switch (item.getItemId()) {
+            case android.R.id.home:
+                if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null)
+                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
+
+                break;
             case R.id.action_settings:
                 return true;
             case R.id.action_login_logout:
@@ -219,8 +235,9 @@ public class HomeActivity extends BasicActivity implements IMapView,
             default:
                 return super.onOptionsItemSelected(item);
         }
-
+        return true;
     }
+
 
     @Override
     protected void onDestroy() {
@@ -265,9 +282,6 @@ public class HomeActivity extends BasicActivity implements IMapView,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        for (Fragment fragment : fragmentManager.getFragments()) {
-//            fragment.onActivityResult(requestCode, resultCode, data);
-//        }
         if (requestCode == 97) {
             sendBroadcast(new Intent(Constant.ACTION_LOCATION));
         }
@@ -288,205 +302,64 @@ public class HomeActivity extends BasicActivity implements IMapView,
     //Version 1.2
     private void initView() {
         layout = (FrameLayout) findViewById(R.id.content_frame);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, HomeFragment.newInstance(), Constant.HOME)
-                .commit();
+        addFragment(HomeFragment.newInstance());
         tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawerLayout.setScrimColor(Color.TRANSPARENT);
-        linearLayout = (LinearLayout) findViewById(R.id.left_drawer);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawers();
-            }
-        });
-
-
         setActionBar();
-        createMenuList();
-        viewAnimator = new ViewAnimator<>(this, list, HomeFragment.newInstance(), drawerLayout, this);
     }
 
-    private void createMenuList() {
-        SlideMenuItem menuItem0 = new SlideMenuItem(Constant.CLOSE, R.drawable.ic_close_dark);
-        list.add(menuItem0);
-        SlideMenuItem menuItem = new SlideMenuItem(Constant.HOME, R.drawable.ic_menu_yba);
-        list.add(menuItem);
-        SlideMenuItem menuItem2 = new SlideMenuItem(Constant.BENH, R.drawable.ic_menu_benh);
-        list.add(menuItem2);
-        SlideMenuItem menuItem3 = new SlideMenuItem(Constant.THUOC, R.drawable.ic_menu_thuoc);
-        list.add(menuItem3);
-        SlideMenuItem menuItem4 = new SlideMenuItem(Constant.TINTUC, R.drawable.ic_menu_tintuc);
-        list.add(menuItem4);
-        SlideMenuItem menuItem5 = new SlideMenuItem(Constant.COSOYTE, R.drawable.ic_menu_cosoyte);
-        list.add(menuItem5);
-        SlideMenuItem menuItem6 = new SlideMenuItem(Constant.LOGIN, R.drawable.ic_action_login);
-        list.add(menuItem6);
-    }
 
     private void setActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                drawerLayout,         /* DrawerLayout object */
-                toolbar,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                linearLayout.removeAllViews();
-                linearLayout.invalidate();
-            }
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                if (slideOffset > 0.6 && linearLayout.getChildCount() == 0)
-                    viewAnimator.showMenuContent();
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
-        drawerLayout.setDrawerListener(drawerToggle);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    String TabCurrent = "";
-
-
-    private ScreenShotable replaceFragment(ScreenShotable screenShotable, int topPosition, String name) {
-        View view = findViewById(R.id.content_frame);
-        int finalRadius = Math.max(view.getWidth(), view.getHeight());
-        SupportAnimator animator = ViewAnimationUtils.createCircularReveal(view, 0, topPosition, 0, finalRadius);
-        animator.setInterpolator(new AccelerateInterpolator());
-        animator.setDuration(ViewAnimator.CIRCULAR_REVEAL_ANIMATION_DURATION);
-
-        findViewById(R.id.content_overlay).setBackgroundDrawable(new BitmapDrawable(getResources(), screenShotable.getBitmap()));
-        animator.start();
-        iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
-        switch (name) {
-            case Constant.HOME:
-                tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
-                HomeFragment contentFragment = HomeFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment, name).commit();
-                return contentFragment;
-            case Constant.THUOC:
-                tvtoolbarTitle.setText(getResources().getString(R.string.find_disease));
-                MedicineFragment medicineFragment = MedicineFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, medicineFragment, name).commit();
-                return medicineFragment;
-            case Constant.BENH:
-                tvtoolbarTitle.setText(getResources().getString(R.string.find_drug));
-                SearchFragment searchFragment = SearchFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment, name).commit();
-                return searchFragment;
-            case Constant.TINTUC:
-                NewsFeedFragment newsFeedFragment = NewsFeedFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, newsFeedFragment, name).commit();
-                tvtoolbarTitle.setText(getResources().getString(R.string.news));
-                return newsFeedFragment;
-
-            case Constant.COSOYTE:
-                iconSwitch.setChecked(IconSwitch.Checked.LEFT);
-                MapFragment mapFragment = MapFragment.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mapFragment, name).commit();
-                tvtoolbarTitle.setText(getResources().getString(R.string.health_care));
-                return mapFragment;
-
-
-        }
-
-
-        HomeFragment contentFragment = HomeFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
-        return contentFragment;
-    }
-
-    @Override
-    public ScreenShotable onSwitch(Resourceble slideMenuItem, ScreenShotable screenShotable, int position) {
-        Log.e(TAG, "onSwitch: " + slideMenuItem.getName());
-
-        if (slideMenuItem.getName().equals(Constant.COSOYTE)) {
-            toolbarSearch.setVisibility(View.VISIBLE);
-            tvtoolbarTitle.setVisibility(View.GONE);
-            content.setVisibility(View.VISIBLE);
-            iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
-        } else {
-            iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
-            toolbarSearch.setVisibility(View.GONE);
-            content.setVisibility(View.GONE);
-            tvtoolbarTitle.setVisibility(View.VISIBLE);
-
-        }
-        changeContentVisibility();
-        switch (slideMenuItem.getName()) {
-            case Constant.CLOSE:
-                return screenShotable;
-            default:
-                if (Constant.LOGIN.equals(slideMenuItem.getName())) {
-                    if (callbackManager.getCurrentSession() == null) {
-                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                    } else {
-                        LoginManager.logOut();
-                        SharedPreferencesUtils.getInstance().setLogined();
-                        showToast("Đã đăng xuất");
-                        SharedPreferencesUtils.getInstance().setLogout();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                startActivityAndFinish(LoginActivity.class);
-                            }
-                        }, 1000);
-
-
-                    }
-                    return screenShotable;
-                } else if (!TabCurrent.equals(slideMenuItem.getName())) {
-                    TabCurrent = slideMenuItem.getName();
-                    return replaceFragment(screenShotable, position, slideMenuItem.getName());
-                } else {
-                    return screenShotable;
-                }
-        }
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
     }
 
-    @Override
-    public void disableHomeButton() {
-        getSupportActionBar().setHomeButtonEnabled(false);
 
+    private void initMenuFragment() {
+        MenuParams menuParams = new MenuParams();
+        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
+        menuParams.setMenuObjects(getMenuObjects());
+        menuParams.setClosableOutside(false);
+        mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+        mMenuDialogFragment.setItemClickListener(this);
+        mMenuDialogFragment.setItemLongClickListener(this);
     }
 
-    @Override
-    public void enableHomeButton() {
-        getSupportActionBar().setHomeButtonEnabled(true);
-        drawerLayout.closeDrawers();
+    List<MenuObject> menuObjects;
 
-    }
+    private List<MenuObject> getMenuObjects() {
+        menuObjects = new ArrayList<>();
 
-    @Override
-    public void addViewToContainer(View view) {
-        linearLayout.addView(view);
+        MenuObject close = new MenuObject();
+        close.setResource(R.drawable.ic_close_black_24dp);
+
+        MenuObject home = new MenuObject(getString(R.string.user_medical));
+        home.setResource(R.drawable.ic_menu_yba);
+
+        MenuObject seatCsyt = new MenuObject(getString(R.string.search_health_center));
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_cosoyte);
+        seatCsyt.setBitmap(b);
+
+        MenuObject searchDisease = new MenuObject(getString(R.string.find_disease));
+        BitmapDrawable bd = new BitmapDrawable(getResources(),
+                BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_benh));
+        searchDisease.setDrawable(bd);
+
+        MenuObject searchDrug = new MenuObject(getString(R.string.find_drug));
+        searchDrug.setResource(R.drawable.ic_menu_thuoc);
+
+        MenuObject news = new MenuObject(getString(R.string.news));
+        news.setResource(R.drawable.ic_menu_tintuc);
+
+        menuObjects.add(close);
+        menuObjects.add(home);
+        menuObjects.add(news);
+        menuObjects.add(searchDisease);
+        menuObjects.add(searchDrug);
+        menuObjects.add(seatCsyt);
+        return menuObjects;
     }
 
 
@@ -678,5 +551,52 @@ public class HomeActivity extends BasicActivity implements IMapView,
             sendBroadcast(new Intent(Constant.ACTION_PERMISSION_LOCATION));
         if (btnAction.getText().equals(getString(R.string.reload)))
             sendBroadcast(new Intent(Constant.ACTION_RELOA_DATA_MAP));
+    }
+
+    int curentTab = 1;
+
+    @Override
+    public void onMenuItemClick(View clickedView, int position) {
+        Log.e(TAG, "onMenuItemClick: " + position);
+        if (curentTab != position) {
+            curentTab = position;
+            switch (position) {
+                case 1:
+                    addFragment(HomeFragment.newInstance());
+                    break;
+                case 2:
+                    addFragment(NewsFeedFragment.newInstance());
+                    break;
+                case 3:
+                    addFragment(MedicineFragment.newInstance());
+                    break;
+                case 4:
+                    addFragment(SearchFragment.newInstance());
+                    break;
+                case 5:
+                    addFragment(MapFragment.newInstance());
+                    break;
+
+            }
+            if (position > 0)
+                tvtoolbarTitle.setText(menuObjects.get(position).getTitle());
+            if (position == 5) {
+                toolbarSearch.setVisibility(View.VISIBLE);
+                tvtoolbarTitle.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+                iconSwitch.setChecked(IconSwitch.Checked.LEFT);
+            } else {
+                iconSwitch.setChecked(IconSwitch.Checked.RIGHT);
+                toolbarSearch.setVisibility(View.GONE);
+                content.setVisibility(View.GONE);
+                tvtoolbarTitle.setVisibility(View.VISIBLE);
+
+            }
+        }
+    }
+
+    @Override
+    public void onMenuItemLongClick(View clickedView, int position) {
+
     }
 }

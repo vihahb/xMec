@@ -86,6 +86,6 @@
         android:background="@drawable/bg_button_radius_tim"
         android:textColor="@color/icons"
         android:layout_margin="16dp"
-        android:layout_height="@dimen/action_button_size"
+        android:layout_height="wrap_content"
         android:text="@string/create_info"/>
 </LinearLayout>

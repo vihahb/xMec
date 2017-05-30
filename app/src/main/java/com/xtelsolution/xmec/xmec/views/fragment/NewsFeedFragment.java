@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 
 import com.xtelsolution.xmec.R;
 
-import yalantis.com.sidemenu.interfaces.ScreenShotable;
+//import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class NewsFeedFragment extends Fragment implements ScreenShotable {
+public class NewsFeedFragment extends Fragment /*implements ScreenShotable*/ {
     private View view;
     private View containerView;
     private Bitmap bitmap;
@@ -62,7 +62,7 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
         }
         mSectionsPagerAdapter.notifyDataSetChanged();
     }
-
+/*
     @Override
     public void takeScreenShot() {
 //        try {
@@ -89,7 +89,7 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
     @Override
     public Bitmap getBitmap() {
         return bitmap;
-    }
+    }*/
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {

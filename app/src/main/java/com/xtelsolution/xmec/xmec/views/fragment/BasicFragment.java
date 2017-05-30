@@ -17,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.xtel.nipservicesdk.NipApplication;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
+import com.xtelsolution.xmec.xmec.views.MyApplication;
 import com.xtelsolution.xmec.xmec.views.activity.LoginActivity;
 import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 
@@ -53,7 +55,8 @@ public class BasicFragment extends Fragment implements BaseView {
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        if (getContext() != null)
+            Toast.makeText(MyApplication.context, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -104,7 +107,7 @@ public class BasicFragment extends Fragment implements BaseView {
                 .setPositiveButton("Đăng nhập", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getActivity(),LoginActivity.class);
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                     }
                 })
@@ -116,7 +119,8 @@ public class BasicFragment extends Fragment implements BaseView {
                 });
         builder.show();
     }
-    protected boolean isLogin(){
+
+    protected boolean isLogin() {
         if (SharedPreferencesUtils.getInstance().isLogined())
             return true;
         return false;

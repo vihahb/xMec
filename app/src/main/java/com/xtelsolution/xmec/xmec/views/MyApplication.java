@@ -39,7 +39,7 @@ public class MyApplication extends MultiDexApplication {
 //        Fabric.with(this, new Crashlytics());
 //        FacebookSdk.sdkInitialize(getApplicationContext());
 //        AccountKit.initialize(getApplicationContext());
-        MultiDex.install(this);
+//        MultiDex.install(this);
         NipApplication.context = this;
         context = this;
         PACKAGE_NAME = context.getPackageName();
@@ -80,5 +80,8 @@ public class MyApplication extends MultiDexApplication {
         }
     }
 
-
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }
