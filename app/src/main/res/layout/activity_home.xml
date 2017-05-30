@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <io.codetail.widget.RevealFrameLayout
+  <FrameLayout
       android:id="@+id/container_frame"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
@@ -36,7 +36,7 @@
 
       <include layout="@layout/item_toolbar" />
 
-  </io.codetail.widget.RevealFrameLayout>
+  </FrameLayout>
 
   <!--<LinearLayout-->
       <!--android:id="@+id/scrollView"-->

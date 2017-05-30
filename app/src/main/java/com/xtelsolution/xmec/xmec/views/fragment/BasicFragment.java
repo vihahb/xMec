@@ -17,11 +17,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.xtel.nipservicesdk.NipApplication;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
-import com.xtelsolution.xmec.xmec.views.MyApplication;
+import com.xtelsolution.xmec.MyApplication;
 import com.xtelsolution.xmec.xmec.views.activity.LoginActivity;
 import com.xtelsolution.xmec.xmec.views.inf.BaseView;
 

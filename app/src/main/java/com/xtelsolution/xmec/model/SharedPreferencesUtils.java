@@ -4,9 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.xmec.views.MyApplication;
+import com.xtelsolution.xmec.MyApplication;
 
 
 public class SharedPreferencesUtils {

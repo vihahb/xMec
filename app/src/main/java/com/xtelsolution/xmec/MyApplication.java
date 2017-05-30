@@ -1,4 +1,4 @@
-package com.xtelsolution.xmec.xmec.views;
+package com.xtelsolution.xmec;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
