@@ -110,7 +110,7 @@ public class HomeActivity extends BasicActivity implements IMapView,
         initMenuFragment();
 
         initColors();
-        initAnimationRelatedFields();
+//        initAnimationRelatedFields();
         content = findViewById(R.id.content);
         content.setVisibility(View.GONE);
         toolbarSearch = findViewById(R.id.toolbar_search);
@@ -417,14 +417,14 @@ public class HomeActivity extends BasicActivity implements IMapView,
     }
 
 
-    private void initAnimationRelatedFields() {
-        revealCenter = new Point();
-        statusBarAnimator = createArgbAnimator(
-                statusBarColors[IconSwitch.Checked.LEFT.ordinal()],
-                statusBarColors[IconSwitch.Checked.RIGHT.ordinal()]);
-        contentInInterpolator = new OvershootInterpolator(0.5f);
-        contentOutInterpolator = new DecelerateInterpolator();
-    }
+//    private void initAnimationRelatedFields() {
+//        revealCenter = new Point();
+//        statusBarAnimator = createArgbAnimator(
+//                statusBarColors[IconSwitch.Checked.LEFT.ordinal()],
+//                statusBarColors[IconSwitch.Checked.RIGHT.ordinal()]);
+//        contentInInterpolator = new OvershootInterpolator(0.5f);
+//        contentOutInterpolator = new DecelerateInterpolator();
+//    }
 
     private void initColors() {
         toolbarColors = new int[IconSwitch.Checked.values().length];
@@ -435,15 +435,15 @@ public class HomeActivity extends BasicActivity implements IMapView,
         statusBarColors[IconSwitch.Checked.LEFT.ordinal()] = color(R.color.informationPrimaryDark);
     }
 
-    private ValueAnimator createArgbAnimator(int leftColor, int rightColor) {
-        ValueAnimator animator = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            animator = ValueAnimator.ofArgb(leftColor, rightColor);
-        }
-        animator.setDuration(DURATION_COLOR_CHANGE_MS);
-        animator.addUpdateListener(this);
-        return animator;
-    }
+//    private ValueAnimator createArgbAnimator(int leftColor, int rightColor) {
+//        ValueAnimator animator = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//            animator = ValueAnimator.ofArgb(leftColor, rightColor);
+//        }
+//        animator.setDuration(DURATION_COLOR_CHANGE_MS);
+//        animator.addUpdateListener(this);
+//        return animator;
+//    }
 
     private void moveFromSwitchToToolbarSpace(Point point) {
         point.set(point.x + iconSwitch.getLeft(), point.y + iconSwitch.getTop());
