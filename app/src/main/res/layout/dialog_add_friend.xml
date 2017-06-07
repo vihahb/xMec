@@ -7,7 +7,7 @@
     android:padding="@dimen/dimen_10">
 
     <TextView
-        style="@style/PreferenceTitle"
+        style="@style/AccountKit.Toolbar.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

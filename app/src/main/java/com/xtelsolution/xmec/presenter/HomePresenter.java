@@ -94,7 +94,7 @@ public class HomePresenter extends BasePresenter {
             } else
                 view.onGetMediacalListSusscess(true, new RESP_List_Medical(mlistMedica));
         } else {
-            view.onGetMediacalListSusscess(true,null);
+            view.onGetMediacalListSusscess(true, null);
         }
     }
 
