@@ -38,6 +38,7 @@ public class HomePresenter extends BasePresenter {
     private void getUser(final Object... param) {
         String url = Constant.SERVER_XMEC + Constant.GET_USER;
         xLog.e(TAG, "getUser: URL  " + url);
+        view.onLoadindView();
         UserModel.getintance().getUser(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_User>(RESP_User.class) {
             @Override
             public void onSuccess(RESP_User obj) {
@@ -55,6 +56,7 @@ public class HomePresenter extends BasePresenter {
     private void getMedicalReportBooks(Object... param) {
         String url = Constant.SERVER_XMEC + Constant.GET_MEDIACAL_REPORT_BOOK;
         Log.d("URL", "getMedicalReportBooks: " + url);
+        view.onLoadindView();
         MedicalDirectoryModel.getinstance().getMedicalReportBooks(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Medical>(RESP_List_Medical.class) {
             @Override
             public void onSuccess(RESP_List_Medical obj) {

@@ -3,29 +3,22 @@ package com.xtelsolution.xmec.xmec.views.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.view.menu.ShowableListMenu;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.listener.EndlessParentScrollListener;
+import com.xtelsolution.xmec.dialog.DialogUtil;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_List_Medical;
 import com.xtelsolution.xmec.model.RESP_Medical;
@@ -47,11 +40,10 @@ import java.util.ArrayList;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ IHomeView, ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
+public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ IHomeView,
+        ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
     private static final String TAG = "HomeFragment";
-    private View view;
-    private View containerView;
-    private Bitmap bitmap;
+
 
     public static HomeFragment newInstance() {
 
@@ -67,6 +59,7 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
     private RecyclerView rvDisease;
     private DiscreteScrollView pagerUser;
     private PagerUserAdapter userAdapter;
+    private ProgressBar loadingProgress;
     //    private ImageView imgAvatar;
 //    private TextView btnProfile;
 //    private TextView tvName;
@@ -115,19 +108,9 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
     }
 
     public void initUI(View view) {
-//        btnProfile = (TextView) view.findViewById(R.id.btnProfile);
-//        tvBirthday = (TextView) view.findViewById(R.id.tv_birthday);
-//        tvHeight = (TextView) view.findViewById(R.id.tv_profile_height);
-//        tvWeight = (TextView) view.findViewById(R.id.tv_profile_weight);
-//        tvIBM = (TextView) view.findViewById(R.id.tv_profile_ibm);
-//        tvName = (TextView) view.findViewById(R.id.tv_profile_name);
-//        imgAvatar = (ImageView) view.findViewById(R.id.img_avatar);
-//        imgGender = (ImageView) view.findViewById(R.id.img_gender);
-//        progcess = (CoordinatorLayout) view.findViewById(R.id.progress_bar);
         rvDisease = (RecyclerView) view.findViewById(R.id.rvDisease);
         pagerUser = (DiscreteScrollView) view.findViewById(R.id.pagerUser);
-        this.view = view;
-        containerView = view.findViewById(R.id.container);
+        loadingProgress = (ProgressBar) view.findViewById(R.id.loadingProgress);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rvDisease.setLayoutManager(manager);
         rvDisease.setNestedScrollingEnabled(false);
@@ -145,11 +128,21 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
         userAdapter.setItemUpDateClickListener(new PagerUserAdapter.ItemUpDateClickListener() {
             @Override
             public void onClick(int position, RESP_User user) {
-                startActivity(new Intent(mContext, ProfileActivity.class));
                 if (!isLogin())
                     showLoginDialog();
                 else
                     startActivityForResult(new Intent(mContext, ProfileActivity.class), Constant.UPDATE_PROFILE);
+            }
+        });
+
+        userAdapter.setItemAddClickListener(new PagerUserAdapter.ItemAddClickListener() {
+            @Override
+            public void onClick() {
+                if (!isLogin())
+                    showLoginDialog();
+                else {
+                    DialogUtil.DiaLodAddFriend(mContext).show();
+                }
             }
         });
 
@@ -195,37 +188,20 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
     }
 
     @Override
+    public void onLoadindView() {
+        loadingProgress.setVisibility(View.VISIBLE);
+        rvDisease.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void onGetUerSusscess(RESP_User user) {
+        loadingProgress.setVisibility(View.GONE);
+        rvDisease.setVisibility(View.VISIBLE);
         if (user == null) {
-            setNull();
             return;
         }
         mlistUsers.add(user);
         userAdapter.notifyDataSetChanged();
-//        tvName.setText(user.getFullname());
-//        tvBirthday.setText(user.getBirthDayasString());
-//        tvHeight.setText(String.valueOf(user.getHeight()));
-//        tvWeight.setText(String.valueOf(user.getWeight()));
-//        try {
-//            DecimalFormat format = new DecimalFormat("##.##");
-//            tvIBM.setText(format.format(user.getWeight() * 100 * 100 / (user.getHeight() * user.getHeight())));
-//        } catch (Exception e) {
-//            tvIBM.setText("0.0");
-//        }
-//
-//        setImage(imgAvatar, user.getAvatar());
-//        if (user.getGender() == 2) {
-//            imgGender.setVisibility(View.VISIBLE);
-//            imgGender.setImageResource(R.drawable.ic_action_name);
-//        } else if (user.getGender() == 1) {
-//            imgGender.setVisibility(View.VISIBLE);
-//            imgGender.setImageResource(R.drawable.ic_man);
-//        } else {
-//            imgGender.setVisibility(View.GONE);
-//        }
-//        SharedPreferencesUtils.getInstance().saveUser(user);
-//        progcess.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -283,15 +259,6 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
         }
     }
 
-    private void setNull() {
-//        tvName.setText(null);
-//        tvBirthday.setText(null);
-//        tvHeight.setText(null);
-//        tvWeight.setText(null);
-//        imgGender.setVisibility(View.GONE);
-//        progcess.setVisibility(View.GONE);
-
-    }
 
     @Override
     public void onButtonAdapterClickListener() {
@@ -302,32 +269,5 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
             showLoginDialog();
         }
     }
-//
-//    @Override
-//    public void takeScreenShot() {
-//        try {
-//            Thread thread = new Thread() {
-//                @Override
-//                public void run() {
-//                    if (containerView == null) {
-//                        containerView = view.findViewById(R.id.container);
-//                    }
-//                    Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
-//                            containerView.getHeight(), Bitmap.Config.ARGB_8888);
-//                    Canvas canvas = new Canvas(bitmap);
-//                    containerView.draw(canvas);
-//                    HomeFragment.this.bitmap = bitmap;
-//                }
-//            };
-//
-//            thread.start();
-//        } catch (Exception e) {
-//            Log.e(TAG, "takeScreenShot: ", new Throwable(e));
-//        }
-//    }
 
-//    @Override
-//    public Bitmap getBitmap() {
-//        return bitmap;
-//    }
 }

@@ -61,10 +61,11 @@ import vn.com.elcom.mymenu.MenuObject;
 import vn.com.elcom.mymenu.MenuParams;
 import vn.com.elcom.mymenu.interfaces.OnMenuItemClickListener;
 import vn.com.elcom.mymenu.interfaces.OnMenuItemLongClickListener;
+import vn.com.elcom.mymenu.interfaces.OnNullClickListener;
 
 public class HomeActivity extends BasicActivity implements IMapView,
         IconSwitch.CheckedChangeListener, ValueAnimator.AnimatorUpdateListener,
-        ItemClickListener, View.OnClickListener, OnMenuItemClickListener, OnMenuItemLongClickListener {
+        ItemClickListener, View.OnClickListener, OnMenuItemClickListener, OnMenuItemLongClickListener, OnNullClickListener {
     private Toolbar toolbar;
     private FrameLayout layout;
     private ContextMenuDialogFragment mMenuDialogFragment;
@@ -159,10 +160,11 @@ public class HomeActivity extends BasicActivity implements IMapView,
         boolean fragmentPopped = fragmentManager.popBackStackImmediate(backStackName, 0);
         if (!fragmentPopped) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.content_frame, fragment, backStackName)
+            transaction.add(R.id.content_frame, fragment/*, backStackName*/)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 //            if (addToBackStack)
-            transaction.addToBackStack(backStackName);
+//            transaction.addToBackStack(backStackName);
+//            transaction.addToBackStack(null);
             transaction.commit();
         }
     }
@@ -308,6 +310,7 @@ public class HomeActivity extends BasicActivity implements IMapView,
         mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
         mMenuDialogFragment.setItemClickListener(this);
         mMenuDialogFragment.setItemLongClickListener(this);
+        mMenuDialogFragment.setmNullClickListener(this);
     }
 
     List<MenuObject> menuObjects;
@@ -319,22 +322,32 @@ public class HomeActivity extends BasicActivity implements IMapView,
         close.setResource(R.drawable.ic_close_black_24dp);
 
         MenuObject home = new MenuObject(getString(R.string.user_medical));
-        home.setResource(R.drawable.ic_menu_yba);
+        home.setResource(R.mipmap.ic_menu_yba);
 
         MenuObject seatCsyt = new MenuObject(getString(R.string.search_health_center));
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_cosoyte);
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_menu_cosoyte);
         seatCsyt.setBitmap(b);
 
         MenuObject searchDisease = new MenuObject(getString(R.string.find_disease));
         BitmapDrawable bd = new BitmapDrawable(getResources(),
-                BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_benh));
+                BitmapFactory.decodeResource(getResources(), R.mipmap.ic_menu_benh));
         searchDisease.setDrawable(bd);
 
         MenuObject searchDrug = new MenuObject(getString(R.string.find_drug));
-        searchDrug.setResource(R.drawable.ic_menu_thuoc);
+        searchDrug.setResource(R.mipmap.ic_menu_thuoc);
 
         MenuObject news = new MenuObject(getString(R.string.news));
-        news.setResource(R.drawable.ic_menu_tintuc);
+        news.setResource(R.mipmap.ic_menu_tintuc);
+
+        MenuObject login = new MenuObject(getString(R.string.login));
+
+        if (callbackManager.getCurrentSession() == null) {
+            login.setTitle(getString(R.string.login));
+            login.setResource(R.drawable.ic_action_login);
+        } else {
+            login.setTitle(getString(R.string.logout));
+            login.setResource(R.drawable.ic_action_logout);
+        }
 
         menuObjects.add(close);
         menuObjects.add(home);
@@ -342,6 +355,7 @@ public class HomeActivity extends BasicActivity implements IMapView,
         menuObjects.add(searchDisease);
         menuObjects.add(searchDrug);
         menuObjects.add(seatCsyt);
+        menuObjects.add(login);
         return menuObjects;
     }
 
@@ -559,6 +573,25 @@ public class HomeActivity extends BasicActivity implements IMapView,
                 case 5:
                     addFragment(MapFragment.newInstance());
                     break;
+                case 6:
+                    if (callbackManager.getCurrentSession() == null) {
+                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                    } else {
+                        LoginManager.logOut();
+                        SharedPreferencesUtils.getInstance().setLogined();
+                        showToast("Đã đăng xuất");
+                        SharedPreferencesUtils.getInstance().setLogout();
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivityAndFinish(LoginActivity.class);
+                            }
+                        }, 1000);
+
+
+                    }
+                    break;
 
             }
             if (position > 0)
@@ -580,6 +613,12 @@ public class HomeActivity extends BasicActivity implements IMapView,
 
     @Override
     public void onMenuItemLongClick(View clickedView, int position) {
+
+    }
+
+
+    @Override
+    public void onClickNullMenu() {
 
     }
 }

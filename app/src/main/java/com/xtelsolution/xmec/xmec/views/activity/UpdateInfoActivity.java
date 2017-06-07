@@ -1,11 +1,9 @@
 package com.xtelsolution.xmec.xmec.views.activity;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
-import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 
 import agency.tango.android.avatarview.views.AvatarView;
 

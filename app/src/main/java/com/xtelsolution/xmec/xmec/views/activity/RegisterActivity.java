@@ -2,12 +2,14 @@ package com.xtelsolution.xmec.xmec.views.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.facebook.accountkit.AccountKitLoginResult;
 import com.facebook.accountkit.PhoneNumber;
 import com.facebook.accountkit.ui.AccountKitActivity;
@@ -28,6 +30,8 @@ public class RegisterActivity extends BasicActivity {
     private CallbackManager callbackManager;
     private EditText etPhone, etPassword, etRePassword;
     private TextView btnHasNumber;
+    private ActionProcessButton btnCreateAccount;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class RegisterActivity extends BasicActivity {
         setContentView(R.layout.activity_register);
 //        setUi(findViewById(R.id.activity_register));
         callbackManager = CallbackManager.create(this);
+        handler = new Handler();
         initUI();
         initControl();
     }
@@ -43,13 +48,31 @@ public class RegisterActivity extends BasicActivity {
         etPhone = (EditText) findViewById(R.id.etPhone);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etRePassword = (EditText) findViewById(R.id.etRePassword);
-        findViewById(R.id.btnCreateAccount).setOnClickListener(new View.OnClickListener() {
+        btnCreateAccount = (ActionProcessButton) findViewById(R.id.btnCreateAccount);
+        btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registerAccount();
             }
         });
         btnHasNumber = (TextView) findViewById(R.id.btn_has_number);
+    }
+
+    private void setEndableView() {
+        etPhone.setEnabled(true);
+        etPassword.setEnabled(true);
+        etRePassword.setEnabled(true);
+        btnCreateAccount.setEnabled(true);
+        btnHasNumber.setEnabled(true);
+    }
+
+    private void setDisableView() {
+        etPhone.setEnabled(false);
+        etPassword.setEnabled(false);
+        etRePassword.setEnabled(false);
+        btnCreateAccount.setEnabled(false);
+        btnHasNumber.setEnabled(false);
+
     }
 
     private void initControl() {
@@ -65,6 +88,7 @@ public class RegisterActivity extends BasicActivity {
         final String phone = etPhone.getText().toString();
         String password = etPassword.getText().toString();
         String rePassword = etRePassword.getText().toString();
+
         if (phone.length() < 9) {
             etPhone.setError("Số điện thoại không khả dụng");
         } else if (password.length() < 6) {
@@ -72,18 +96,41 @@ public class RegisterActivity extends BasicActivity {
         } else if (!password.equals(rePassword)) {
             etRePassword.setError("Mật khẩu chưa trùng khớp");
         } else {
+            btnCreateAccount.setProgress(50);
+            setDisableView();
+
             callbackManager.registerNipService(phone, password, null, true, new CallbackLisenerRegister() {
                 @Override
                 public void onSuccess(RESP_Register register) {
-                    activeAccount(phone);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            activeAccount(phone);
+                        }
+                    }, 1500);
+
                 }
 
                 @Override
                 public void onError(Error error) {
+
+                    setEndableView();
                     if (error.getCode() == 103) {
-                        showToast("Tài khoản đã tồn tại");
-                        activeAccount(phone);
-                    }
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                showToast("Tài khoản đã tồn tại");
+                                activeAccount(phone);
+                            }
+                        }, 1500);
+
+                    } else btnCreateAccount.setProgress(-1);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnCreateAccount.setProgress(0);
+                        }
+                    }, 3000);
                 }
             });
         }
@@ -106,6 +153,7 @@ public class RegisterActivity extends BasicActivity {
         intent.putExtra(
                 AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
                 configurationBuilder.build());
+        btnCreateAccount.setProgress(100);
         startActivityForResult(intent, 99);
     }
 

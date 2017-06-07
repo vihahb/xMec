@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_register"
-    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:weightSum="100">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_top"
         android:layout_width="match_parent"
@@ -24,14 +26,17 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:fillViewport="true"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -56,44 +61,54 @@
 
                 <EditText
                     android:id="@+id/etPhone"
+                    style="@style/EditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/EditProfile"
+                    android:hint="@string/phone_number"
                     android:imeOptions="actionNext"
                     android:inputType="phone"
-                    android:maxLines="1"
-                    android:hint="@string/phone_number" />
+                    android:maxLines="1" />
 
                 <EditText
                     android:id="@+id/etPassword"
+                    style="@style/EditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/EditProfile"
-                    android:inputType="textPassword"
-                    android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:layout_marginTop="8dp"
-                    android:hint="@string/password" />
+                    android:hint="@string/password"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
 
                 <EditText
                     android:id="@+id/etRePassword"
+                    style="@style/EditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/EditProfile"
-                    android:inputType="textPassword"
+                    android:hint="@string/re_password"
                     android:imeOptions="actionDone"
-                    android:maxLines="1"
-                    android:hint="@string/re_password" />
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
 
-                <Button
+
+                <com.dd.processbutton.iml.ActionProcessButton
                     android:id="@+id/btnCreateAccount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/icons"
-                    android:text="@string/create_account" />
+                    android:text="@string/create_account"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    custom:pb_colorComplete="@color/green_complete"
+                    custom:pb_colorNormal="@color/colorPrimary"
+                    custom:pb_colorPressed="@color/blue_pressed"
+                    custom:pb_colorProgress="@color/purple_progress"
+                    custom:pb_textComplete="Thành công"
+                    custom:pb_textError="Đăng ký thất bại"
+                    custom:pb_textProgress="Đang đăng ký" />
+
 
             </LinearLayout>
 
@@ -108,8 +123,7 @@
                     android:id="@+id/btn_has_number"
                     style="@style/TextViewUnderLine"
                     android:layout_gravity="bottom"
-                    android:text="@string/had_account"
-                    />
+                    android:text="@string/had_account" />
             </RelativeLayout>
         </LinearLayout>
 

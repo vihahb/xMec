@@ -86,6 +86,7 @@ dependencies {
     compile 'com.yarolegovich:mp:1.0.5'
     compile 'com.polyak:icon-switch:1.0.0'
     compile 'com.yarolegovich:discrete-scrollview:1.2.0'
+    compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4' //v2
 //    compile('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
 //        transitive = true;
 //    }

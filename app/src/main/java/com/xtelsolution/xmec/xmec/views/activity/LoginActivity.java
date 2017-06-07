@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.xmec.views.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.IntentCompat;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -54,9 +56,11 @@ public class LoginActivity extends BasicActivity {
     private ImageView imgLogo;
     private TextView tvSignUp;
     private EditText etPhone, etPassword;
-    private Button btnLoginbyPhone, btnLoginByFB;
+    private ActionProcessButton btnLoginbyPhone;
+    private Button btnLoginByFB;
     private KeyboardDetectorRelativeLayout content;
     private LinearLayout box2;
+    private Handler handler;
     private CallbackManager callbackManager;
     private com.facebook.CallbackManager fbCallbackManager;
 
@@ -65,6 +69,7 @@ public class LoginActivity extends BasicActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        handler = new Handler();
         setUi(findViewById(R.id.lg_content));
         init();
 //        animation();
@@ -99,7 +104,7 @@ public class LoginActivity extends BasicActivity {
         AccountKit.initialize(getApplicationContext());
         imgLogo = (ImageView) findViewById(R.id.img_logo);
         tvSignUp = (TextView) findViewById(R.id.tv_sign_up);
-        btnLoginbyPhone = (Button) findViewById(R.id.btnLogin);
+        btnLoginbyPhone = (ActionProcessButton) findViewById(R.id.btnLogin);
         btnLoginByFB = (Button) findViewById(R.id.btnLoginByFB);
         box2 = (LinearLayout) findViewById(R.id.LoginBox2);
         etPhone = (EditText) findViewById(R.id.etPhone);
@@ -189,37 +194,73 @@ public class LoginActivity extends BasicActivity {
         imgLogo.startAnimation(animTranslate);
     }
 
+    private void setDisenabledView() {
+        etPassword.setEnabled(false);
+        etPhone.setEnabled(false);
+        btnLoginbyPhone.setEnabled(false);
+        tvSignUp.setEnabled(false);
+    }
+
+    private void setEnabledView() {
+        etPassword.setEnabled(true);
+        etPhone.setEnabled(true);
+        btnLoginbyPhone.setEnabled(true);
+        tvSignUp.setEnabled(true);
+    }
+
     private void onPhoneLogin() {
         if (etPhone.getText().toString().trim().length() <= 9) {
             etPhone.setError("Số điện thoại không hợp lệ");
         } else if (etPassword.getText().toString().length() == 0) {
             etPassword.setError("Mật khẩu trống");
         } else {
+            setDisenabledView();
+            btnLoginbyPhone.setProgress(50);
             callbackManager.LoginNipAcc(etPhone.getText().toString(), etPassword.getText().toString(), true, new CallbacListener() {
                 @Override
                 public void onSuccess(RESP_Login success) {
                     Log.e("Session", "onSuccess: " + JsonHelper.toJson(success));
                     xLog.e(TAG, "onPhoneLogin: onSuccess: " + Constant.LOGPHI + success.getSession());
-                    SharedPreferencesUtils.getInstance().setLogined();
-                    startActivityFinishAll();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SharedPreferencesUtils.getInstance().setLogined();
+                            btnLoginbyPhone.setProgress(100);
+                            startActivityFinishAll();
+                        }
+                    }, 1000);
+
                 }
 
                 @Override
-                public void onError(Error error) {
-                    showLog(TAG, "onPhoneLogin: onError: " + JsonHelper.toJson(error));
-                    int errorCode = error.getCode();
-                    switch (errorCode) {
-                        case 111:
-                            showToast("SĐT hoặc mật khẩu sai");
-                            break;
-                        case 112:
-                            showToast("Tài khoản chưa được kích hoạt");
-                            activeAccount(etPhone.getText().toString());
-                            break;
-                        default:
-                            showToast("Đăng nhập thất bại");
-                            break;
-                    }
+                public void onError(final Error error) {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setEnabledView();
+                            btnLoginbyPhone.setProgress(-1);
+                            showLog(TAG, "onPhoneLogin: onError: " + JsonHelper.toJson(error));
+                            int errorCode = error.getCode();
+                            switch (errorCode) {
+                                case 111:
+                                    showToast("SĐT hoặc mật khẩu sai");
+                                    break;
+                                case 112:
+                                    showToast("Tài khoản chưa được kích hoạt");
+                                    activeAccount(etPhone.getText().toString());
+                                    break;
+                                default:
+                                    showToast("Đăng nhập thất bại");
+                                    break;
+                            }
+                        }
+                    }, 2000);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnLoginbyPhone.setProgress(0);
+                        }
+                    }, 4000);
                 }
             });
         }
