@@ -1,1 +1,1 @@
-include ':app', ':NIPmodule-master', ':lvlistenkeyboardevent', ':mymenu'
+include ':app', ':NIPmodule-master', ':lvlistenkeyboardevent'

@@ -51,7 +51,7 @@
             android:src="@mipmap/ic_menu_benh" />
 
         <TextView
-            style="@style/TextView.GuillotineItem.Selected"
+            style="@style/TextView.GuillotineItem"
             android:text="@string/find_disease" />
     </LinearLayout>
 
@@ -87,10 +87,13 @@
         style="@style/LinearLayout.GuillotineItem">
 
         <ImageView
+            android:id="@+id/icMenuLogin"
             style="@style/ImageView.GuillotineItem"
+            android:padding="@dimen/dimen_8"
             android:src="@drawable/ic_action_logout" />
 
         <TextView
+            android:id="@+id/textMenuLogin"
             style="@style/TextView.GuillotineItem"
             android:text="@string/login" />
     </LinearLayout>

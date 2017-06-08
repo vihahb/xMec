@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/guillotine_actionbar_background_view_height"-->
-        <!--android:layout_gravity="top"-->
-        <!--android:background="@color/colorPrimary" />-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/guillotine_actionbar_background_view_height"
+        android:layout_gravity="top"
+        android:background="@color/colorPrimary" />
 
     <LinearLayout
         android:id="@+id/content_overlay"

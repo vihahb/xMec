@@ -12,10 +12,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,7 +47,8 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
     private String TAG = "HomeActivity";
     //    private List<RESP_Map_Healthy_Care> mapHealthyCareList;
     private BroadcastReceiver receiver;
-    private TextView tvtoolbarTitle, textError;
+    private TextView tvtoolbarTitle, textMenuLogin;
+    private ImageView icMenuLogin;
     //    private Button btnAction;
 //    private ProgressBar loadding;
     private CallbackManager callbackManager;
@@ -55,7 +58,7 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
     private FrameLayout root;
     private View contentHamburger;
     private View guillotineMenu;
-    private LinearLayout itemYba, itemTinTuc, itemTimKiemBenh, itemTimKiemThuoc, itemTimKiemCoSoYte;
+    private LinearLayout itemYba, itemTinTuc, itemTimKiemBenh, itemTimKiemThuoc, itemTimKiemCoSoYte, itemLogIn;
     private GuillotineAnimation animation;
 
     private static final long RIPPLE_DURATION = 250;
@@ -96,7 +99,7 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
 //        nav end
         toolbar.setTitle("");
         initView();
-//        callbackManager = CallbackManager.create(this);
+        callbackManager = CallbackManager.create(this);
 //        rvHosiptalCenter = (RecyclerView) findViewById(R.id.rList);
 //        adapter = new HospitalCenterAdapter(getApplicationContext(), mapHealthyCareList);
 //        adapter.setItemClickListener(this);
@@ -110,31 +113,65 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         itemTimKiemBenh = (LinearLayout) findViewById(R.id.itemTimKiemBenh);
         itemTimKiemThuoc = (LinearLayout) findViewById(R.id.itemTimKiemThuoc);
         itemTimKiemCoSoYte = (LinearLayout) findViewById(R.id.itemTimKiemCoSoYte);
+        itemLogIn = (LinearLayout) findViewById(R.id.itemLogIn);
+        icMenuLogin = (ImageView) findViewById(R.id.icMenuLogin);
+        textMenuLogin = (TextView) findViewById(R.id.textMenuLogin);
         itemYba.setOnClickListener(this);
         itemTinTuc.setOnClickListener(this);
         itemTimKiemBenh.setOnClickListener(this);
         itemTimKiemThuoc.setOnClickListener(this);
         itemTimKiemCoSoYte.setOnClickListener(this);
+        itemLogIn.setOnClickListener(this);
+        itemYba.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
+        if (callbackManager.getCurrentSession() == null) {
+            icMenuLogin.setImageResource(R.drawable.ic_action_login);
+            textMenuLogin.setText(getString(R.string.login));
+        } else {
+            icMenuLogin.setImageResource(R.drawable.ic_action_logout);
+            textMenuLogin.setText(getString(R.string.logout));
+        }
+    }
+
+    private void cleanSelect() {
+        TypedValue outValue = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+
+        itemYba.setBackgroundResource(outValue.resourceId);
+        itemTinTuc.setBackgroundResource(outValue.resourceId);
+        itemTimKiemBenh.setBackgroundResource(outValue.resourceId);
+        itemTimKiemThuoc.setBackgroundResource(outValue.resourceId);
+        itemTimKiemCoSoYte.setBackgroundResource(outValue.resourceId);
     }
 
     public void onMenuItemClick(int position) {
         Log.e(TAG, "onMenuItemClick: " + position);
         if (curentTab != position) {
             curentTab = position;
+            cleanSelect();
             switch (position) {
                 case 1:
+                    tvtoolbarTitle.setText(getString(R.string.title_menu_y_ba));
+                    itemYba.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(HomeFragment.newInstance());
                     break;
                 case 2:
+                    tvtoolbarTitle.setText(getString(R.string.title_menu_tin_tuc));
+                    itemTinTuc.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(NewsFeedFragment.newInstance());
                     break;
                 case 3:
+                    tvtoolbarTitle.setText(getString(R.string.find_disease));
+                    itemTimKiemBenh.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(MedicineFragment.newInstance());
                     break;
                 case 4:
+                    tvtoolbarTitle.setText(getString(R.string.find_drug));
+                    itemTimKiemThuoc.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(SearchFragment.newInstance());
                     break;
                 case 5:
+                    tvtoolbarTitle.setText(getString(R.string.title_tim_kiem_co_so_y_te));
+                    itemTimKiemCoSoYte.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(MapFragment.newInstance());
                     break;
                 case 6:
@@ -149,7 +186,7 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivityAndFinish(LoginActivity.class);
+                                startActivityAndFinish(HomeActivity.class);
                             }
                         }, 1000);
                     }
@@ -414,6 +451,10 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
             case R.id.itemTimKiemCoSoYte:
                 animation.close();
                 onMenuItemClick(5);
+                break;
+            case R.id.itemLogIn:
+                animation.close();
+                onMenuItemClick(6);
                 break;
         }
     }
