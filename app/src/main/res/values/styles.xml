@@ -209,6 +209,7 @@
         <item name="android:textSize">@dimen/guillotine_item_text_size</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextView.GuillotineItem.Selected">
@@ -235,7 +236,7 @@
         <item name="android:layout_width">?attr/actionBarSize</item>
         <item name="android:scaleType">centerInside</item>
         <!--<item name="android:layout_marginBottom">-->
-            <!--@dimen/abc_action_bar_overflow_padding_start_material-->
+        <!--@dimen/abc_action_bar_overflow_padding_start_material-->
         <!--</item>-->
     </style>
 

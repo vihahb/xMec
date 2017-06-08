@@ -39,7 +39,6 @@ import com.yalantis.guillotine.animation.GuillotineAnimation;
 public class HomeActivity extends BasicActivity implements /*IMapView,*/
         ItemClickListener, View.OnClickListener {
     private Toolbar toolbar;
-    private FrameLayout layout;
     private FragmentManager fragmentManager;
     //    private SlidingDrawer slidingDrawer;
 //    private RecyclerView rvHosiptalCenter;
@@ -52,8 +51,8 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
     //    private Button btnAction;
 //    private ProgressBar loadding;
     private CallbackManager callbackManager;
-//    private EditText edsearch;
-
+    //    private EditText edsearch;
+    private boolean isOpenMenu = false;
 
     private FrameLayout root;
     private View contentHamburger;
@@ -86,15 +85,7 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
 //        btnAction = (Button) findViewById(R.id.btnAction);
 //        loadding = (ProgressBar) findViewById(R.id.progress_bar);
 //        Menu nav
-        root = (FrameLayout) findViewById(R.id.container_frame);
-        contentHamburger = (View) findViewById(R.id.content_hamburger);
-        guillotineMenu = LayoutInflater.from(this).inflate(R.layout.navigation_layout, null);
-        root.addView(guillotineMenu);
-        animation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
+
 
 //        nav end
         toolbar.setTitle("");
@@ -108,6 +99,17 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
     }
 
     private void initUiNav() {
+        root = (FrameLayout) findViewById(R.id.container_frame);
+        contentHamburger = (View) findViewById(R.id.content_hamburger);
+        guillotineMenu = LayoutInflater.from(this).inflate(R.layout.navigation_layout, null);
+        root.addView(guillotineMenu);
+        View view = guillotineMenu.findViewById(R.id.guillotine_hamburger);
+        animation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu, view, contentHamburger)
+                .setStartDelay(RIPPLE_DURATION)
+                .setActionBarViewForAnimation(toolbar)
+                .setClosedOnStart(true)
+                .build();
+
         itemYba = (LinearLayout) findViewById(R.id.itemYba);
         itemTinTuc = (LinearLayout) findViewById(R.id.itemTinTuc);
         itemTimKiemBenh = (LinearLayout) findViewById(R.id.itemTimKiemBenh);
@@ -130,6 +132,28 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
             icMenuLogin.setImageResource(R.drawable.ic_action_logout);
             textMenuLogin.setText(getString(R.string.logout));
         }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if (isOpenMenu) {
+                isOpenMenu = false;
+                animation.close();
+//                } else {
+////                    animation.open();
+//                    isOpenMenu = true;
+//
+//                }
+                Log.e(TAG, "clickOpenMenu: " + isOpenMenu);
+            }
+        });
+        findViewById(R.id.content_hamburger).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isOpenMenu = true;
+                animation.open();
+                Log.e(TAG, "clickOpenMenu: " + isOpenMenu);
+            }
+        });
     }
 
     private void cleanSelect() {
@@ -145,6 +169,7 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
 
     public void onMenuItemClick(int position) {
         Log.e(TAG, "onMenuItemClick: " + position);
+        isOpenMenu = false;
         if (curentTab != position) {
             curentTab = position;
             cleanSelect();
@@ -286,6 +311,11 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
 
     @Override
     public void onBackPressed() {
+        if (isOpenMenu) {
+            animation.close();
+            isOpenMenu = false;
+            return;
+        }
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
@@ -334,7 +364,6 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
 //
 //    //Version 1.2
     private void initView() {
-        layout = (FrameLayout) findViewById(R.id.content_frame);
         addFragment(HomeFragment.newInstance());
         tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));
         setActionBar();

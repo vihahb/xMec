@@ -71,9 +71,7 @@
             android:theme="@style/HomeActivityTheme" />
         <activity android:name=".xmec.views.activity.DetailControlDiseaseActivity" />
         <activity android:name=".xmec.views.activity.DetailBodyPart" />
-        <activity
-            android:name=".xmec.views.activity.UpdateInfoActivity"
-            android:theme="@style/HomeActivityTheme" />
+
         <activity
             android:name=".xmec.views.activity.ProfileActivity"
             android:theme="@style/HomeActivityTheme"

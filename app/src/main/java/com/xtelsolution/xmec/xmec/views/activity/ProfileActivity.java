@@ -44,6 +44,7 @@ import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import agency.tango.android.avatarview.views.AvatarView;
@@ -274,29 +275,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         }
     }
 
-    public void animation() {
-        boxInput.setVisibility(View.GONE);
 
-        Animation animTranslate = AnimationUtils.loadAnimation(ProfileActivity.this, R.anim.translate_profile);
-        animTranslate.setAnimationListener(new Animation.AnimationListener() {
-
-            @Override
-            public void onAnimationStart(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                boxInput.setVisibility(View.VISIBLE);
-                Animation animFade = AnimationUtils.loadAnimation(ProfileActivity.this, R.anim.fade);
-                boxInput.startAnimation(animFade);
-            }
-        });
-        layout_avatar.startAnimation(animTranslate);
-    }
 
     private void showDatePicker() {
         datePicker.show(getSupportFragmentManager(), "datepicker");
@@ -313,10 +292,12 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         else {
             etBirthday.setText(null);
         }
+        DecimalFormat format = new DecimalFormat("####.#");
+
         if (height != 0)
-            etHeight.setText(String.valueOf(height));
+            etHeight.setText(String.valueOf(format.format(height)));
         if (weight != 0)
-            etWeight.setText(String.valueOf(weight));
+            etWeight.setText(String.valueOf(format.format(weight)));
         setImage(avatarView, url);
 //        gender=sex;
         if (!url.equals(""))
@@ -337,6 +318,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         showToast("Cập nhật thành công");
         final Intent i = new Intent(ProfileActivity.this, HomeActivity.class);
         btnUpdateInfo.setProgress(100);
+
         setEnabledView();
         handler.postDelayed(new Runnable() {
             @Override
