@@ -65,20 +65,23 @@ public class ProfilePresenter extends BasePresenter {
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_HEIGHT, (float) hegiht);
                 SharedPreferencesUtils.getInstance().putFloatValue(Constant.USER_WEIGHT, (float) weight);
                 SharedPreferencesUtils.getInstance().putStringValue(Constant.USER_AVATAR, urlAvatar);
-                SharedPreferencesUtils.getInstance().putIntValue(Constant.USER_GENDER,gender);
+                SharedPreferencesUtils.getInstance().putIntValue(Constant.USER_GENDER, gender);
                 view.dismissProgressDialog();
             }
 
             @Override
             public void onError(Error error) {
+                view.onError();
                 handlerError(view, error, param);
             }
         });
     }
 
     public void checkUpdateProfile(final String name, final long birthDay, final double hegiht, final double weight, String urlAvatar, int sex) {
-        if (!checkConnnecttion(view))
+        if (!checkConnnecttion(view)) {
+            view.onError();
             return;
+        }
         updateProfile(UPDATEPROFILE, name, birthDay, hegiht, weight, urlAvatar, sex);
     }
 
@@ -113,7 +116,7 @@ public class ProfilePresenter extends BasePresenter {
 
             @Override
             public void onError(String e) {
-
+                view.onError();
             }
         }).execute(bitmap);
 

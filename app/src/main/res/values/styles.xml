@@ -40,7 +40,7 @@
     </style>
 
     <style name="HomeActivityTheme" parent="NoACtionBar">
-        <item name="android:windowBackground">@drawable/bg_home_activity</item>
+        <!--<item name="android:windowBackground">@drawable/bg_home_activity</item>-->
     </style>
 
     <style name="MaterialTab" parent="HomeActivityTheme">
@@ -53,10 +53,12 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
+
     <style name="Theme_Dialog" parent="android:Theme.Holo.Dialog">
         <item name="android:windowMinWidthMajor">90%</item>
         <item name="android:windowMinWidthMinor">90%</item>
     </style>
+
     <style name="EditProfile">
         <item name="android:layout_marginLeft">@dimen/dimen_16</item>
         <item name="android:layout_marginRight">@dimen/dimen_16</item>
@@ -65,12 +67,13 @@
         <item name="android:paddingRight">@dimen/dimen_16</item>
         <item name="android:paddingTop">@dimen/dimen_16</item>
         <item name="android:paddingBottom">@dimen/dimen_16</item>
-        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textColor">@drawable/color_edittext</item>
         <item name="android:textColorHint">@color/textHint</item>
         <item name="android:textSize">@dimen/dimen16sp</item>
         <item name="android:lines">1</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="EditTextAddIllness" parent="EditProfile">
         <item name="android:layout_weight">0.015</item>
     </style>
@@ -175,6 +178,73 @@
         <item name="android:textColor">@color/colorAccent</item>
 
     </style>
-    <style name="AppLoginTheme" parent="Theme.AccountKit">
+
+    <style name="AppLoginTheme" parent="Theme.AccountKit"></style>
+
+
+    <style name="LinearLayout" />
+
+    <style name="LinearLayout.GuillotineItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingTop">@dimen/guillotine_small_margin</item>
+        <item name="android:paddingBottom">@dimen/guillotine_small_margin</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
+
+    <style name="TextView" />
+
+    <style name="TextView.ToolbarTitle">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextView.GuillotineItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/guillotine_small_margin</item>
+        <item name="android:textSize">@dimen/guillotine_item_text_size</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView.GuillotineItem.Selected">
+        <item name="android:textColor">@color/selected_item_color</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="ImageView" />
+
+    <style name="ImageView.ContentItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="ImageView.Hamburger" parent="Widget.AppCompat.ActionButton">
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:layout_width">?attr/actionBarSize</item>
+        <item name="android:scaleType">centerInside</item>
+        <!--<item name="android:layout_marginBottom">-->
+        <!--@dimen/abc_action_bar_overflow_padding_start_material-->
+        <!--</item>-->
+    </style>
+
+    <style name="ImageView.GuillotineItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_16</item>
+    </style>
+
 </resources>

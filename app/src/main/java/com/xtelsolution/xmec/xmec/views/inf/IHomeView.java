@@ -7,7 +7,10 @@ import com.xtelsolution.xmec.model.RESP_User;
  * Created by phimau on 2/15/2017.
  */
 
-public interface IHomeView  extends BaseView {
+public interface IHomeView extends BaseView {
+    void onLoadindView();
+
     void onGetUerSusscess(RESP_User user);
-    void onGetMediacalListSusscess(boolean useCache,RESP_List_Medical list_medical);
+
+    void onGetMediacalListSusscess(boolean useCache, RESP_List_Medical list_medical);
 }

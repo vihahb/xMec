@@ -105,9 +105,9 @@
                     android:id="@+id/spcategorize"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginBottom="@dimen/dimen_8"
                     android:layout_marginRight="@dimen/dimen_8"
-                    android:layout_marginBottom="@dimen/dimen_8" />
+                    android:layout_marginTop="@dimen/dimen_8" />
             </LinearLayout>
 
 
@@ -154,7 +154,20 @@
                     android:text="Kg" />
             </LinearLayout>
 
-            <Button
+            <!--<Button-->
+            <!--android:id="@+id/btn_update_info"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="@dimen/dimen_30"-->
+            <!--android:layout_marginLeft="@dimen/dimen_25"-->
+            <!--android:layout_marginRight="@dimen/dimen_25"-->
+            <!--android:layout_marginTop="@dimen/dimen_15"-->
+            <!--android:background="@drawable/button_pressed_tim"-->
+            <!--android:text="@string/update_profile_text"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textStyle="bold" />-->
+
+            <com.dd.processbutton.iml.ActionProcessButton
                 android:id="@+id/btn_update_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,10 +175,16 @@
                 android:layout_marginLeft="@dimen/dimen_25"
                 android:layout_marginRight="@dimen/dimen_25"
                 android:layout_marginTop="@dimen/dimen_15"
-                android:background="@drawable/button_pressed_tim"
                 android:text="@string/update_profile_text"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:pb_colorComplete="@color/green_complete"
+                app:pb_colorNormal="@color/tim"
+                app:pb_colorPressed="@color/blue_pressed"
+                app:pb_colorProgress="@color/purple_progress"
+                app:pb_textComplete="Cập nhật thành công"
+                app:pb_textProgress="Đang cập nhật" />
         </LinearLayout>
     </com.xtelsolution.xmec.xmec.views.widget.KeyboardDetectorRelativeLayout>
 </LinearLayout>

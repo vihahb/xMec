@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
@@ -43,6 +44,7 @@ import com.xtelsolution.xmec.xmec.views.smallviews.DatePickerFragment;
 import com.xtelsolution.xmec.xmec.views.widget.PickerBuilder;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import agency.tango.android.avatarview.views.AvatarView;
@@ -57,11 +59,12 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     private LinearLayout boxInput;
     private FrameLayout layout_avatar;
     private Toolbar mToolbar;
+    private Handler handler;
     private EditText etName;
     private EditText etBirthday;
     private EditText etHeight;
     private EditText etWeight;
-    private Button btnUpdateInfo;
+    private ActionProcessButton btnUpdateInfo;
     private DatePickerFragment datePicker;
     private ProfilePresenter presenter;
     private String urlAvatar = "";
@@ -76,6 +79,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         setContentView(R.layout.activity_profile);
         setUi(findViewById(R.id.activity_profile));
         mContext = this;
+        handler = new Handler();
         initUI();
         presenter = new ProfilePresenter(this);
         presenter.getProfile();
@@ -103,11 +107,11 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         etHeight = (EditText) findViewById(R.id.et_height);
         etWeight = (EditText) findViewById(R.id.et_weight);
         etBirthday.setInputType(InputType.TYPE_NULL);
-        btnUpdateInfo = (Button) findViewById(R.id.btn_update_info);
+        btnUpdateInfo = (ActionProcessButton) findViewById(R.id.btn_update_info);
         btnSelectImage.setOnClickListener(this);
         spSex = (Spinner) findViewById(R.id.spcategorize);
-        ArrayList<String> listSex =new ArrayList<>();
-        ArrayAdapter<String> adapterSpiner = new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_dropdown_item,listSex);
+        ArrayList<String> listSex = new ArrayList<>();
+        ArrayAdapter<String> adapterSpiner = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, listSex);
         listSex.add("Giới tính");
         listSex.add("Nam");
         listSex.add("Nữ");
@@ -118,6 +122,29 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         initControl();
         initValidate();
     }
+
+    private void setEnabledView() {
+        btnUpdateInfo.setEnabled(true);
+        etBirthday.setEnabled(true);
+        btnSelectImage.setEnabled(true);
+        spSex.setEnabled(true);
+        etBirthday.setEnabled(true);
+        etName.setEnabled(true);
+        etHeight.setEnabled(true);
+        etWeight.setEnabled(true);
+    }
+
+    private void setDisabledView() {
+        btnUpdateInfo.setEnabled(false);
+        etBirthday.setEnabled(false);
+        btnSelectImage.setEnabled(false);
+        spSex.setEnabled(false);
+        etBirthday.setEnabled(false);
+        etName.setEnabled(false);
+        etHeight.setEnabled(false);
+        etWeight.setEnabled(false);
+    }
+
 
     private void initControl() {
         btnUpdateInfo.setOnClickListener(this);
@@ -235,34 +262,20 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
                     Toast.makeText(mContext, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                updateProfile();
+                btnUpdateInfo.setProgress(50);
+                setDisabledView();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateProfile();
+                    }
+                }, 1000);
+
 
         }
     }
 
-    public void animation() {
-        boxInput.setVisibility(View.GONE);
 
-        Animation animTranslate = AnimationUtils.loadAnimation(ProfileActivity.this, R.anim.translate_profile);
-        animTranslate.setAnimationListener(new Animation.AnimationListener() {
-
-            @Override
-            public void onAnimationStart(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                boxInput.setVisibility(View.VISIBLE);
-                Animation animFade = AnimationUtils.loadAnimation(ProfileActivity.this, R.anim.fade);
-                boxInput.startAnimation(animFade);
-            }
-        });
-        layout_avatar.startAnimation(animTranslate);
-    }
 
     private void showDatePicker() {
         datePicker.show(getSupportFragmentManager(), "datepicker");
@@ -279,22 +292,24 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         else {
             etBirthday.setText(null);
         }
+        DecimalFormat format = new DecimalFormat("####.#");
+
         if (height != 0)
-            etHeight.setText(String.valueOf(height));
+            etHeight.setText(String.valueOf(format.format(height)));
         if (weight != 0)
-            etWeight.setText(String.valueOf(weight));
+            etWeight.setText(String.valueOf(format.format(weight)));
         setImage(avatarView, url);
 //        gender=sex;
         if (!url.equals(""))
             urlAvatar = url;
         else
-            urlAvatar="none";
+            urlAvatar = "none";
         if (sex == 1)
-            spSex.setSelection(2,true);
+            spSex.setSelection(2, true);
         else if (sex == 2)
-            spSex.setSelection(1,true);
+            spSex.setSelection(1, true);
         else
-            spSex.setSelection(0,true);
+            spSex.setSelection(0, true);
     }
 
 
@@ -302,7 +317,10 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     public void onUpdateProfileSuccess() {
         showToast("Cập nhật thành công");
         final Intent i = new Intent(ProfileActivity.this, HomeActivity.class);
-        new Handler().postDelayed(new Runnable() {
+        btnUpdateInfo.setProgress(100);
+
+        setEnabledView();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 setResult(Activity.RESULT_OK);
@@ -331,5 +349,17 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     @Override
     public void onUploadImageSussces(String url) {
         urlAvatar = url;
+    }
+
+    @Override
+    public void onError() {
+        setEnabledView();
+        btnUpdateInfo.setProgress(-1);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                btnUpdateInfo.setProgress(0);
+            }
+        }, 1000);
     }
 }

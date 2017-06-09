@@ -19,6 +19,7 @@ import vn.com.elcom.mymenu.interfaces.OnItemClickListener;
 import vn.com.elcom.mymenu.interfaces.OnItemLongClickListener;
 import vn.com.elcom.mymenu.interfaces.OnMenuItemClickListener;
 import vn.com.elcom.mymenu.interfaces.OnMenuItemLongClickListener;
+import vn.com.elcom.mymenu.interfaces.OnNullClickListener;
 
 public class ContextMenuDialogFragment extends DialogFragment implements OnItemClickListener, OnItemLongClickListener {
 
@@ -29,6 +30,7 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
     private LinearLayout mWrapperText;
     private MenuAdapter mDropDownMenuAdapter;
     private OnMenuItemClickListener mItemClickListener;
+    private OnNullClickListener mNullClickListener;
     private OnMenuItemLongClickListener mItemLongClickListener;
     private MenuParams mMenuParams;
 
@@ -115,9 +117,22 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
                     if (isAdded()) {
                         dismiss();
                     }
+                    close();
                 }
             });
         }
+        rootView.findViewById(R.id.root).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNullClickListener != null) {
+                    mNullClickListener.onClickNullMenu();
+                    if (isAdded()) {
+                        dismiss();
+                    }
+                    close();
+                }
+            }
+        });
         return rootView;
     }
 
@@ -149,6 +164,10 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
 
     public void setItemClickListener(OnMenuItemClickListener itemClickListener) {
         this.mItemClickListener = itemClickListener;
+    }
+
+    public void setmNullClickListener(OnNullClickListener mNullClickListener) {
+        this.mNullClickListener = mNullClickListener;
     }
 
     /**

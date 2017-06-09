@@ -1,60 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/drawer_layout"
-  style="@style/HomeActivityTheme"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_frame"
+    style="@style/HomeActivityTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-  <FrameLayout
-      android:id="@+id/container_frame"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/guillotine_actionbar_background_view_height"
+        android:layout_gravity="top"
+        android:background="@color/colorPrimary" />
 
-      <LinearLayout
-          android:id="@+id/content_overlay"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical" />
+    <LinearLayout
+        android:id="@+id/content_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 
-      <FrameLayout
-          android:id="@+id/content_frame"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginTop="?attr/actionBarSize" />
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize" />
 
-      <com.yarolegovich.mp.MaterialPreferenceScreen
-          android:id="@+id/content"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@android:color/white"
-          android:visibility="gone">
+    <!--<com.yarolegovich.mp.MaterialPreferenceScreen-->
+        <!--android:id="@+id/content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@android:color/white"-->
+        <!--android:visibility="gone">-->
 
-          <include layout="@layout/layout_load_listview"/>
+        <!--<include layout="@layout/layout_load_listview" />-->
 
-      </com.yarolegovich.mp.MaterialPreferenceScreen>
+    <!--</com.yarolegovich.mp.MaterialPreferenceScreen>-->
 
 
-      <include layout="@layout/item_toolbar" />
+    <include layout="@layout/item_toolbar" />
 
-  </FrameLayout>
+</FrameLayout>
 
-  <!--<LinearLayout-->
-      <!--android:id="@+id/scrollView"-->
-      <!--android:layout_width="@dimen/sliding_menu_width"-->
-      <!--android:layout_height="match_parent"-->
-      <!--android:layout_gravity="start|bottom"-->
-      <!--android:orientation="vertical">-->
+    <!--<LinearLayout--><!--android:id="@+id/scrollView"--><!--android:layout_width="@dimen/sliding_menu_width"--><!--android:layout_height="match_parent"--><!--android:layout_gravity="start|bottom"--><!--android:orientation="vertical">-->
 
-      <!--<LinearLayout-->
-          <!--android:id="@+id/left_drawer"-->
-          <!--android:layout_width="@dimen/sliding_menu_width"-->
-          <!--android:layout_height="match_parent"-->
-          <!--android:background="@color/colorPrimary"-->
-          <!--android:divider="@android:color/transparent"-->
-          <!--android:orientation="vertical" />-->
-  <!--</LinearLayout>-->
-</android.support.design.widget.CoordinatorLayout>
-  <!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:id="@+id/activity_main2"--><!--style="@style/HomeActivityTheme"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--tools:context="com.xtelsolution.xmec.xmec.views.activity.HomeActivity">-->
+    <!--<LinearLayout--><!--android:id="@+id/left_drawer"--><!--android:layout_width="@dimen/sliding_menu_width"--><!--android:layout_height="match_parent"--><!--android:background="@color/colorPrimary"--><!--android:divider="@android:color/transparent"--><!--android:orientation="vertical" />--><!--</LinearLayout>--><!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:id="@+id/activity_main2"--><!--style="@style/HomeActivityTheme"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--tools:context="com.xtelsolution.xmec.xmec.views.activity.HomeActivity">-->
 
     <!--<include layout="@layout/item_toolbar" />-->
 

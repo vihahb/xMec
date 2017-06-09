@@ -74,7 +74,7 @@ public class MapFragment extends BasicFragment implements/* ScreenShotable,*/
     private Marker mMarker;
     private FloatingActionButton btnCurrentLocation;
     private boolean isCheckPermission;
-    private IMapView onLoadMapSuccessListener;
+//    private IMapView onLoadMapSuccessListener;
     private MapPresenter presenter;
     private CoordinatorLayout locationPermission;
     private Button btnInitPermission;
@@ -89,7 +89,7 @@ public class MapFragment extends BasicFragment implements/* ScreenShotable,*/
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_health_center, container, false);
-            onLoadMapSuccessListener = ((HomeActivity) getActivity()).get();
+//            onLoadMapSuccessListener = ((HomeActivity) getActivity()).get();
             initview();
             initControl();
             presenter = new MapPresenter(this);
@@ -184,12 +184,12 @@ public class MapFragment extends BasicFragment implements/* ScreenShotable,*/
     public void onMapCreateSuccess() {
         isCheckPermission = true;
         initMap();
-        onLoadMapSuccessListener.onMapCreateSuccess();
+//        onLoadMapSuccessListener.onMapCreateSuccess();
     }
 
     @Override
     public void onProviderDisabled() {
-        onLoadMapSuccessListener.onProviderDisabled();
+//        onLoadMapSuccessListener.onProviderDisabled();
         showToast("Bạn chưa bật chia sẻ vị trí");
     }
 
@@ -197,31 +197,31 @@ public class MapFragment extends BasicFragment implements/* ScreenShotable,*/
     public void onGetCurrentLocationFinish(LatLng latLng) {
         Log.e("MY", "onGetCurrentLocationFinish: " + latLng.longitude + "   " + latLng.latitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f));
-        onLoadMapSuccessListener.onGetCurrentLocationFinish(latLng);
+//        onLoadMapSuccessListener.onGetCurrentLocationFinish(latLng);
     }
 
     @Override
     public void onLocationChange(LatLng latLng) {
         mMarker.setPosition(latLng);
 //        xLog.e("onLocationChange", latLng.toString());
-        onLoadMapSuccessListener.onLocationChange(latLng);
+//        onLoadMapSuccessListener.onLocationChange(latLng);
     }
 
     @Override
     public void onPermissionDenied() {
         locationPermission.setVisibility(View.VISIBLE);
-        onLoadMapSuccessListener.onPermissionDenied();
+//        onLoadMapSuccessListener.onPermissionDenied();
     }
 
     @Override
     public void onPermissionGranted() {
         locationPermission.setVisibility(View.GONE);
-        onLoadMapSuccessListener.onPermissionGranted();
+//        onLoadMapSuccessListener.onPermissionGranted();
     }
 
     @Override
     public void onGPSDisabled() {
-        onLoadMapSuccessListener.onGPSDisabled();
+//        onLoadMapSuccessListener.onGPSDisabled();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle("Sử dụng chức năng này cần Bật GPS");
         alertDialog.setPositiveButton("Cài đặt", new DialogInterface.OnClickListener() {
@@ -272,7 +272,7 @@ public class MapFragment extends BasicFragment implements/* ScreenShotable,*/
             clusterManager.addItem(hospital);
         }
         mMap.moveCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom + 0.001f));
-        onLoadMapSuccessListener.onGetListHealtyCareSuccess(data);
+//        onLoadMapSuccessListener.onGetListHealtyCareSuccess(data);
 
     }
 

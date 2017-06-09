@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#41c3fd</color>
-    <color name="colorPrimaryDark">#41c3fd</color>
+    <color name="colorPrimary">#03A9F4</color>
+    <color name="colorPrimaryDark">#03A9F4</color>
     <color name="colorAccent">#53e69d</color>
     <color name="primary_light">#C8E6C9</color>
     <color name="divider">#BDBDBD</color>
@@ -16,6 +16,7 @@
     <color name="colorControlNormal">#fff</color>
     <color name="fistText">#616161</color>
     <color name="tim">#673AB7</color>
+    <color name="selected_item_color">#673AB7</color>
     <color name="time">#96a9c5</color>
     <color name="title_item">#424a55</color>
     <color name="colorPrimary_75">#c841c3fd</color>
