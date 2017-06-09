@@ -1,13 +1,7 @@
 package com.xtelsolution.xmec.presenter;
 
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.util.Log;
-
-import com.google.gson.JsonObject;
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
-import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.common.Constant;
@@ -15,15 +9,10 @@ import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.DiseaseModel;
 import com.xtelsolution.xmec.model.MedicineModel;
 import com.xtelsolution.xmec.model.REQ_Add_Disease;
-import com.xtelsolution.xmec.model.REQ_Disease;
 import com.xtelsolution.xmec.model.REQ_Medicine;
 import com.xtelsolution.xmec.model.RESP_ID;
-import com.xtelsolution.xmec.model.RESP_List_Disease;
-import com.xtelsolution.xmec.model.RESP_Medicine;
-import com.xtelsolution.xmec.model.entity.Disease;
-import com.xtelsolution.xmec.xmec.views.inf.IAddIllnessView;
+import com.xtelsolution.xmec.views.inf.IAddIllnessView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

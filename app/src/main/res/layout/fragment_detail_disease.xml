@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:elevation="@dimen/dimen_6"
         android:padding="16dp"
-        tools:context="com.xtelsolution.xmec.xmec.views.fragment.DetailDiseaseFragment">
+        tools:context=".views.fragment.DetailDiseaseFragment">
 
         <ListView
             android:id="@+id/list_control_detail"

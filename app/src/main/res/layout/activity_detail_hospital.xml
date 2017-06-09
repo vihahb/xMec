@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xtelsolution.xmec.xmec.views.activity.DetailHospitalActivity">
+    tools:context=".views.activity.DetailHospitalActivity">
 
     <include layout="@layout/toobar"></include>
 
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_96"
                 android:layout_margin="3dp"
-                tools:context=".xmec.views.activity.HomeActivity" />
+                tools:context=".views.activity.HomeActivity" />
 
             <LinearLayout
                 android:layout_width="match_parent"

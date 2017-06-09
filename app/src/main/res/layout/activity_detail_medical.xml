@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xtelsolution.xmec.xmec.views.activity.MedicalDetailActivity">
+    tools:context=".views.activity.MedicalDetailActivity">
 
-    <include layout="@layout/toobar"></include>
+    <include layout="@layout/toobar" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+       >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,13 +45,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <LinearLayout
-                                android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
                                 <TextView
                                     android:id="@+id/tv_name"
                                     android:layout_width="wrap_content"
@@ -102,22 +107,25 @@
                                         android:textSize="@dimen/dimen12sp" />
                                 </LinearLayout>
                             </LinearLayout>
+
                             <android.support.design.widget.CoordinatorLayout
                                 android:id="@+id/progress_bar"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@color/icons"
                                 android:orientation="vertical">
+
                                 <ProgressBar
-                                    android:layout_gravity="center_horizontal|center_vertical"
                                     android:layout_width="@dimen/dimen_32"
-                                    android:layout_height="@dimen/dimen_32" />
+                                    android:layout_height="@dimen/dimen_32"
+                                    android:layout_gravity="center_horizontal|center_vertical" />
                             </android.support.design.widget.CoordinatorLayout>
                         </FrameLayout>
 
 
                     </LinearLayout>
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/btn_update_medical"
                     android:layout_width="wrap_content"
@@ -132,16 +140,15 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_healthy_recoder"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_8"
-                android:layout_marginTop="@dimen/dimen_16"></android.support.v7.widget.RecyclerView>
+                android:layout_marginTop="@dimen/dimen_16" />
 
             <TextView
                 style="@style/TextviewBlod"
+                android:visibility="gone"
                 android:layout_margin="@dimen/dimen_8"
-
                 android:layout_marginBottom="@dimen/dimen_8"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:text="@string/list_illness" />
@@ -150,7 +157,19 @@
                 android:id="@+id/rcDisease"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/dimen_8"></android.support.v7.widget.RecyclerView>
+                android:layout_margin="@dimen/dimen_8"
+                android:visibility="gone" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

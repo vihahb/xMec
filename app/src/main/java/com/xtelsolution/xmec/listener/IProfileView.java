@@ -1,6 +1,6 @@
 package com.xtelsolution.xmec.listener;
 
-import com.xtelsolution.xmec.xmec.views.inf.BaseView;
+import com.xtelsolution.xmec.views.inf.BaseView;
 
 /**
  * Created by phimau on 2/18/2017.

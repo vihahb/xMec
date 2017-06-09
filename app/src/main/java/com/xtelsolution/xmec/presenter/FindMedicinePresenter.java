@@ -8,7 +8,7 @@ import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.MedicineModel;
 import com.xtelsolution.xmec.model.RESP_List_Medicine_Compact;
 
-import com.xtelsolution.xmec.xmec.views.inf.ISearchMedicineView;
+import com.xtelsolution.xmec.views.inf.ISearchMedicineView;
 
 /**
  * Created by phimau on 3/21/2017.

@@ -18,7 +18,7 @@ import com.xtelsolution.xmec.model.RESP_ID;
 import com.xtelsolution.xmec.model.REQ_Medical_Detail;
 import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.Resource;
-import com.xtelsolution.xmec.xmec.views.inf.IAddMedicalView;
+import com.xtelsolution.xmec.views.inf.IAddMedicalView;
 
 import java.util.List;
 

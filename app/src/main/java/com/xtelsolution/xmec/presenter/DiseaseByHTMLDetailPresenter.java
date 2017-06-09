@@ -3,7 +3,7 @@ package com.xtelsolution.xmec.presenter;
 import com.xtelsolution.xmec.callbacks.HtmlLoader;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
-import com.xtelsolution.xmec.xmec.views.inf.HtmlDetailView;
+import com.xtelsolution.xmec.views.inf.HtmlDetailView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

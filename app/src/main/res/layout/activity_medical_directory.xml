@@ -6,7 +6,7 @@
     android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xtelsolution.xmec.xmec.views.activity.AddMedicalDetailActivity">
+    tools:context=".views.activity.AddMedicalDetailActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_top"

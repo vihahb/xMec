@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xtelsolution.xmec.xmec.views.activity.DetailDiseaseActivity">
+    tools:context=".views.activity.DetailDiseaseActivity">
 
     <include layout="@layout/toobar"></include>
 

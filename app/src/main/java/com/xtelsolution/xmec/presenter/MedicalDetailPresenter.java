@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
-import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 import com.xtel.nipservicesdk.utils.JsonHelper;
@@ -13,17 +12,13 @@ import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.DiseaseModel;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
 import com.xtelsolution.xmec.model.RESP_Disease;
-import com.xtelsolution.xmec.model.RESP_List_Disease;
 import com.xtelsolution.xmec.model.REQ_Medical_Detail;
 import com.xtelsolution.xmec.model.RESP_List_Disease_With_Link;
-import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.model.Resource;
-import com.xtelsolution.xmec.xmec.views.inf.IMedicalDetailView;
+import com.xtelsolution.xmec.views.inf.IMedicalDetailView;
 
 import java.util.List;
-
-import static android.R.attr.id;
 
 /**
  * Created by phimau on 3/6/2017.

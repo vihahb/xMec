@@ -11,7 +11,7 @@
         android:layout_marginLeft="@dimen/dimen_8"
         android:layout_marginRight="@dimen/dimen_8"
         android:layout_marginTop="@dimen/dimen_16">
-        <com.xtelsolution.xmec.xmec.views.smallviews.DelayAutoCompleteTextView
+        <com.xtelsolution.xmec.views.smallviews.DelayAutoCompleteTextView
             android:id="@+id/et_find_medicine"
             style="@style/EditTextAddIllness"
             android:layout_margin="0dp"
