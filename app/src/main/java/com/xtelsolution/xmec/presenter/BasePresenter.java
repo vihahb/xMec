@@ -13,8 +13,8 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.NetWorkInfo;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
-import com.xtelsolution.xmec.xmec.views.activity.LoginActivity;
-import com.xtelsolution.xmec.xmec.views.inf.BaseView;
+import com.xtelsolution.xmec.views.activity.LoginActivity;
+import com.xtelsolution.xmec.views.inf.BaseView;
 
 
 /**

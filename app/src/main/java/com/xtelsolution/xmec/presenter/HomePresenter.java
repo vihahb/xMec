@@ -5,8 +5,6 @@ import android.util.Log;
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
-import com.xtel.nipservicesdk.utils.SharedUtils;
-import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.MedicalDirectoryModel;
@@ -15,10 +13,9 @@ import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.model.UserModel;
-import com.xtelsolution.xmec.xmec.views.inf.IHomeView;
+import com.xtelsolution.xmec.views.inf.IHomeView;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 /**
  * Created by phimau on 2/15/2017.

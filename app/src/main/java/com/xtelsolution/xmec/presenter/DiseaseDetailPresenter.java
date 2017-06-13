@@ -7,8 +7,8 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.DiseaseModel;
 import com.xtelsolution.xmec.model.RESP_Disease_Detail;
-import com.xtelsolution.xmec.xmec.views.inf.IAddIllnessView;
-import com.xtelsolution.xmec.xmec.views.inf.IDiseaseDetailView;
+import com.xtelsolution.xmec.views.inf.IAddIllnessView;
+import com.xtelsolution.xmec.views.inf.IDiseaseDetailView;
 
 /**
  * Created by phimau on 4/1/2017.

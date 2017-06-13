@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.xtelsolution.xmec.xmec.views.widget.CarouselLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.xtelsolution.xmec.views.widget.CarouselLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/add_layout"
     android:layout_width="320dp"
@@ -26,4 +26,4 @@
         android:textSize="@dimen/dimen16sp"
         android:textStyle="bold" />
 
-</com.xtelsolution.xmec.xmec.views.widget.CarouselLinearLayout>
+</com.xtelsolution.xmec.views.widget.CarouselLinearLayout>

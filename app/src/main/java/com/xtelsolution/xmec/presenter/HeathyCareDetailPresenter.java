@@ -1,10 +1,6 @@
 package com.xtelsolution.xmec.presenter;
 
-import android.widget.Toast;
-
-import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
-import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtelsolution.xmec.callbacks.HtmlLoader;
 import com.xtelsolution.xmec.common.Constant;
@@ -12,7 +8,7 @@ import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
 import com.xtelsolution.xmec.model.HealthyCareModel;
 import com.xtelsolution.xmec.model.RESP_Healthy_Care_Detail;
-import com.xtelsolution.xmec.xmec.views.inf.IHeathyCareDetailView;
+import com.xtelsolution.xmec.views.inf.IHeathyCareDetailView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

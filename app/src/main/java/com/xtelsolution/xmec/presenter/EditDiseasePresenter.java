@@ -13,7 +13,7 @@ import com.xtelsolution.xmec.model.REQ_Add_Medicine;
 import com.xtelsolution.xmec.model.REQ_Edit_Disease;
 import com.xtelsolution.xmec.model.RESP_ID;
 import com.xtelsolution.xmec.model.RESP_User_Medicine;
-import com.xtelsolution.xmec.xmec.views.inf.IEditDiseaseView;
+import com.xtelsolution.xmec.views.inf.IEditDiseaseView;
 
 /**
  * Created by phimau on 4/4/2017.

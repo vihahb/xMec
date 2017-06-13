@@ -8,12 +8,9 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.listener.OnNewsFeedLoadedListener;
 import com.xtelsolution.xmec.model.DiseaseModel;
-import com.xtelsolution.xmec.model.MedicineModel;
 import com.xtelsolution.xmec.model.RESP_List_Disease;
-import com.xtelsolution.xmec.model.RESP_List_Medicine_Compact;
-import com.xtelsolution.xmec.model.entity.Disease;
 import com.xtelsolution.xmec.model.entity.NewsFeed;
-import com.xtelsolution.xmec.xmec.views.inf.ISearchNewsView;
+import com.xtelsolution.xmec.views.inf.ISearchNewsView;
 
 import java.util.ArrayList;
 

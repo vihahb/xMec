@@ -2,7 +2,7 @@ package com.xtelsolution.xmec.presenter;
 
 import com.xtelsolution.xmec.callbacks.HtmlLoader;
 import com.xtelsolution.xmec.listener.LoadHtmlDetailListener;
-import com.xtelsolution.xmec.xmec.views.inf.IIllnessDetailview;
+import com.xtelsolution.xmec.views.inf.IIllnessDetailview;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
