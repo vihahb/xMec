@@ -251,28 +251,10 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         super.onSaveInstanceState(outState);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_main, menu);
-//        if (callbackManager.getCurrentSession() == null) {
-//            menu.getItem(0).setIcon(R.drawable.ic_action_login);
-//            menu.getItem(0).setTitle(R.string.login);
-//        } else {
-//            menu.getItem(0).setIcon(R.drawable.ic_action_logout);
-//            menu.getItem(0).setTitle(R.string.logout);
-//        }
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-//                if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null)
-//                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
-
-                break;
             case R.id.action_settings:
                 return true;
             case R.id.action_login_logout:
@@ -297,7 +279,6 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
             default:
                 return super.onOptionsItemSelected(item);
         }
-        return true;
     }
 
 
@@ -358,10 +339,6 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         startActivity(i);
     }
 
-    //    public IMapView get() {
-//        return this;
-//    }
-//
 //    //Version 1.2
     private void initView() {
         addFragment(HomeFragment.newInstance());
