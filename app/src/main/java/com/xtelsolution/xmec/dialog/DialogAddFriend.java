@@ -12,17 +12,32 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.dd.processbutton.iml.ActionProcessButton;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
+import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.callback.ResponseHandle;
+import com.xtel.nipservicesdk.commons.Cts;
+import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.model.entity.RESP_Basic;
+import com.xtel.nipservicesdk.model.entity.RESP_None;
+import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.model.RESP_User;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 /**
  * Created by Admin on 5/31/2017.
  */
 
-public class DialogUtil {
-    public static Dialog DiaLodAddFriend(Context context) {
+public class DialogAddFriend {
+    static String TAG = "DialogAddFriend";
+
+    public static Dialog DiaLodAddFriend(final Context context) {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_add_friend);
@@ -58,26 +73,29 @@ public class DialogUtil {
             public void onClick(View v) {
                 Log.e("onClick: ", btnSend.getText().toString());
                 btnSend.setEnabled(false);
+                numberPhone.setEnabled(false);
                 btnSend.setProgress(50);
-                searchUser(numberPhone.getText().toString(), new SearchUserListener() {
+                searchUser(context, numberPhone.getText().toString(), new ResponseHandle<RESP_User>(RESP_User.class) {
                     @Override
-                    public void success(RESP_User user) {
+                    public void onSuccess(RESP_User obj) {
                         btnSend.setEnabled(true);
-                        numberPhone.setEnabled(false);
+                        numberPhone.setEnabled(true);
                         btnSend.setProgress(100);
                         btnSend.setText(R.string.add_user);
                         layoutSearch.setVisibility(View.GONE);
                         layoutUser.setVisibility(View.VISIBLE);
+                        Log.e(TAG, "onSuccess: " + obj);
                     }
 
                     @Override
-                    public void error() {
+                    public void onError(Error error) {
                         btnSend.setProgress(-1);
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 btnSend.setProgress(0);
                                 btnSend.setEnabled(true);
+                                numberPhone.setEnabled(true);
                             }
                         }, 1000);
                         btnSend.setEnabled(true);
@@ -98,23 +116,30 @@ public class DialogUtil {
         return dialog;
     }
 
-    interface SearchUserListener {
-        void success(RESP_User user);
 
-        void error();
-    }
+    private static void searchUser(Context context, String phone, final ResponseHandle<RESP_User> listener) {
 
-    private static void searchUser(String phone, final SearchUserListener listener) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (Calendar.getInstance().getTimeInMillis() % 2 == 0) {
-                    listener.success(null);
-                } else {
-                    listener.error();
-                }
-            }
-        }, 2000);
+        Log.e(TAG, "searchUser: " + Constant.SEARCH_FRIEND + phone);
+        Log.e(TAG, "searchUser: " + LoginManager.getCurrentSession());
+
+        Ion.with(context).load(Constant.SEARCH_FRIEND + phone)
+                .setHeader(Cts.SESSION, LoginManager.getCurrentSession())
+                .asJsonObject().withResponse()
+                .setCallback(new FutureCallback<Response<JsonObject>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonObject> result) {
+                        if (e == null) {
+                            if (result.getResult() != null) {
+                                Log.e(TAG, "onCompleted: " + result.getResult().toString());
+                                listener.onSuccess(result.getResult().toString());
+                            } else {
+                                listener.onError(new Error(101, null, null));
+                            }
+                        } else {
+                            listener.onError(new Error(101, null, null));
+                        }
+                    }
+                });
     }
 
 }

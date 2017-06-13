@@ -8,7 +8,7 @@ import java.util.List;
  * Created by phimau on 3/21/2017.
  */
 
-public interface ISearchMedicineView extends BaseView{
+public interface ISearchMedicineView extends BaseView {
     void onFindMedicienFinish(List<Medicine> data);
 
     void onError();

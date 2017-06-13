@@ -14,4 +14,5 @@ public interface IMedicalDetailView extends BaseView {
     void onLoadListIllnessFinish(List<RESP_Disease> data);
     void onUpdateMedicalFinish();
     void onRemoveMedicalSuccess();
+
 }

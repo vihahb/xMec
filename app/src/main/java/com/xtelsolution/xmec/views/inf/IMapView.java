@@ -1,6 +1,10 @@
 package com.xtelsolution.xmec.views.inf;
 
+<<<<<<< HEAD
 import android.app.Fragment;
+=======
+import android.support.v4.app.Fragment;
+>>>>>>> origin/master
 
 import com.google.android.gms.maps.model.LatLng;
 import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
@@ -20,5 +24,5 @@ public interface IMapView extends BaseView {
     void onPermissionDenied();
     void onPermissionGranted();
     void onGPSDisabled();
-    android.support.v4.app.Fragment getFragmentView();
+
 }

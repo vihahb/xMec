@@ -267,7 +267,6 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
     }
 
 
-
     private void showDatePicker() {
         datePicker.show(getSupportFragmentManager(), "datepicker");
     }
@@ -323,8 +322,8 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
 
     private void updateProfile() {
         String name = etName.getText().toString();
-        double height = Double.valueOf(etHeight.getText().toString());
-        double weight = Double.valueOf(etWeight.getText().toString());
+        double height = Double.valueOf(etHeight.getText().toString().replace(",", "."));
+        double weight = Double.valueOf(etWeight.getText().toString().replace(",", "."));
         long birthday = datePicker.getTimeinMilisecond();
         if (birthday == 0) {
             birthday = SharedPreferencesUtils.getInstance().getLongValue(Constant.USER_BIRTHDAY);

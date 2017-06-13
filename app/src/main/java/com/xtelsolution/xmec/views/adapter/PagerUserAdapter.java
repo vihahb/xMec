@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.model.RESP_User;
@@ -32,6 +31,7 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
     IImageLoader imageLoader;
     private final int TYPE_ITEM = 0;
     private ItemUpDateClickListener itemUpDateClickListener;
+    private ItemAddClickListener itemAddClickListener;
 
     public PagerUserAdapter(Context mContext, List<RESP_User> data) {
         this.mContext = mContext;
@@ -41,6 +41,10 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
 
     public void setItemUpDateClickListener(ItemUpDateClickListener itemUpDateClickListener) {
         this.itemUpDateClickListener = itemUpDateClickListener;
+    }
+
+    public void setItemAddClickListener(ItemAddClickListener itemAddClickListener) {
+        this.itemAddClickListener = itemAddClickListener;
     }
 
     @Override
@@ -65,7 +69,9 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
             addUserViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "add thành viên", Toast.LENGTH_LONG).show();
+                    if (itemAddClickListener != null) {
+                        itemAddClickListener.onClick();
+                    }
                 }
             });
         }
@@ -188,5 +194,9 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
 
     public interface ItemUpDateClickListener {
         void onClick(int position, RESP_User user);
+    }
+
+    public interface ItemAddClickListener {
+        void onClick();
     }
 }

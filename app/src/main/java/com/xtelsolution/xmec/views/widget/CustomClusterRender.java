@@ -71,7 +71,7 @@ public class CustomClusterRender<T extends ClusterItem> extends DefaultClusterRe
         return bhalfsize;
     }
 
-    //    public int getScreenSize() {
+//    public int getScreenSize() {
 //        int screenSize = context.getResources().getConfiguration().screenLayout &
 //                Configuration.SCREENLAYOUT_SIZE_MASK;
 //        xLog.e("SCREEN SIZE",screenSize+"   :");
