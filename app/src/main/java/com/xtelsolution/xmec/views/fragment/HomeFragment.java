@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.dialog.DialogUtil;
+import com.xtelsolution.xmec.dialog.DialogAddFriend;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_List_Medical;
 import com.xtelsolution.xmec.model.RESP_Medical;
@@ -141,7 +141,7 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
                 if (!isLogin())
                     showLoginDialog();
                 else {
-                    DialogUtil.DiaLodAddFriend(mContext).show();
+                    DialogAddFriend.DiaLodAddFriend(mContext).show();
                 }
             }
         });

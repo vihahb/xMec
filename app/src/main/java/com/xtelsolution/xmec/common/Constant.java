@@ -69,6 +69,12 @@ public class Constant {
     public static final String MEDICAL_NOTE = "note";
     public static final String MEDICAL_RESOURCES = "resources";
 
+    //    public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";
+    public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";
+    //    public static final String SERVICE_CODE = "http://192.168.22.112:8010/v0.1/";
+    public static final String LOCAL_SECCION = "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR";
+    public static final String GET_MEDIACAL_REPORT_BOOK = "user/medical-report-book?page=1&pagesize=30";
+
 
     public static final String SERVER_AUTHEN = "http://124.158.5.112:9180/nipum/";
     public static final String GET_USER = "user";
@@ -88,6 +94,7 @@ public class Constant {
     public static final String UPDATE_DISEASE = "user/update-disease";
     public static final String REMOVE_MEDICINE = "user/medical-report-book/disease/drug/";
     public static final String REMOVE_DISEASE = "user/remove-disease/";
+    public static final String SEARCH_FRIEND = SERVER_XMEC + "friend/search?phone=";
     public static Boolean iGetNewSession = false;
 
     public static int EDIT_USER_DISEASE = 92;
@@ -100,12 +107,6 @@ public class Constant {
 
     public static final String ILLNESS_URL = "illness_url";
     public static final String DISEASE_URL = "disease_url";
-
-    //    public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";
-    public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";
-    //    public static final String SERVICE_CODE = "http://192.168.22.112:8010/v0.1/";
-    public static final String LOCAL_SECCION = "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR";
-    public static final String GET_MEDIACAL_REPORT_BOOK = "user/medical-report-book?page=1&pagesize=30";
 
 
     public static String getDate(long times) {
