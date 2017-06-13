@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.views.inf.ScreenShotable;
 
 //import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
@@ -20,8 +21,10 @@ import com.xtelsolution.xmec.R;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class NewsFeedFragment extends Fragment /*implements ScreenShotable*/ {
-
+public class NewsFeedFragment extends Fragment implements ScreenShotable {
+    private View view;
+    private View containerView;
+    private Bitmap bitmap;
     public static NewsFeedFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -61,6 +64,33 @@ public class NewsFeedFragment extends Fragment /*implements ScreenShotable*/ {
         mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void takeScreenShot() {
+//        try {
+//            Thread thread = new Thread() {
+//                @Override
+//                public void run() {
+//                    if (containerView == null) {
+//                        containerView = view.findViewById(R.id.container);
+//                    }
+//                    Bitmap bitmap = Bitmap.createBitmap(containerView.getWidth(),
+//                            containerView.getHeight(), Bitmap.Config.ARGB_8888);
+//                    Canvas canvas = new Canvas(bitmap);
+//                    containerView.draw(canvas);
+//                    HomeFragment.this.bitmap = bitmap;
+//                }
+//            };
+//
+//            thread.start();
+//        } catch (Exception e) {
+//            Log.e(TAG, "takeScreenShot: ", new Throwable(e));
+//        }
+    }
+
+    @Override
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -75,25 +105,27 @@ public class NewsFeedFragment extends Fragment /*implements ScreenShotable*/ {
 
             switch (position) {
                 case 0:
-                    return NewsFragment.newInstance("http://songkhoe.vn/widget.rss", "Nổi bật");
+                    return NewsFragment.newInstance("http://suckhoe.vn/dinh-duong/1", "Dinh dưỡng");
                 case 1:
-                    return NewsFragment.newInstance("http://songkhoe.vn/tam-su.rss", "Tâm sự");
+                    return NewsFragment.newInstance("http://suckhoe.vn/loi-song/1", "Lối sống");
                 case 2:
-                    return NewsFragment.newInstance("http://songkhoe.vn/gioi-tinh.rss", "Giới tính");
+                    return NewsFragment.newInstance("http://suckhoe.vn/lam-dep/1", "Làm đẹp");
                 case 3:
-                    return NewsFragment.newInstance("http://songkhoe.vn/dinh-duong.rss", "Dinh dưỡng");
+                    return NewsFragment.newInstance("http://suckhoe.vn/cac-benh/1", "Các bệnh");
                 case 4:
-                    return NewsFragment.newInstance("http://songkhoe.vn/thoi-su.rss", "Thời sự");
+                    return NewsFragment.newInstance("http://suckhoe.vn/thuoc/1", "Thuốc");
                 case 5:
-                    return NewsFragment.newInstance("http://songkhoe.vn/lam-dep.rss", "Làm đẹp");
+                    return NewsFragment.newInstance("http://suckhoe.vn/gioi-tinh/1", "Giới tính");
                 case 6:
-                    return NewsFragment.newInstance("http://songkhoe.vn/lam-me.rss", "Làm mẹ");
+                    return NewsFragment.newInstance("http://suckhoe.vn/me-be/1", "Mẹ & Bé");
                 case 7:
-                    return NewsFragment.newInstance("http://songkhoe.vn/vui-khoe.rss", "Vui khỏe");
+                    return NewsFragment.newInstance("http://suckhoe.vn/trac-nghiem/1", "Trắc nghiệm");
                 case 8:
-                    return NewsFragment.newInstance("http://songkhoe.vn/can-biet.rss", "Cần biết");
+                    return NewsFragment.newInstance("http://suckhoe.vn/hoi-dap/1", "Hỏi đáp");
                 case 9:
-                    return NewsFragment.newInstance("http://songkhoe.vn/video.rss", "Video");
+                    return NewsFragment.newInstance("http://suckhoe.vn/meo-vat/1", "Mẹo vặt");
+                case 10:
+                    return NewsFragment.newInstance("http://suckhoe.vn/giai-tri/1", "Giải trí");
             }
 
             return NewsFragment.newInstance("", "");
@@ -102,32 +134,34 @@ public class NewsFeedFragment extends Fragment /*implements ScreenShotable*/ {
         @Override
         public int getCount() {
             // Show 9 total pages.
-            return 10;
+            return 11;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Nổi bật";
-                case 1:
-                    return "Tâm sự";
-                case 2:
-                    return "Giới tính";
-                case 3:
                     return "Dinh dưỡng";
-                case 4:
-                    return "Thời sự";
-                case 5:
+                case 1:
+                    return "Lối sống";
+                case 2:
                     return "Làm đẹp";
+                case 3:
+                    return "Các bệnh";
+                case 4:
+                    return "Thuốc";
+                case 5:
+                    return "Giới tính";
                 case 6:
-                    return "Làm mẹ";
+                    return "Mẹ & Bé";
                 case 7:
-                    return "Vui khỏe";
+                    return "Trắc nghiệm";
                 case 8:
-                    return "Cần biết";
+                    return "Hỏi đáp";
                 case 9:
-                    return "Video";
+                    return "Mẹo vặt";
+                case 10:
+                    return "Giải trí";
             }
             return null;
         }

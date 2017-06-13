@@ -10,9 +10,9 @@ public class Article {
     private NewsFeed newsFeed;
     private int type;
     private String type_name;
-    private int total_like;
-    private int total_view;
-    private int total_comment;
+    private String total_like;
+    private String total_view;
+    private String total_comment;
 
 
     public static final int TYPE_VIDEO = 1;
@@ -20,7 +20,7 @@ public class Article {
     public Article() {
     }
 
-    public Article(int id, NewsAuthor author, NewsFeed newsFeed, int type, String type_name, int total_like, int total_view, int total_comment) {
+    public Article(int id, NewsAuthor author, NewsFeed newsFeed, int type, String type_name, String total_like, String total_view, String total_comment) {
         this.id = id;
         this.author = author;
         this.newsFeed = newsFeed;
@@ -71,27 +71,27 @@ public class Article {
         this.type_name = type_name;
     }
 
-    public int getTotal_like() {
+    public String getTotal_like() {
         return total_like;
     }
 
-    public void setTotal_like(int total_like) {
+    public void setTotal_like(String total_like) {
         this.total_like = total_like;
     }
 
-    public int getTotal_view() {
+    public String getTotal_view() {
         return total_view;
     }
 
-    public void setTotal_view(int total_view) {
+    public void setTotal_view(String total_view) {
         this.total_view = total_view;
     }
 
-    public int getTotal_comment() {
+    public String getTotal_comment() {
         return total_comment;
     }
 
-    public void setTotal_comment(int total_comment) {
+    public void setTotal_comment(String total_comment) {
         this.total_comment = total_comment;
     }
 }

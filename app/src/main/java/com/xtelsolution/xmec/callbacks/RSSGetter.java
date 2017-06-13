@@ -1,7 +1,6 @@
 package com.xtelsolution.xmec.callbacks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.entity.NewsFeed;
@@ -63,7 +62,6 @@ public class RSSGetter extends AsyncTask<String, Integer, ArrayList<NewsFeed>> {
 
     private ArrayList<NewsFeed> loadUrl(String url) {
         try {
-            Log.e(TAG, "loadUrl: " + url);
             OkHttpClient client = new OkHttpClient();
             Request.Builder builder = new Request.Builder();
             builder.url(url);

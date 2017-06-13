@@ -20,7 +20,7 @@ public class NewsAdapter extends RecyclerView.Adapter {
     public static final String TAG_NEWS_URL = "news_url";
     private Context mContext;
     private ArrayList<NewsFeed> data;
-//    private onItem
+    //    private onItem
     public NewsAdapter(Context mContext,ArrayList<NewsFeed> data) {
         this.mContext = mContext;
         this.data =data;
@@ -37,7 +37,7 @@ public class NewsAdapter extends RecyclerView.Adapter {
         if (holder instanceof NewsViewHolder) {
             ((NewsViewHolder) holder).tvNewsTitle.setText(data.get(position).getTitle());
             ((NewsViewHolder) holder).tvNewsPubTime.setText(data.get(position).getPubDate());
-           Picasso.with(mContext).load(data.get(position).getDescription()).into((((NewsViewHolder) holder).imgNewsPhoto));
+            Picasso.with(mContext).load(data.get(position).getDescription()).into((((NewsViewHolder) holder).imgNewsPhoto));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -80,6 +80,7 @@
                     android:id="@+id/tvNewsPubTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     android:text="1 phút trước" />
 
             </LinearLayout>
@@ -146,8 +147,7 @@ sử đụng khi cần! "
                 android:paddingEnd="@dimen/dimen_16"
                 android:paddingLeft="@dimen/dimen_16"
                 android:paddingRight="@dimen/dimen_16"
-                android:paddingStart="@dimen/dimen_16"
-                android:visibility="gone">
+                android:paddingStart="@dimen/dimen_16">
 
                 <LinearLayout
                     android:layout_width="match_parent"

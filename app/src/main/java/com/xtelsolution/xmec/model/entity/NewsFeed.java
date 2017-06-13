@@ -20,7 +20,7 @@ public class NewsFeed {
     private String description;
     private String pubDate;
 
-    private NewsFeed(String title, String link, String description, String pubDate) {
+    public NewsFeed(String title, String link, String description, String pubDate) {
         this.title = title;
         this.link = link;
         this.description = description;

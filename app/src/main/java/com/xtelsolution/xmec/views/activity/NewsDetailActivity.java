@@ -29,7 +29,8 @@ public class NewsDetailActivity extends BasicActivity implements HtmlDetailView 
         String url = getIntent().getExtras().getString(TAG_NEWS_URL);
         init();
         initWebView();
-        presenter.loadNews(url);
+        //presenter.loadNews(url);
+        presenter.loadNewsHTML(url);
     }
 
     private void init() {

@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.xtelsolution.xmec.R;
-import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.listener.RecyclerOnScrollListener;
+import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.presenter.NewsFeedPresenter;
 import com.xtelsolution.xmec.views.adapter.NewsFeedAdapter;
 import com.xtelsolution.xmec.views.inf.INewsFeedView;
@@ -55,6 +55,7 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
         Bundle bundle = this.getArguments();
         rss_url = bundle.getString(RSS_URL);
         typeName = bundle.getString(TYPE_NAME);
+
         presenter = new NewsFeedPresenter(this);
 
         mContext = getContext();
@@ -84,13 +85,10 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
     }
 
     private void initUI(View view) {
-
         recyclerView = (SuperRecyclerView) view.findViewById(R.id.rvNewsFeed);
-
-
         manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-
         recyclerView.setLayoutManager(manager);
+
 //        RecyclerViewMarginVertical decoration = new RecyclerViewMarginVertical((int) (getContext().getResources().getDisplayMetrics().density * 8f + 0.5f));
 //        recyclerView.addItemDecoration(decoration);
         recyclerView.setRefreshing(true);
@@ -137,7 +135,7 @@ public class NewsFragment extends BasicFragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        presenter.loadNewsFeed(rss_url);
+        presenter.loadNewsFeed_html(rss_url);
         recyclerView.setRefreshing(true);
     }
 

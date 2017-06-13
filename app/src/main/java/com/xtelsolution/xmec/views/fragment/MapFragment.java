@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -45,6 +44,8 @@ import com.xtelsolution.xmec.views.widget.CustomClusterRender;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.annotation.Nullable;
 
 //import yalantis.com.sidemenu.interfaces.ScreenShotable;
 

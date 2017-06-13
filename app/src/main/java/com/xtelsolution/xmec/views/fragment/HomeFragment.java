@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
-import com.xtelsolution.xmec.dialog.DialogUtil;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
 import com.xtelsolution.xmec.model.RESP_List_Medical;
 import com.xtelsolution.xmec.model.RESP_Medical;
@@ -134,17 +133,17 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
                     startActivityForResult(new Intent(mContext, ProfileActivity.class), Constant.UPDATE_PROFILE);
             }
         });
-
-        userAdapter.setItemAddClickListener(new PagerUserAdapter.ItemAddClickListener() {
-            @Override
-            public void onClick() {
-                if (!isLogin())
-                    showLoginDialog();
-                else {
-                    DialogUtil.DiaLodAddFriend(mContext).show();
-                }
-            }
-        });
+//
+//        userAdapter.setItemAddClickListener(new PagerUserAdapter.ItemAddClickListener() {
+//            @Override
+//            public void onClick() {
+//                if (!isLogin())
+//                    showLoginDialog();
+//                else {
+//                    DialogUtil.DiaLodAddFriend(mContext).show();
+//                }
+//            }
+//        });
 
         pagerUser.addScrollStateChangeListener(new DiscreteScrollView.ScrollStateChangeListener<RecyclerView.ViewHolder>() {
             @Override

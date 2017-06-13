@@ -44,9 +44,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
             viewHolder.tvNewsFeedTitle.setText(article.getNewsFeed().getTitle());
             viewHolder.tvTypename.setText(article.getType_name());
             viewHolder.tvNewsPubTime.setText(article.getNewsFeed().getPubDate());
-            viewHolder.tvViews.setText(String.format(mContext.getResources().getString(R.string.total_view), article.getTotal_view()));
-            viewHolder.tvLikes.setText(String.format(mContext.getResources().getString(R.string.total_like), article.getTotal_like()));
-            viewHolder.tvComments.setText(String.format(mContext.getResources().getString(R.string.total_comment), article.getTotal_comment()));
+            viewHolder.tvViews.setText(article.getTotal_view());
+            viewHolder.tvLikes.setText(article.getTotal_like());
+            viewHolder.tvComments.setText(article.getTotal_comment());
             Picasso.with(mContext).load(article.getNewsFeed().getDescription()).into((viewHolder).imgNewsPhoto);
             if (data.get(position).getType() == Article.TYPE_VIDEO)
                 (viewHolder).imgPlayIcon.setVisibility(View.VISIBLE);
