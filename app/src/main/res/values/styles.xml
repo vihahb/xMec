@@ -40,6 +40,8 @@
     </style>
 
     <style name="HomeActivityTheme" parent="NoACtionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!--<item name="android:windowBackground">@drawable/bg_home_activity</item>-->
     </style>
 

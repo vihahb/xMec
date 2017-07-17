@@ -15,7 +15,8 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dimen_8"
         android:background="@drawable/bg_shape_radius_white"
-        android:elevation="@dimen/dimen_6">
+        android:elevation="@dimen/dimen_6"
+        tools:targetApi="lollipop">
 
             <WebView
                 android:id="@+id/webviewNews"

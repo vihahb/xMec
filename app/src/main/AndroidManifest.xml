@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -109,7 +110,6 @@
         <activity
             android:name=".views.activity.MedicalDetailActivity"
             android:theme="@style/HomeActivityTheme" />
-        tools:replace="android:theme" />
         <activity android:name=".views.activity.NewsDetailActivity" />
         <activity android:name=".views.activity.IllnessDetailActivity" />
         <activity
@@ -121,6 +121,7 @@
         <activity
             android:name=".views.activity.EditDiseaseActivity"
             android:theme="@style/HomeActivityTheme" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="7d2e9b9d775cb6a8ff1a6a09d8add33ded40b0ff" />
@@ -131,7 +132,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

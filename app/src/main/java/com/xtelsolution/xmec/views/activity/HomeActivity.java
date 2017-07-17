@@ -244,6 +244,7 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             transaction.commit();
         }
+
     }
 
     @Override
@@ -339,7 +340,7 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         startActivity(i);
     }
 
-//    //Version 1.2
+    //    //Version 1.2
     private void initView() {
         addFragment(HomeFragment.newInstance());
         tvtoolbarTitle.setText(getResources().getString(R.string.user_medical));

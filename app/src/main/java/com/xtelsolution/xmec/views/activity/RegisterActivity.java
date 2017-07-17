@@ -88,13 +88,15 @@ public class RegisterActivity extends BasicActivity {
         final String phone = etPhone.getText().toString();
         String password = etPassword.getText().toString();
         String rePassword = etRePassword.getText().toString();
-
         if (phone.length() < 9) {
             etPhone.setError("Số điện thoại không khả dụng");
+            etPhone.requestFocus();
         } else if (password.length() < 6) {
             etPassword.setError("Mật khẩu quá yếu");
+            etPassword.requestFocus();
         } else if (!password.equals(rePassword)) {
             etRePassword.setError("Mật khẩu chưa trùng khớp");
+            etRePassword.requestFocus();
         } else {
             btnCreateAccount.setProgress(50);
             setDisableView();
@@ -106,6 +108,7 @@ public class RegisterActivity extends BasicActivity {
                         @Override
                         public void run() {
                             activeAccount(phone);
+                            setEndableView();
                         }
                     }, 1500);
 
@@ -113,18 +116,9 @@ public class RegisterActivity extends BasicActivity {
 
                 @Override
                 public void onError(Error error) {
-
+                    showToast("Tài khoản đã tồn tại");
                     setEndableView();
-                    if (error.getCode() == 103) {
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                showToast("Tài khoản đã tồn tại");
-                                activeAccount(phone);
-                            }
-                        }, 1500);
-
-                    } else btnCreateAccount.setProgress(-1);
+                    btnCreateAccount.setProgress(-1);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
