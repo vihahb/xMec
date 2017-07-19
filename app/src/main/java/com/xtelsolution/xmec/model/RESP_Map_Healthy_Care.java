@@ -13,7 +13,7 @@ public class RESP_Map_Healthy_Care extends RESP_Basic {
     @Expose
     private String name;
     @Expose
-    private String address;
+        private String address;
     @Expose
     private double lat;
     @Expose
@@ -67,5 +67,10 @@ public class RESP_Map_Healthy_Care extends RESP_Basic {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

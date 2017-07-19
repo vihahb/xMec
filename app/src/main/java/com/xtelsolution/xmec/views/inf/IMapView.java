@@ -26,6 +26,8 @@ public interface IMapView extends BaseView {
 
     void onPermissionGranted();
 
+    void onAddHealThyCareSuccess(RESP_Map_Healthy_Care healthyCare,boolean isNew);
+
     void onGPSDisabled();
 
     Fragment getFragmentView();

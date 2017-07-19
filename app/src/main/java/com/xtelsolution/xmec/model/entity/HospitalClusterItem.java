@@ -1,6 +1,10 @@
 package com.xtelsolution.xmec.model.entity;
 
+import android.view.View;
+
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.ClusterItem;
 
 /**
@@ -12,6 +16,8 @@ public class HospitalClusterItem implements ClusterItem {
     private String title;
     private int idHospital;
     private int type;
+    private String address;
+
     @Override
     public LatLng getPosition() {
         return latLng;
@@ -39,16 +45,33 @@ public class HospitalClusterItem implements ClusterItem {
         this.type = type;
     }
 
-    public HospitalClusterItem(LatLng latLng, String title, int idHospital) {
-        this.latLng = latLng;
-        this.title = title;
-        this.idHospital = idHospital;
+    public String getAddress() {
+        return address;
     }
 
-    public HospitalClusterItem(LatLng latLng, String title, int idHospital, int type) {
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+//    public HospitalClusterItem(LatLng latLng, String title, int idHospital, String address) {
+//        this.latLng = latLng;
+//        this.title = title;
+//        this.idHospital = idHospital;
+//        this.address = address;
+//    }
+
+    public HospitalClusterItem(LatLng latLng, String title, int idHospital, int type, String address) {
         this.latLng = latLng;
         this.title = title;
         this.idHospital = idHospital;
         this.type = type;
+        this.address = address;
     }
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        HospitalClusterItem clusterItem = (HospitalClusterItem) obj;
+//
+//        return clusterItem.getIdHospital()==this.idHospital;
+//    }
 }

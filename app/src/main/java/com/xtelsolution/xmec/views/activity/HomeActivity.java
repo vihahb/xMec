@@ -10,10 +10,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -40,24 +42,19 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         ItemClickListener, View.OnClickListener {
     private Toolbar toolbar;
     private FragmentManager fragmentManager;
-    //    private SlidingDrawer slidingDrawer;
-//    private RecyclerView rvHosiptalCenter;
-//    private HospitalCenterAdapter adapter;
     private String TAG = "HomeActivity";
-    //    private List<RESP_Map_Healthy_Care> mapHealthyCareList;
     private BroadcastReceiver receiver;
     private TextView tvtoolbarTitle, textMenuLogin;
     private ImageView icMenuLogin;
-    //    private Button btnAction;
-//    private ProgressBar loadding;
     private CallbackManager callbackManager;
-    //    private EditText edsearch;
     private boolean isOpenMenu = false;
-
+    private int curentTab = 1;
+    private boolean isShowingListType=false ;
     private FrameLayout root;
     private View contentHamburger;
     private View guillotineMenu;
     private LinearLayout itemYba, itemTinTuc, itemTimKiemBenh, itemTimKiemThuoc, itemTimKiemCoSoYte, itemLogIn;
+    private LinearLayout llMapToolbar;
     private GuillotineAnimation animation;
 
     private static final long RIPPLE_DURATION = 250;
@@ -68,39 +65,25 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         fragmentManager = getSupportFragmentManager();
-//        mapHealthyCareList = new ArrayList<>();
         init();
         initReceiver();
-
-
-//        rvHosiptalCenter.setAdapter(adapter);
-//        rvHosiptalCenter.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
 
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar_top);
         tvtoolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-//        textError = (TextView) findViewById(R.id.textError);
-//        btnAction = (Button) findViewById(R.id.btnAction);
-//        loadding = (ProgressBar) findViewById(R.id.progress_bar);
-//        Menu nav
-
-
-//        nav end
+        tvtoolbarTitle.setText(getString(R.string.user_medical));
         toolbar.setTitle("");
         initView();
         callbackManager = CallbackManager.create(this);
-//        rvHosiptalCenter = (RecyclerView) findViewById(R.id.rList);
-//        adapter = new HospitalCenterAdapter(getApplicationContext(), mapHealthyCareList);
-//        adapter.setItemClickListener(this);
-//        btnAction.setOnClickListener(this);
         initUiNav();
     }
 
     private void initUiNav() {
         root = (FrameLayout) findViewById(R.id.container_frame);
         contentHamburger = (View) findViewById(R.id.content_hamburger);
+        llMapToolbar = (LinearLayout) findViewById(R.id.toolbar_search);
         guillotineMenu = LayoutInflater.from(this).inflate(R.layout.navigation_layout, null);
         root.addView(guillotineMenu);
         View view = guillotineMenu.findViewById(R.id.guillotine_hamburger);
@@ -118,12 +101,14 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         itemLogIn = (LinearLayout) findViewById(R.id.itemLogIn);
         icMenuLogin = (ImageView) findViewById(R.id.icMenuLogin);
         textMenuLogin = (TextView) findViewById(R.id.textMenuLogin);
+
         itemYba.setOnClickListener(this);
         itemTinTuc.setOnClickListener(this);
         itemTimKiemBenh.setOnClickListener(this);
         itemTimKiemThuoc.setOnClickListener(this);
         itemTimKiemCoSoYte.setOnClickListener(this);
         itemLogIn.setOnClickListener(this);
+
         itemYba.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
         if (callbackManager.getCurrentSession() == null) {
             icMenuLogin.setImageResource(R.drawable.ic_action_login);
@@ -135,14 +120,8 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isOpenMenu) {
                 isOpenMenu = false;
                 animation.close();
-//                } else {
-////                    animation.open();
-//                    isOpenMenu = true;
-//
-//                }
                 Log.e(TAG, "clickOpenMenu: " + isOpenMenu);
             }
         });
@@ -175,26 +154,31 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
             cleanSelect();
             switch (position) {
                 case 1:
+                    dissisMapToolbar();
                     tvtoolbarTitle.setText(getString(R.string.title_menu_y_ba));
                     itemYba.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(HomeFragment.newInstance());
                     break;
                 case 2:
+                    dissisMapToolbar();
                     tvtoolbarTitle.setText(getString(R.string.title_menu_tin_tuc));
                     itemTinTuc.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(NewsFeedFragment.newInstance());
                     break;
                 case 3:
-                    tvtoolbarTitle.setText(getString(R.string.find_disease));
+                    dissisMapToolbar();
+                    tvtoolbarTitle.setText(getString(R.string.find_drug));
                     itemTimKiemBenh.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(MedicineFragment.newInstance());
                     break;
                 case 4:
-                    tvtoolbarTitle.setText(getString(R.string.find_drug));
+                    dissisMapToolbar();
+                    tvtoolbarTitle.setText(getString(R.string.find_disease));
                     itemTimKiemThuoc.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(SearchFragment.newInstance());
                     break;
                 case 5:
+                    showMapToolbar();
                     tvtoolbarTitle.setText(getString(R.string.title_tim_kiem_co_so_y_te));
                     itemTimKiemCoSoYte.setBackgroundColor(getResources().getColor(R.color.informationPrimary));
                     addFragment(MapFragment.newInstance());
@@ -221,6 +205,15 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         }
     }
 
+    private void dissisMapToolbar(){
+        tvtoolbarTitle.setVisibility(View.VISIBLE);
+        llMapToolbar.setVisibility(View.GONE);
+    }
+    private void showMapToolbar(){
+        tvtoolbarTitle.setVisibility(View.GONE);
+        llMapToolbar.setVisibility(View.VISIBLE);
+    }
+
     public void initReceiver() {
         receiver = new BroadcastReceiver() {
             @Override
@@ -234,7 +227,8 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         registerReceiver(receiver, filter);
     }
 
-    protected void addFragment(Fragment fragment) {
+    protected void
+    addFragment(Fragment fragment) {
         invalidateOptionsMenu();
         String backStackName = fragment.getClass().getName();
         boolean fragmentPopped = fragmentManager.popBackStackImmediate(backStackName, 0);
@@ -252,6 +246,36 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_find_health_cennter, menu);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+//        final MenuItem menuItem = menu.findItem(R.id.list);
+//        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                isShowingListType = !isShowingListType;
+//                menuItem.setIcon(getResources().getDrawable(getDrawable()));
+//                return false;
+//            }
+//        });
+        return true;
+    }
+
+    public int getDrawable() {
+        return (isShowingListType) ? R.mipmap.avatar : R.mipmap.family_logo;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -273,8 +297,6 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
                             startActivityAndFinish(LoginActivity.class);
                         }
                     }, 1000);
-
-
                 }
                 return true;
             default:
@@ -302,10 +324,8 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
             super.onBackPressed();
             return;
         }
-
         this.doubleBackToExitPressedOnce = true;
         showToast("Nhấn BACK 2 lần để thoát");
-
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -313,14 +333,12 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
-//        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
     }
 
 
@@ -347,97 +365,12 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
         setActionBar();
     }
 
-    //
-//
     private void setActionBar() {
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-
     }
-//
-//
-//    @Override
-//    public void onMapCreateSuccess() {
-//        sendBroadcast(new Intent(Constant.ACTION_LOCATION));
-//    }
-//
-//    @Override
-//    public void onProviderDisabled() {
-//        loadding.setVisibility(View.GONE);
-//        textError.setVisibility(View.VISIBLE);
-//        textError.setText(R.string.gps_permission);
-//        btnAction.setVisibility(View.VISIBLE);
-//        btnAction.setText(R.string.btn_open_gps);
-//    }
-//
-//    @Override
-//    public void onGetCurrentLocationFinish(LatLng latLng) {
-//
-//    }
-//
-//    @Override
-//    public void onGetListHealtyCareSuccess(List<RESP_Map_Healthy_Care> data) {
-//        adapter.addAll(data);
-//        if (adapter.getItemCount() > 0) {
-//            rvHosiptalCenter.setVisibility(View.VISIBLE);
-//            textError.setVisibility(View.GONE);
-//            loadding.setVisibility(View.GONE);
-//            btnAction.setVisibility(View.GONE);
-//        } else {
-//            loadding.setVisibility(View.GONE);
-//            textError.setVisibility(View.VISIBLE);
-//            textError.setText(R.string.emtry_list_new_feed);
-//            btnAction.setVisibility(View.VISIBLE);
-//            btnAction.setText(R.string.reload);
-//        }
-//    }
-//
-//    @Override
-//    public void onLocationChange(LatLng latLng) {
-//
-//    }
-//
-//    @Override
-//    public void onPermissionDenied() {
-//        loadding.setVisibility(View.GONE);
-//        textError.setVisibility(View.VISIBLE);
-//        textError.setText(R.string.location_permission);
-//        btnAction.setVisibility(View.VISIBLE);
-//        btnAction.setText(R.string.btn_location_permission);
-//    }
-//
-//    @Override
-//    public void onPermissionGranted() {
-//        loadding.setVisibility(View.VISIBLE);
-//        textError.setVisibility(View.GONE);
-//        btnAction.setVisibility(View.GONE);
-//        sendBroadcast(new Intent(Constant.ACTION_RELOA_DATA_MAP));
-//    }
-//
-//    @Override
-//    public void onGPSDisabled() {
-//        loadding.setVisibility(View.GONE);
-//        textError.setVisibility(View.VISIBLE);
-//        textError.setText(R.string.gps_permission);
-//        btnAction.setVisibility(View.VISIBLE);
-//        btnAction.setText(R.string.btn_open_gps);
-//    }
-//
-//    @Override
-//    public Fragment getFragmentView() {
-//        return null;
-//    }
 
     @Override
     public void onClick(View v) {
-//        if (btnAction.getText().equals(getString(R.string.btn_open_gps)))
-//            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 97);
-//        if (btnAction.getText().equals(getString(R.string.btn_location_permission)))
-//            sendBroadcast(new Intent(Constant.ACTION_PERMISSION_LOCATION));
-//        if (btnAction.getText().equals(getString(R.string.reload)))
-//            sendBroadcast(new Intent(Constant.ACTION_RELOA_DATA_MAP));
         switch (v.getId()) {
             case R.id.itemYba:
                 animation.close();
@@ -465,8 +398,6 @@ public class HomeActivity extends BasicActivity implements /*IMapView,*/
                 break;
         }
     }
-
-    int curentTab = 1;
 
 
 }

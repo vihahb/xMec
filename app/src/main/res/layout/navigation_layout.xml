@@ -45,14 +45,13 @@
     <LinearLayout
         android:id="@+id/itemTimKiemBenh"
         style="@style/LinearLayout.GuillotineItem">
-
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@mipmap/ic_menu_benh" />
+            android:src="@mipmap/ic_menu_thuoc" />
 
         <TextView
             style="@style/TextView.GuillotineItem"
-            android:text="@string/find_disease" />
+            android:text="@string/title_tim_kiem_thuoc" />
     </LinearLayout>
 
 
@@ -62,11 +61,11 @@
 
         <ImageView
             style="@style/ImageView.GuillotineItem"
-            android:src="@mipmap/ic_menu_thuoc" />
+            android:src="@mipmap/ic_menu_benh" />
 
         <TextView
             style="@style/TextView.GuillotineItem"
-            android:text="@string/title_tim_kiem_thuoc" />
+            android:text="@string/find_disease" />
     </LinearLayout>
 
     <LinearLayout

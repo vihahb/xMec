@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,6 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
     }
 
     @Nullable
@@ -49,6 +49,7 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
         if (mainView == null) {
             mainView = inflater.inflate(R.layout.fragment_news_feed, container, false);
         }
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         return mainView;
     }
 
@@ -91,7 +92,8 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
     public Bitmap getBitmap() {
         return bitmap;
     }
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -99,9 +101,6 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-
 
             switch (position) {
                 case 0:
@@ -127,8 +126,7 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
                 case 10:
                     return NewsFragment.newInstance("http://suckhoe.vn/giai-tri/1", "Giải trí");
             }
-
-            return NewsFragment.newInstance("", "");
+            return null;
         }
 
         @Override

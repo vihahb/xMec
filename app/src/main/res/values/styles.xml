@@ -25,6 +25,11 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="EditTextWhite" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/icons</item>
+        <item name="colorControlActivated">@color/icons</item>
+    </style>
+
     <style name="LoginButton" parent="Base.TextAppearance.AppCompat.Button">
         <item name="android:background">@drawable/backgroudbutton</item>
     </style>
@@ -159,6 +164,19 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Texview">
+       <item name="android:textSize">@dimen/dimen16sp</item>
+    </style>
+
+    <style name="Texview.Small">
+        <item name="android:textSize">@dimen/dimen13sp</item>
+    </style>
+
+    <style name="Texview.ColorAngent">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+
     <style name="RadioGroup">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">30dp</item>
@@ -241,6 +259,12 @@
         <!--@dimen/abc_action_bar_overflow_padding_start_material-->
         <!--</item>-->
     </style>
+
+    <style name="Edite">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
 
     <style name="ImageView.GuillotineItem">
         <item name="android:layout_width">wrap_content</item>

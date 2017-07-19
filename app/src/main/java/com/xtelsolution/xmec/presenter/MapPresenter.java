@@ -47,7 +47,7 @@ public class MapPresenter extends BasePresenter implements
     private double radius;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private HashMap<Integer, Boolean> listPos;
+    private HashMap<Integer, RESP_Map_Healthy_Care> listPos;
     private final int GETLOCATION = 1;
     private boolean isMapInit = false;
 
@@ -119,7 +119,7 @@ public class MapPresenter extends BasePresenter implements
                 List<RESP_Map_Healthy_Care> data = new ArrayList<>();
                 for (RESP_Map_Healthy_Care mapHealthyCare : result) {
                     if (listPos.get(mapHealthyCare.getId()) == null) {
-                        listPos.put(mapHealthyCare.getId(), true);
+                        listPos.put(mapHealthyCare.getId(), mapHealthyCare);
                         data.add(mapHealthyCare);
                     }
                 }
@@ -131,6 +131,17 @@ public class MapPresenter extends BasePresenter implements
                 handlerError(view, error, param);
             }
         });
+    }
+
+    public void addHealThyCare(RESP_Map_Healthy_Care healthyCare) {
+        RESP_Map_Healthy_Care mapHealthyCare = listPos.get(healthyCare.getId());
+        boolean isNew=false;
+        if (mapHealthyCare == null) {
+            listPos.put(healthyCare.getId(), healthyCare);
+            isNew=true;
+            mapHealthyCare=healthyCare;
+        }
+        view.onAddHealThyCareSuccess(mapHealthyCare,isNew);
     }
 
     public void checkGetHospital(double lat, double lng) {

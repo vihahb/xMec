@@ -40,10 +40,9 @@ import java.util.ArrayList;
  * Created by HUNGNT on 1/18/2017.
  */
 
-public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ IHomeView,
-        ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
-    private static final String TAG = "HomeFragment";
+public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ IHomeView, ItemClickListener, ItemClickListener.ButtonAdapterClickListener {
 
+    private static final String TAG = "HomeFragment";
 
     public static HomeFragment newInstance() {
 
@@ -60,19 +59,10 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
     private DiscreteScrollView pagerUser;
     private PagerUserAdapter userAdapter;
     private ProgressBar loadingProgress;
-    //    private ImageView imgAvatar;
-//    private TextView btnProfile;
-//    private TextView tvName;
-//    private TextView tvBirthday;
-//    private TextView tvHeight;
-//    private TextView tvWeight;
-//    private TextView tvIBM;
     private HomePresenter presenter;
     private Context mContext;
     private ArrayList<RESP_Medical> mlistMedica;
     private ArrayList<RESP_User> mlistUsers;
-//    private ImageView imgGender;
-//    private CoordinatorLayout progcess;
 
 
     @Override
@@ -115,16 +105,15 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
         rvDisease.setLayoutManager(manager);
         rvDisease.setNestedScrollingEnabled(false);
         rvDisease.setAdapter(adapter);
-
-
         final NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
-
-
         scrollView.scrollTo(0, 0);
-
         pagerUser.setNestedScrollingEnabled(false);
         pagerUser.setAdapter(userAdapter);
 
+
+    }
+
+    private void initControl() {
         userAdapter.setItemUpDateClickListener(new PagerUserAdapter.ItemUpDateClickListener() {
             @Override
             public void onClick(int position, RESP_User user) {
@@ -166,20 +155,6 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
 
             }
         });
-    }
-
-    private void initControl() {
-//        btnProfile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                startActivity(new Intent(mContext, ProfileActivity.class));
-//                if (!isLogin())
-//                    showLoginDialog();
-//                else
-//                    startActivityForResult(new Intent(mContext, ProfileActivity.class), Constant.UPDATE_PROFILE);
-////                getActivity().finish();
-//            }
-//        });
     }
 
     @Override
@@ -239,23 +214,7 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
                 adapter.updateItem(data.getStringExtra(Constant.MEDICAL_NAME), data.getLongExtra(Constant.MEDICAL_BEGIN_TIME, -1), data.getIntExtra(Constant.MEDICAL_INDEX, -1));
             }
         } else if (requestCode == Constant.UPDATE_PROFILE) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                RESP_User user = SharedPreferencesUtils.getInstance().getUser();
-//                tvName.setText(user.getFullname());
-//                tvBirthday.setText(user.getBirthDayasString());
-//                tvHeight.setText(String.valueOf(user.getHeight()));
-//                tvWeight.setText(String.valueOf(user.getWeight()));
-//                setImage(imgAvatar, user.getAvatar());
-//                if (user.getGender() == 2) {
-//                    imgGender.setImageResource(R.drawable.ic_action_name);
-//                    imgGender.setVisibility(View.VISIBLE);
-//                } else if (user.getGender() == 1) {
-//                    imgGender.setImageResource(R.drawable.ic_man);
-//                    imgGender.setVisibility(View.VISIBLE);
-//                } else {
-//                    imgGender.setVisibility(View.GONE);
-//                }
-//            }
+
         }
     }
 
@@ -269,5 +228,4 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
             showLoginDialog();
         }
     }
-
 }

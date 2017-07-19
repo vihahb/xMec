@@ -83,6 +83,7 @@ public class Constant {
     public static final String ILLNESS = "user/medical-report-book/disease";
     public static final String HEALTHY_CENTER = "user/detail-hospital";
     public static final String HEALTHY_CENTER_AROUND = "user/hospitals-around";
+    public static final String HEALTHY_CENTER_HOME = "hospital/";
     public static final String Disease = "user/disease";
     public static final String DISEASE = "user/medical-report-book/disease";
     public static final String DETAIL_DISEASE = "user/detail-user-disease?id=";

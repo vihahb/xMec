@@ -53,5 +53,4 @@ public class DelayAutoCompleteTextView extends android.support.v7.widget.AppComp
         }
         super.onFilterComplete(count);
     }
-
 }

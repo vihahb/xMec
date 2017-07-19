@@ -14,6 +14,7 @@
     <color name="textHint">#a9b7cf</color>
     <color name="default_background">#f1f9ff</color>
     <color name="colorControlNormal">#fff</color>
+    <color name="white_50">#BFffffff</color>
     <color name="fistText">#616161</color>
     <color name="tim">#673AB7</color>
     <color name="selected_item_color">#673AB7</color>
