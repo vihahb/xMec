@@ -53,7 +53,7 @@ import java.util.Collections;
 public class LoginActivity extends BasicActivity {
     private static final String TAG = "LoginActivity";
     private ImageView imgLogo;
-    private TextView tvSignUp;
+    private TextView tvSignUp, tv_ForgotPassword;
     private EditText etPhone, etPassword;
     private ActionProcessButton btnLoginbyPhone;
     private Button btnLoginByFB;
@@ -62,6 +62,14 @@ public class LoginActivity extends BasicActivity {
     private Handler handler;
     private CallbackManager callbackManager;
     private com.facebook.CallbackManager fbCallbackManager;
+
+    public static boolean checkApiVersion() {
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            return true;
+        }
+        return false;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -80,6 +88,13 @@ public class LoginActivity extends BasicActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+        tv_ForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
             }
         });
         btnLoginbyPhone.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +118,7 @@ public class LoginActivity extends BasicActivity {
         AccountKit.initialize(getApplicationContext());
         imgLogo = (ImageView) findViewById(R.id.img_logo);
         tvSignUp = (TextView) findViewById(R.id.tv_sign_up);
+        tv_ForgotPassword = (TextView) findViewById(R.id.tv_forgot_pw);
         btnLoginbyPhone = (ActionProcessButton) findViewById(R.id.btnLogin);
         btnLoginByFB = (Button) findViewById(R.id.btnLoginByFB);
         box2 = (LinearLayout) findViewById(R.id.LoginBox2);
@@ -158,14 +174,6 @@ public class LoginActivity extends BasicActivity {
                         showLog(TAG, "initFacebookSdk: onError: " + exception.getMessage());
                     }
                 });
-    }
-
-    public static boolean checkApiVersion() {
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            return true;
-        }
-        return false;
     }
 
     public void animation() {

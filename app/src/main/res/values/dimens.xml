@@ -26,6 +26,7 @@
     <dimen name="dimen_1">1dp</dimen>
     <dimen name="dimen_2">2dp</dimen>
     <dimen name="dimen_3">3dp</dimen>
+    <dimen name="dimen_4">3dp</dimen>
     <dimen name="dimen_5">5dp</dimen>
     <dimen name="dimen_6">6dp</dimen>
     <dimen name="dimen_7">7dp</dimen>

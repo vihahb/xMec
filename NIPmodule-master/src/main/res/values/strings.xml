@@ -26,4 +26,5 @@
     <string name="error_authentication_id_invalid">Mã xác thực đã hết hiệu lực</string>
     <string name="error_facebook_access_token_invalid">Mã truy cập Facebook đã hết hiệu lực</string>
     <string name="error_phone_number_wrong">Số điện thoại không đúng</string>
+    <string name="error_phone_number_null">Số điện thoại không được để trống</string>
 </resources>

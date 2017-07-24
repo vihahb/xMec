@@ -14,8 +14,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.location.gps" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- android:name="android.support.multidex.MultiDexApplication" -->
     <application
@@ -72,7 +72,6 @@
             android:theme="@style/HomeActivityTheme" />
         <activity android:name=".views.activity.DetailControlDiseaseActivity" />
         <activity android:name=".views.activity.DetailBodyPart" />
-
         <activity
             android:name=".views.activity.ProfileActivity"
             android:theme="@style/HomeActivityTheme"
@@ -121,10 +120,13 @@
         <activity
             android:name=".views.activity.EditDiseaseActivity"
             android:theme="@style/HomeActivityTheme" />
-
+        <activity
+            android:name=".views.activity.ResetPasswordActivity"
+            android:theme="@style/HomeActivityTheme" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="7d2e9b9d775cb6a8ff1a6a09d8add33ded40b0ff" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -134,6 +136,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
     </application>
 
 </manifest>

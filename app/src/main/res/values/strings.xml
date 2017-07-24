@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">xMec</string>
     <string name="create_account">Tạo tài khoản</string>
+    <string name="recovery_password">Khôi phục tài khoản</string>
     <string name="phone_number">Số điện thoại</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
     <string name="password">Mật khẩu</string>
+    <string name="new_password">Mật khẩu mới</string>
     <string name="re_password">Nhập lại mật khẩu</string>
+    <string name="re_new_password">Nhập lại mật khẩu mới</string>
     <string name="had_account"><u>Đã có tài khoản</u></string>
     <string name="forgot_pw"><u>Quên mật khẩu</u></string>
     <string name="sign_up"><u>Tạo tài khoản</u></string>
@@ -91,6 +94,7 @@
     <string name="control_disease_dieu_tri">Điều trị</string>
     <string name="emtry_list_new_feed">Không có bài viết nào</string>
     <string name="register_account">Đăng kí tài khoản</string>
+    <string name="recovery_account">Quên mật khẩu</string>
     <string name="update_process">Đang cập nhật</string>
     <string name="add_medical">Đang thêm y bạ</string>
     <string name="location_permission">Bạn cần cấp quyền truy cập vị trí để sử dụng tính năng này.</string>
@@ -140,6 +144,8 @@
     <string name="title_tim_kiem_co_so_y_te">Tìm kiếm cơ sở y tế</string>
     <string name="tim_kiem_co_so_y_te_hint">Nhập tên,địa chỉ ...</string>
     <string name="map_no_search_resutl">Không tìm thấy kết quả</string>
+    <string name="title_validate_phone">Xác thực</string>
+    <string name="title_change_phone">Đổi mật khẩu</string>
 
 
 </resources>
