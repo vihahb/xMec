@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "807176787482",
+    "firebase_url": "https://xmec-80ce6.firebaseio.com",
+    "project_id": "xmec-80ce6",
+    "storage_bucket": "xmec-80ce6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807176787482:android:6f68e5e9c50ee46d",
+        "android_client_info": {
+          "package_name": "com.xtelsolution.xmec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807176787482-24vkd1mco75hu1q1u9u6q1vjrg5nlred.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xtelsolution.xmec",
+            "certificate_hash": "64cba5a3261eccefd745f37bcfd4c33d3ed0e482"
+          }
+        },
+        {
+          "client_id": "807176787482-ol5ndbqnp57jfn49l000pp781ruo8ekg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFv8Dt8yAF03HGpJtWo-BnaV9Ob1co1lE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807176787482-ol5ndbqnp57jfn49l000pp781ruo8ekg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

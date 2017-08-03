@@ -1,2 +1,0 @@
-# NIPmodule
-NIP Service SDK
