@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_stt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:text="1"
+        android:textColor="@color/primaryText"
+        android:textSize="@dimen/dimen12sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgIllnessAva"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_virus" />
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center_vertical">-->
+
+    <TextView
+        android:id="@+id/tvIllnessName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toLeftOf="@+id/tv_time_stamp"
+        android:layout_toStartOf="@+id/tv_time_stamp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Tên bệnh số 1"
+        android:textColor="@color/title_item"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_time_stamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="24/01/2017"
+        android:textColor="@color/time"
+        android:textSize="13sp" />
+    <!--</RelativeLayout>-->
+
+</LinearLayout>

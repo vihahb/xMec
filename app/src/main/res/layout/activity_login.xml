@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xtelsolution.xmec.views.widget.KeyboardDetectorRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lg_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".views.activity.LoginActivity">
+
+    <ScrollView
+        android:id="@+id/LoginBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5">
+
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="98dp"
+                    android:layout_height="98dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/avatar" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_16"
+                android:layout_marginRight="@dimen/dimen_16"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etPhone"
+                    style="@style/EditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/phone_number"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+
+                    android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    style="@style/EditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:inputType="textPassword" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dimen_16"
+                    android:paddingRight="@dimen/dimen_16">
+
+
+                    <com.dd.processbutton.iml.ActionProcessButton
+                        android:id="@+id/btnLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="32dp"
+                        android:text="@string/login"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        custom:pb_colorComplete="@color/green_complete"
+                        custom:pb_colorNormal="@color/colorPrimary"
+                        custom:pb_colorPressed="@color/blue_pressed"
+                        custom:pb_colorProgress="@color/purple_progress"
+                        custom:pb_textComplete="Thành công"
+                        custom:pb_textError="Đăng nhập thất bại"
+                        custom:pb_textProgress="Đang đăng nhập" />
+
+                    <LinearLayout
+                        android:id="@+id/LoginBox2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@color/divider"></View>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="8dp"
+                                android:text="Hoặc" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@color/divider"></View>
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnLoginByFB"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@color/facebook"
+                            android:padding="8dp"
+                            android:text="@string/login_fb"
+                            android:textColor="@color/icons" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_size_16"
+                android:gravity="center"
+                android:padding="@dimen/dimen_4"
+                android:text="@string/sign_up" />
+
+            <TextView
+                android:id="@+id/tv_forgot_pw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/text_size_16"
+                android:gravity="center"
+                android:padding="@dimen/dimen_4"
+                android:text="@string/forgot_pw" />
+        </LinearLayout>
+
+    </ScrollView>
+</com.xtelsolution.xmec.views.widget.KeyboardDetectorRelativeLayout>

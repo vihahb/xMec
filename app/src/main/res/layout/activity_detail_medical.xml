@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_detail_medical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".views.activity.MedicalDetailActivity">
+
+    <include layout="@layout/toobar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_8"
+                android:background="@drawable/bg_shape_small_radius_white"
+                android:elevation="@dimen/dimen_6"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_8">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_98"
+                        android:layout_height="@dimen/dimen_98"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:src="@mipmap/ic_sym" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/dimen_5"
+                                    android:layout_marginTop="8dp"
+                                    android:text="Y bạ Vai"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="@dimen/dimen18sp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/dimen_5">
+
+                                    <TextView
+                                        android:id="@+id/textView3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Thời gian: "
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tv_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="27/8/2016 - 26/9/2017"
+                                        android:textSize="@dimen/dimen12sp"
+                                        android:textStyle="italic" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Ghi chú:    "
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tv_note"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="đay là ghi chú đây là gi chú ,chú đây là ghi chú"
+                                        android:textSize="@dimen/dimen12sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <android.support.design.widget.CoordinatorLayout
+                                android:id="@+id/progress_bar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/icons"
+                                android:orientation="vertical">
+
+                                <ProgressBar
+                                    android:layout_width="@dimen/dimen_32"
+                                    android:layout_height="@dimen/dimen_32"
+                                    android:layout_gravity="center_horizontal|center_vertical" />
+                            </android.support.design.widget.CoordinatorLayout>
+                        </FrameLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btn_update_medical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:clickable="true"
+                    android:padding="@dimen/dimen_8"
+                    android:text="@string/update_medical"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_healthy_recoder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_16" />
+
+            <TextView
+                style="@style/TextviewBlod"
+                android:layout_margin="@dimen/dimen_8"
+                android:layout_marginBottom="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:text="@string/list_illness"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcDisease"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dimen_8"
+                android:visibility="gone" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

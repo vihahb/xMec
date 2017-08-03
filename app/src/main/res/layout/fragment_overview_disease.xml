@@ -1,0 +1,159 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".views.fragment.OverviewDiseaseFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_shape_radius_white"
+        android:elevation="6dp"
+        android:fillViewport="true"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".views.fragment.OverviewDiseaseFragment">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/book_icon" />
+
+                <TextView
+                    android:id="@+id/tv_define"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/define_disease"
+                    android:textColor="@color/fistText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/file_search" />
+
+                <TextView
+                    android:id="@+id/tv_symptom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/symptom"
+                    android:textColor="@color/fistText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/medical_tonometer" />
+
+                <TextView
+                    android:id="@+id/tv_diagnose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/diagnose"
+                    android:textColor="@color/fistText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_info" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tv_treatment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/treatment_method"
+                        android:textColor="@color/fistText" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<LinearLayout style="@style/LinearLayoutButtonImage"-->
+    <!--android:layout_marginLeft="@dimen/dimen_3">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/btn_medicine"-->
+    <!--style="@style/ButtonImage"-->
+    <!--android:src="@drawable/ic_nha_thuoc" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout style="@style/LinearLayoutButtonImage">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/btn_2"-->
+    <!--style="@style/ButtonImage"-->
+    <!--android:src="@drawable/ic_hospitalnew" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout style="@style/LinearLayoutButtonImage">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/btn_3"-->
+    <!--style="@style/ButtonImage"-->
+    <!--android:src="@drawable/ic_nha_nha" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout style="@style/LinearLayoutButtonImage">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/btn_4"-->
+    <!--style="@style/ButtonImage"-->
+    <!--android:src="@drawable/ic_gop_y" />-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+</LinearLayout>
+

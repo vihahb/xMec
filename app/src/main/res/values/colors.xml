@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#03A9F4</color>
+    <color name="colorPrimaryDark">#03A9F4</color>
+    <color name="colorAccent">#53e69d</color>
+    <color name="primary_light">#C8E6C9</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="secondaryText">#9E9E9E</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="facebook">#3B5998</color>
+    <color name="primaryText">#3f4751</color>
+    <color name="textTitle">#3f4751</color>
+    <color name="textTitleNewFeed">#687281</color>
+    <color name="textHint">#a9b7cf</color>
+    <color name="default_background">#f1f9ff</color>
+    <color name="colorControlNormal">#fff</color>
+    <color name="black_75">#BF000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="white_50">#BFffffff</color>
+    <color name="white_75">#BFffffff</color>
+    <color name="fistText">#616161</color>
+    <color name="tim">#673AB7</color>
+    <color name="selected_item_color">#673AB7</color>
+    <color name="time">#96a9c5</color>
+    <color name="title_item">#424a55</color>
+    <color name="colorPrimary_75">#c841c3fd</color>
+    <color name="colorPrimary_40">#6641c3fd</color>
+
+    <color name="informationPrimary">#673AAA</color>
+    <color name="informationPrimaryDark">#63329B</color>
+
+    <color name="mapPrimary">#F34E4E</color>
+    <color name="mapPrimaryDark">#C0394F</color>
+</resources>

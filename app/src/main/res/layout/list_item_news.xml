@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_shape_radius_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingTop="20dp">
+
+        <ImageView
+            android:id="@+id/imgNewsPhoto"
+            android:layout_width="135dp"
+            android:layout_height="76dp"
+            android:maxWidth="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder_news" />
+
+        <TextView
+            android:id="@+id/tvNewsFeedTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:text="Tiêm phòng cho trẻ em ngày đậu xanh rau má"
+            android:textColor="@color/textTitle"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvNewsPubTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:text="18/01/2017"
+            android:textColor="@color/time"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+</LinearLayout>

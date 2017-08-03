@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.SettingsActivity">
+    <item
+        android:id="@+id/action_login_logout"
+        android:icon="@drawable/ic_action_logout"
+        android:orderInCategory="100"
+        android:title="@string/login"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_notify"
+        android:icon="@mipmap/ic_ring"
+        android:orderInCategory="100"
+        android:title="@string/login"
+        app:showAsAction="always" />
+</menu>
