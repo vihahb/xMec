@@ -15,6 +15,9 @@ public class Constant {
     public static final String INTENT_ID_MEDICINE = "intent_id_medicine";
 
 
+    public static final String OBJECT = "object";
+    public static final String STRING = "string";
+
     public static final String CLOSE = "Close";
     public static final String HOME = "home";
     public static final String BENH = "benh";
@@ -58,9 +61,9 @@ public class Constant {
     //    public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";
     public static final String SERVER_XMEC = "http://124.158.5.112:8092/xmec/v0.1/";
     //    public static final String SERVICE_CODE = "http://192.168.22.112:8010/v0.1/";
-    public static final String LOCAL_SECCION = "V5BDuS4BFpiMjgfAZBrkQpb2FUFGX8owdAxh9G77o9dE6kXfyuhPss7M5NxyNTgKwxns6SMStxlVERmOH1n05RTvbOUOC0TBWMKR";
+    public static final String LOCAL_SECCION = null;
     public static final String GET_MEDIACAL_REPORT_BOOK = "user/medical-report-book?page=1&pagesize=30";
-    public static final String FRIEND_REQUEST_STATE = "/friend/list?status=";
+    public static final String FRIEND_REQUEST_STATE = "friend/list?status=";
     public static final String FRIEND_ACTION = "/friend?friend_id=";
     public static final int FRIEND_ACCEFTED = 1;
     public static final int FRIEND_NOT_ACCEFT = 2;

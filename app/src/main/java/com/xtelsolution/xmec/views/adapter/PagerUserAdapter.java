@@ -32,6 +32,8 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private ItemUpDateClickListener itemUpDateClickListener;
     private ItemAddClickListener itemAddClickListener;
+    private ItemDeleteClickListener itemDeleteClickListener;
+    private boolean isLogin = true;
 
     public PagerUserAdapter(Context mContext, List<RESP_User> data) {
         this.mContext = mContext;
@@ -45,6 +47,10 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
 
     public void setItemAddClickListener(ItemAddClickListener itemAddClickListener) {
         this.itemAddClickListener = itemAddClickListener;
+    }
+
+    public void setDeleteItemClickListener(ItemDeleteClickListener itemDeleteClickListener) {
+        this.itemDeleteClickListener = itemDeleteClickListener;
     }
 
     @Override
@@ -66,6 +72,11 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
             viewHolder.setData(position);
         } else {
             AddUserViewHolder addUserViewHolder = (AddUserViewHolder) holder;
+            if (isLogin) {
+                addUserViewHolder.setDataView(R.drawable.ic_add_user, "Thêm thành viên");
+            } else {
+                addUserViewHolder.setDataView(R.mipmap.ic_launcher, "Đăng nhập");
+            }
             addUserViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -118,6 +129,10 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
         notifyItemRangeInserted(startIndex, list.size());
     }
 
+    public void setLogin(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
+
     public interface ItemUpDateClickListener {
         void onClick(int position, RESP_User user);
     }
@@ -126,12 +141,25 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
         void onClick();
     }
 
-    private class AddUserViewHolder extends RecyclerView.ViewHolder {
+    public interface ItemDeleteClickListener {
+        void onClick(int position, RESP_User user);
+    }
+
+    public class AddUserViewHolder extends RecyclerView.ViewHolder {
         LinearLayout add_layout;
+        ImageView imageView2;
+        TextView tv_title;
 
         public AddUserViewHolder(View itemView) {
             super(itemView);
             add_layout = (LinearLayout) itemView.findViewById(R.id.add_layout);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+            imageView2 = (ImageView) itemView.findViewById(R.id.imageView2);
+        }
+
+        public void setDataView(int Resource, String message) {
+            imageView2.setImageResource(Resource);
+            tv_title.setText(message);
         }
     }
 
@@ -139,6 +167,7 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
 
         private AvatarView imgAvatar;
         private TextView btnProfile;
+        private TextView btnDeleteFriend;
         private TextView tvName;
         private TextView tvBirthday;
         private TextView tvHeight;
@@ -150,6 +179,7 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
         private UserViewHolder(View view) {
             super(view);
             btnProfile = (TextView) view.findViewById(R.id.btnProfile);
+            btnDeleteFriend = (TextView) view.findViewById(R.id.btnDeleteFriend);
             tvBirthday = (TextView) view.findViewById(R.id.tv_birthday);
             tvHeight = (TextView) view.findViewById(R.id.tv_profile_height);
             tvWeight = (TextView) view.findViewById(R.id.tv_profile_weight);
@@ -168,8 +198,10 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
 
             if (!user.isMaster()) {
                 btnProfile.setVisibility(View.INVISIBLE);
+                btnDeleteFriend.setVisibility(View.VISIBLE);
             } else {
                 btnProfile.setVisibility(View.VISIBLE);
+                btnDeleteFriend.setVisibility(View.GONE);
             }
             imageLoader.loadImage(imgAvatar, user.getAvatar(), user.getFullname());
             tvName.setText(user.getFullname());
@@ -200,6 +232,13 @@ public class PagerUserAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     if (itemUpDateClickListener != null)
                         itemUpDateClickListener.onClick(position, user);
+                }
+            });
+
+            btnDeleteFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemDeleteClickListener.onClick(position, user);
                 }
             });
         }

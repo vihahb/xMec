@@ -14,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.callbacks.DialogActionListener;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.dialog.DialogAddFriend;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
@@ -24,6 +26,7 @@ import com.xtelsolution.xmec.model.RESP_List_Medical;
 import com.xtelsolution.xmec.model.RESP_Medical;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
+import com.xtelsolution.xmec.model.entity.UserMedical;
 import com.xtelsolution.xmec.presenter.HomePresenter;
 import com.xtelsolution.xmec.views.activity.AddMedicalDetailActivity;
 import com.xtelsolution.xmec.views.activity.LoginActivity;
@@ -35,6 +38,7 @@ import com.xtelsolution.xmec.views.inf.IHomeView;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -54,6 +58,8 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
     private Context mContext;
     private ArrayList<RESP_Medical> mlistMedica;
     private ArrayList<RESP_User> mlistUsers;
+    private List<UserMedical> listUserMedical;
+    private TextView tv_state;
 
     public static HomeFragment newInstance() {
 
@@ -71,11 +77,20 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
         presenter = new HomePresenter(this);
         mlistMedica = new ArrayList<>();
         mlistUsers = new ArrayList<>();
+        listUserMedical = new ArrayList<>();
         adapter = new MedicalDirectoryAdapter(mlistMedica, getContext());
         adapter.setItemClickListener(this);
         adapter.setButtonAdapterClickListener(this);
         userAdapter = new PagerUserAdapter(mContext, mlistUsers);
+        checkLogin();
+    }
 
+    private void checkLogin() {
+        if (!SharedPreferencesUtils.getInstance().isLogined()) {
+            userAdapter.setLogin(false);
+        } else {
+            userAdapter.setLogin(true);
+        }
     }
 
     @Nullable
@@ -85,8 +100,9 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
         initUI(view);
         initControl();
         presenter.checkGetUser(userModel);
+//        presenter.checkGetMedical(adapter.getList());
+        presenter.getMedicalReportBookDefault();
         presenter.getUserFriend();
-        presenter.checkGetMedical(adapter.getList());
         return view;
     }
 
@@ -97,6 +113,7 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
     }
 
     public void initUI(View view) {
+        tv_state = (TextView) view.findViewById(R.id.tv_state);
         rvDisease = (RecyclerView) view.findViewById(R.id.rvDisease);
         pagerUser = (DiscreteScrollView) view.findViewById(R.id.pagerUser);
         loadingProgress = (ProgressBar) view.findViewById(R.id.loadingProgress);
@@ -116,8 +133,11 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
             public void onClick(int position, RESP_User user) {
                 if (!isLogin())
                     showLoginDialog();
-                else
-                    startActivityForResult(new Intent(mContext, ProfileActivity.class), Constant.UPDATE_PROFILE);
+                else {
+                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                    intent.putExtra(Constant.OBJECT, user);
+                    startActivityForResult(intent, Constant.UPDATE_PROFILE);
+                }
             }
         });
 
@@ -129,6 +149,18 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
                 else {
                     DialogAddFriend.DiaLodAddFriend(mContext).show();
                 }
+            }
+        });
+
+        userAdapter.setDeleteItemClickListener(new PagerUserAdapter.ItemDeleteClickListener() {
+            @Override
+            public void onClick(int position, final RESP_User user) {
+                showActionDialog("Bạn có muốn xóa " + user.getFullname() + " khỏi danh sách bạn bè?", "Có", new DialogActionListener() {
+                    @Override
+                    public void onActionProcess() {
+                        presenter.deleteFriend(user.getUid());
+                    }
+                });
             }
         });
 
@@ -156,11 +188,16 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
             @Override
             public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
                 if (adapterPosition < mlistUsers.size()) {
-                    int id_uid = mlistUsers.get(adapterPosition).getUid();
-                    if (id_uid != 0) {
-                        presenter.getMedicalFromUserId(id_uid);
+                    if (adapterPosition != 0 && adapterPosition <= mlistUsers.size() - 1) {
+                        int id_uid = mlistUsers.get(adapterPosition).getUid();
+                        if (listUserMedical.get(adapterPosition).getMedical() != null) {
+                            adapter.addCleanAll(listUserMedical.get(adapterPosition).getMedical(), false);
+                        } else {
+                            presenter.getMedicalFromUserId(id_uid);
+                        }
+                    } else {
+                        presenter.getMedicalReportBookDefault();
                     }
-                    Log.e(TAG, "UID: " + id_uid);
                 }
             }
         });
@@ -179,13 +216,15 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
 
     @Override
     public void onGetUerSusscess(RESP_User user) {
+        setStateVisible(null);
         loadingProgress.setVisibility(View.GONE);
         rvDisease.setVisibility(View.VISIBLE);
         if (user == null) {
             return;
         }
         user.setMaster(true);
-        mlistUsers.add(user);
+        mlistUsers.add(0, user);
+        listUserMedical.add(0, new UserMedical(user, null));
         userAdapter.notifyDataSetChanged();
     }
 
@@ -207,17 +246,47 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
                 return;
             }
             user.setMaster(false);
+            listUserMedical.add(new UserMedical(user, null));
             mlistUsers.add(user);
             Log.e(TAG, "onGetFriendActiveSuccess: add user " + i);
         }
         userAdapter.notifyDataSetChanged();
-        Log.e(TAG, "list uer: " + mlistUsers.toString());
+        Log.e(TAG, "list uer: " + mlistUsers.size());
     }
 
     @Override
-    public void getMedicalFromUIdSuccess(ArrayList arrayList) {
-        mlistMedica.addAll(arrayList);
-        adapter.addAll(mlistMedica);
+    public void getMedicalFromUIdSuccess(ArrayList<RESP_Medical> arrayList, int uid) {
+        int position = getPositionByUid(uid);
+        if (position != -1) {
+            if (arrayList.size() == 0) {
+                setStateVisible("Không có dữ liệu.");
+            } else {
+                setStateVisible(null);
+                listUserMedical.get(getPositionByUid(uid)).setMedical(arrayList);
+                adapter.addCleanAll(listUserMedical.get(position).getMedical(), false);
+            }
+        }
+
+    }
+
+    private void setStateVisible(String message) {
+        if (message != null) {
+            tv_state.setText(message);
+            tv_state.setVisibility(View.VISIBLE);
+        } else {
+            tv_state.setVisibility(View.GONE);
+        }
+    }
+
+    private int getPositionByUid(int uid) {
+        int position = -1;
+
+        for (int i = 0; i < listUserMedical.size(); i++) {
+            if (uid == listUserMedical.get(i).getUser().getUid()) {
+                position = i;
+            }
+        }
+        return position;
     }
 
     @Override
@@ -229,6 +298,31 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
     public void requireLogin() {
         startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();
+    }
+
+    @Override
+    public void onGetMedicalDefault(ArrayList<RESP_Medical> arrayList) {
+        if (arrayList.size() == 0) {
+            setStateVisible("Không có dữ liệu");
+        }
+        if (mlistMedica.size() > 0) {
+            mlistMedica.clear();
+        }
+        mlistMedica.addAll(arrayList);
+        listUserMedical.get(0).setMedical(mlistMedica);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDeleteItemSuccess(int uid) {
+        showToast("Xóa bạn bè thành công");
+        userAdapter.remove(getPositionByUid(uid));
+        listUserMedical.remove(getPositionByUid(uid));
+    }
+
+    @Override
+    public void onDeleteItemError(String message) {
+        showToast("Xóa bạn bè thất bại");
     }
 
     @Override

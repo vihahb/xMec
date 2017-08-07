@@ -27,6 +27,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     private Context mContext;
     private ItemClickListener itemClickListener;
     private ItemClickListener.ButtonAdapterClickListener buttonAdapterClickListener;
+    private boolean isMaster = true;
 
     public MedicalDirectoryAdapter(ArrayList<RESP_Medical> data, Context context) {
         this.list = data;
@@ -74,6 +75,12 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
                     buttonAdapterClickListener.onButtonAdapterClickListener();
                 }
             });
+
+            if (!isMaster) {
+                viewhodlder.btnAdd.setVisibility(View.GONE);
+            } else {
+                viewhodlder.btnAdd.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -93,9 +100,10 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
         notifyItemRangeInserted(startIndex, data.size());
     }
 
-    public void addCleanAll(ArrayList<RESP_Medical> data) {
+    public void addCleanAll(ArrayList<RESP_Medical> data, boolean isMaster) {
         list.clear();
         list.addAll(data);
+        this.isMaster = isMaster;
         notifyDataSetChanged();
     }
 

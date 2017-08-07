@@ -294,14 +294,28 @@
                         <!--</Spinner>-->
                     </android.support.design.widget.CoordinatorLayout>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rvDisease"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dimen_16"
-                        android:layout_marginLeft="@dimen/dimen_6"
-                        android:layout_marginRight="@dimen/dimen_16"
-                        android:layout_marginStart="@dimen/dimen_6" />
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rvDisease"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:layout_marginLeft="@dimen/dimen_6"
+                            android:layout_marginRight="@dimen/dimen_16"
+                            android:layout_marginStart="@dimen/dimen_6" />
+
+                        <TextView
+                            android:id="@+id/tv_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Không có dữ liệu"
+                            android:textColor="@color/title_item"
+                            android:visibility="gone" />
+                    </FrameLayout>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

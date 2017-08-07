@@ -46,10 +46,16 @@ public class HealtRecoderAdapter extends RecyclerView.Adapter<HealtRecoderAdapte
 //
 //                    }
 //                });
-        Picasso.with(context)
-                .load(urlList.get(position).getServer_path())
-                .placeholder(R.drawable.image_director)
-                .into(holder.imageView);
+
+        Resource resource = urlList.get(position);
+        if (resource.getBitmap() != null) {
+            holder.imageView.setImageBitmap(resource.getBitmap());
+        } else {
+            Picasso.with(context)
+                    .load(urlList.get(position).getServer_path())
+                    .placeholder(R.drawable.image_director)
+                    .into(holder.imageView);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

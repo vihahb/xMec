@@ -1,10 +1,12 @@
 package com.xtelsolution.xmec.model.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by ChungDT on 2/2/2017.
  */
 
-public class Article {
+public class Article implements Serializable {
     public static final int TYPE_VIDEO = 1;
     public static final int TYPE_OTHER = 2;
     private int id;

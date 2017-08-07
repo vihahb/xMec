@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
@@ -141,5 +142,15 @@ public class BasicActivity extends AppCompatActivity implements BaseView {
         Intent i = new Intent(this, clazz);
         startActivity(i);
         finish();
+    }
+
+    protected void setImageFileToView(ImageView imageView, Bitmap bitmap) {
+//        Picasso.with(getActivity())
+//                .load(bitmap)
+//                .error(R.mipmap.ic_launcher)
+//                .into(imageView);
+
+        imageView.setImageBitmap(bitmap);
+
     }
 }

@@ -10,6 +10,8 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
+import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.presenter.NewsDetailPresenter;
 import com.xtelsolution.xmec.views.inf.HtmlDetailView;
 
@@ -20,16 +22,17 @@ public class NewsDetailActivity extends BasicActivity implements HtmlDetailView 
     private LinearLayout loLoading;
     private Handler handler;
     private NewsDetailPresenter presenter;
+    private Article article;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
         handler = new Handler();
-        String url = getIntent().getExtras().getString(TAG_NEWS_URL);
+        String url = getUrl();
         init();
         initWebView();
-        //presenter.loadNews(url);
+//        presenter.loadNews(url);
         presenter.loadNewsHTML(url);
     }
 
@@ -78,5 +81,9 @@ public class NewsDetailActivity extends BasicActivity implements HtmlDetailView 
         if (item.getItemId() == android.R.id.home)
             finish();
         return true;
+    }
+
+    public String getUrl() {
+        return getIntent().getStringExtra(Constant.STRING);
     }
 }

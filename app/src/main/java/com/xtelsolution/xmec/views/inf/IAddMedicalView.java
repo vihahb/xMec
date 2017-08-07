@@ -1,5 +1,7 @@
 package com.xtelsolution.xmec.views.inf;
 
+import android.graphics.Bitmap;
+
 import com.xtelsolution.xmec.model.RESP_Medical;
 
 /**
@@ -7,7 +9,9 @@ import com.xtelsolution.xmec.model.RESP_Medical;
  */
 
 public interface IAddMedicalView extends BaseView {
-    void onUploadImageSussces(String url);
+    void onUploadImageSussces(String url, Bitmap bitmap);
+
+    void onUploadImageError();
 
     void onAddMedicalSuccess(RESP_Medical medical);
 

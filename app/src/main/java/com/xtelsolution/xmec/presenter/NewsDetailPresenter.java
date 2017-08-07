@@ -130,33 +130,42 @@ public class NewsDetailPresenter {
 
     // Parse Html
     private String getNewsBoxFromPageHTML(Document document) {
-
         try {
             InputStream inputStream = view.getActivity().getAssets().open("news-detail.html");
             Document mainHtml = Jsoup.parse(inputStream, "UTF-8", "news-detail.html");
 
-            if (document.select("div.journal-content-article").size() > 0) {
-                Element titleNewsElement = document.select("div.title-content h1").get(0);
-                Element shortDes = document.select("div.journal-content-article").get(0);
-                Log.e(TAG, "getNewsBoxFromPageHTML: " + shortDes.toString());
+            if (document.select("div.wrap-topic").size() > 0) {
+                Element titleNewsElement = null;
+                try {
+                    titleNewsElement = document.select("h1.wtc-h3-shapo").get(0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Element shortDes = null;
+                try {
+                    shortDes = document.select("div.wtc-div-title").get(0);
+                    Log.e(TAG, "getNewsBoxFromPageHTML: " + shortDes.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Element titleElement = null;
                 try {
-                    titleElement = document.select("div.journal-content-article h2").get(0);
+                    titleElement = document.select("p.wtc-p-user").get(0);
                 } catch (Exception e) {
 
                 }
 
-                String html = (titleNewsElement != null) ? titleNewsElement.outerHtml() : "" + shortDes.ownText() + titleElement.outerHtml();
+                String html = (titleNewsElement != null) ? titleNewsElement.outerHtml() : "" + shortDes == null ? "" : shortDes.ownText() + titleElement == null ? "" : titleElement.outerHtml();
 
-                int size = document.select("div.journal-content-article p").size();
+                int size = document.select("div.wtc-div-title p").size();
                 for (int i = 0; i < size; i++) {
-                    if (document.select("div.journal-content-article p").get(i).select("img").size() > 0) {
-                        String urlImg = document.select("div.journal-content-article p").get(i).select("img").attr("src");
+                    if (document.select("div.wtc-div-title p").get(i).select("img").size() > 0) {
+                        String urlImg = document.select("div.wtc-div-title p").get(i).select("img").attr("src");
                         html += "<img style=\"display: block; margin-left: auto; margin-right: auto; width: 100%;\" src=\"" + urlImg + "\">";
-                        String em = document.select("div.journal-content-article p").get(i).select("em").text();
+                        String em = document.select("div.wtc-div-title p").get(i).select("em").text();
                         html += "<p style=\"text-align: center \">" + em + "</p>";
                     } else {
-                        html += document.select("div.journal-content-article p").get(i).outerHtml();
+                        html += document.select("div.wtc-div-title p").get(i).outerHtml();
                     }
                 }
 
@@ -165,7 +174,8 @@ public class NewsDetailPresenter {
                 return mainHtml.select("div#wrapper").first().append("<h3>Xin lỗi, chúng tôi không tìm thấy trang bạn yêu cầu !</h3>").outerHtml();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            Log.e(TAG, "getNewsBoxFromPageHTML: ", new Throwable(e));
             return "<h3>Xin lỗi, chúng tôi không tìm thấy trang bạn yêu cầu !</h3>";
         }
     }

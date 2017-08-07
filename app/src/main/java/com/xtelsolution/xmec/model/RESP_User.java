@@ -4,11 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
 import com.xtelsolution.xmec.common.Constant;
 
+import java.io.Serializable;
+
 /**
  * Created by phimau on 2/15/2017.
  */
 
-public class RESP_User extends RESP_Basic {
+public class RESP_User extends RESP_Basic implements Serializable {
     @Expose
     private int uid;
     @Expose

@@ -107,7 +107,7 @@ public class NotificationActivity extends BasicActivity implements INotification
         Log.e("data arr notify", JsonHelper.toJson(arrayNotification));
 
         setRefresh(false);
-        if (arrayNotification.size() == 0) {
+        if (arrayNotification.size() == 0 || arrayNotification == null) {
             progressView.updateMessage(-1, getString(R.string.error_list_data_empty));
             progressView.showMessage();
         }
@@ -129,7 +129,7 @@ public class NotificationActivity extends BasicActivity implements INotification
 
     @Override
     public void getNotificationRequestError(String mes) {
-        showToast(mes);
+        progressView.updateMessage(R.mipmap.ic_launcher, mes);
     }
 
     @Override

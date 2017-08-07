@@ -2,7 +2,6 @@ package com.xtelsolution.xmec.presenter;
 
 import android.util.Log;
 
-import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_None;
@@ -27,7 +26,8 @@ public class LoginPresenter {
             switch ((int) params[0]) {
                 case 1:
                     String token = (String) params[1];
-                    UserModel.getintance().updateCloudMessageToken(token, LoginManager.getCurrentSession(), new ResponseHandle<RESP_None>(RESP_None.class) {
+                    String session = (String) params[2];
+                    UserModel.getintance().updateCloudMessageToken(token, session, new ResponseHandle<RESP_None>(RESP_None.class) {
                         @Override
                         public void onSuccess(RESP_None obj) {
                             view.updateTokenSuccess();
@@ -50,11 +50,11 @@ public class LoginPresenter {
         this.view = view;
     }
 
-    public void updateFcmToken(String token) {
+    public void updateFcmToken(String token, String session) {
         if (!NetWorkInfo.isOnline(MyApplication.context)) {
             view.showToast(view.getActivity().getString(R.string.error_no_internet));
         } else {
-            iCmd.excute(1, token);
+            iCmd.excute(1, token, session);
         }
     }
 }

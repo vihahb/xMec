@@ -295,4 +295,25 @@
         <item name="android:layout_marginLeft">@dimen/dimen_16</item>
     </style>
 
+    <!-- TextView -->
+    <style name="Textview">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Textview.normal">
+        <item name="android:drawablePadding">@dimen/dimen_16</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="Textview.title_white">
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Textview.normal.black_85">
+        <item name="android:textColor">@color/black_85</item>
+    </style>
+
 </resources>

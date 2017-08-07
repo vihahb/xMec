@@ -11,6 +11,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Base64Helper;
 import com.xtelsolution.xmec.model.entity.DataPayloadEntity;
 import com.xtelsolution.xmec.views.activity.NotificationActivity;
 
@@ -22,7 +23,7 @@ import java.util.Map;
 
 public class xMecFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = xMecFirebaseMessagingService.class.getSimpleName();
+    private static final String TAG = "xMecFirebaseMessagingSe";
 
     private NotificationHelper notificationUtils;
 
@@ -54,10 +55,11 @@ public class xMecFirebaseMessagingService extends FirebaseMessagingService {
 
             Map<String, String> map = remoteMessage.getData();
             DataPayloadEntity payloadEntity = new DataPayloadEntity();
-            payloadEntity.setTitle(map.get("title"));
+            payloadEntity.setName(map.get("name"));
             payloadEntity.setType(Integer.parseInt(map.get("type")));
-            payloadEntity.setMessage(map.get("message"));
-            payloadEntity.setBanner(map.get("banner"));
+            payloadEntity.setUid(Integer.parseInt(map.get("uid")));
+
+            String names = Base64Helper.getDecode(payloadEntity.getName());
 
             Log.e("Dât object", JsonHelper.toJson(payloadEntity));
 
@@ -76,12 +78,13 @@ public class xMecFirebaseMessagingService extends FirebaseMessagingService {
             Intent notifyIntentPositive = new Intent(this, NotificationActivity.class);
             PendingIntent pendingIntentPositive = PendingIntent.getActivity(this, 11, notifyIntentPositive, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
+            int id_notification = 0;
+            id_notification++;
             switch (type) {
                 case 1:
                     title = "Thông báo kết bạn";
-                    message = payloadEntity.getMessage() + " đã gửi cho bạn một lời mời kết bạn.";
-                    utils.showSmallNotification(
+                    message = names + " đã gửi cho bạn một lời mời kết bạn.";
+                    utils.showSmallNotification(id_notification,
                             R.mipmap.ic_launcher,
                             title,
                             message,
@@ -95,8 +98,8 @@ public class xMecFirebaseMessagingService extends FirebaseMessagingService {
                     break;
                 case 2:
                     title = "Thông báo kết bạn";
-                    message = payloadEntity.getMessage() + " đã chấp nhận lời mời kết bạn của bạn.";
-                    utils.showSmallNotification(R.mipmap.ic_launcher,
+                    message = names + " đã chấp nhận lời mời kết bạn của bạn.";
+                    utils.showSmallNotification(id_notification, R.mipmap.ic_launcher,
                             title,
                             message,
                             //Negative Action Notification

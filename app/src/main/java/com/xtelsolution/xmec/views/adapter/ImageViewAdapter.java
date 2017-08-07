@@ -33,9 +33,15 @@ public class ImageViewAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(container.getContext());
-        Picasso.with(mContext)
-                .load(urlList.get(position).getServer_path())
-                .into(photoView);
+
+        Resource resource = urlList.get(position);
+        if (resource.getBitmap() != null) {
+            photoView.setImageBitmap(resource.getBitmap());
+        } else {
+            Picasso.with(mContext)
+                    .load(urlList.get(position).getServer_path())
+                    .into(photoView);
+        }
         container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return photoView;
     }

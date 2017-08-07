@@ -233,7 +233,7 @@ public class LoginActivity extends BasicActivity implements ILoginActivity {
                 public void onSuccess(RESP_Login success) {
                     String tokenFCM = FirebaseInstanceId.getInstance().getToken();
                     Log.e("tokenFCM", "onSuccess: " + tokenFCM);
-                    presenter.updateFcmToken(tokenFCM);
+                    presenter.updateFcmToken(tokenFCM, success.getSession());
                     Log.e("Session", "onSuccess: " + JsonHelper.toJson(success));
                     xLog.e(TAG, "onPhoneLogin: onSuccess: " + Constant.LOGPHI + success.getSession());
                 }

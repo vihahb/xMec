@@ -1,7 +1,6 @@
 package com.xtelsolution.xmec.views.fragment;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,11 +21,9 @@ import android.widget.Toast;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.listener.list.ItemClickListener;
-import com.xtelsolution.xmec.model.REQ_Medicine;
 import com.xtelsolution.xmec.model.RESP_Medicine;
 import com.xtelsolution.xmec.model.entity.DrugEntity;
 import com.xtelsolution.xmec.presenter.Fragment.DrugDetailsFragmentPresenter;
-import com.xtelsolution.xmec.views.activity.AddIllnessActivity;
 import com.xtelsolution.xmec.views.activity.LoginActivity;
 import com.xtelsolution.xmec.views.adapter.DrugListAdapter;
 import com.xtelsolution.xmec.views.adapter.MedicineAdapterWithEditButton;
@@ -151,16 +147,24 @@ public class DrugDetailsFragment extends Fragment implements IDrugDetailsFragmen
     @Override
     public void getDrugListSuccess(ArrayList<DrugEntity> arrayList) {
         Log.e(TAG, "getDrugListSuccess: arr size" + arrayList.size());
-        adapter.refreshAdapter(arrayList);
-        rcl_Drug.setVisibility(View.VISIBLE);
-        btnAction.setVisibility(View.GONE);
-        message.setVisibility(View.GONE);
-        progress_bar.setVisibility(View.GONE);
+        if (arrayList.size() != 0) {
+            adapter.refreshAdapter(arrayList);
+            rcl_Drug.setVisibility(View.VISIBLE);
+            btnAction.setVisibility(View.GONE);
+            message.setVisibility(View.GONE);
+            progress_bar.setVisibility(View.GONE);
+        } else {
+            progress_bar.setVisibility(View.GONE);
+            message.setText(R.string.message_null_data);
+            message.setVisibility(View.VISIBLE);
+            btnAction.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void getDrugListError(String mes) {
         showToast(mes);
+        progress_bar.setVisibility(View.GONE);
     }
 
     @Override
@@ -190,6 +194,13 @@ public class DrugDetailsFragment extends Fragment implements IDrugDetailsFragmen
         etFindMedicine.setText(null);
         mDialog.dismiss();
         showToast("Thêm thuốc thất bại");
+    }
+
+    @Override
+    public void setProgressView(String message) {
+        progress_bar.setVisibility(View.GONE);
+        this.message.setText(R.string.message_null_data);
+        this.message.setVisibility(View.VISIBLE);
     }
 
     @Override

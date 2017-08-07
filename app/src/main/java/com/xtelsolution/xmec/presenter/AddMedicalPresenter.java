@@ -1,6 +1,6 @@
 package com.xtelsolution.xmec.presenter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -82,22 +82,23 @@ public class AddMedicalPresenter extends BasePresenter {
         addMedicalDirectorry(ADDMEDICAL, name, beginTime, endTime, type, note, resources);
     }
 
-    public void postImage(Bitmap bitmap, boolean isBigImage, Context context) {
+    public void postImage(final Bitmap bitmap, boolean isBigImage, Activity context) {
 
-        view.showProgressDialog(view.getActivity().getResources().getString(R.string.upload_image));
+//        view.showProgressDialog(view.getActivity().getResources().getString(R.string.upload_image));
         if (!checkConnnecttion(view))
             return;
         new Task.ConvertImage(context, isBigImage, new UploadFileListener() {
             @Override
             public void onSuccess(String url) {
                 xLog.e(TAG, "postImage: onSuccess: " + "onSuccess: " + url);
-                view.onUploadImageSussces(url);
-                view.dismissProgressDialog();
+                view.onUploadImageSussces(url, bitmap);
+//                view.dismissProgressDialog();
             }
 
             @Override
             public void onError(String e) {
-
+                view.onUploadImageError();
+//                view.dismissProgressDialog();
             }
         }).execute(bitmap);
 

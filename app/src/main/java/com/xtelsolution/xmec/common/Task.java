@@ -1,7 +1,7 @@
 package com.xtelsolution.xmec.common;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -9,22 +9,41 @@ import android.util.Log;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.ProgressCallback;
+import com.xtelsolution.xmec.dialog.TaskUploadDialog;
 import com.xtelsolution.xmec.listener.UploadFileListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
 /**
- * Created by Lê Công Long Vũ on 12/1/2016.
+ * Created by vivhp on 07/08/2017
  */
 
 public class Task {
 
+    private static final String TAG = "Task";
+    private static TaskUploadDialog uploadDialog;
 
-    private static void postImageToServer(final File file, final Context context, final UploadFileListener uploadFileListener) {
+    private static void postImageToServer(final File file, final Activity context, final UploadFileListener uploadFileListener) {
+        uploadDialog = new TaskUploadDialog(context);
+        uploadDialog.show();
         Log.e("tb_up_upload", "dang up: " + file.getPath());
         Ion.with(context)
                 .load(Constant.SERVER_UPLOAD)
+                .progress(new ProgressCallback() {
+                    @Override
+                    public void onProgress(final long downloaded, final long total) {
+                        Log.e(TAG, "onProgress: " + downloaded + " / " + total);
+                        context.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                uploadDialog.setProgressBarTotal((int) total);
+                                uploadDialog.setTextCount(String.valueOf(downloaded));
+                            }
+                        });
+                    }
+                })
                 .setMultipartFile("fileUpload", file)
                 .asString()
                 .setCallback(new FutureCallback<String>() {
@@ -32,8 +51,10 @@ public class Task {
                     public void onCompleted(Exception e, String result) {
                         if (e != null) {
                             Log.e("tb_up_error", e.toString());
+                            uploadDialog.dismis();
                             uploadFileListener.onError("");
                         } else {
+                            uploadDialog.dismis();
                             uploadFileListener.onSuccess(result);
                         }
                     }
@@ -42,11 +63,11 @@ public class Task {
 
     public static class ConvertImage extends AsyncTask<Bitmap, Void, File> {
         private ProgressDialog dialogProgressBar;
-        private Context context;
+        private Activity context;
         private boolean isBigImage;
         private UploadFileListener uploadFileListener;
 
-        public ConvertImage(Context context, boolean isBigImage, UploadFileListener uploadFileListener) {
+        public ConvertImage(Activity context, boolean isBigImage, UploadFileListener uploadFileListener) {
             this.context = context;
             this.isBigImage = isBigImage;
             this.uploadFileListener = uploadFileListener;

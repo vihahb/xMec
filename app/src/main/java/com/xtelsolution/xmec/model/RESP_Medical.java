@@ -68,4 +68,6 @@ public class RESP_Medical extends RESP_Basic implements Serializable {
     public void setType(int type) {
         this.type = type;
     }
+
+
 }

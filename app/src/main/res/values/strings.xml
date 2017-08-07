@@ -29,6 +29,7 @@
     <string name="result_search_illnesses_text">Kết quả tìm kiếm bài bệnh…</string>
     <string name="result_search_mediacine_text">Kết quả tìm kiếm thuốc : </string>
     <string name="update_profile_text">Cập nhật thông tin</string>
+    <string name="delete_friend_text">Xóa bạn bè</string>
     <string name="tong_hop">Tổng hợp</string>
     <string name="search_placeholder_text">Nhập tên bệnh, triệu chứng …</string>
     <string name="search_medicine_text">Nhập tên thuốc, tác dụng …</string>
@@ -150,6 +151,9 @@
     <string name="error_no_network">Không thể kết nối đến máy chủ.   chạm để thử lại</string>
     <string name="error_list_data_empty">Không có dữ liệu</string>
     <string name="error_no_internet">Không có kết nối mạng</string>
+    <string name="message_null_data">Không có dữ liệu</string>
+    <string name="title_login">Đăng nhập</string>
+    <string name="message_notification">Thông báo</string>
 
 
 </resources>

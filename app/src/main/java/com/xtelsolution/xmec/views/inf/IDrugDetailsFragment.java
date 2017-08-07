@@ -17,4 +17,6 @@ public interface IDrugDetailsFragment extends BaseView {
     void addDrugSucces();
     void addDrugError();
 
+    void setProgressView(String message);
+
 }

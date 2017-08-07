@@ -31,4 +31,5 @@
 
     <color name="mapPrimary">#F34E4E</color>
     <color name="mapPrimaryDark">#C0394F</color>
+    <color name="black_85">#D9000000</color>
 </resources>

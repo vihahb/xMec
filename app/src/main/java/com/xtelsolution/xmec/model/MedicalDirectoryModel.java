@@ -20,7 +20,8 @@ public class MedicalDirectoryModel extends BasicModel {
         return instance;
     }
 
-    public void getMedicalReportBooks(String url, String session, ResponseHandle<RESP_List_Medical> userResponseHandle) {
+    public void getMedicalReportBooks(String session, ResponseHandle<RESP_List_Medical> userResponseHandle) {
+        String url = Constant.SERVER_XMEC + Constant.GET_MEDIACAL_REPORT_BOOK;
         requestServer.getApi(url, session, userResponseHandle);
     }
 

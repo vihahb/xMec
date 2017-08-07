@@ -60,12 +60,14 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
     private LinearLayout llMapToolbar;
     private GuillotineAnimation animation;
     private HomeActivityPresenter presenter;
+    private int notificationNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         presenter = new HomeActivityPresenter(this);
+        presenter.getNotificationCount();
         fragmentManager = getSupportFragmentManager();
         init();
         initReceiver();
@@ -274,7 +276,11 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
 //                return false;
 //            }
 //        });
-        return true;
+        if (notificationNumber > 0) {
+        } else {
+        }
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     public int getDrawable() {
@@ -300,7 +306,14 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
                 }
                 return true;
             case R.id.action_notify:
+                if (notificationNumber > 0) {
+                    notificationNumber--;
+
+                } else {
+
+                }
                 startActivity(new Intent(this, NotificationActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -419,5 +432,15 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
                 startActivityAndFinish(LoginActivity.class);
             }
         }, 1000);
+    }
+
+    @Override
+    public void setNotificationSize(int size) {
+        this.notificationNumber = size;
+    }
+
+    @Override
+    public void setNotificationError() {
+        Log.e(TAG, "setNotificationError: eror");
     }
 }

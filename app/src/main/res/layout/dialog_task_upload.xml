@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_36"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen_24">
+
+    <FrameLayout
+        android:id="@+id/fr_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_title"
+            style="@style/Textview.title_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_48"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="@dimen/dimen_55"
+            android:paddingRight="@dimen/dimen_55"
+            android:text="@string/message_notification" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_32"
+            android:layout_height="@dimen/dimen_32"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_16"
+            android:src="@mipmap/ic_circle_info_white" />
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="@dimen/dimen_60"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fr_title"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/dimen_24"
+        android:background="@drawable/circular_progressbar_background"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/circular_progressbar" />
+
+    <TextView
+        android:id="@+id/txt_content"
+        style="@style/Textview.normal.black_85"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/progressBar"
+        android:layout_below="@+id/fr_title"
+        android:layout_marginEnd="@dimen/dimen_24"
+        android:layout_marginRight="@dimen/dimen_24"
+        android:layout_toEndOf="@+id/progressBar"
+        android:layout_toRightOf="@+id/progressBar"
+        android:text="Đang tải lên..." />
+
+    <TextView
+        android:id="@+id/txt_count"
+        style="@style/Textview.normal.black_85"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/progressBar"
+        android:layout_below="@+id/txt_content"
+        android:layout_marginEnd="@dimen/dimen_24"
+        android:layout_marginRight="@dimen/dimen_24"
+        android:layout_toEndOf="@+id/progressBar"
+        android:layout_toRightOf="@+id/progressBar"
+        android:gravity="center" />
+</RelativeLayout>

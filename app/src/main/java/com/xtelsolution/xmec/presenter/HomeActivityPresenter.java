@@ -8,6 +8,7 @@ import com.xtelsolution.xmec.MyApplication;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.callbacks.ICommand;
 import com.xtelsolution.xmec.common.NetWorkInfo;
+import com.xtelsolution.xmec.model.RESP_ListFriend;
 import com.xtelsolution.xmec.model.UserModel;
 import com.xtelsolution.xmec.views.activity.inf.IHomeActivityView;
 
@@ -37,6 +38,20 @@ public class HomeActivityPresenter {
                         }
                     });
                     break;
+
+                case 2:
+                    UserModel.getintance().getFriendRequest(LoginManager.getCurrentSession(), new ResponseHandle<RESP_ListFriend>(RESP_ListFriend.class) {
+                        @Override
+                        public void onSuccess(RESP_ListFriend obj) {
+                            view.setNotificationSize(obj.getData().size());
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.setNotificationError();
+                        }
+                    });
+                    break;
             }
         }
     };
@@ -50,6 +65,14 @@ public class HomeActivityPresenter {
             view.showToast(view.getActivity().getString(R.string.error_no_internet));
         } else {
             iCmd.excute(1, token);
+        }
+    }
+
+    public void getNotificationCount() {
+        if (!NetWorkInfo.isOnline(MyApplication.context)) {
+            view.showToast(view.getActivity().getString(R.string.error_no_internet));
+        } else {
+            iCmd.excute(2);
         }
     }
 

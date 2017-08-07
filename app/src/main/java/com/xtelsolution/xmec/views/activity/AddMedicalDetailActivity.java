@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.views.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -101,6 +103,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     }
 
 
+    @SuppressLint("RestrictedApi")
     private void init() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_top);
         setSupportActionBar(mToolbar);
@@ -151,14 +154,14 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         btnSavaDirectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mForm.isValid()) {
-                    showToast("Không được để trống");
-                    return;
+                if (validForm()) {
+                    if (idMedical == -1) {
+                        addMedicalDirectory();
+                    } else
+                        updateMedicalDirectory();
+                } else {
+                    showToast("Vui lòng kiểm tra lại thông tin y bạ!");
                 }
-                if (idMedical == -1) {
-                    addMedicalDirectory();
-                } else
-                    updateMedicalDirectory();
             }
         });
         btnAddHelthReconder.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +188,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
 //                        Toast.makeText(mContext, "Got image - " + imageUri, Toast.LENGTH_LONG).show();
                                 try {
                                     Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                                    presenter.postImage(avatar, true, getBaseContext());
+                                    presenter.postImage(avatar, true, getActivity());
                                     bottomSheetChoosePicture.dismiss();
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -202,7 +205,7 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
                             public void onImageReceived(Uri imageUri) {
                                 try {
                                     Bitmap avatar = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                                    presenter.postImage(avatar, true, getBaseContext());
+                                    presenter.postImage(avatar, true, getActivity());
                                     bottomSheetChoosePicture.dismiss();
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -212,6 +215,19 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
                         }).start();
             }
         });
+    }
+
+    private boolean validForm() {
+        if (TextUtils.isEmpty(etName.getText().toString())) {
+            etName.requestFocus();
+            etName.setError("Tên y bạ không được để trống");
+            return false;
+        } else if (TextUtils.isEmpty(etBeginTime.getText().toString())) {
+            etBeginTime.requestFocus();
+            etBeginTime.setError("Ngày bắt đầu không được để trống");
+            return false;
+        }
+        return true;
     }
 
 
@@ -282,11 +298,16 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
     }
 
     @Override
-    public void onUploadImageSussces(String url) {
+    public void onUploadImageSussces(String url, Bitmap bitmap) {
         xLog.e(TAG, "onUploadImageSussces: SIZE ADAPTER " + healtRecoderAdapter.getItemCount());
-        healtRecoderAdapter.add(new Resource(url));
+        healtRecoderAdapter.add(new Resource(url, bitmap));
         imageViewAdapter.notifyDataSetChanged();
         xLog.d(TAG, "onUploadImageSussces:  " + url);
+    }
+
+    @Override
+    public void onUploadImageError() {
+        showToast("Tải ảnh lên thất bại. Vui lòng thử lại sau!");
     }
 
 

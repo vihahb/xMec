@@ -91,7 +91,7 @@ public class DialogAddFriend {
                             btnSend.setVisibility(View.GONE);
                             btnAddUser.setEnabled(true);
                             numberPhone.setEnabled(true);
-                            btnAddUser.setProgress(50);
+                            btnAddUser.setProgress(0);
                             btnAddUser.setText(R.string.add_user);
                             layoutSearch.setVisibility(View.GONE);
                             tvName.setText("Họ tên: " + obj.getFullname());

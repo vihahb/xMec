@@ -1,6 +1,6 @@
 package com.xtelsolution.xmec.presenter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -84,7 +84,8 @@ public class ProfilePresenter extends BasePresenter {
     }
 
     public void getProfile() {
-        RESP_User user = SharedPreferencesUtils.getInstance().getUser();
+//        RESP_User user = SharedPreferencesUtils.getInstance().getUser();
+        RESP_User user = (RESP_User) view.getActivity().getIntent().getSerializableExtra(Constant.OBJECT);
         Log.e("USER", "getProfile: " + user.toString());
         ;
         view.onLoadProfileSuccess(user.getFullname(), user.getBirthday(), user.getHeight(), user.getWeight(), user.getAvatar(), user.getGender());
@@ -99,7 +100,7 @@ public class ProfilePresenter extends BasePresenter {
         }
     }
 
-    public void postImage(Bitmap bitmap, boolean isBigImage, Context context) {
+    public void postImage(Bitmap bitmap, boolean isBigImage, Activity context) {
 
         view.showProgressDialog(view.getActivity().getResources().getString(R.string.upload_image));
         if (!checkConnnecttion(view))

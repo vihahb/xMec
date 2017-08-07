@@ -68,7 +68,7 @@ public class NotificationUtils {
 //        notificationManagerCompat.notify(1, notificationBuilder.build());
 //    }
 
-    public void showSmallNotification(int icon,
+    public void showSmallNotification(int id_notification, int icon,
                                       String title,
                                       String message,
                                       int iconNegative, String TitleNegative, PendingIntent pendingNegative,
@@ -106,7 +106,9 @@ public class NotificationUtils {
         }
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NOTIFICATION_ID, notificationBuilder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(id_notification, notificationBuilder.build());
+        }
     }
 
 
@@ -151,7 +153,9 @@ public class NotificationUtils {
         }
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NOTIFICATION_ID_BIG_IMAGE, notificationBuilder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(Config.NOTIFICATION_ID_BIG_IMAGE, notificationBuilder.build());
+        }
     }
 
     /**

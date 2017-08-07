@@ -3,6 +3,7 @@ package com.xtelsolution.xmec.views.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.model.entity.Article;
 import com.xtelsolution.xmec.views.activity.NewsDetailActivity;
 
@@ -21,6 +23,7 @@ import java.util.List;
  */
 
 public class NewsFeedAdapter extends RecyclerView.Adapter {
+    private static final String TAG = "NewsFeedAdapter";
     private List<Article> data;
     private Context mContext;
 
@@ -55,8 +58,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.e(TAG, "url link: " + article.getNewsFeed().getLink());
                     Intent intent = new Intent(mContext, NewsDetailActivity.class);
-                    intent.putExtra(NewsDetailActivity.TAG_NEWS_URL, article.getNewsFeed().getLink());
+                    intent.putExtra(Constant.STRING, article.getNewsFeed().getLink());
                     mContext.startActivity(intent);
                 }
             });

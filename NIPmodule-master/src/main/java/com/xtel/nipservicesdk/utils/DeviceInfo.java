@@ -30,8 +30,8 @@ public class DeviceInfo {
         device_vendor = android.os.Build.MANUFACTURER;
 
         DeviceObject deviceObject = new DeviceObject();
-//        deviceObject.setDeviceid(device_id);
-        deviceObject.setDeviceid("123456789123");
+        deviceObject.setDeviceid(device_id);
+//        deviceObject.setDeviceid("123456789123");
         deviceObject.setOs_name(device_os_name);
         deviceObject.setOs_version(device_os_ver);
         deviceObject.setOther("not yet");

@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtelsolution.xmec.common.xLog;
@@ -112,7 +113,7 @@ public class MapPresenter extends BasePresenter implements
         String location = "latitude=" + latitude + "&longitude=" + longitude;
         String url = "http://124.158.5.112:8092/xmec/v0.1/user/hospitals-around?latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius + "&type=-1";
         xLog.e("getHospitals", url);
-        HealthyCareModel.getInstance().getHospital(url, getSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
+        HealthyCareModel.getInstance().getHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Map_Healthy_Care>(RESP_List_Map_Healthy_Care.class) {
             @Override
             public void onSuccess(RESP_List_Map_Healthy_Care obj) {
                 List<RESP_Map_Healthy_Care> result = obj.getData();

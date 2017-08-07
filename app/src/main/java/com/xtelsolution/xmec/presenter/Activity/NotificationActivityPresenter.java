@@ -23,14 +23,14 @@ public class NotificationActivityPresenter {
     private ICommand iCmd = new ICommand() {
         @Override
         public void excute(Object... params) {
-            switch ((int)params[0]) {
+            switch ((int) params[0]) {
                 case 1:
                     //Get Notification
                     UserModel.getintance().getFriendRequest(LoginManager.getCurrentSession(), new ResponseHandle<RESP_ListFriend>(RESP_ListFriend.class) {
                         @Override
                         public void onSuccess(RESP_ListFriend obj) {
                             view.setRefresh(false);
-                            if (obj.getData().size() == 0){
+                            if (obj.getData().size() == 0) {
                                 view.getNotificationRequestError("Dữ liệu trống");
                             } else {
                                 view.getNotificationRequestSuccess(obj.getData());
@@ -40,9 +40,11 @@ public class NotificationActivityPresenter {
                         @Override
                         public void onError(Error error) {
                             view.setRefresh(false);
-                            if (error.getCode() == 2){
+                            if (error.getCode() == 2) {
                                 view.showToast(JsonParse.getCodeMessage(error.getCode(), "Có lỗi."));
                                 view.onAuthentExpired();
+                            } else if (error.getCode() == 101) {
+                                view.getNotificationRequestError("Dữ liệu trống");
                             } else {
                                 view.showToast(JsonParse.getCodeMessage(error.getCode(), "Có lỗi."));
                             }
@@ -62,7 +64,7 @@ public class NotificationActivityPresenter {
 
                         @Override
                         public void onError(Error error) {
-                            if (error.getCode() == 2){
+                            if (error.getCode() == 2) {
                                 view.showToast(JsonParse.getCodeMessage(error.getCode(), "Có lỗi."));
                                 view.onAuthentExpired();
                             } else {
@@ -84,7 +86,7 @@ public class NotificationActivityPresenter {
 
                         @Override
                         public void onError(Error error) {
-                            if (error.getCode() == 2){
+                            if (error.getCode() == 2) {
                                 view.showToast(JsonParse.getCodeMessage(error.getCode(), "Có lỗi."));
                                 view.onAuthentExpired();
                             } else {
@@ -101,24 +103,24 @@ public class NotificationActivityPresenter {
         this.view = view;
     }
 
-    public void getNotificationRequest(){
-        if (!NetWorkInfo.isOnline(view.getActivity())){
+    public void getNotificationRequest() {
+        if (!NetWorkInfo.isOnline(view.getActivity())) {
             view.onNoNetWork();
         } else {
             iCmd.excute(1);
         }
     }
 
-    public void onActiveFriend(int uid_friend){
-        if (!NetWorkInfo.isOnline(view.getActivity())){
+    public void onActiveFriend(int uid_friend) {
+        if (!NetWorkInfo.isOnline(view.getActivity())) {
             view.onNoNetWork();
         } else {
             iCmd.excute(2, uid_friend);
         }
     }
 
-    public void onDeclineFriend(int uid_friend){
-        if (!NetWorkInfo.isOnline(view.getActivity())){
+    public void onDeclineFriend(int uid_friend) {
+        if (!NetWorkInfo.isOnline(view.getActivity())) {
             view.onNoNetWork();
         } else {
             iCmd.excute(3, uid_friend);

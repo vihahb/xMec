@@ -104,27 +104,28 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
 
             switch (position) {
                 case 0:
-                    return NewsFragment.newInstance("http://suckhoe.vn/dinh-duong/1", "Dinh dưỡng");
+//                    return NewsFragment.newInstance("http://suckhoe.vn/dinh-duong/1", "Dinh dưỡng");
+                    return NewsFragment.newInstance("http://songkhoe.vn/widget.rss", "Trang chủ");
                 case 1:
-                    return NewsFragment.newInstance("http://suckhoe.vn/loi-song/1", "Lối sống");
+                    return NewsFragment.newInstance("http://songkhoe.vn/tam-su.rss", "Tâm sự");
                 case 2:
-                    return NewsFragment.newInstance("http://suckhoe.vn/lam-dep/1", "Làm đẹp");
+                    return NewsFragment.newInstance("http://songkhoe.vn/gioi-tinh.rss", "Giới tính");
                 case 3:
-                    return NewsFragment.newInstance("http://suckhoe.vn/cac-benh/1", "Các bệnh");
+                    return NewsFragment.newInstance("http://songkhoe.vn/dinh-duong.rss", "Dinh dưỡng");
                 case 4:
-                    return NewsFragment.newInstance("http://suckhoe.vn/thuoc/1", "Thuốc");
+                    return NewsFragment.newInstance("http://songkhoe.vn/thoi-su.rss", "Thời sự");
                 case 5:
-                    return NewsFragment.newInstance("http://suckhoe.vn/gioi-tinh/1", "Giới tính");
+                    return NewsFragment.newInstance("http://songkhoe.vn/lam-dep.rss", "Làm đẹp");
                 case 6:
-                    return NewsFragment.newInstance("http://suckhoe.vn/me-be/1", "Mẹ & Bé");
+                    return NewsFragment.newInstance("http://songkhoe.vn/lam-me.rss", "Làm mẹ");
                 case 7:
-                    return NewsFragment.newInstance("http://suckhoe.vn/trac-nghiem/1", "Trắc nghiệm");
+                    return NewsFragment.newInstance("http://songkhoe.vn/vui-khoe.rss", "Vui khỏe");
                 case 8:
-                    return NewsFragment.newInstance("http://suckhoe.vn/hoi-dap/1", "Hỏi đáp");
+                    return NewsFragment.newInstance("http://songkhoe.vn/can-biet.rss", "Cần biết");
                 case 9:
-                    return NewsFragment.newInstance("http://suckhoe.vn/meo-vat/1", "Mẹo vặt");
-                case 10:
-                    return NewsFragment.newInstance("http://suckhoe.vn/giai-tri/1", "Giải trí");
+                    return NewsFragment.newInstance("http://songkhoe.vn/video.rss", "Video");
+//                case 10:
+//                    return NewsFragment.newInstance("http://suckhoe.vn/giai-tri/1", "Giải trí");
             }
             return null;
         }
@@ -132,34 +133,57 @@ public class NewsFeedFragment extends Fragment implements ScreenShotable {
         @Override
         public int getCount() {
             // Show 9 total pages.
-            return 11;
+            return 10;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
+//                case 0:
+//                    return "Dinh dưỡng";
+//                case 1:
+//                    return "Lối sống";
+//                case 2:
+//                    return "Làm đẹp";
+//                case 3:
+//                    return "Các bệnh";
+//                case 4:
+//                    return "Thuốc";
+//                case 5:
+//                    return "Giới tính";
+//                case 6:
+//                    return "Mẹ & Bé";
+//                case 7:
+//                    return "Trắc nghiệm";
+//                case 8:
+//                    return "Hỏi đáp";
+//                case 9:
+//                    return "Mẹo vặt";
+//                case 10:
+//                    return "Giải trí";
+
                 case 0:
-                    return "Dinh dưỡng";
+                    return "Trang chủ";
                 case 1:
-                    return "Lối sống";
+                    return "Tâm sự";
                 case 2:
-                    return "Làm đẹp";
-                case 3:
-                    return "Các bệnh";
-                case 4:
-                    return "Thuốc";
-                case 5:
                     return "Giới tính";
+                case 3:
+                    return "Dinh dưỡng";
+                case 4:
+                    return "Thời sự";
+                case 5:
+                    return "Làm đẹp";
                 case 6:
-                    return "Mẹ & Bé";
+                    return "Làm mẹ";
                 case 7:
-                    return "Trắc nghiệm";
+                    return "Vui khỏe";
                 case 8:
-                    return "Hỏi đáp";
+                    return "Cần biết";
                 case 9:
-                    return "Mẹo vặt";
-                case 10:
-                    return "Giải trí";
+                    return "Video";
+//                case 10:
+//                    return "Giải trí";
             }
             return null;
         }

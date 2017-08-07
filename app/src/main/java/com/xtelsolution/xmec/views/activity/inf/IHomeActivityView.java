@@ -12,4 +12,7 @@ public interface IHomeActivityView extends BaseView {
 
     void updateTokenError();
 
+    void setNotificationSize(int size);
+
+    void setNotificationError();
 }

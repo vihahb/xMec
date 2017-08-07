@@ -27,19 +27,19 @@ public class DrugDetailsFragmentPresenter {
     private ICommand iCmd = new ICommand() {
         @Override
         public void excute(Object... params) {
-            switch ((int)params[0]){
+            switch ((int) params[0]) {
                 case 1:
                     int id_medical_report = (int) params[1];
                     MedicalDirectoryModel.getinstance().getListDrug(id_medical_report, LoginManager.getCurrentSession(), new ResponseHandle<RESP_DrugList>(RESP_DrugList.class) {
                         @Override
                         public void onSuccess(RESP_DrugList obj) {
                             ArrayList<DrugEntity> arrayList = new ArrayList<>();
-                            if (obj.getSpecial() != null && obj.getSpecial().getData().size() > 0){
+                            if (obj.getSpecial() != null && obj.getSpecial().getData().size() > 0) {
                                 SpecialEntity entity = obj.getSpecial();
                                 arrayList.addAll(entity.getData());
                             }
 
-                            if (obj.getGeneral() != null && obj.getGeneral().getData().size() > 0){
+                            if (obj.getGeneral() != null && obj.getGeneral().getData().size() > 0) {
                                 GeneralEntity generalEntity = obj.getGeneral();
                                 arrayList.addAll(generalEntity.getData());
                             }
@@ -49,12 +49,14 @@ public class DrugDetailsFragmentPresenter {
 
                         @Override
                         public void onError(Error error) {
-                            if (error != null && error.getCode() == 2){
+                            if (error != null && error.getCode() == 2) {
 //                                view.showToast(JsonParse.getCodeMessage(error.getCode(), "Có lỗi!"));
                                 view.showToast(view.getActivity().getString(com.xtel.nipservicesdk.R.string.error_session_invalid));
                                 view.requireLogin();
-                            } else if (error != null){
-                                if (error.getMessage() != null) {
+                            } else if (error != null && error.getCode() == 101) {
+                                view.setProgressView("Không có dữ liệu");
+                            } else {
+                                if (error != null && error.getMessage() != null) {
                                     view.getDrugListError(error.getMessage());
                                 }
                             }
@@ -87,16 +89,16 @@ public class DrugDetailsFragmentPresenter {
         this.view = view;
     }
 
-    public void getListDrug(int id_medical_report_book){
-        if (!NetWorkInfo.isOnline(view.getActivity())){
+    public void getListDrug(int id_medical_report_book) {
+        if (!NetWorkInfo.isOnline(view.getActivity())) {
             view.showToast("Không có kết nối mạng.");
         } else {
             iCmd.excute(1, id_medical_report_book);
         }
     }
 
-    public void addDrugToMedicineReport(int id_medicine_report_book, int id_medicine, String instruction){
-        if (!NetWorkInfo.isOnline(view.getActivity())){
+    public void addDrugToMedicineReport(int id_medicine_report_book, int id_medicine, String instruction) {
+        if (!NetWorkInfo.isOnline(view.getActivity())) {
             view.showToast("Không có internet");
         } else {
             iCmd.excute(2, id_medicine_report_book, id_medicine, instruction);

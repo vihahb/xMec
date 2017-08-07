@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.xtelsolution.xmec.MyApplication;
 import com.xtelsolution.xmec.R;
+import com.xtelsolution.xmec.callbacks.DialogActionListener;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.SharedPreferencesUtils;
 import com.xtelsolution.xmec.views.activity.LoginActivity;
@@ -108,6 +109,24 @@ public abstract class BasicFragment extends Fragment implements BaseView {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.show();
+    }
+
+    protected void showActionDialog(String title, String positiveTitle, final DialogActionListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle(title)
+                .setPositiveButton(positiveTitle, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        listener.onActionProcess();
                     }
                 })
                 .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {

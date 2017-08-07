@@ -219,19 +219,35 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/btnProfile"
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/dimen_18"
-                android:background="?attr/selectableItemBackground"
-                android:padding="8dp"
-                android:text="@string/update_profile_text"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/btnProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="@string/update_profile_text"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btnDeleteFriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:padding="8dp"
+                    android:text="@string/delete_friend_text"
+                    android:textColor="@color/red_error"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </FrameLayout>
         </RelativeLayout>
 
 

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.BasicModel;
+import com.xtel.nipservicesdk.model.entity.RESP_None;
 import com.xtelsolution.xmec.common.Constant;
 
 /**
@@ -72,8 +73,15 @@ public class UserModel extends BasicModel {
     }
 
     public void getMedicalFromUId(int uid, String session, ResponseHandle<RESP_List_Medical> responseHandle) {
-        String url = Constant.SERVER_XMEC + uid;
+//        String url = "http://124.158.5.112:8092/xmec/v0.1/user/medical-report-book/friend?uid=281&page=1&pagesize=10";
+        String url = Constant.SERVER_XMEC + "user/medical-report-book/friend?uid=" + uid + "&page=1&pagesize=10";
         Log.e(TAG, "getMedicalFromUId: " + url);
         requestServer.getApi(url, session, responseHandle);
+    }
+
+    public void deleteFriendFromUid(int uid, String session, ResponseHandle<RESP_None> responseHandle) {
+        String url = Constant.SERVER_XMEC + "friend?friend_id=" + uid;
+        Log.e(TAG, "deleteFriendFromUid: " + url);
+        requestServer.deleteApi(url, "", session, responseHandle);
     }
 }
