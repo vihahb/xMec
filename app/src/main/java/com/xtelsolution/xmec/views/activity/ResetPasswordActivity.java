@@ -113,7 +113,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements IResetPa
 
     private boolean validatePhone() {
         if (TextUtils.isEmpty(edtPhone.getText().toString())) {
-            showToast(getString(R.string.error_phone_number_null));
+//            showToast(getString(R.string.error_phone_number_null));
             edtPhone.setError(getString(R.string.error_phone_number_null));
             edtPhone.requestFocus();
             return false;
@@ -157,7 +157,8 @@ public class ResetPasswordActivity extends AppCompatActivity implements IResetPa
 
             @Override
             public void onError(Error error) {
-                showToast(error.getMessage());
+//                showToast(error.getMessage());
+                Log.e(TAG, "onError: " + error.getMessage());
             }
         });
     }

@@ -42,8 +42,6 @@ public class JsonParse {
             return NipApplication.context.getString(R.string.error_activation_failed);
         } else if (code == 100) {
             return NipApplication.context.getString(R.string.error_service_not_valid);
-        } else if (code == 101) {
-            return NipApplication.context.getString(R.string.error_service_in_valid);
         } else if (code == 102) {
             return NipApplication.context.getString(R.string.error_email_already);
         } else if (code == 103) {

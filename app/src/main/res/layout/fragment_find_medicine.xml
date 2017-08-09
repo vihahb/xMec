@@ -31,7 +31,7 @@
             android:paddingTop="8dp"
             android:textColor="@color/textTitle"
             android:textColorHint="@color/textHint"
-            android:textSize="@dimen/dimen12sp"
+            android:textSize="@dimen/dimen14sp"
             android:textStyle="bold" />
 
 
@@ -58,7 +58,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/result_search_mediacine_text"
             android:textColor="@color/textTitle"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView

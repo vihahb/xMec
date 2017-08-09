@@ -18,7 +18,7 @@ import com.xtelsolution.xmec.views.inf.BaseView;
 
 
 /**
- * Created by phimau on 3/22/2017.
+ * Created by phimau on 3/22/2017
  */
 
 public abstract class BasePresenter {
@@ -53,8 +53,8 @@ public abstract class BasePresenter {
         xLog.e(TAG, "handlerError" + error.toString());
         switch (error.getCode()) {
             case 2:
-                count++;
-                synchronized (Constant.iGetNewSession) {
+//                count++;
+                if (Constant.iGetNewSession) {
 //                    if (Constant.iGetNewSession) {
 //                        onGetNewSessionSuccess(param);
 //                        Constant.iGetNewSession = false;
@@ -64,7 +64,7 @@ public abstract class BasePresenter {
                     LoginModel.getInstance().getNewSession(service_code, new ResponseHandle<RESP_Login>(RESP_Login.class) {
                         @Override
                         public void onSuccess(RESP_Login obj) {
-                            view.dismissProgressDialog();
+//                        view.dismissProgressDialog();
                             xLog.e(TAG, "So lan het han " + count);
                             SharedUtils.getInstance().putStringValue(Cts.USER_SESSION, obj.getSession());
                             onGetNewSessionSuccess(param);

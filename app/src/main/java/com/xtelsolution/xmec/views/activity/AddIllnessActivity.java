@@ -173,9 +173,9 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
             @Override
             public void onItemClickListener(Object item, int position) {
                 if (item == null) {
-                    showToast("Item Null: " + position);
+//                    showToast("Item Null: " + position);
                 } else {
-                    showToast("Item: " + position);
+//                    showToast("Item: " + position);
                 }
             }
         });
@@ -220,7 +220,7 @@ public class AddIllnessActivity extends BasicActivity implements IAddIllnessView
 
     @Override
     public void onAddMedicineSuccess(int id) {
-        showToast("Thêm bệnh thành công");
+        showToast("Thêm thuốc thành công");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

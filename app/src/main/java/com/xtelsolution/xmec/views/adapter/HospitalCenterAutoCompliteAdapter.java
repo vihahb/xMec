@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.xtel.nipservicesdk.commons.Cts;
 import com.xtel.nipservicesdk.utils.JsonHelper;
+import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
@@ -79,15 +80,17 @@ public class HospitalCenterAutoCompliteAdapter extends BaseAdapter implements Fi
                 if (constraint != null && constraint.length() > 1) {
                     try {
                         xLog.e(TAG, "getFilter: " + Constant.LOGPHI + url + constraint.toString() + "&size=10");
-                        diseases = new GetToServer().execute(url + constraint.toString() + "&size=10", Constant.LOCAL_SECCION).get();
+                        diseases = new GetToServer().execute(url + constraint.toString() + "&size=10", SharedUtils.getInstance().getStringValue(Cts.USER_SESSION)).get();
                     } catch (InterruptedException e) {
                         xLog.e(TAG, "getFilter: " + e.getMessage());
                     } catch (ExecutionException e) {
                         xLog.e(TAG, "getFilter: " + e.getMessage());
                     }
-                    filterResults.values = diseases;
-                    filterResults.count = diseases.size();
-                    if (diseases.size() == 0)
+                    if (diseases != null && diseases.size() != 0) {
+                        filterResults.values = diseases;
+                        filterResults.count = diseases.size();
+                    }
+                    if (diseases != null && diseases.size() == 0)
                         Toast.makeText(mContext, R.string.map_no_search_resutl, Toast.LENGTH_SHORT).show();
 
                 }

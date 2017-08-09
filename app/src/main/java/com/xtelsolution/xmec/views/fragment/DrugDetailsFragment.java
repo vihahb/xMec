@@ -163,7 +163,7 @@ public class DrugDetailsFragment extends Fragment implements IDrugDetailsFragmen
 
     @Override
     public void getDrugListError(String mes) {
-        showToast(mes);
+//        showToast(mes);
         progress_bar.setVisibility(View.GONE);
     }
 

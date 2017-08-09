@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -249,7 +250,7 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
         switch (view.getId()) {
 
             case R.id.btn_update_info:
-                if (!mForm.isValid()) {
+                if (validData()) {
                     Toast.makeText(mContext, "Không được để trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -264,6 +265,23 @@ public class ProfileActivity extends BasicActivity implements View.OnClickListen
 
 
         }
+    }
+
+    private boolean validData() {
+        if (TextUtils.isEmpty(etName.getText().toString())) {
+            etName.setError("Tên không được để trống");
+            etName.requestFocus();
+        } else if (TextUtils.isEmpty(etBirthday.getText().toString())) {
+            etBirthday.setError("Ngày sinh được để trống");
+            etBirthday.requestFocus();
+        } else if (TextUtils.isEmpty(etHeight.getText().toString())) {
+            etHeight.setError("Chiều cao được để trống");
+            etHeight.requestFocus();
+        } else if (TextUtils.isEmpty(etWeight.getText().toString())) {
+            etWeight.setError("Cân nặng không được để trống");
+            etWeight.requestFocus();
+        }
+        return true;
     }
 
 

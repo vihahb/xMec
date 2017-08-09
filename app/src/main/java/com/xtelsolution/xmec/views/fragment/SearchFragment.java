@@ -138,7 +138,6 @@ public class SearchFragment extends BasicFragment implements ISearchNewsView, It
                     illnessAdapter.setLoadMore(true);
                     newsPresenter.checkSearchDisease(charSequence.toString());
                 }
-
             }
 
             @Override

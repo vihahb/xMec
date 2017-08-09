@@ -31,13 +31,13 @@ public class LoginPresenter {
                         @Override
                         public void onSuccess(RESP_None obj) {
                             view.updateTokenSuccess();
-                            view.showToast("Cập nhật Token thành công.");
+//                            view.showToast("Cập nhật Token thành công.");
                         }
 
                         @Override
                         public void onError(Error error) {
                             view.updateTokenError();
-                            view.showToast("Cập nhật Token thất bại.");
+//                            view.showToast("Cập nhật Token thất bại.");
                             Log.e("Error fcm put token", error.toString());
                         }
                     });

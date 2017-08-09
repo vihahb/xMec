@@ -92,7 +92,7 @@ public class MapFragment extends BasicFragment implements
     @Override
     public void onCreate(@android.support.annotation.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showToast("Đã tạo ");
+//        showToast("Đã tạo ");
     }
 
     @Nullable
@@ -380,12 +380,14 @@ public class MapFragment extends BasicFragment implements
             TextView tvName = (TextView) view.findViewById(R.id.tv_name);
             TextView tvAdress = (TextView) view.findViewById(R.id.tv_address);
 
-            if (clickedItem.getType() == 0)
-                img.setImageResource(R.drawable.marker_hospiotal);
-            else
-                img.setImageResource(R.drawable.ic_pharmacy);
-            tvName.setText(clickedItem.getTitle());
-            tvAdress.setText(clickedItem.getAddress());
+            if (clickedItem != null) {
+                if (clickedItem.getType() == 0)
+                    img.setImageResource(R.drawable.marker_hospiotal);
+                else
+                    img.setImageResource(R.drawable.ic_pharmacy);
+                tvName.setText(clickedItem.getTitle());
+                tvAdress.setText(clickedItem.getAddress());
+            }
             return view;
         }
 

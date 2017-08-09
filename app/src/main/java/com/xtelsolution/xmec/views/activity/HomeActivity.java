@@ -414,7 +414,7 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
 
     @Override
     public void updateTokenSuccess() {
-        showToast("Đã hủy dịch vụ thông báo đẩy.");
+//        showToast("Đã hủy dịch vụ thông báo đẩy.");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -425,7 +425,7 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
 
     @Override
     public void updateTokenError() {
-        showToast("Hủy dịch vụ thông báo đẩy thất bại.");
+//        showToast("Hủy dịch vụ thông báo đẩy thất bại.");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

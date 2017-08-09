@@ -282,6 +282,7 @@
                             android:layout_gravity="left"
                             android:text="@string/tong_hop"
                             android:textColor="@color/title_item"
+                            android:textSize="@dimen/dimen14sp"
                             android:textStyle="bold" />
 
                         <!--<Spinner-->

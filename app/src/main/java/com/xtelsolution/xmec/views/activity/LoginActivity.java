@@ -35,10 +35,12 @@ import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.callback.CallbackListenerActive;
 import com.xtel.nipservicesdk.callback.CallbackListenerReactive;
+import com.xtel.nipservicesdk.commons.Cts;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtel.nipservicesdk.model.entity.RESP_Reactive;
 import com.xtel.nipservicesdk.utils.JsonHelper;
+import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
@@ -111,7 +113,8 @@ public class LoginActivity extends BasicActivity implements ILoginActivity {
         btnLoginByFB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onFacebookLogin();
+//                onFacebookLogin();
+                showToast("Tính năng đang phát triển.");
             }
         });
 
@@ -165,6 +168,7 @@ public class LoginActivity extends BasicActivity implements ILoginActivity {
                             @Override
                             public void onError(Error error) {
                                 showToast(JsonHelper.toJson(error));
+                                Log.e(TAG, "onError: " + JsonHelper.toJson(error));
                             }
                         });
                     }
@@ -223,14 +227,17 @@ public class LoginActivity extends BasicActivity implements ILoginActivity {
     private void onPhoneLogin() {
         if (etPhone.getText().toString().trim().length() <= 9) {
             etPhone.setError("Số điện thoại không hợp lệ");
+            etPhone.requestFocus();
         } else if (etPassword.getText().toString().length() == 0) {
             etPassword.setError("Mật khẩu trống");
+            etPhone.requestFocus();
         } else {
             setDisenabledView();
             btnLoginbyPhone.setProgress(50);
             callbackManager.LoginNipAcc(etPhone.getText().toString(), etPassword.getText().toString(), true, new CallbacListener() {
                 @Override
                 public void onSuccess(RESP_Login success) {
+                    SharedUtils.getInstance().putStringValue(Cts.USER_SESSION, success.getSession());
                     String tokenFCM = FirebaseInstanceId.getInstance().getToken();
                     Log.e("tokenFCM", "onSuccess: " + tokenFCM);
                     presenter.updateFcmToken(tokenFCM, success.getSession());

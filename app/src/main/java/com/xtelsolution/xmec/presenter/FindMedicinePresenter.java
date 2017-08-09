@@ -2,7 +2,9 @@ package com.xtelsolution.xmec.presenter;
 
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
+import com.xtel.nipservicesdk.commons.Cts;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.MedicineModel;
@@ -27,7 +29,7 @@ public class FindMedicinePresenter extends BasePresenter {
         String url = Constant.SERVER_XMEC + Constant.MEDICINE_SEARCH + "?name=" + key + "&size=15";
         xLog.e(TAG, "searchMedicine:" + url);
         xLog.e(TAG, "searchMedicine: secsion: " + LoginManager.getCurrentSession());
-        MedicineModel.getInstance().findMedicine(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_List_Medicine_Compact>(RESP_List_Medicine_Compact.class) {
+        MedicineModel.getInstance().findMedicine(url, SharedUtils.getInstance().getStringValue(Cts.USER_SESSION), new ResponseHandle<RESP_List_Medicine_Compact>(RESP_List_Medicine_Compact.class) {
             @Override
             public void onSuccess(RESP_List_Medicine_Compact obj) {
                 view.onFindMedicienFinish(obj.getData());

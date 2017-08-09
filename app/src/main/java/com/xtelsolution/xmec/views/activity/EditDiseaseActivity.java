@@ -160,11 +160,11 @@ public class EditDiseaseActivity extends BasicActivity implements IEditDiseaseVi
         medicineAdapterOptionButton.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClickListener(Object item, int position) {
-                if (item == null) {
-                    showToast("Item Null: " + position);
-                } else {
-                    showToast("Item: " + position);
-                }
+//                if (item == null) {
+//                    showToast("Item Null: " + position);
+//                } else {
+//                    showToast("Item: " + position);
+//                }
             }
         });
         etFindDisease.setOnItemClickListener(new AdapterView.OnItemClickListener() {

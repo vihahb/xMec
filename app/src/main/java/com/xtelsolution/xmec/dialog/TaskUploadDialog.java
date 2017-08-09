@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.xtelsolution.xmec.R;
 
 /**
- * Created by vivhp on 8/7/2017.
+ * Created by vivhp on 8/7/2017
  */
 
 public class TaskUploadDialog {

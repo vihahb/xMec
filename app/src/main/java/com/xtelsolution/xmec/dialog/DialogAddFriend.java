@@ -181,7 +181,7 @@ public class DialogAddFriend {
         UserModel.getintance().addFriend(url_add, LoginManager.getCurrentSession(), new ResponseHandle<RESP_None>(RESP_None.class) {
             @Override
             public void onSuccess(RESP_None obj) {
-                Toast.makeText(context, "Thêm thành viên thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Đã gửi yêu cầu kết bạn!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
 

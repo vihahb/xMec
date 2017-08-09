@@ -2,7 +2,11 @@ package com.xtelsolution.xmec.presenter;
 
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
+import com.xtel.nipservicesdk.commons.Cts;
+import com.xtel.nipservicesdk.model.LoginModel;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.model.entity.RESP_Login;
+import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.callbacks.RSSGetter;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
@@ -78,11 +82,11 @@ public class SearchNewsPresenter extends BasePresenter {
 
 
     private void findDisease(final Object... param) {
-        String key = (String) param[1];
+        final String key = (String) param[0];
         String url = Constant.SERVER_XMEC + Constant.Disease + "?name=" + key + "&size=15";
         xLog.e(TAG, "Sear Disease:" + url);
         xLog.e(TAG, "searchMedicine: secsion: " + LoginManager.getCurrentSession());
-        DiseaseModel.getInstance().findDisease(url, Constant.LOCAL_SECCION, new ResponseHandle<RESP_List_Disease>(RESP_List_Disease.class) {
+        DiseaseModel.getInstance().findDisease(url, SharedUtils.getInstance().getStringValue(Cts.USER_SESSION), new ResponseHandle<RESP_List_Disease>(RESP_List_Disease.class) {
             @Override
             public void onSuccess(RESP_List_Disease obj) {
                 view.onFindDiseaseFinish(obj.getList());
@@ -90,6 +94,20 @@ public class SearchNewsPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
+                if (error != null && error.getCode() == 2) {
+                    LoginModel.getInstance().getNewSession(LoginModel.getInstance().getServiceCode(view.getActivity()), new ResponseHandle<RESP_Login>(RESP_Login.class) {
+                        @Override
+                        public void onSuccess(RESP_Login obj) {
+                            SharedUtils.getInstance().putStringValue(Cts.USER_SESSION, obj.getSession());
+                            findDisease(key);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.showToast("Có lỗi xảy ra.");
+                        }
+                    });
+                }
                 handlerError(view, error, param);
             }
         });
@@ -98,7 +116,7 @@ public class SearchNewsPresenter extends BasePresenter {
     public void checkSearchDisease(String key) {
         if (!checkConnnecttion(view))
             return;
-        findDisease(SEARDISEASE, key);
+        findDisease(key);
     }
 
     @Override
