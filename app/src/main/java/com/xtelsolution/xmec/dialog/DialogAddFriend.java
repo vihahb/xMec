@@ -1,7 +1,9 @@
 package com.xtelsolution.xmec.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -29,6 +31,7 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.model.RESP_User;
 import com.xtelsolution.xmec.model.UserModel;
+import com.xtelsolution.xmec.views.activity.LoginActivity;
 import com.xtelsolution.xmec.views.widget.RoundedImageView;
 
 /**
@@ -39,7 +42,7 @@ public class DialogAddFriend {
     static String TAG = "DialogAddFriend";
     static int friend_id = -1;
 
-    public static Dialog DiaLodAddFriend(final Context context) {
+    public static Dialog DiaLodAddFriend(final Activity context) {
         final Dialog dialog = new Dialog(context, R.style.Theme_Transparent);
         dialog.setContentView(R.layout.dialog_add_friend);
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -109,17 +112,22 @@ public class DialogAddFriend {
 
                         @Override
                         public void onError(Error error) {
-                            btnSend.setProgress(-1);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    btnSend.setProgress(0);
-                                    btnSend.setEnabled(true);
-                                    numberPhone.setEnabled(true);
-                                }
-                            }, 1000);
-                            btnSend.setEnabled(true);
-                            numberPhone.setEnabled(true);
+                            if (error != null && error.getCode() == 2) {
+                                context.startActivity(new Intent(context, LoginActivity.class));
+                                context.finish();
+                            } else {
+                                btnSend.setProgress(-1);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        btnSend.setProgress(0);
+                                        btnSend.setEnabled(true);
+                                        numberPhone.setEnabled(true);
+                                    }
+                                }, 1000);
+                                btnSend.setEnabled(true);
+                                numberPhone.setEnabled(true);
+                            }
                         }
                     });
                 }

@@ -2,9 +2,12 @@ package com.xtelsolution.xmec.presenter;
 
 import android.text.TextUtils;
 
+import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtel.nipservicesdk.model.entity.RESP_None;
 import com.xtel.nipservicesdk.utils.JsonParse;
 import com.xtelsolution.xmec.callbacks.ICommand;
@@ -46,8 +49,20 @@ public class HomePresenter extends BasePresenter {
 
                         @Override
                         public void onError(Error error) {
-                            handlerError(view, error, GetFriend);
-                            if (!TextUtils.isEmpty(error.getMessage())) {
+                            if (error.getCode() == 2) {
+                                CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                                    @Override
+                                    public void onSuccess(RESP_Login success) {
+                                        getUserFriend();
+                                    }
+
+                                    @Override
+                                    public void onError(Error error) {
+                                        view.requireLogin();
+                                        view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                                    }
+                                });
+                            } else if (!TextUtils.isEmpty(error.getMessage())) {
                                 view.showToast(error.getMessage());
                             } else {
                                 view.showToast(JsonParse.getCodeMessage(error.getCode(), "Có lỗi xảy ra."));
@@ -69,12 +84,24 @@ public class HomePresenter extends BasePresenter {
                         @Override
                         public void onError(Error error) {
                             if (error != null && error.getCode() == 2) {
-                                view.showToast(JsonParse.getCodeMessage(error.getCode(), "Có lỗi."));
-                                view.requireLogin();
+//                                view.showToast(JsonParse.getCodeMessage(error.getCode(), "Có lỗi."));
+                                CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                                    @Override
+                                    public void onSuccess(RESP_Login success) {
+                                        getMedicalFromUserId(uid);
+                                    }
+
+                                    @Override
+                                    public void onError(Error error) {
+                                        view.requireLogin();
+                                        view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                                    }
+                                });
+//                                view.requireLogin();
                             } else {
                                 if (error != null && error.getMessage() != null) {
                                     view.getMedicalFromUIdError(error.getMessage());
-                                    handlerError(view, error, GetMedicalUid, uid);
+//                                    handlerError(view, error, GetMedicalUid, uid);
                                 }
                             }
                         }
@@ -93,8 +120,24 @@ public class HomePresenter extends BasePresenter {
 
                         @Override
                         public void onError(Error error) {
-                            xLog.e(TAG, "getMedicalReportBooks: onError" + error.toString());
-                            handlerError(view, error, GETMEDICAL);
+                            if (error != null) {
+//                                xLog.e(TAG, "getMedicalReportBooks: onError" + error.toString());
+                                if (error.getCode() == 2) {
+                                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                                        @Override
+                                        public void onSuccess(RESP_Login success) {
+                                            getMedicalReportBookDefault();
+                                        }
+
+                                        @Override
+                                        public void onError(Error error) {
+                                            view.requireLogin();
+                                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                                        }
+                                    });
+                                }
+//                            handlerError(view, error, GETMEDICAL);
+                            }
                         }
                     });
                     break;
@@ -110,7 +153,19 @@ public class HomePresenter extends BasePresenter {
                         @Override
                         public void onError(Error error) {
                             if (error.getCode() == 2) {
-                                handlerError(view, error, DeleteFriend, friend_uid);
+//                                handlerError(view, error, DeleteFriend, friend_uid);
+                                CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                                    @Override
+                                    public void onSuccess(RESP_Login success) {
+                                        deleteFriend(friend_uid);
+                                    }
+
+                                    @Override
+                                    public void onError(Error error) {
+                                        view.requireLogin();
+                                        view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                                    }
+                                });
                             } else {
 
                             }
@@ -138,7 +193,22 @@ public class HomePresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, GETUSER);
+                if (error.getCode() == 2) {
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            getUser(GETUSER);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
@@ -166,11 +236,13 @@ public class HomePresenter extends BasePresenter {
         if (!checkConnnecttion(view))
             return;
         if (SharedPreferencesUtils.getInstance().isLogined()) {
-            if (userModel == null) {
+            if (userModel != null) {
+                view.onGetUerSusscess(userModel);
+            } else {
                 getUser(GETUSER);
-            } else view.onGetUerSusscess(userModel);
+            }
         } else {
-            view.onGetUerSusscess(null);
+            view.showToast("Vui lòng đăng nhập để có thể sử dụng được tất cả chức năng.");
         }
 
     }
@@ -223,26 +295,4 @@ public class HomePresenter extends BasePresenter {
 //            getMedicalReportBooks(GETMEDICAL);
 //        }
 //    }
-
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-        switch ((int) param[0]) {
-            case GETUSER:
-                getUser(param);
-                break;
-            case GETMEDICAL:
-//                getMedicalReportBooks(param);
-                getMedicalReportBookDefault();
-                break;
-            case GetFriend:
-                getUserFriend();
-                break;
-            case GetMedicalUid:
-                getMedicalFromUserId((Integer) param[1]);
-                break;
-
-            case DeleteFriend:
-                deleteFriend((Integer) param[1]);
-        }
-    }
 }

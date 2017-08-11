@@ -31,4 +31,10 @@ public interface IMapView extends BaseView {
     void onGPSDisabled();
 
     Fragment getFragmentView();
+
+    void startSearchHospital();
+
+    void onGetSuggestionSuccess(List<RESP_Map_Healthy_Care> list);
+
+    void onCLickRecycleItem(RESP_Map_Healthy_Care healthyCare);
 }

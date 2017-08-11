@@ -16,4 +16,6 @@ public interface BaseView {
     void showProgressDialog(String title);
 
     void dismissProgressDialog();
+
+    void requireLogin();
 }

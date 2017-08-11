@@ -9,21 +9,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.SearchView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,12 +46,15 @@ import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
 import com.xtelsolution.xmec.model.entity.HospitalClusterItem;
 import com.xtelsolution.xmec.presenter.MapPresenter;
 import com.xtelsolution.xmec.views.activity.DetailHospitalActivity;
+import com.xtelsolution.xmec.views.adapter.AdapterFindResult;
 import com.xtelsolution.xmec.views.adapter.HospitalCenterAutoCompliteAdapter;
 import com.xtelsolution.xmec.views.inf.IMapView;
 import com.xtelsolution.xmec.views.smallviews.DelayAutoCompleteTextView;
 import com.xtelsolution.xmec.views.widget.CustomClusterManager;
 import com.xtelsolution.xmec.views.widget.CustomClusterRender;
+import com.xtelsolution.xmec.views.widget.CustomLayoutManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -63,6 +69,7 @@ public class MapFragment extends BasicFragment implements
         ClusterManager.OnClusterItemClickListener, GoogleMap.OnInfoWindowClickListener {
     private static final String TAG = "MapFragment";
     int count = 0;
+    private IMapView inf = this;
     private View view;
     private GoogleMap mMap;
     private Marker mMarker;
@@ -79,6 +86,14 @@ public class MapFragment extends BasicFragment implements
     private HospitalClusterItem clickedItem;
     private CustomClusterManager clusterManager;
     private BroadcastReceiver receiver;
+    private BottomSheetBehavior bottomSheetBehavior;
+    private RecyclerView rcl_find_result;
+    private AdapterFindResult adapterFindResult;
+    private List<RESP_Map_Healthy_Care> careList;
+    private ProgressBar progressFind;
+    private TextView tv_state;
+    private CoordinatorLayout mainLayout;
+    private RadioGroup group_action;
 
     public static MapFragment newInstance() {
 
@@ -87,6 +102,15 @@ public class MapFragment extends BasicFragment implements
         MapFragment fragment = new MapFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void showScreenBottomSheet(boolean isFullScreen) {
+        if (isFullScreen) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+
     }
 
     @Override
@@ -136,7 +160,51 @@ public class MapFragment extends BasicFragment implements
 
 
     private void initview() {
-        btnCurrentLocation = (FloatingActionButton) view.findViewById(R.id.btn__current_location);
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                group_action = (RadioGroup) getActivity().findViewById(R.id.group_action);
+
+                group_action.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        switch (checkedId) {
+                            case R.id.radio_list:
+                                //Handler left radio in map fragment select
+                                showScreenBottomSheet(true);
+                                showToast("Left Radio Click");
+                                break;
+                            case R.id.radio_maps:
+                                //Handler Right radio in map fragment select
+                                showToast("Right Radio Click");
+                                showScreenBottomSheet(false);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+                mainLayout = (CoordinatorLayout) view.findViewById(R.id.main_content);
+                careList = new ArrayList<>();
+                View bottomSheet = view.findViewById(R.id.bottom_sheet);
+                tv_state = (TextView) bottomSheet.findViewById(R.id.tv_state_bottom);
+                progressFind = (ProgressBar) bottomSheet.findViewById(R.id.progress_find);
+                rcl_find_result = (RecyclerView) bottomSheet.findViewById(R.id.rcl_find_result);
+                rcl_find_result.setNestedScrollingEnabled(false);
+                adapterFindResult = new AdapterFindResult(getActivity(), careList, inf);
+                CustomLayoutManager customLayoutManager = new CustomLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                rcl_find_result.setLayoutManager(customLayoutManager);
+                rcl_find_result.setAdapter(adapterFindResult);
+                bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+            }
+        }, 300);
+
+
+        btnCurrentLocation = (FloatingActionButton) view.findViewById(R.id.btn_current_location);
         locationPermission = (CoordinatorLayout) view.findViewById(R.id.location_permission);
         btnInitPermission = (Button) view.findViewById(R.id.btn_init_permission);
         etFindHospital = (DelayAutoCompleteTextView) getActivity().findViewById(R.id.ed_search);
@@ -145,10 +213,39 @@ public class MapFragment extends BasicFragment implements
     }
 
     private void initAdapter() {
-        findHospital = new HospitalCenterAutoCompliteAdapter(getActivity());
-        etFindHospital.setThreshold(3);
-        etFindHospital.setLoadingIndicator(progressBar);
-        etFindHospital.setAdapter(findHospital);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                findHospital = new HospitalCenterAutoCompliteAdapter(getActivity(), inf);
+                etFindHospital.setThreshold(3);
+                etFindHospital.setLoadingIndicator(progressBar);
+                etFindHospital.setAdapter(findHospital);
+
+                etFindHospital.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (count > 0) {
+                            group_action.check(R.id.radio_list);
+                            startSearchHospital();
+                        } else {
+                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+            }
+        }, 200);
+
     }
 
     private void initControl() {
@@ -290,6 +387,48 @@ public class MapFragment extends BasicFragment implements
     }
 
     @Override
+    public void startSearchHospital() {
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    @Override
+    public void onGetSuggestionSuccess(List<RESP_Map_Healthy_Care> list) {
+        if (list != null && list.size() > 0) {
+            if (careList != null && careList.size() > 0) {
+                careList.clear();
+                careList.addAll(list);
+            } else {
+                if (careList != null)
+                    careList.addAll(list);
+            }
+            adapterFindResult.notifyDataSetChanged();
+            setComponentVisible(false);
+        } else {
+            setComponentVisible(true);
+        }
+    }
+
+    @Override
+    public void onCLickRecycleItem(RESP_Map_Healthy_Care healthyCare) {
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(healthyCare.getLat(), healthyCare.getLng()), 18f));
+        presenter.addHealThyCare(healthyCare);
+    }
+
+    private void setComponentVisible(boolean isVisible) {
+        if (isVisible) {
+            rcl_find_result.setVisibility(View.GONE);
+            progressFind.setVisibility(View.GONE);
+            tv_state.setText("Không tìm thấy kết quả.");
+            tv_state.setVisibility(View.VISIBLE);
+        } else {
+            rcl_find_result.setVisibility(View.VISIBLE);
+            progressFind.setVisibility(View.GONE);
+            tv_state.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         presenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -318,6 +457,9 @@ public class MapFragment extends BasicFragment implements
 
     @Override
     public void onCameraIdle() {
+        if (bottomSheetBehavior != null) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
         xLog.e(TAG, "onCameraIdle:" + mMap.getCameraPosition().target.latitude + "           " + mMap.getCameraPosition().target.longitude);
         presenter.checkGetHospital(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
     }
@@ -339,24 +481,23 @@ public class MapFragment extends BasicFragment implements
         return false;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_find_health_cennter, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        super.onCreateOptionsMenu(menu, inflater);
-
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.menu_find_health_cennter, menu);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+//
+//    }
 
     @Override
     public void onInfoWindowClick(Marker marker) {

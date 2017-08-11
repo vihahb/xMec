@@ -147,7 +147,7 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
                 if (!isLogin())
                     showLoginDialog();
                 else {
-                    DialogAddFriend.DiaLodAddFriend(mContext).show();
+                    DialogAddFriend.DiaLodAddFriend(getActivity()).show();
                 }
             }
         });
@@ -251,6 +251,7 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
             Log.e(TAG, "onGetFriendActiveSuccess: add user " + i);
         }
         userAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
         Log.e(TAG, "list uer: " + mlistUsers.size());
     }
 
@@ -302,15 +303,13 @@ public class HomeFragment extends BasicFragment implements /*ScreenShotable,*/ I
 
     @Override
     public void onGetMedicalDefault(ArrayList<RESP_Medical> arrayList) {
+        Log.e(TAG, "onGetMedicalDefault Size: " + arrayList.size());
         if (arrayList.size() == 0) {
             setStateVisible("Không có dữ liệu");
         }
-        if (mlistMedica.size() > 0) {
-            mlistMedica.clear();
-        }
-        mlistMedica.addAll(arrayList);
-        listUserMedical.get(0).setMedical(mlistMedica);
-        adapter.notifyDataSetChanged();
+        adapter.addCleanAll(arrayList, true);
+        listUserMedical.get(0).setMedical(arrayList);
+
     }
 
     @Override

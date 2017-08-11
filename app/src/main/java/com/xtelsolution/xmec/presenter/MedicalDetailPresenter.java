@@ -2,10 +2,13 @@ package com.xtelsolution.xmec.presenter;
 
 import android.util.Log;
 
+import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
 import com.xtel.nipservicesdk.model.entity.RESP_Basic;
+import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
@@ -47,13 +50,28 @@ public class MedicalDetailPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, param);
+                if (error.getCode() == 2) {
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            getDetailMedical(GETDETAIlMEDICAL, id);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
 
     private void getListIllness(final Object... param) {
-        int id = (int) param[1];
+        final int id = (int) param[1];
         String url = Constant.SERVER_XMEC + Constant.ILLNESS + "/" + id;
         xLog.e(TAG, "getListIllness: " + Constant.LOGPHI + "url" + url);
         DiseaseModel.getInstance().getListIllness(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_List_Disease_With_Link>(RESP_List_Disease_With_Link.class) {
@@ -65,7 +83,22 @@ public class MedicalDetailPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, param);
+                if (error.getCode() == 2) {
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            getListIllness(GETLISTILLNESS, id);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
@@ -73,13 +106,13 @@ public class MedicalDetailPresenter extends BasePresenter {
     //    int id,String name,long beginTime,long endTime,int type,String note,List<Resource> resources
     private void updateMedicalDirectory(final Object... param) {
 //        RESP_Medical medical = (RESP_Medical) param[1];
-        int id = (int) param[1];
+        final int id = (int) param[1];
         final String name = (String) param[2];
-        long beginTime = (long) param[3];
-        long endTime = (long) param[4];
-        int type = (int) param[5];
-        String note = (String) param[6];
-        List<Resource> resources = (List<Resource>) param[7];
+        final long beginTime = (long) param[3];
+        final long endTime = (long) param[4];
+        final int type = (int) param[5];
+        final String note = (String) param[6];
+        final List<Resource> resources = (List<Resource>) param[7];
         view.showProgressDialog("Đang cập nhật");
         String url = Constant.SERVER_XMEC + Constant.MEDICAL_REPORT_BOOK;
         Log.e("ADD", "addMedicalDirectorry: " + url);
@@ -106,13 +139,28 @@ public class MedicalDetailPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, param);
+                if (error.getCode() == 2) {
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            updateMedicalDirectory(UPDATEMEDICAL, id, name, beginTime, endTime, type, note, resources);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
 
     public void removeMedical(final Object... param) {
-        int id = (int) param[1];
+        final int id = (int) param[1];
         view.showProgressDialog("Đang Xóa");
         String url = Constant.SERVER_XMEC + Constant.MEDICAL_REPORT_BOOK + "/" + id;
         MedicalDirectoryModel.getinstance().deleteMedicalDirectory(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Basic>(RESP_Basic.class) {
@@ -124,7 +172,22 @@ public class MedicalDetailPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, param);
+                if (error.getCode() == 2) {
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            removeMedical(REMOVEMEDiCAL, id);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
 
@@ -153,22 +216,5 @@ public class MedicalDetailPresenter extends BasePresenter {
         if (!checkConnnecttion(view))
             return;
         updateMedicalDirectory(UPDATEMEDICAL, id, name, beginTime, endTime, type, note, resources);
-    }
-
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-        switch ((int) param[0]) {
-            case GETDETAIlMEDICAL:
-                getDetailMedical(param);
-                break;
-            case GETLISTILLNESS:
-                getListIllness(param);
-                break;
-            case REMOVEMEDiCAL:
-                removeMedical(param);
-                break;
-            case UPDATEMEDICAL:
-                updateMedicalDirectory(param);
-        }
     }
 }

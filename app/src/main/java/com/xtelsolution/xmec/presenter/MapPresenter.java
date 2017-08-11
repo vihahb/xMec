@@ -19,9 +19,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.HealthyCareModel;
 import com.xtelsolution.xmec.model.RESP_List_Map_Healthy_Care;
@@ -106,8 +109,8 @@ public class MapPresenter extends BasePresenter implements
     }
 
     public void getHospitals(final Object... param) {
-        double latitude = (double) param[1];
-        double longitude = (double) param[2];
+        final double latitude = (double) param[1];
+        final double longitude = (double) param[2];
         if (latitude == 0 && longitude == 0)
             return;
         String location = "latitude=" + latitude + "&longitude=" + longitude;
@@ -129,7 +132,22 @@ public class MapPresenter extends BasePresenter implements
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, param);
+                if (error.getCode() == 2) {
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            getHospitals(GETLOCATION, latitude, longitude);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
@@ -160,7 +178,7 @@ public class MapPresenter extends BasePresenter implements
     }
 
     public void initPermission() {
-        view.getFragmentView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
+        view.getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 99);
     }
 
     private void createLocationRequest() {
@@ -168,15 +186,6 @@ public class MapPresenter extends BasePresenter implements
         locationRequest.setInterval(1000);
         locationRequest.setFastestInterval(500);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
-
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-        switch ((int) param[0]) {
-            case GETLOCATION:
-                getHospitals(param);
-                break;
-        }
     }
 
     @Override

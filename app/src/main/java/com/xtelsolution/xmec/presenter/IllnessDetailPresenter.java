@@ -80,16 +80,5 @@ public class IllnessDetailPresenter extends BasePresenter {
         }).execute(url);
     }
 
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-//        switch ((int)param[0]){
-//            case GETUSER:
-//                getUser(param);
-//                break;
-//            case GETMEDICAL:
-//                getMedicalReportBooks();
-//                break;
-//        }
-    }
 }
 

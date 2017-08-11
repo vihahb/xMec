@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.xtel.nipservicesdk.CallbackManager;
@@ -61,6 +62,9 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
     private GuillotineAnimation animation;
     private HomeActivityPresenter presenter;
     private int notificationNumber = 0;
+    private Menu menu;
+    private RadioGroup group_action;
+    private boolean mapsFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,7 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
         root = (FrameLayout) findViewById(R.id.container_frame);
         contentHamburger = (View) findViewById(R.id.content_hamburger);
         llMapToolbar = (LinearLayout) findViewById(R.id.toolbar_search);
+        group_action = (RadioGroup) findViewById(R.id.group_action);
         guillotineMenu = LayoutInflater.from(this).inflate(R.layout.navigation_layout, null);
         root.addView(guillotineMenu);
         View view = guillotineMenu.findViewById(R.id.guillotine_hamburger);
@@ -213,11 +218,14 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
     private void dissisMapToolbar() {
         tvtoolbarTitle.setVisibility(View.VISIBLE);
         llMapToolbar.setVisibility(View.GONE);
+        group_action.setVisibility(View.GONE);
     }
 
     private void showMapToolbar() {
+        mapsFragment = true;
         tvtoolbarTitle.setVisibility(View.GONE);
         llMapToolbar.setVisibility(View.VISIBLE);
+        group_action.setVisibility(View.VISIBLE);
     }
 
     public void initReceiver() {
@@ -255,32 +263,14 @@ public class HomeActivity extends BasicActivity implements IHomeActivityView, /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.search_view).getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
-//        final MenuItem menuItem = menu.findItem(R.id.list);
-//        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                isShowingListType = !isShowingListType;
-//                menuItem.setIcon(getResources().getDrawable(getDrawable()));
-//                return false;
-//            }
-//        });
-        if (notificationNumber > 0) {
+        if (mapsFragment) {
+            menu.getItem(0).setVisible(false);
+            menu.getItem(1).setVisible(false);
+            menu.getItem(2).setVisible(false);
         } else {
+            menu.getItem(1).setVisible(true);
         }
-
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     public int getDrawable() {

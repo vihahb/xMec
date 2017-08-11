@@ -24,6 +24,7 @@ import com.xtelsolution.xmec.model.RESP_Disease;
 import com.xtelsolution.xmec.model.RESP_Medical_Detail;
 import com.xtelsolution.xmec.presenter.MedicalDetailPresenter;
 import com.xtelsolution.xmec.views.activity.AddIllnessActivity;
+import com.xtelsolution.xmec.views.activity.LoginActivity;
 import com.xtelsolution.xmec.views.activity.MedicalDetailActivity;
 import com.xtelsolution.xmec.views.activity.UserDiseaseDetailActivity;
 import com.xtelsolution.xmec.views.adapter.IllnessAdapterWithEditButton;
@@ -123,6 +124,14 @@ public class MedicineInMedicalDetailFragment extends Fragment implements IMedica
     @Override
     public void dismissProgressDialog() {
 
+    }
+
+    @Override
+    public void requireLogin() {
+        if (!LoginActivity.active) {
+            getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+            getActivity().finish();
+        }
     }
 
     @Override

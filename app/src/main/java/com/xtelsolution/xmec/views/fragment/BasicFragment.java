@@ -143,4 +143,11 @@ public abstract class BasicFragment extends Fragment implements BaseView {
             return true;
         return false;
     }
+
+    public void requireLogin() {
+        if (LoginActivity.active) {
+            getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+            getActivity().finish();
+        }
+    }
 }

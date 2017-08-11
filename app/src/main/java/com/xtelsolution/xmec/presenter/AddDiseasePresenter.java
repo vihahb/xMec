@@ -1,8 +1,11 @@
 package com.xtelsolution.xmec.presenter;
 
+import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
@@ -33,10 +36,10 @@ public class AddDiseasePresenter extends BasePresenter {
     public void addDeisease(final Object... param) {
         view.showProgressDialog("Đang thêm bệnh");
         String url = Constant.SERVER_XMEC + Constant.DISEASE;
-        int idMedical = (int) param[1];
-        String name = (String) param[2];
-        int idDisease = (int) param[3];
-        String note = (String) param[4];
+        final int idMedical = (int) param[1];
+        final String name = (String) param[2];
+        final int idDisease = (int) param[3];
+        final String note = (String) param[4];
         final List<REQ_Medicine> medicines = (List<REQ_Medicine>) param[5];
         REQ_Add_Disease disease = new REQ_Add_Disease(idMedical, name, idDisease, note, medicines);
         xLog.e(TAG, "addDeisease: " + Constant.LOGPHI + JsonHelper.toJson(disease));
@@ -63,7 +66,24 @@ public class AddDiseasePresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, ADD_DISEASE, param);
+//                handlerError(view, error, ADD_DISEASE, param);
+                if (error.getCode() == 2) {
+//                                handlerError(view, error, DeleteFriend, friend_uid);
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            addDeisease(ADD_DISEASE, idMedical, name, idDisease, note, medicines);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
@@ -136,18 +156,10 @@ public class AddDiseasePresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error);
+//                handlerError(view, error);
             }
         });
     }
 
-
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-        switch ((int) param[0]) {
-            case ADD_DISEASE:
-                addDeisease(param);
-        }
-    }
 }
 

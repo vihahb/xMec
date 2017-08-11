@@ -57,6 +57,7 @@ import java.util.Collections;
 
 public class LoginActivity extends BasicActivity implements ILoginActivity {
     private static final String TAG = "LoginActivity";
+    public static boolean active = false;
     LoginPresenter presenter;
     private ImageView imgLogo;
     private TextView tvSignUp, tv_ForgotPassword;
@@ -380,5 +381,17 @@ public class LoginActivity extends BasicActivity implements ILoginActivity {
                 startActivityFinishAll();
             }
         }, 1000);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        active = false;
     }
 }

@@ -1,8 +1,11 @@
 package com.xtelsolution.xmec.presenter;
 
+import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtelsolution.xmec.callbacks.HtmlLoader;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
@@ -29,7 +32,7 @@ public class HeathyCareDetailPresenter extends BasePresenter {
     }
 
     private void getHeathyCareDetail(final Object... param) {
-        int id = (int) param[1];
+        final int id = (int) param[1];
         String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER + "/" + id;
         xLog.e(TAG, "getHeathyCareDetail: " + url);
         HealthyCareModel.getInstance().getDetailHospital(url, LoginManager.getCurrentSession(), new ResponseHandle<RESP_Healthy_Care_Detail>(RESP_Healthy_Care_Detail.class) {
@@ -41,7 +44,22 @@ public class HeathyCareDetailPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, param);
+                if (error.getCode() == 2) {
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            getHeathyCareDetail(GETHEALTHCAREDETAIl, id);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
@@ -127,12 +145,4 @@ public class HeathyCareDetailPresenter extends BasePresenter {
         getHeathyCareDetail(GETHEALTHCAREDETAIl, id);
     }
 
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-        switch ((int) param[0]) {
-            case 1:
-                getHeathyCareDetail(param);
-                break;
-        }
-    }
 }

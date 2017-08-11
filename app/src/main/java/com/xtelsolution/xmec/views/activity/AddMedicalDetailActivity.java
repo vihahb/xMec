@@ -254,8 +254,12 @@ public class AddMedicalDetailActivity extends BasicActivity implements IAddMedic
         MenuInflater inflater = getMenuInflater();
         if (idMedical != -1)
             inflater.inflate(R.menu.menu_remove_medical, menu);
-        else
+        else {
             inflater.inflate(R.menu.menu_main, menu);
+            menu.getItem(0).setVisible(false);
+            menu.getItem(1).setVisible(false);
+            menu.getItem(2).setVisible(true);
+        }
         return true;
     }
 

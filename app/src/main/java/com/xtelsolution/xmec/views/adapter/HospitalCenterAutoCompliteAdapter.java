@@ -1,5 +1,6 @@
 package com.xtelsolution.xmec.views.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
 import com.xtelsolution.xmec.model.RESP_List_Map_Healthy_Care;
 import com.xtelsolution.xmec.model.RESP_Map_Healthy_Care;
+import com.xtelsolution.xmec.views.inf.IMapView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,17 +39,19 @@ public class HospitalCenterAutoCompliteAdapter extends BaseAdapter implements Fi
 
     private static final String url = Constant.SERVER_XMEC + Constant.HEALTHY_CENTER_HOME + "name?key=";
     private static final String TAG = "HospitalCenterAutoCompliteAdapter";
-
+    List<RESP_Map_Healthy_Care> diseases;
     private List<RESP_Map_Healthy_Care> healthyCares = new ArrayList<>();
     private Context mContext;
+    private IMapView view;
 
-    public HospitalCenterAutoCompliteAdapter(Context mContext) {
+    public HospitalCenterAutoCompliteAdapter(Context mContext, IMapView view) {
         this.mContext = mContext;
+        this.view = view;
     }
 
     @Override
     public int getCount() {
-        return healthyCares.size();
+        return 0;
     }
 
     @Override
@@ -60,6 +64,7 @@ public class HospitalCenterAutoCompliteAdapter extends BaseAdapter implements Fi
         return 0;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
@@ -76,7 +81,7 @@ public class HospitalCenterAutoCompliteAdapter extends BaseAdapter implements Fi
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
                 xLog.e(TAG, "getFilter: " + constraint.toString());
-                List<RESP_Map_Healthy_Care> diseases = new ArrayList<>();
+                diseases = new ArrayList<>();
                 if (constraint != null && constraint.length() > 1) {
                     try {
                         xLog.e(TAG, "getFilter: " + Constant.LOGPHI + url + constraint.toString() + "&size=10");
@@ -105,12 +110,24 @@ public class HospitalCenterAutoCompliteAdapter extends BaseAdapter implements Fi
                     healthyCares.addAll((List<RESP_Map_Healthy_Care>) results.values);
                     xLog.e(TAG, "getFilter: publishResults: " + Constant.LOGPHI + healthyCares.toString());
                     notifyDataSetChanged();
+                    view.onGetSuggestionSuccess(healthyCares);
                 } else {
                     notifyDataSetInvalidated();
                 }
             }
         };
         return filter;
+    }
+
+    public void setDataToListBottom(List<RESP_Map_Healthy_Care> list) {
+        if (healthyCares != null && healthyCares.size() > 0) {
+            if (list != null && list.size() > 0) {
+                list.addAll(healthyCares);
+            } else {
+                if (list != null)
+                    list.addAll(healthyCares);
+            }
+        }
     }
 
     private class GetToServer extends AsyncTask<String, Integer, List<RESP_Map_Healthy_Care>> {

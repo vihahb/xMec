@@ -1,9 +1,12 @@
 package com.xtelsolution.xmec.presenter;
 
+import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.commons.Cts;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtel.nipservicesdk.utils.SharedUtils;
 import com.xtelsolution.xmec.common.Constant;
 import com.xtelsolution.xmec.common.xLog;
@@ -20,12 +23,13 @@ public class FindMedicinePresenter extends BasePresenter {
     private final int SEARCHMEDICINE = 1;
     private ISearchMedicineView view;
 
+
     public FindMedicinePresenter(ISearchMedicineView view) {
         this.view = view;
     }
 
     public void searchMedicine(final Object... param) {
-        String key = (String) param[1];
+        final String key = (String) param[1];
         String url = Constant.SERVER_XMEC + Constant.MEDICINE_SEARCH + "?name=" + key + "&size=15";
         xLog.e(TAG, "searchMedicine:" + url);
         xLog.e(TAG, "searchMedicine: secsion: " + LoginManager.getCurrentSession());
@@ -40,7 +44,23 @@ public class FindMedicinePresenter extends BasePresenter {
             @Override
             public void onError(Error error) {
                 view.onError();
-                handlerError(view, error, param);
+//                handlerError(view, error, param);
+                if (error.getCode() == 2) {
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            searchMedicine(SEARCHMEDICINE, key);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
@@ -53,13 +73,4 @@ public class FindMedicinePresenter extends BasePresenter {
         searchMedicine(SEARCHMEDICINE, key);
     }
 
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-        switch ((int) param[0]) {
-            case SEARCHMEDICINE:
-                searchMedicine(param);
-                break;
-
-        }
-    }
 }

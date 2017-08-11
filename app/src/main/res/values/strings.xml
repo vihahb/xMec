@@ -143,7 +143,7 @@
 
     <!--map fragment-->
     <string name="title_tim_kiem_co_so_y_te">Tìm kiếm cơ sở y tế</string>
-    <string name="tim_kiem_co_so_y_te_hint">Nhập tên,địa chỉ ...</string>
+    <string name="tim_kiem_co_so_y_te_hint">Nhập tên,địa chỉ…</string>
     <string name="map_no_search_resutl">Không tìm thấy kết quả</string>
     <string name="title_validate_phone">Xác thực</string>
     <string name="title_change_phone">Đổi mật khẩu</string>

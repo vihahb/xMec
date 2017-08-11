@@ -1,11 +1,11 @@
 package com.xtelsolution.xmec;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 import android.util.Base64;
 import android.util.Log;
 
@@ -22,7 +22,7 @@ import io.fabric.sdk.android.Fabric;
  * Created by HUNGNT on 1/17/2017.
  */
 
-public class MyApplication extends MultiDexApplication {
+public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
     public static Context context;
     public static String PACKAGE_NAME;

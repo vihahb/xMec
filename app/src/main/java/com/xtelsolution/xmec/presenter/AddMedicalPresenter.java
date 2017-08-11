@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.xtel.nipservicesdk.CallbackManager;
 import com.xtel.nipservicesdk.LoginManager;
+import com.xtel.nipservicesdk.callback.CallbacListener;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
 import com.xtel.nipservicesdk.model.entity.Error;
+import com.xtel.nipservicesdk.model.entity.RESP_Login;
 import com.xtel.nipservicesdk.utils.JsonHelper;
 import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.common.Constant;
@@ -41,8 +44,8 @@ public class AddMedicalPresenter extends BasePresenter {
         final long beginTime = (long) param[2];
         final long endTime = (long) param[3];
         final int type = (int) param[4];
-        String note = (String) param[5];
-        List<Resource> resources = (List<Resource>) param[6];
+        final String note = (String) param[5];
+        final List<Resource> resources = (List<Resource>) param[6];
         String url = Constant.SERVER_XMEC + Constant.MEDICAL_REPORT_BOOK;
         Log.e("ADD", "addMedicalDirectorry: " + url);
         REQ_Medical_Detail REQ_medicalDetail = new REQ_Medical_Detail();
@@ -70,7 +73,24 @@ public class AddMedicalPresenter extends BasePresenter {
 
             @Override
             public void onError(Error error) {
-                handlerError(view, error, param);
+//                handlerError(view, error, param);
+                if (error.getCode() == 2) {
+//                                handlerError(view, error, DeleteFriend, friend_uid);
+                    CallbackManager.create(view.getActivity()).getNewSesion(new CallbacListener() {
+                        @Override
+                        public void onSuccess(RESP_Login success) {
+                            addMedicalDirectorry(ADDMEDICAL, name, beginTime, endTime, type, note, resources);
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.requireLogin();
+                            view.showToast("Vui lòng đăng nhập để tiếp tục.");
+                        }
+                    });
+                } else {
+                    view.showToast("Có lỗi xảy ra.");
+                }
             }
         });
     }
@@ -104,15 +124,4 @@ public class AddMedicalPresenter extends BasePresenter {
 
     }
 
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-        switch ((int) param[0]) {
-            case ADDMEDICAL:
-                addMedicalDirectorry(param);
-                break;
-//            case GETMEDICAL:
-//                getMedicalReportBooks();
-//                break;
-        }
-    }
 }

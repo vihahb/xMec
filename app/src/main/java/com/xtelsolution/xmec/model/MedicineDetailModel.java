@@ -2,6 +2,7 @@ package com.xtelsolution.xmec.model;
 
 import com.xtel.nipservicesdk.LoginManager;
 import com.xtel.nipservicesdk.callback.ResponseHandle;
+import com.xtel.nipservicesdk.commons.Cts;
 import com.xtelsolution.xmec.common.Constant;
 
 /**
@@ -24,6 +25,6 @@ public class MedicineDetailModel extends BasicModel {
         if (SharedPreferencesUtils.getInstance().isLogined())
             requestServer.getApi(url, LoginManager.getCurrentSession(), handle);
         else
-            requestServer.getApi(url, Constant.LOCAL_SECCION, handle);
+            requestServer.getApi(url, Cts.USER_SESSION, handle);
     }
 }

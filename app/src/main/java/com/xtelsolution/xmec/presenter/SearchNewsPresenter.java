@@ -99,6 +99,7 @@ public class SearchNewsPresenter extends BasePresenter {
                         @Override
                         public void onSuccess(RESP_Login obj) {
                             SharedUtils.getInstance().putStringValue(Cts.USER_SESSION, obj.getSession());
+                            SharedUtils.getInstance().putStringValue(Cts.USER_AUTH_ID, obj.getAuthenticationid());
                             findDisease(key);
                         }
 
@@ -108,7 +109,6 @@ public class SearchNewsPresenter extends BasePresenter {
                         }
                     });
                 }
-                handlerError(view, error, param);
             }
         });
     }
@@ -117,14 +117,5 @@ public class SearchNewsPresenter extends BasePresenter {
         if (!checkConnnecttion(view))
             return;
         findDisease(key);
-    }
-
-    @Override
-    public void onGetNewSessionSuccess(Object... param) {
-        switch ((int) param[0]) {
-            case SEARDISEASE:
-                findDisease(param);
-                break;
-        }
     }
 }

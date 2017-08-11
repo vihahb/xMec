@@ -27,7 +27,7 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
     private Context mContext;
     private ItemClickListener itemClickListener;
     private ItemClickListener.ButtonAdapterClickListener buttonAdapterClickListener;
-    private boolean isMaster = true;
+    private boolean isMaster = false;
 
     public MedicalDirectoryAdapter(ArrayList<RESP_Medical> data, Context context) {
         this.list = data;
@@ -76,22 +76,30 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
             });
 
-            if (!isMaster) {
-                viewhodlder.btnAdd.setVisibility(View.GONE);
-            } else {
+            if (isMaster) {
                 viewhodlder.btnAdd.setVisibility(View.VISIBLE);
+            } else {
+                viewhodlder.btnAdd.setVisibility(View.GONE);
             }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return list.size() <= position ? VIEW_TYPE_ADD_BUTTON : VIEW_TYPE_ITEM;
+        if (list.size() <= position) {
+            return VIEW_TYPE_ADD_BUTTON;
+        } else {
+            return VIEW_TYPE_ITEM;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return (list == null) ? 1 : list.size() + 1;
+        if (list == null || list.size() == 0) {
+            return 1;
+        } else {
+            return list.size() + 1;
+        }
     }
 
     public void addAll(ArrayList<RESP_Medical> data) {
@@ -105,6 +113,13 @@ public class MedicalDirectoryAdapter extends RecyclerView.Adapter<RecyclerView.V
         list.addAll(data);
         this.isMaster = isMaster;
         notifyDataSetChanged();
+    }
+
+    public void addDefault(ArrayList<RESP_Medical> data, boolean isMaster) {
+        int startIndex = list.size();
+        list.addAll(startIndex, data);
+        this.isMaster = isMaster;
+        notifyItemRangeChanged(startIndex, data.size());
     }
 
     public ArrayList<RESP_Medical> getList() {

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +25,7 @@ import com.xtelsolution.xmec.R;
 import com.xtelsolution.xmec.presenter.ResetPasswordPresenter;
 import com.xtelsolution.xmec.views.inf.IResetPasswordActivityView;
 
-public class ResetPasswordActivity extends AppCompatActivity implements IResetPasswordActivityView, View.OnClickListener {
+public class ResetPasswordActivity extends BasicActivity implements IResetPasswordActivityView, View.OnClickListener {
 
     private EditText edtPhone, edtNewPassword, edtReNewPassword;
     private TextView tv_alreadyAccount;

@@ -1,66 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etSearch"
-        style="@style/EditextNomarl"
-        android:drawableEnd="@drawable/ic_action_search"
-        android:drawableRight="@drawable/ic_action_search"
-        android:hint="@string/search_health_center"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        android:lines="1"
-        android:textColor="@color/textTitle"
-        android:textColorHint="@color/textHint"
-        android:textSize="@dimen/dimen12sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
-
-
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <EditText
+            android:id="@+id/etSearch"
+            style="@style/EditextNomarl"
+            android:drawableEnd="@drawable/ic_action_search"
+            android:drawableRight="@drawable/ic_action_search"
+            android:hint="@string/search_health_center"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:textColor="@color/textTitle"
+            android:textColorHint="@color/textHint"
+            android:textSize="@dimen/dimen12sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".views.activity.HomeActivity" />
+            android:layout_height="match_parent">
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/location_permission"
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".views.activity.HomeActivity" />
+
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/location_permission"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/textHint">
+
+                <Button
+                    android:id="@+id/btn_init_permission"
+                    style="@style/ButtonRadius"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/dimen_8"
+                    android:paddingRight="@dimen/dimen_8"
+                    android:text="@string/location_permission" />
+            </android.support.design.widget.CoordinatorLayout>
+        </FrameLayout>
+
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:behavior_hideable="true"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/textHint">
+            android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/btn_init_permission"
-                style="@style/ButtonRadius"
-                android:layout_width="wrap_content"
+            <ProgressBar
+                android:id="@+id/progress_find"
+                android:layout_width="@dimen/dimen_48"
+                android:layout_height="@dimen/dimen_48"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/tv_state_bottom"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingLeft="@dimen/dimen_8"
-                android:paddingRight="@dimen/dimen_8"
-                android:text="@string/location_permission" />
-        </android.support.design.widget.CoordinatorLayout>
-    </FrameLayout>
+                android:paddingTop="8dp"
+                android:text="Không có dữ liệu"
+                android:textColor="@color/title_item"
+                android:visibility="gone" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcl_find_result"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dimen_16" />
+
+        </FrameLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn__current_location"
+        android:id="@+id/btn_current_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/dimen_16"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_my_location_white_36dp" />
-</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

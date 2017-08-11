@@ -91,6 +91,14 @@ public class BasicActivity extends AppCompatActivity implements BaseView {
         }
     }
 
+    @Override
+    public void requireLogin() {
+        if (!LoginActivity.active) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            finish();
+        }
+    }
+
     protected void setImage(ImageView img, String url) {
         if (url == null || url.trim().length() == 0) {
             img.setImageResource(R.mipmap.avatar);
